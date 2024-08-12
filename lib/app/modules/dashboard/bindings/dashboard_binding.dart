@@ -1,0 +1,28 @@
+import 'package:get/get.dart';
+import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
+import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
+import 'package:manpower_station/app/modules/help_support/controller/help_controller.dart';
+import 'package:manpower_station/app/modules/home/controllers/home_controller.dart';
+import 'package:manpower_station/app/modules/menu/controller/menu_controller.dart';
+import 'package:manpower_station/app/modules/order_history/controller/order_controller.dart';
+
+class DashboardBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<DashBoardController>(
+          () => DashBoardController(),
+    );Get.lazyPut<OrderController>(
+          () => OrderController(),
+    );
+    Get.lazyPut<HomeController>(
+          () => HomeController(),
+    );
+    Get.lazyPut<AuthenticationController>(
+          () => AuthenticationController(),
+    );Get.lazyPut<HelpController>(
+          () => HelpController(),
+    );Get.lazyPut<MenusController>(
+          () => MenusController(),
+    );
+  }
+}
