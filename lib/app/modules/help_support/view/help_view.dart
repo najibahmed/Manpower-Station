@@ -10,6 +10,7 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/config/translations/strings_enum.dart';
 
 class HelpView extends BaseView<HelpController> {
   const HelpView({super.key});
@@ -38,7 +39,7 @@ class HelpView extends BaseView<HelpController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Welcome to Manpower Station Support!",
+            "${Strings.welcomeSupport.tr}!",
             style: TextStyle(
               color: DarkThemeColors.primaryColor,
               fontSize: MyFonts.displayMediumSize,
@@ -48,8 +49,7 @@ class HelpView extends BaseView<HelpController> {
             height: 5,
           ),
           Text(
-            "Our customer help agents are ready to assist you. Please text us \nwith your problem, "
-                "complaint or any advice you need.",
+            "${Strings.supportAdvise.tr}.",
             style: TextStyle(
               fontSize: MyFonts.bodySmallTextSize,
             ),
@@ -80,8 +80,8 @@ class HelpView extends BaseView<HelpController> {
                 width: 30,
                 child: SvgPicture.asset('assets/vectors/24_help_icon.svg')
               ),
-              title: Text('Take Help',style: TextStyle(color: LightThemeColors.primaryColor,fontSize: MyFonts.listTileTitleSize),),
-              subtitle: Text('Instant support 24/7',style:TextStyle(color: LightThemeColors.bodyTextColor,fontSize: MyFonts.bodySmallTextSize), ),
+              title: Text(Strings.takeHelp.tr,style: TextStyle(color: LightThemeColors.primaryColor,fontSize: MyFonts.listTileTitleSize),),
+              subtitle: Text(Strings.instantSupport.tr,style:TextStyle(color: LightThemeColors.bodyTextColor,fontSize: MyFonts.bodySmallTextSize), ),
               trailing: Icon(Icons.arrow_forward_ios),
             ),
           ),
@@ -100,8 +100,8 @@ class HelpView extends BaseView<HelpController> {
                   width: 30,
                   child: SvgPicture.asset('assets/vectors/support_icon.svg')
               ),
-              title: Text('FAQs',style: TextStyle(color: LightThemeColors.primaryColor,fontSize: MyFonts.listTileTitleSize),),
-              subtitle: Text('See frequently asked questions',style:TextStyle(color: LightThemeColors.bodyTextColor,fontSize: MyFonts.bodySmallTextSize), ),
+              title: Text(Strings.faqs.tr,style: TextStyle(color: LightThemeColors.primaryColor,fontSize: MyFonts.listTileTitleSize),),
+              subtitle: Text(Strings.seeFaqs.tr,style:TextStyle(color: LightThemeColors.bodyTextColor,fontSize: MyFonts.bodySmallTextSize), ),
               trailing: Icon(Icons.arrow_forward_ios),
             ),
           ),

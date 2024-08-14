@@ -7,6 +7,7 @@ import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/order_history/controller/order_controller.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/config/translations/strings_enum.dart';
 
 class OrderHistoryView extends BaseView<OrderController>{
   const OrderHistoryView({super.key});
@@ -37,14 +38,14 @@ class OrderHistoryView extends BaseView<OrderController>{
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               CustomButton(
-                  title: 'Active Order',
+                  title: Strings.activeService.tr,
                   height: 40,
                   width: 130,
                   onTap: (){}
               ),
               SizedBox(width: 10,),
               CustomButton(
-                  title: 'Order History',
+                  title: Strings.serviceHistory.tr,
                   height: 40,
                   width: 130,
                   onTap: (){}
@@ -66,7 +67,7 @@ class OrderHistoryView extends BaseView<OrderController>{
             height: MediaQuery.of(context).size.height * .04,
           ),
           Center(
-              child: Text("You have no order history",
+              child: Text(Strings.noActiveHistory.tr,
                 style: TextStyle(
                 fontSize: MyFonts.displayMediumSize,
               ),))

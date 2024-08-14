@@ -10,6 +10,7 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/config/translations/strings_enum.dart';
 
 
 class RegistrationView extends BaseView<AuthenticationController> {
@@ -51,12 +52,12 @@ class RegistrationView extends BaseView<AuthenticationController> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.07,
           ),
-          Text("Enter Your Phone Number",
+          Text("${Strings.enterEmailPhnNum.tr}",
               style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
           SizedBox(
             height: 2,
           ),
-          Text("You will get 6-digit verification code.",
+          Text("${Strings.getVerification.tr}.",
               style: TextStyle(
                   fontSize: MyFonts.bodyMediumSize,
                   color: LightThemeColors.opacityTextColor)),
@@ -68,16 +69,16 @@ class RegistrationView extends BaseView<AuthenticationController> {
             keyboardType: TextInputType.phone,
             controller: controller.phoneNumberController,
             decoration: InputDecoration(
-                prefixIcon: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Container(
-                    width: 70,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Icon(Icons.flag_outlined), Text(' +88  |')],
-                    ),
-                  ),
-                ),
+                // prefixIcon: Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 8.0),
+                //   child: Container(
+                //     width: 70,
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       children: [Icon(Icons.flag_outlined), Text(' +88  |')],
+                //     ),
+                //   ),
+                // ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   borderSide: BorderSide(
@@ -88,7 +89,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   borderSide: BorderSide(
                       color: LightThemeColors.opacityTextColor, width: 2.0),
                 ),
-                hintText: '01**********',
+                hintText: '01********** or abc@gmail.com',
                 hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
             validator: (String? value) {},
           ),
@@ -101,26 +102,26 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    text: 'By entering your phone number, you agree to our',
+                    text: '${Strings.acceptTermMsg.tr}',
                     style: TextStyle(
                         color: LightThemeColors.opacityTextColor,
                         fontSize: MyFonts.bodyMediumSize),
-                    children: const <InlineSpan>[
+                    children:  <InlineSpan>[
                       WidgetSpan(
                         alignment: PlaceholderAlignment.baseline,
                         baseline: TextBaseline.alphabetic,
                         child: LinkButton(
-                            urlLabel: "Terms and Conditions",
+                            urlLabel: " ${Strings.termsAndCondition.tr}",
                             url: "https://example.com/terms-and-conditions"),
                       ),
                       TextSpan(
-                        text: ' and ',
+                        text: ' ${Strings.and.tr} ',
                       ),
                       WidgetSpan(
                         alignment: PlaceholderAlignment.baseline,
                         baseline: TextBaseline.alphabetic,
                         child: LinkButton(
-                            urlLabel: "Privacy Policy.",
+                            urlLabel: "${Strings.privacyPolicy.tr}.",
                             url: "https://example.com/privacy-policy"),
                       ),
                     ],
@@ -134,7 +135,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
           ),
           Center(
               child: CustomButton(
-            title: "Send OTP",
+            title: "${Strings.sendOtp.tr}",
             height: 44,
             width: 298,
             onTap: () {

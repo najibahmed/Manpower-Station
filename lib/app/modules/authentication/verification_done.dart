@@ -8,6 +8,7 @@ import 'package:manpower_station/app/modules/authentication/Auth%20controller/au
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/config/translations/strings_enum.dart';
 
 import '../../components/custom_button.dart';
 import '../../routes/app_pages.dart';
@@ -50,12 +51,12 @@ class VerificationCompleted extends BaseView<AuthenticationController>{
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.04,
           ),
-          RichText(text:TextSpan(text: "Successfully\n",
+          RichText(text:TextSpan(text: "${Strings.successful.tr}\n",
               style: TextStyle(fontSize: MyFonts.displayLargeSize,
                   color: LightThemeColors.listTileTitleColor,
                   fontWeight: FontWeight.bold),
             children: [
-              TextSpan(text: "Your account has been Created",
+              TextSpan(text: "${Strings.accountCreated.tr}",
              style: TextStyle(
               fontSize: MyFonts.bodyMediumSize,
               color: LightThemeColors.opacityTextColor,
@@ -71,7 +72,7 @@ class VerificationCompleted extends BaseView<AuthenticationController>{
 
           Center(
               child: CustomButton(
-                title: "Okay",
+                title: "${Strings.okay.tr}",
                 height: 44,
                 width: 298,
                 onTap: () {

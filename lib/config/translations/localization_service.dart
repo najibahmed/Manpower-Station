@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:manpower_station/config/translations/bn_BD/bn_bd_translation.dart';
 
 import '../../app/data/local/my_shared_pref.dart';
 import 'ar_AR/ar_ar_translation.dart';
@@ -21,9 +23,10 @@ class LocalizationService extends Translations {
   static Locale defaultLanguage = supportedLanguages['en']!;
 
   // supported languages
-  static Map<String,Loc ale> supportedLanguages = {
+  static Map<String,Locale> supportedLanguages = {
     'en' : const Locale('en', 'US'),
     'ar' : const Locale('ar', 'AR'),
+    'bn' : const Locale('bn', 'BD'),
   };
 
   // supported languages fonts family (must be in assets & pubspec yaml) or you can use google fonts
@@ -31,12 +34,14 @@ class LocalizationService extends Translations {
     // todo add your English font families (add to assets/fonts, pubspec and name it here) default is poppins for english and cairo for arabic
     'en' : const TextStyle(fontFamily: 'Poppins'),
     'ar': const TextStyle(fontFamily: 'Cairo'),
+    'bn':  GoogleFonts.notoSansBengali(),
   };
 
   @override
   Map<String, Map<String, String>> get keys => {
     'en_US': enUs,
     'ar_AR': arAR,
+    'bn_BD': bnBD,
   };
 
   /// check if the language is supported

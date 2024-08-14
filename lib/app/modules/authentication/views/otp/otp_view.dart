@@ -13,6 +13,7 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:pinput/pinput.dart';
 import '../../Auth controller/authentication_controller.dart';
 
@@ -76,13 +77,13 @@ class OtpView extends BaseView<AuthenticationController> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.07,
             ),
-            Text("Verifying your number",
+            Text("${Strings.verifyNumMsg.tr}",
                 style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
             SizedBox(
               height: 2,
             ),
-            Text('''A verification code has been sent to
-            +8801XXXXXXXXX''',
+            Text('''${Strings.verificationCodeSent.tr}
+            +88${controller.phoneNumberController.text?? '+8801XXXXXXXXX'}''',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     fontSize: MyFonts.bodyMediumSize,
@@ -115,7 +116,7 @@ class OtpView extends BaseView<AuthenticationController> {
               ),
             ),
         Text(
-           "Enter 4-digit code",
+           "${Strings.enterCode.tr}",
           style: TextStyle(
               fontSize: MyFonts.bodyMediumSize,
               color: LightThemeColors.opacityTextColor),),
@@ -125,7 +126,7 @@ class OtpView extends BaseView<AuthenticationController> {
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                  text: "Didn't recieve code? ",
+                  text: "${Strings.dintGetCode.tr}? ",
                   style: TextStyle(
                       fontSize: MyFonts.bodyMediumSize,
                       color: LightThemeColors.bodySmallTextColor),

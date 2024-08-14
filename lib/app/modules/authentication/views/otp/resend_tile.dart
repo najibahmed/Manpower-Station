@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'dart:async';
 
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/config/translations/strings_enum.dart';
 
 class ResendSmsTile extends StatefulWidget {
   @override
@@ -46,7 +48,7 @@ class _ResendSmsTileState extends State<ResendSmsTile> {
       enabled: _isTileActive,
       onTap: _isTileActive ? _resendSms : null,
       leading: Icon(Icons.sms, color: _isTileActive ? LightThemeColors.primaryColor :LightThemeColors.opacityTextColor),
-      title: Text('Resend SMS'),
+      title: Text('${Strings.resendSms.tr}'),
       trailing:  _isTileActive ? Text(''):Text('Wait $_start s',
         style: TextStyle(
           fontSize: MyFonts.bodySmallTextSize,

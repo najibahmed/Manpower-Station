@@ -8,6 +8,7 @@ import 'package:manpower_station/app/modules/authentication/Auth%20controller/au
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/config/translations/strings_enum.dart';
 
 class CreateProfileScreen extends BaseView<AuthenticationController>{
   TextStyle myTextStyle = TextStyle(color: LightThemeColors.primaryColor,fontSize: MyFonts.appBarTittleSize);
@@ -19,7 +20,7 @@ class CreateProfileScreen extends BaseView<AuthenticationController>{
       backgroundColor: Get.isDarkMode
           ?  DarkThemeColors.backgroundColor:Colors.white,
       centerTitle: true,
-      title: Text("Create your profile",
+      title: Text("${Strings.createProfile.tr}",
         style: myTextStyle.copyWith(color:LightThemeColors.primaryColor,
             fontWeight: FontWeight.bold
         ),
@@ -46,7 +47,7 @@ class CreateProfileScreen extends BaseView<AuthenticationController>{
             height: size.height * 0.04,
           ),
           Center(
-            child: Text( "Your can find and edit this info in your settings.",
+            child: Text( "${Strings.editFindSetting.tr}.",
                 style: TextStyle(
                     fontSize: MyFonts.bodyMediumSize,
                     color: LightThemeColors.opacityTextColor,
@@ -107,9 +108,9 @@ class CreateProfileScreen extends BaseView<AuthenticationController>{
                         borderSide: BorderSide(
                             color: LightThemeColors.opacityTextColor, width: 2.0),
                       ),
-                      hintText: 'Your your name',
+                      hintText: 'Your name',
                       labelStyle: myTextStyle.copyWith(fontWeight: FontWeight.normal,fontSize:MyFonts.bodyMediumSize),
-                      labelText: "Name",
+                      labelText: "${Strings.name.tr}",
                       hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
                   validator: (String? value) {},
                 ),

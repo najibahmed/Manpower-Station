@@ -11,6 +11,7 @@ import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/config/translations/strings_enum.dart';
 import '../../../../config/theme/my_theme.dart';
 import '../../../../config/translations/localization_service.dart';
 import '../../../core/base/base_view.dart';
@@ -27,11 +28,11 @@ class HomeView extends BaseView<HomeController> {
         centerTitle: true,
         leading: InkWell(
           onTap: () => LocalizationService.updateLanguage(
-            LocalizationService.getCurrentLocal().languageCode == 'ar'
+            LocalizationService.getCurrentLocal().languageCode == 'bn'
                 ? 'en'
-                : 'ar',
+                : 'bn',
           ),
-          child: Container(
+          child: SizedBox(
             height: 30.h,
             width: 30.h,
             // decoration: theme.extension<HeaderContainerThemeData>()?.decoration,
@@ -96,27 +97,29 @@ class HomeView extends BaseView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              Wrap(
                 children: [
                   Container(
-                    height: 60,
-                    width: 65,
+                    height: 55,
+                    width: 55,
                     child: CircleAvatar(
                       backgroundColor: Colors.grey.withOpacity(.30),
                       radius:100,
                       child: Icon(Icons.person,color: LightThemeColors.primaryColor,size:40,),
                     ),
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 10,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hi! James Carlo.',
+                        'Hi! ${Strings.name.tr}.',
                         style: TextStyle(fontSize: MyFonts.bodyMediumSize, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 2),
-                      Text('We are always here to help you. \nChoose option.',
+                      Text('${Strings.help.tr}',
+                        style: TextStyle(fontSize: MyFonts.bodySmallTextSize, fontWeight: FontWeight.bold),),
+                      Text('${Strings.chooseService.tr}',
                         style: TextStyle(fontSize: MyFonts.bodySmallTextSize, fontWeight: FontWeight.bold),),
                     ],
                   ),
@@ -158,30 +161,30 @@ class HomeView extends BaseView<HomeController> {
               ),
               SizedBox(height: 20),
               Text(
-                'Which service do you need?',
-                style: TextStyle(fontSize: MyFonts.bodySmallTextSize, fontWeight: FontWeight.w500),
+                '${Strings.askTypeOfService.tr}?',
+                style: TextStyle(fontSize: MyFonts.bodyMediumSize, fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ServiceOption(
-                    label: 'Maid',
+                    label: '${Strings.maid.tr}',
                     image: 'assets/images/maid_icon.png',
                     onTap: () {  },
                   ),
                   ServiceOption(
-                    label: 'Care Giver',
+                    label: '${Strings.careGiver.tr}',
                     image: 'assets/images/caregiver_icon.png',
                     onTap: () {  },
                   ),
                   ServiceOption(
-                    label: 'Baby Sitter',
+                    label: '${Strings.babySitter.tr}',
                     image: 'assets/images/babysitter_icon.png',
                     onTap: () {  },
                   ),
                   ServiceOption(
-                    label: 'More',
+                    label: '${Strings.more.tr}',
                     image: 'assets/images/more_icon.png',
                     onTap: () {  },
                   ),
@@ -236,18 +239,13 @@ class HomeView extends BaseView<HomeController> {
                 ),
               ),
         Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
                 TextButton(onPressed: (){
                   print('tap');
                   Get.toNamed(AppPages.Registration,);
                 },
-                    child: Text("next page")),
-              TextButton(onPressed: (){
-                  print('tap');
-                  Get.toNamed(AppPages.OrderHistory,);
-                },
-                    child: Text("order history page")),
+                    child: Text("registration page")),
+
             ],
           ),
             ],

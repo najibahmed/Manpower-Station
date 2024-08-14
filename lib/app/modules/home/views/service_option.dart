@@ -18,12 +18,17 @@ class ServiceOption extends StatelessWidget {
       children: [
         InkWell(
           onTap: onTap,
-          child: CircleAvatar(
-            radius: 30,
-            backgroundColor: LightThemeColors.primaryColor,
-            child: Image.asset(
-              image,
-              fit: BoxFit.cover,
+          child: Material(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: CircleAvatar(
+                radius: 30,
+                backgroundColor: LightThemeColors.primaryColor,
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
         ),

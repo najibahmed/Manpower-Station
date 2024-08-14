@@ -4,6 +4,7 @@ import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/menu/controller/menu_controller.dart';
 import 'package:manpower_station/app/modules/menu/widgets/menu_item.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/config/translations/strings_enum.dart';
 
 import '../../../../config/theme/dark_theme_colors.dart';
 
@@ -50,7 +51,7 @@ class MenuView extends BaseView<MenusController>{
           )),
           const SizedBox(height: 30),
           MenuItem(icon: Icons.payment, text: 'Digital payment'),
-          MenuItem(icon: Icons.language, text: 'Language change'),
+          MenuItem(icon: Icons.language, text: '${Strings.changeLanguage.tr}'),
           MenuItem(icon: Icons.privacy_tip, text: 'Privacy policy'),
           MenuItem(icon: Icons.document_scanner, text: 'Terms & Conditions'),
           MenuItem(icon: Icons.info_outline, text: 'About Us'),
