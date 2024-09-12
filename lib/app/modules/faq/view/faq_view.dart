@@ -31,7 +31,7 @@ class FaqView extends BaseView<FaqController> {
     return ListView.separated(
       padding: const EdgeInsets.all(16.0),
       separatorBuilder: (context, index) {
-        return Divider(thickness: 6,);
+        return const Divider(thickness: 5,);
       },
       itemCount: controller.faqItems.length,
       itemBuilder: (context, index) {
@@ -46,14 +46,13 @@ class FaqView extends BaseView<FaqController> {
         },
         children: [
           ExpansionPanel(
-
             headerBuilder: (BuildContext context, bool isExpanded) {
               return ListTile(
                 title: Text(item.question),
               );
             },
             body: ListTile(
-              title: Text(item.answer,style: TextStyle(
+              title: Text(item.answer,textAlign: TextAlign.justify,style: TextStyle(
                   fontSize: MyFonts.bodySmallTextSize
               ),),
             ),

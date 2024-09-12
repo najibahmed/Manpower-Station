@@ -27,6 +27,7 @@ class BaseClient {
       )
   )
     ..interceptors.add(PrettyDioLogger(
+
       requestHeader: true,
       requestBody: true,
       responseBody: true,

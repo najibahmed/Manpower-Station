@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 
 import 'app/core/binding/initial_binding.dart';
+import 'app/data/local/my_shared_pref.dart';
 import 'app/routes/app_pages.dart';
 import 'config/theme/my_theme.dart';
 import 'config/translations/localization_service.dart';
@@ -33,7 +33,7 @@ Future<void> main() async {
       builder: (context, widget) {
         return GetMaterialApp(
           // todo add your app name
-          title: "GetXSkeleton",
+          title: "ManPowerStation",
           useInheritedMediaQuery: true,
           debugShowCheckedModeBanner: false,
           builder: (context, widget) {
@@ -42,7 +42,7 @@ Future<void> main() async {
               data: MyTheme.getThemeData(isLight: themeIsLight),
               child: MediaQuery(
                 // prevent font from scaling (some people use big/small device fonts)
-                // but we want our app font to still the same and dont get affected
+                // but we want our app font to still the same and don't get affected
                 data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
                 child: widget!,
               ),

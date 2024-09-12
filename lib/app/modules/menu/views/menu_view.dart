@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/menu/controller/menu_controller.dart';
@@ -34,13 +37,13 @@ class MenuView extends BaseView<MenusController>{
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 20),
+           SizedBox(height: 20.h),
           CircleAvatar(
             radius: 40,
             backgroundColor: Colors.grey.shade300,
             child: const Icon(Icons.person, size: 50, color: Colors.white),
           ),
-          const SizedBox(height: 10),
+           SizedBox(height: 10.h),
           Obx(() => Text(
             controller.userName.value,
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -49,7 +52,7 @@ class MenuView extends BaseView<MenusController>{
             controller.phoneNumber.value,
             style: const TextStyle(fontSize: 16, color: Colors.grey),
           )),
-          const SizedBox(height: 30),
+          SizedBox(height: 30.h),
           MenuItem(icon: Icons.payment, text: 'Digital payment'),
           MenuItem(icon: Icons.language, text: '${Strings.changeLanguage.tr}'),
           MenuItem(icon: Icons.privacy_tip, text: 'Privacy policy'),

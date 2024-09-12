@@ -10,6 +10,9 @@ import 'package:manpower_station/app/modules/menu/bindings/menu_bindings.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
 import 'package:manpower_station/app/modules/order_history/binding/order_binding.dart';
 import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
+import 'package:manpower_station/app/modules/service_list/bindings/service_binding.dart';
+import 'package:manpower_station/app/modules/service_list/view/service_details.dart';
+import 'package:manpower_station/app/modules/service_list/view/service_list_grid.dart';
 import '../modules/authentication/Auth Bindings/authentication_binding.dart';
 import '../modules/authentication/views/registration/registration_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -29,6 +32,8 @@ class AppPages {
   static const MenusPage = Routes.MenusPage;
   static const INITIAL = Routes.DashBoard;
   static const FaqScreen = Routes.FaqScreen;
+  static const ServiceList = Routes.ServiceList;
+  static const ServiceDetails = Routes.ServiceDetailsScreen;
 
   static final routes = [
     GetPage(
@@ -76,6 +81,16 @@ class AppPages {
       page: () =>   FaqView(),
         binding: FaqBindings(),
       transition: Transition.rightToLeft
+    ),GetPage(
+      name: _Paths.ServiceList,
+      page: () =>   ServiceListView(),
+        binding: ServiceBinding(),
+      transition: Transition.rightToLeft
+    ),GetPage(
+      name: _Paths.ServiceDetailsScreen,
+      page: () => ServiceDetailsScreen(),
+        binding: ServiceBinding(),
+      // transition: Transition.rightToLeft
     ),
   ];
 }

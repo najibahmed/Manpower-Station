@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'base_controller.dart';
 
 abstract class BaseView<Controller extends BaseController>

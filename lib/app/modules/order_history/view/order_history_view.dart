@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/preferred_size.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
@@ -39,15 +40,15 @@ class OrderHistoryView extends BaseView<OrderController>{
             children: [
               CustomButton(
                   title: Strings.activeService.tr,
-                  height: 40,
-                  width: 130,
+                  height: 40.h,
+                  width: 130.w,
                   onTap: (){}
               ),
               SizedBox(width: 10,),
               CustomButton(
                   title: Strings.serviceHistory.tr,
-                  height: 40,
-                  width: 130,
+                  height: 40.h,
+                  width: 130.w,
                   onTap: (){}
               ),
             ],

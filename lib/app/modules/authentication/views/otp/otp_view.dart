@@ -1,20 +1,20 @@
-import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/preferred_size.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/resend_tile.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
-import 'package:manpower_station/config/theme/my_fonts.dart';
-import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:pinput/pinput.dart';
+import '../../../../../config/theme/light_theme_colors.dart';
+import '../../../../../config/theme/my_fonts.dart';
+import '../../../../../config/translations/strings_enum.dart';
+import '../../../../core/base/base_view.dart';
 import '../../Auth controller/authentication_controller.dart';
 
 class OtpView extends BaseView<AuthenticationController> {
@@ -83,7 +83,7 @@ class OtpView extends BaseView<AuthenticationController> {
               height: 2,
             ),
             Text('''${Strings.verificationCodeSent.tr}
-            +88${controller.phoneNumberController.text?? '+8801XXXXXXXXX'}''',
+            +88${controller.phoneNumberEmailController.text?? '+8801XXXXXXXXX'}''',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     fontSize: MyFonts.bodyMediumSize,
@@ -99,6 +99,7 @@ class OtpView extends BaseView<AuthenticationController> {
               defaultPinTheme: defaultPinTheme,
               onCompleted: (pin) {
                 controller.showError.value = pin != '5555';
+                controller.otpVerification();
                 Get.snackbar("Welcome", "Sucessfully Logged In");
               },
               focusedPinTheme: defaultPinTheme.copyWith(
@@ -143,6 +144,7 @@ class OtpView extends BaseView<AuthenticationController> {
                             fontWeight: FontWeight.bold)),
                   ]),
             ),
+          SizedBox(height: 12.h,),
           ResendSmsTile()
           ],
         ),

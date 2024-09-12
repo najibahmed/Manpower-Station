@@ -10,8 +10,13 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 
+// ignore: must_be_immutable
 class CreateProfileScreen extends BaseView<AuthenticationController>{
   TextStyle myTextStyle = TextStyle(color: LightThemeColors.primaryColor,fontSize: MyFonts.appBarTittleSize);
+
+  CreateProfileScreen({super.key});
+
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar

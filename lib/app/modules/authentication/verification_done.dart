@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/preferred_size.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
@@ -73,8 +73,8 @@ class VerificationCompleted extends BaseView<AuthenticationController>{
           Center(
               child: CustomButton(
                 title: "${Strings.okay.tr}",
-                height: 44,
-                width: 298,
+                height: 44.h,
+                width: 298.w,
                 onTap: () {
                   Get.toNamed(AppPages.CreateProfile);
 

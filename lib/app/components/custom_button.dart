@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
-import 'package:manpower_station/config/theme/my_fonts.dart';
 
+import 'package:flutter/material.dart';
+import '../../config/theme/light_theme_colors.dart';
+
+// ignore: must_be_immutable
 class CustomButton extends StatelessWidget {
   String title;
   double height;
@@ -21,15 +21,11 @@ class CustomButton extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8)))
         ),
           onPressed: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Center(
-              child: Text(title,overflow:TextOverflow.visible,style: TextStyle(
-                color: LightThemeColors.buttonTextColor,
-                fontSize: MyFonts.bodyMediumSize,
-                fontWeight: FontWeight.bold
-              ),),
-            ),
+          child: Center(
+            child: Text(title,overflow:TextOverflow.visible,style: TextStyle(
+              color: LightThemeColors.buttonTextColor,
+              fontWeight: FontWeight.bold
+            ),),
           )),
     );
   }
