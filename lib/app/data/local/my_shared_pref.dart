@@ -14,6 +14,9 @@ class MySharedPref {
   static const String _fcmTokenKey = 'fcm_token';
   static const String _currentLocalKey = 'current_local';
   static const String _lightThemeKey = 'is_theme_light';
+  static const String USER_JWT='USER_JWT';
+  static const String isLoggedIn = 'isLoggedIn';
+  static const String userId = 'adminId';
 
   /// init get storage services
   static Future<void> init() async {
@@ -57,4 +60,35 @@ class MySharedPref {
   /// clear all data from shared pref
   static Future<void> clear() async => await _sharedPreferences.clear();
 
+  /// check user login status
+  static Future<bool> setLoginStatus(bool status) async {
+    final pref = await SharedPreferences.getInstance();
+    return pref.setBool(isLoggedIn, status);
+  }
+
+  static Future<bool> getLoginStatus() async {
+    final pref = await SharedPreferences.getInstance();
+    return pref.getBool(isLoggedIn) ?? false;
+  }
+
+  /// set and get user ID
+  static Future<bool> setUserId(int id) async {
+    final pref = await SharedPreferences.getInstance();
+    return pref.setInt(userId, id);
+  }
+
+  static Future<int> getUserId() async {
+    final pref = await SharedPreferences.getInstance();
+    return pref.getInt(userId) ?? 0;
+  }
+
+///saved jwt
+static Future<bool> savedJWT(String value) async {
+  final localBD=await SharedPreferences.getInstance();
+  return localBD.setString(USER_JWT, value);
+}
+static Future<String?> getJWT() async {
+  final localBD=await SharedPreferences.getInstance();
+  return localBD.getString(USER_JWT);
+}
 }

@@ -76,7 +76,7 @@ class VerificationCompleted extends BaseView<AuthenticationController>{
                 height: 44.h,
                 width: 298.w,
                 onTap: () {
-                  Get.toNamed(AppPages.CreateProfile);
+                  Get.toNamed(AppPages.DashboardView);
 
                 },
               ))

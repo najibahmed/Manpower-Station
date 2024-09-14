@@ -8,7 +8,7 @@ import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
 import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 
-class DashboardView extends BaseView<DashBoardController>{
+class DashboardScreen extends BaseView<DashBoardController>{
 
 
   @override

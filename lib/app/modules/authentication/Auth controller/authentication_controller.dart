@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:manpower_station/app/modules/authentication/views/otp/otp_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 import '../../../core/base/base_controller.dart';
 
@@ -66,17 +67,21 @@ class AuthenticationController extends BaseController {
       await BaseClient.safeApiCall(
         "http://172.16.154.43/api/users/sign_in/sign_up",
         RequestType.post,
-        data: {
-          "phone_or_email":requestData
-
-        },
-        onSuccess: (response) {
-          if (kDebugMode) {
-            print(response.data);
+        data: requestData,
+        onSuccess: (response){
+          if(response.statusCode==201){
+            if (kDebugMode) {
+              print('Success data here------${response.data['success']}');
+              print('Message data here------${response.data['message']}');
+            }
+            var jsonData=response.statusMessage;
+            Get.snackbar('Success',jsonData!);
           }
         },
       );
-    } catch (e) {}
+    } catch (e) {
+      Get.snackbar('Error :',e.toString());
+    }
   }
 
   Future<void> otpVerification() async {
@@ -90,8 +95,10 @@ class AuthenticationController extends BaseController {
         data: {"otp": requestData},
         onSuccess: (response) {
           if (response.statusCode == 200) {
+            Map<String,dynamic> responseData = response.data;
+            OtpModel otpData= OtpModel.fromJson(responseData);
             // Success handling (for example, navigate to another screen)
-            Get.snackbar('Success', 'OTP verified successfully!');
+            Get.snackbar('Success', '${otpData.message}');
           } else {
             // Handle error
             errorMessage.value = 'Error: ${response.data['message']}';
@@ -100,7 +107,8 @@ class AuthenticationController extends BaseController {
           if (kDebugMode) {
             print(response.statusCode);
           }
-          final responseData = response.statusMessage;
+
+
         },
       );
     } catch (e) {

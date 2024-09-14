@@ -13,6 +13,7 @@ import 'package:manpower_station/app/modules/order_history/view/order_history_vi
 import 'package:manpower_station/app/modules/service_list/bindings/service_binding.dart';
 import 'package:manpower_station/app/modules/service_list/view/service_details.dart';
 import 'package:manpower_station/app/modules/service_list/view/service_list_grid.dart';
+import 'package:manpower_station/redirect_screen.dart';
 import '../modules/authentication/Auth Bindings/authentication_binding.dart';
 import '../modules/authentication/views/registration/registration_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -30,10 +31,11 @@ class AppPages {
   static const CreateProfile = Routes.CreateProfile;
   static const OrderHistory = Routes.OrderHistory;
   static const MenusPage = Routes.MenusPage;
-  static const INITIAL = Routes.DashBoard;
+  static const INITIAL = Routes.RedirectScreen;
   static const FaqScreen = Routes.FaqScreen;
   static const ServiceList = Routes.ServiceList;
   static const ServiceDetails = Routes.ServiceDetailsScreen;
+  static const DashboardView = Routes.DashBoard;
 
   static final routes = [
     GetPage(
@@ -45,7 +47,7 @@ class AppPages {
       name: _Paths.Registration,
       page: () =>  RegistrationView(),
       binding: AuthenticationBinding(),
-      transition: Transition.rightToLeft
+      // transition: Transition.rightToLeft
     ),
     GetPage(
       name: _Paths.OtpScreen,
@@ -68,7 +70,7 @@ class AppPages {
       transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.DashBoard,
-      page: () =>  DashboardView(),
+      page: () =>  DashboardScreen(),
         binding: DashboardBinding(),
       transition: Transition.rightToLeft
     ),GetPage(
@@ -90,6 +92,11 @@ class AppPages {
       name: _Paths.ServiceDetailsScreen,
       page: () => ServiceDetailsScreen(),
         binding: ServiceBinding(),
+      // transition: Transition.rightToLeft
+    ),GetPage(
+      name: _Paths.RedirectScreen,
+      page: () => const RedirectScreen(),
+        // binding: ServiceBinding(),
       // transition: Transition.rightToLeft
     ),
   ];

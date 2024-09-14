@@ -236,7 +236,8 @@ class RegistrationView extends BaseView<AuthenticationController> {
                                 borderRadius: BorderRadius.circular(8)),
                             backgroundColor: Colors.white,
                             elevation: 5),
-                        onPressed: () {},
+                        onPressed: () {
+                        },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Row(
@@ -274,15 +275,16 @@ class RegistrationView extends BaseView<AuthenticationController> {
 
 void _authenticate() async {
   if (_formKey.currentState!.validate()) {
-    // EasyLoading.show(status: 'Please wait', dismissOnTap: false);
+    controller.showLoading();
     try {
       controller.loginWithPhoneOrEmail();
       // EasyLoading.dismiss();
-      Get.toNamed(AppPages.OtpScreen);
+      controller.hideLoading();
+
     } catch (error) {
       // EasyLoading.dismiss();
-        // controller.errMsg.value = error.message;
-
+      //   controller.errMsg.value = error.message;
+      print(error);
     }
   }
 }

@@ -14,6 +14,8 @@ abstract class Routes {
   static const FaqScreen = _Paths.FaqScreen;
   static const ServiceList = _Paths.ServiceList;
   static const ServiceDetailsScreen = _Paths.ServiceDetailsScreen;
+  static const RedirectScreen = _Paths.RedirectScreen;
+
 }
 
 abstract class _Paths {
@@ -28,5 +30,6 @@ abstract class _Paths {
   static const OrderHistory = '/order_history';
   static const FaqScreen = '/faq';
   static const ServiceList = '/service_list';
-  static const ServiceDetailsScreen = '/service_details/:service';
+  static const ServiceDetailsScreen = '/service_details';
+  static const RedirectScreen = '/redirect_screen';
 }

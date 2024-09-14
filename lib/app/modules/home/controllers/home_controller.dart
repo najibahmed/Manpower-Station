@@ -22,7 +22,6 @@ class HomeController extends BaseController {
             // }
             if (response.statusCode == 200) {
               var jsonData = response.data['services'];
-              print(jsonData);// Assuming the response is a list
               var serviceList = jsonData.map((e) => ServiceModel.fromJson(e))
                   .toList();
               serviceData.assignAll(serviceList);// Update the RxList with new data
