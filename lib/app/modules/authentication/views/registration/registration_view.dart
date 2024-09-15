@@ -70,7 +70,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
               // autofocus: true,
               keyboardType: TextInputType.phone,
               controller: controller.phoneNumberEmailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   // prefixIcon: Padding(
                   //   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   //   child: Container(
@@ -167,7 +167,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
               height: 38,
               width: 298,
               onTap: () {
-               _authenticate();
+               _sendOtp();
                 // Get.toNamed(AppPages.OtpScreen);
               },
             )),
@@ -192,42 +192,6 @@ class RegistrationView extends BaseView<AuthenticationController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // SizedBox(
-                  //   width: 260,
-                  //   child: ElevatedButton(
-                  //       style: ElevatedButton.styleFrom(
-                  //           elevation: 5,
-                  //           backgroundColor: CupertinoColors.activeBlue,
-                  //           side: BorderSide(color: Colors.grey, width: 1)),
-                  //       onPressed: () {},
-                  //       child: Padding(
-                  //         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  //         child: Row(
-                  //           children: [
-                  //             SizedBox(
-                  //               height: 30,
-                  //               width: 30,
-                  //               child: Image.asset(
-                  //                 'assets/images/Facebook_Logo_Primary.png',
-                  //                 fit: BoxFit.fill,
-                  //               ),
-                  //             ),
-                  //             SizedBox(
-                  //               width: 20,
-                  //             ),
-                  //             Text(
-                  //               'Continue with Facebook',
-                  //               style: TextStyle(
-                  //                   color: Colors.white,
-                  //                   fontWeight: FontWeight.w400),
-                  //             )
-                  //           ],
-                  //         ),
-                  //       )),
-                  // ),
-                  // SizedBox(
-                  //   height: MediaQuery.of(context).size.height * 0.02,
-                  // ),
                   SizedBox(
                     width: 260,
                     child: ElevatedButton(
@@ -273,16 +237,15 @@ class RegistrationView extends BaseView<AuthenticationController> {
     );
   }
 
-void _authenticate() async {
+void _sendOtp() async {
   if (_formKey.currentState!.validate()) {
     controller.showLoading();
     try {
-      controller.loginWithPhoneOrEmail();
-      // EasyLoading.dismiss();
+      await controller.loginWithPhoneOrEmail();
       controller.hideLoading();
 
     } catch (error) {
-      // EasyLoading.dismiss();
+      controller.hideLoading();
       //   controller.errMsg.value = error.message;
       print(error);
     }

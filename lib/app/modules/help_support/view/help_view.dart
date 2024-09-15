@@ -70,7 +70,7 @@ class HelpView extends BaseView<HelpController> {
           ),
           Material(
             elevation: 5,
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
             child: ListTile(
               tileColor: Colors.white,
               splashColor: LightThemeColors.primaryColor,
@@ -82,12 +82,12 @@ class HelpView extends BaseView<HelpController> {
               ),
               title: Text(Strings.takeHelp.tr,style: TextStyle(color: LightThemeColors.primaryColor,fontSize: MyFonts.listTileTitleSize),),
               subtitle: Text(Strings.instantSupport.tr,style:TextStyle(color: LightThemeColors.bodyTextColor,fontSize: MyFonts.bodySmallTextSize), ),
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * .03,),
           Material(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
             elevation: 5,
             child: ListTile(
               tileColor: Colors.white,
@@ -102,7 +102,7 @@ class HelpView extends BaseView<HelpController> {
               ),
               title: Text(Strings.faqs.tr,style: TextStyle(color: LightThemeColors.primaryColor,fontSize: MyFonts.listTileTitleSize),),
               subtitle: Text(Strings.seeFaqs.tr,style:TextStyle(color: LightThemeColors.bodyTextColor,fontSize: MyFonts.bodySmallTextSize), ),
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
             ),
           ),
         ],

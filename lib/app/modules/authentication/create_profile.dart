@@ -31,8 +31,8 @@ class CreateProfileScreen extends BaseView<AuthenticationController>{
         ),
       ),
       actions: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 14.0),
           child: Icon(Icons.check_rounded,size: 28,color: LightThemeColors.primaryColor,),
         )
       ],
@@ -82,7 +82,7 @@ class CreateProfileScreen extends BaseView<AuthenticationController>{
                           controller.profilePic.value!,
                           fit: BoxFit.cover,
                         ):
-                         Icon(Icons.add_a_photo,color: LightThemeColors.primaryColor,size:60,)
+                         const Icon(Icons.add_a_photo,color: LightThemeColors.primaryColor,size:60,)
                       ],
                     ),
                   ),
@@ -96,8 +96,8 @@ class CreateProfileScreen extends BaseView<AuthenticationController>{
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Icon(Icons.person,size: 35,color: LightThemeColors.primaryColor,),
               ),
               Expanded(
@@ -105,18 +105,18 @@ class CreateProfileScreen extends BaseView<AuthenticationController>{
                   keyboardType: TextInputType.name,
                   controller: controller.nameController,
                   decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: const BorderSide(
                             color: LightThemeColors.primaryColor, width: 2.0),
                       ),
-                      enabledBorder: UnderlineInputBorder(
+                      enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(
                             color: LightThemeColors.opacityTextColor, width: 2.0),
                       ),
                       hintText: 'Your name',
                       labelStyle: myTextStyle.copyWith(fontWeight: FontWeight.normal,fontSize:MyFonts.bodyMediumSize),
                       labelText: "${Strings.name.tr}",
-                      hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
+                      hintStyle: const TextStyle(color: LightThemeColors.hintTextColor)),
                   validator: (String? value) {},
                 ),
               ),

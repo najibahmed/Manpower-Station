@@ -40,7 +40,7 @@ class ReviewsScreen extends StatelessWidget {
               //   '4.65 out of 5',
               //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               // ),
-              SizedBox(height: 8,),
+              const SizedBox(height: 8,),
               _buildRatingBars(),
               const TextField(
                 decoration: InputDecoration(
@@ -59,18 +59,18 @@ class ReviewsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
                   // Add write review functionality
                 },
-                child: Text('Submit',style: TextStyle(color: Colors.white),),
+                child: const Text('Submit',style: TextStyle(color: Colors.white),),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                 ),
               ),
-              SizedBox(height: 8),
-              service.reviews!.length ==0 ? Text("There is no review"): Column(
+              const SizedBox(height: 8),
+              service.reviews!.length ==0 ? const Text("There is no review"): Column(
                 children: List.generate(reviewData.length, (index) {
                   var review=service.reviews![index];
                   return ReviewCard(review: reviewData[index],reviews:review);
@@ -111,8 +111,8 @@ class ReviewsScreen extends StatelessWidget {
   Widget _buildRatingBar(int stars, double percentage) {
     return Row(
       children: [
-        Text(stars.toString(), style: TextStyle(fontSize: 18)),
-        SizedBox(width: 8),
+        Text(stars.toString(), style: const TextStyle(fontSize: 18)),
+        const SizedBox(width: 8),
         Expanded(
           child: LinearProgressIndicator(
             value: percentage,
@@ -135,7 +135,7 @@ class ReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -144,27 +144,27 @@ class ReviewCard extends StatelessWidget {
             Row(
               children: [
                 _buildStarRating(review.rating),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
                   review.author,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               review.date,
-              style: TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.grey),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               review.isVerified ? 'Verified purchase' : '',
-              style: TextStyle(color: Colors.green),
+              style: const TextStyle(color: Colors.green),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               reviews,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),

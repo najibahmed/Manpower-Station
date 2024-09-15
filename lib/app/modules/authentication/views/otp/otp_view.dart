@@ -18,7 +18,7 @@ import '../../../../core/base/base_view.dart';
 import '../../Auth controller/authentication_controller.dart';
 
 class OtpView extends BaseView<AuthenticationController> {
-  OtpView({super.key});
+  const OtpView({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
@@ -83,7 +83,7 @@ class OtpView extends BaseView<AuthenticationController> {
               height: 2,
             ),
             Text('''${Strings.verificationCodeSent.tr}
-            +88${controller.phoneNumberEmailController.text?? '+8801XXXXXXXXX'}''',
+            ${controller.phoneNumberEmailController.text?? '+8801XXXXXXXXX'}''',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     fontSize: MyFonts.bodyMediumSize,
@@ -97,11 +97,19 @@ class OtpView extends BaseView<AuthenticationController> {
               length: length,
               controller: controller.otpController,
               defaultPinTheme: defaultPinTheme,
+              // validator: (value) {
+              //   return controller.isOtpWrong.value ? "Pin is incorrect" : null;
+              // },
+              hapticFeedbackType: HapticFeedbackType.lightImpact,
               onCompleted: (pin) {
-                controller.showError.value = pin != '5555';
-                controller.otpVerification();
-                Get.snackbar("Welcome", "Sucessfully Logged In");
+                authenticateOtp(pin);
               },
+              // onCompleted: (pin) {
+              //   print(pin);
+              //   // controller.showError.value = pin != '5555';
+              //   // controller.otpVerification();
+              //   // Get.snackbar("Welcome", "Sucessfully Logged In");
+              // },
               focusedPinTheme: defaultPinTheme.copyWith(
                 height: 68,
                 width: 64,
@@ -150,5 +158,13 @@ class OtpView extends BaseView<AuthenticationController> {
         ),
       )),
     );
+  }
+
+  void authenticateOtp(String pin) {
+    try{
+      controller.otpVerification(pin);
+    }catch(e){
+      print("Verify otp error: $e");
+    }
   }
 }

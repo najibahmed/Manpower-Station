@@ -10,13 +10,11 @@ class RedirectScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 5),() async {
-      final userMapString =await MySharedPref.getLoginStatus();
-      if(userMapString){
-        // Get.offAll(()=>const SignInPage(),transition: Transition.rightToLeftWithFade );
-        Get.toNamed(AppPages.Registration,);
+      final isUserLoggedIn =await MySharedPref.getLoginStatus();
+      if(isUserLoggedIn){
+        Get.offAllNamed(AppPages.Registration);
       }else{
-        Get.toNamed(AppPages.DashboardView);
-        // Get.offAll(()=>const DashBoardPage(),transition: Transition.rightToLeftWithFade );
+        Get.offAllNamed(AppPages.DashboardView);
       }
     },);
 

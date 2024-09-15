@@ -1,6 +1,4 @@
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/modules/service_list/model/service_list_model.dart';
@@ -9,6 +7,8 @@ import '../../../services/api_client.dart';
 
 class ServiceController extends BaseController  {
   var serviceData = <dynamic>[].obs;
+  RxInt selectedTime=3.obs;
+  RxString selectedTimeKey='hours'.obs;
 
   @override
   void onInit() {

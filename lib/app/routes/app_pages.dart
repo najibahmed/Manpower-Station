@@ -11,6 +11,7 @@ import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
 import 'package:manpower_station/app/modules/order_history/binding/order_binding.dart';
 import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
 import 'package:manpower_station/app/modules/service_list/bindings/service_binding.dart';
+import 'package:manpower_station/app/modules/service_list/view/service_booking_screen.dart';
 import 'package:manpower_station/app/modules/service_list/view/service_details.dart';
 import 'package:manpower_station/app/modules/service_list/view/service_list_grid.dart';
 import 'package:manpower_station/redirect_screen.dart';
@@ -24,18 +25,18 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const Home = Routes.HOME;
-  static const Registration = Routes.Registration;
-  static const OtpScreen = Routes.OtpScreen;
-  static const RegistrationDone = Routes.VerificationDone;
-  static const CreateProfile = Routes.CreateProfile;
-  static const OrderHistory = Routes.OrderHistory;
-  static const MenusPage = Routes.MenusPage;
-  static const INITIAL = Routes.RedirectScreen;
-  static const FaqScreen = Routes.FaqScreen;
-  static const ServiceList = Routes.ServiceList;
-  static const ServiceDetails = Routes.ServiceDetailsScreen;
-  static const DashboardView = Routes.DashBoard;
+  static const Home = Routes.homeScreen;
+  static const Registration = Routes.registrationScreen;
+  static const OtpScreen = Routes.otpScreen;
+  static const RegistrationDone = Routes.verificationDone;
+  static const CreateProfile = Routes.createProfile;
+  static const OrderHistory = Routes.orderHistory;
+  static const MenusPage = Routes.menusPage;
+  static const INITIAL = Routes.redirectScreen;
+  static const FaqScreen = Routes.faqScreen;
+  static const ServiceBooking = Routes.serviceBooking;
+  static const ServiceDetails = Routes.serviceDetailsScreen;
+  static const DashboardView = Routes.dashBoard;
 
   static final routes = [
     GetPage(
@@ -51,7 +52,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.OtpScreen,
-      page: () =>  OtpView(),
+      page: () =>  const OtpView(),
       binding: AuthenticationBinding(),
         transition: Transition.rightToLeft
     ),
@@ -65,7 +66,7 @@ class AppPages {
       transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.OrderHistory,
-      page: () =>  OrderHistoryView(),
+      page: () =>  const OrderHistoryView(),
         binding: OrderBinding(),
       transition: Transition.rightToLeft
     ),GetPage(
@@ -84,13 +85,13 @@ class AppPages {
         binding: FaqBindings(),
       transition: Transition.rightToLeft
     ),GetPage(
-      name: _Paths.ServiceList,
-      page: () =>   ServiceListView(),
+      name: _Paths.ServiceBooking,
+      page: () =>   ServiceBookingScreen(),
         binding: ServiceBinding(),
       transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.ServiceDetailsScreen,
-      page: () => ServiceDetailsScreen(),
+      page: () => const ServiceDetailsScreen(),
         binding: ServiceBinding(),
       // transition: Transition.rightToLeft
     ),GetPage(

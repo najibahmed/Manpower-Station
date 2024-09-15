@@ -169,9 +169,6 @@ class HomeView extends BaseView<HomeController> {
                           return Container(
                             width: MediaQuery.of(context).size.width,
                             margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                            decoration: const BoxDecoration(
-                              color: Colors.amber,
-                            ),
                             child: Image.asset(
                               url,
                               fit: BoxFit.fill,

@@ -11,10 +11,10 @@ class MySharedPref {
   static late SharedPreferences _sharedPreferences;
 
   // STORING KEYS
-  static const String _fcmTokenKey = 'fcm_token';
+  static const String _accessTokenKey = 'access_token';
   static const String _currentLocalKey = 'current_local';
   static const String _lightThemeKey = 'is_theme_light';
-  static const String USER_JWT='USER_JWT';
+  static const String refreshTokenKey='USER_JWT';
   static const String isLoggedIn = 'isLoggedIn';
   static const String userId = 'adminId';
 
@@ -49,13 +49,13 @@ class MySharedPref {
       return LocalizationService.supportedLanguages[langCode]!;
   }
 
-  /// save generated fcm token
-  static Future<void> setFcmToken(String token) =>
-      _sharedPreferences.setString(_fcmTokenKey, token);
+  /// save generated access token
+  static Future<void> setAccessToken(String token) =>
+      _sharedPreferences.setString(_accessTokenKey, token);
 
   /// get authorization token
-  static String? getFcmToken() =>
-      _sharedPreferences.getString(_fcmTokenKey);
+  static String? getAccessToken() =>
+      _sharedPreferences.getString(_accessTokenKey);
 
   /// clear all data from shared pref
   static Future<void> clear() async => await _sharedPreferences.clear();
@@ -83,12 +83,12 @@ class MySharedPref {
   }
 
 ///saved jwt
-static Future<bool> savedJWT(String value) async {
+static Future<bool> setRefreshToken(String value) async {
   final localBD=await SharedPreferences.getInstance();
-  return localBD.setString(USER_JWT, value);
+  return localBD.setString(refreshTokenKey, value);
 }
-static Future<String?> getJWT() async {
+static Future<String?> getRefreshToken() async {
   final localBD=await SharedPreferences.getInstance();
-  return localBD.getString(USER_JWT);
+  return localBD.getString(refreshTokenKey);
 }
 }

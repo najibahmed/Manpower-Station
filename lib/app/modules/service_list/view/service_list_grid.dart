@@ -7,43 +7,43 @@ import 'package:manpower_station/app/modules/service_list/controller/service_con
 import 'package:manpower_station/app/routes/app_pages.dart';
 import '../model/service_list_model.dart';
 
-class ServiceListView extends BaseView<ServiceController> {
-  ServiceListView({super.key});
-  @override
-  PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      title: Text('Service List'),
-    );
-  }
-
-  @override
-  Widget body(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 0.9,
-        ),
-        itemCount: controller.serviceData.length,
-        itemBuilder: (context, index) {
-          ServiceModel service = controller.serviceData[index];
-          return InkWell(
-            onTap: (){
-              Get.toNamed(AppPages.ServiceDetails,arguments:service);
-            },
-            child: ServiceCard(
-              title: service.name!,
-              image: service.image!,
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
+// class ServiceListView extends BaseView<ServiceController> {
+//   ServiceListView({super.key});
+//   @override
+//   PreferredSizeWidget? appBar(BuildContext context) {
+//     return AppBar(
+//       title: const Text('Service List'),
+//     );
+//   }
+//
+//   @override
+//   Widget body(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(8.0),
+//       child: GridView.builder(
+//         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//           crossAxisCount: 2,
+//           crossAxisSpacing: 10,
+//           mainAxisSpacing: 10,
+//           childAspectRatio: 0.9,
+//         ),
+//         itemCount: controller.serviceData.length,
+//         itemBuilder: (context, index) {
+//           ServiceModel service = controller.serviceData[index];
+//           return InkWell(
+//             onTap: (){
+//               Get.toNamed(AppPages.ServiceDetails,arguments:service);
+//             },
+//             child: ServiceCard(
+//               title: service.name!,
+//               image: service.image!,
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
 
 class ServiceCard extends StatelessWidget {
   final String title;
@@ -62,7 +62,7 @@ class ServiceCard extends StatelessWidget {
       child:Column(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
             child: Hero(
               tag: title,
               child: Image.network(
@@ -78,13 +78,13 @@ class ServiceCard extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
@@ -95,12 +95,12 @@ class ServiceCard extends StatelessWidget {
                     width: size.width * 0.4,
                     child: ElevatedButton(
                         onPressed: () {
-                          // Get.toNamed(AppPages.ServiceDetails,parameters:{'service':service} );
+                          Get.toNamed(AppPages.ServiceBooking,);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
                         ),
-                        child: Text(
+                        child: const Text(
                           'Book',
                           style: TextStyle(fontSize: 12, color: Colors.white),
                         )),
@@ -115,7 +115,7 @@ class ServiceCard extends StatelessWidget {
                   // ),
                 ],
               )),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         ],
       ),
     );

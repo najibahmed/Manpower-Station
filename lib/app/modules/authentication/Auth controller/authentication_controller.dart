@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_model.dart';
+import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 import '../../../core/base/base_controller.dart';
 
@@ -16,7 +18,7 @@ class AuthenticationController extends BaseController {
   RxBool showError = false.obs;
   final profilePic = Rx<File?>(null);
   final RxString errorMessage = ''.obs;
-  final RxBool isLoading = false.obs;
+  // final RxBool isOtpWrong= false.obs;
 
   Future<void> pickImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
@@ -30,16 +32,16 @@ class AuthenticationController extends BaseController {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.camera),
-                title: Text('Take a Photo'),
+                leading: const Icon(Icons.camera),
+                title: const Text('Take a Photo'),
                 onTap: () async {
                   Navigator.of(context)
                       .pop(await picker.pickImage(source: ImageSource.camera));
                 },
               ),
               ListTile(
-                leading: Icon(Icons.image),
-                title: Text('Choose from Gallery'),
+                leading: const Icon(Icons.image),
+                title: const Text('Choose from Gallery'),
                 onTap: () async {
                   Navigator.of(context)
                       .pop(await picker.pickImage(source: ImageSource.gallery));
@@ -74,8 +76,12 @@ class AuthenticationController extends BaseController {
               print('Success data here------${response.data['success']}');
               print('Message data here------${response.data['message']}');
             }
-            var jsonData=response.statusMessage;
-            Get.snackbar('Success',jsonData!);
+            Get.snackbar('Success','${response.data['message']}');
+            if(response.data['success'] == true){
+              Get.toNamed(AppPages.OtpScreen);
+            }else{
+              Get.snackbar('Error','Having problem to send otp');
+            }
           }
         },
       );
@@ -84,22 +90,34 @@ class AuthenticationController extends BaseController {
     }
   }
 
-  Future<void> otpVerification() async {
+  Future<void> otpVerification(String pin) async {
     try {
       Map<String, dynamic> requestData = {
-        'otp_code': otpController.text.trim(),
+        'otp': pin,
       };
       await BaseClient.safeApiCall(
         "http://172.16.154.43/api/users/signup/phone_email/verified",
         RequestType.put,
-        data: {"otp": requestData},
+        data: requestData,
+        onError: (p0) {
+         var response= p0.response;
+          otpController.clear();
+          Get.snackbar('Wrong otp',"${response!.data['message']}");
+        },
         onSuccess: (response) {
           if (response.statusCode == 200) {
             Map<String,dynamic> responseData = response.data;
             OtpModel otpData= OtpModel.fromJson(responseData);
+
+            print("------->$otpData");
+
+             String accToken=otpData.token!.accesstoken!;
+             String refToken=otpData.token!.refreshtoken!;
+            MySharedPref.setAccessToken(accToken);
+            MySharedPref.setAccessToken(refToken);
             // Success handling (for example, navigate to another screen)
             Get.snackbar('Success', '${otpData.message}');
-          } else {
+          }else{
             // Handle error
             errorMessage.value = 'Error: ${response.data['message']}';
             Get.snackbar('Error', errorMessage.value);
@@ -107,16 +125,13 @@ class AuthenticationController extends BaseController {
           if (kDebugMode) {
             print(response.statusCode);
           }
-
-
         },
       );
     } catch (e) {
       // Handle other types of errors
-      errorMessage.value = 'Something went wrong';
+      errorMessage.value = 'Something went wrong: $e';
       Get.snackbar('Error', errorMessage.value);
     } finally {
-      isLoading(false);
     }
   }
 

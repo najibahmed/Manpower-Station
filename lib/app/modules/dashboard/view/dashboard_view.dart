@@ -22,10 +22,10 @@ class DashboardScreen extends BaseView<DashBoardController>{
         child: IndexedStack(
           index: controller.selectedIndex.value,
           children: [
-            HomeView(),
-            OrderHistoryView(),
-            HelpView(),
-            MenuView(),
+            const HomeView(),
+            const OrderHistoryView(),
+            const HelpView(),
+            const MenuView(),
 
           ],
         ));
@@ -38,19 +38,19 @@ class DashboardScreen extends BaseView<DashBoardController>{
       selectedItemColor: LightThemeColors.primaryColor,
       unselectedItemColor: Colors.grey,
       items: [
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.task_outlined),
           label: 'Order',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.support_agent),
           label: 'Support',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.menu),
           label: 'Menu',
         ),
