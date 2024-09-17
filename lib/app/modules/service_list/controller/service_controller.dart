@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/modules/service_list/model/service_list_model.dart';
@@ -8,13 +9,32 @@ import '../../../services/api_client.dart';
 class ServiceController extends BaseController  {
   var serviceData = <dynamic>[].obs;
   RxInt selectedTime=3.obs;
-  RxString selectedTimeKey='hours'.obs;
+  RxString selectedTimeKey='Hours'.obs;
+  RxList time = [3, 4, 5, 6, 7, 8].obs;
+
+  TextEditingController nameController=TextEditingController();
+  TextEditingController phoneNumberController=TextEditingController();
+  TextEditingController houseNoController=TextEditingController();
+  TextEditingController areaController=TextEditingController();
+  TextEditingController thanaController=TextEditingController();
+  TextEditingController postCodeController=TextEditingController();
 
   @override
   void onInit() {
-    getServiceData();
+    // getServiceData();
     // TODO: implement onInit
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    nameController.dispose();
+    phoneNumberController.dispose();
+    houseNoController.dispose();
+    areaController.dispose();
+    thanaController.dispose();
+    postCodeController.dispose();
+    super.onClose();
   }
 
   Future<void> getServiceData() async {

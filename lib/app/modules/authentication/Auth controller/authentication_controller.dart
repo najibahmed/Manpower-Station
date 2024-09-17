@@ -16,50 +16,10 @@ class AuthenticationController extends BaseController {
   TextEditingController nameController = TextEditingController();
   TextEditingController otpController = TextEditingController();
   RxBool showError = false.obs;
-  final profilePic = Rx<File?>(null);
   final RxString errorMessage = ''.obs;
   // final RxBool isOtpWrong= false.obs;
 
-  Future<void> pickImage(BuildContext context) async {
-    final ImagePicker picker = ImagePicker();
 
-    // Show a bottom sheet with options to choose between camera and gallery
-    final XFile? image = await showModalBottomSheet<XFile>(
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.camera),
-                title: const Text('Take a Photo'),
-                onTap: () async {
-                  Navigator.of(context)
-                      .pop(await picker.pickImage(source: ImageSource.camera));
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.image),
-                title: const Text('Choose from Gallery'),
-                onTap: () async {
-                  Navigator.of(context)
-                      .pop(await picker.pickImage(source: ImageSource.gallery));
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-
-    if (image != null) {
-      // Handle the picked image file (e.g. display it in an Image widget)
-      profilePic.value = File(image.path);
-      // Do something with the image file, like uploading or displaying it
-      print('Image selected: ${image.path}');
-    }
-  }
 
   Future<void> loginWithPhoneOrEmail() async {
     try {

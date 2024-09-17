@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -126,7 +125,7 @@ class HomeView extends BaseView<HomeController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Hi! ${Strings.name.tr}.',
+                          'Hello!',
                           style: TextStyle(
                               fontSize: MyFonts.bodyMediumSize,
                               fontWeight: FontWeight.bold),
@@ -136,12 +135,14 @@ class HomeView extends BaseView<HomeController> {
                           '${Strings.help.tr}',
                           style: TextStyle(
                               fontSize: MyFonts.bodySmallTextSize,
+                              color: Colors.black.withOpacity(.65),
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
                           '${Strings.chooseService.tr}',
                           style: TextStyle(
                               fontSize: MyFonts.bodyMediumSize,
+                              color: Colors.black.withOpacity(.65),
                               fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -184,6 +185,7 @@ class HomeView extends BaseView<HomeController> {
                   '${Strings.askTypeOfService.tr}?',
                   style: TextStyle(
                       fontSize: MyFonts.bodyLargeSize,
+                      color: Colors.black.withOpacity(.65),
                       fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: 15.h),
@@ -235,6 +237,7 @@ class HomeView extends BaseView<HomeController> {
                             child: ServiceCard(
                               title: service.name!,
                               image: service.image!,
+                              service: service,
                             ),
                           );
                         }

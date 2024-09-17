@@ -24,7 +24,7 @@ class RedirectScreen extends StatelessWidget {
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
           statusBarBrightness: Brightness.light,
-          statusBarColor: Colors.white,
+          statusBarColor: Colors.black26,
         ),
       ),
       body: Image.asset(

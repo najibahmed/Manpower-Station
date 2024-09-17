@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class DateRangeCalendar extends StatefulWidget {
@@ -35,10 +36,12 @@ class _DateRangeCalendarState extends State<DateRangeCalendar> {
   Widget build(BuildContext context) {
 
     return  Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("From which date you want to start your Service?"),
+        Text("From which date you want to start your Service?",style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold)),
         TableCalendar(
-          weekNumbersVisible: false,
+          pageAnimationEnabled: false,
+          availableGestures: AvailableGestures.horizontalSwipe,
           calendarFormat: _calendarFormat,
           onFormatChanged: (format) {
             setState(() {

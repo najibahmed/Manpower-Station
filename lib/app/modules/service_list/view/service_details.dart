@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/modules/service_list/model/service_list_model.dart';
 import 'package:manpower_station/app/modules/service_list/view/service_reviews.dart';
+import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 
 class ServiceDetailsScreen extends StatefulWidget {
@@ -127,7 +128,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 width: MediaQuery.of(context).size.width*0.3,
                 height: MediaQuery.of(context).size.width*0.09,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AppPages.ServiceBooking,arguments: service);
+                  },
                   child:  Text('Book now',style: TextStyle(color: Colors.white,fontSize: MyFonts.buttonTextSize),),
                 ),
               ),

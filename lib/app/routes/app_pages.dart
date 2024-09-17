@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:manpower_station/app/modules/authentication/create_profile.dart';
+import 'package:manpower_station/app/modules/user_profile/user_bindings/user_binding.dart';
+import 'package:manpower_station/app/modules/user_profile/user_view/user_profile_screen.dart';
 import 'package:manpower_station/app/modules/authentication/verification_done.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_view.dart';
 import 'package:manpower_station/app/modules/dashboard/bindings/dashboard_binding.dart';
@@ -62,11 +63,12 @@ class AppPages {
         transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.CreateProfile,
-      page: () =>  CreateProfileScreen(),
+      page: () =>  UserProfileScreen(),
+      binding: UserBinding(),
       transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.OrderHistory,
-      page: () =>  const OrderHistoryView(),
+      page: () => const OrderHistoryView(),
         binding: OrderBinding(),
       transition: Transition.rightToLeft
     ),GetPage(

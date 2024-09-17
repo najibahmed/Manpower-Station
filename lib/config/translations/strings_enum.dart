@@ -15,7 +15,7 @@ class Strings {
   static const String goodMorning = 'good morning';
   static const String name = 'Name';
   static const String help = 'we are always here to help you';
-  static const String chooseService = 'Choose Service';
+  static const String chooseService = 'Here you can find your manpower service.';
   static const String time = 'time';
   static const String days = 'day';
   static const String tasks = 'task';
@@ -62,5 +62,5 @@ class Strings {
   static const String careGiver = 'Care Giver';
   static const String babySitter = 'Baby Sitter';
   static const String more = 'More';
-  static const String askTypeOfService = 'Which service do you need';
+  static const String askTypeOfService = 'What type of manpower do you require';
 }

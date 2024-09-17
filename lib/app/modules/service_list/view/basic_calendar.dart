@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TableBasicsExample extends StatefulWidget {
@@ -17,9 +18,11 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("From which date you want to start your Service?"),
+        Text("From which date you want to start your Service?",style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold)),
         TableCalendar(
           firstDay: DateTime.now().add(Duration(days: 1)),
+          pageAnimationEnabled: false,
+          availableGestures: AvailableGestures.horizontalSwipe,
           lastDay: DateTime(2025),
           focusedDay: _focusedDay,
           calendarFormat: _calendarFormat,

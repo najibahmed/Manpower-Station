@@ -5,8 +5,8 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 class MenuItem extends StatelessWidget {
   final IconData icon;
   final String text;
-
-  const MenuItem({super.key, required this.icon, required this.text});
+  final VoidCallback onTap;
+  const MenuItem({super.key, required this.icon, required this.text, required this.onTap,});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,7 @@ class MenuItem extends StatelessWidget {
             side: BorderSide(color: Colors.grey.shade200),
           ),
           tileColor: Colors.white,
-          onTap: () {
-            // Handle item tap here
-          },
+          onTap:onTap
         ),
       ),
     );

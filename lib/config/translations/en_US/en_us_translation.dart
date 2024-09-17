@@ -17,7 +17,7 @@ const Map<String, String> enUs = {
   Strings.goodMorning : 'Good morning',
   Strings.name : 'Name',
   Strings.help : 'We are always here to help you.',
-  Strings.chooseService: 'Choose Service.',
+  Strings.chooseService: 'Here you can find your manpower service.',
   Strings.time : '09:00 am',
   Strings.tasks : 'Tasks',
   Strings.viewAll : 'View All',
@@ -58,5 +58,5 @@ const Map<String, String> enUs = {
   Strings.careGiver : 'Care Giver',
   Strings.babySitter : 'Baby Sitter',
   Strings.more : 'More',
-  Strings.askTypeOfService : 'Which service do you need',
+  Strings.askTypeOfService :'What type of manpower do you require?',
 };

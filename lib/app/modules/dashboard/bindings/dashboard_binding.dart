@@ -6,14 +6,16 @@ import 'package:manpower_station/app/modules/home/controllers/home_controller.da
 import 'package:manpower_station/app/modules/menu/controller/menu_controller.dart';
 import 'package:manpower_station/app/modules/order_history/controller/order_controller.dart';
 import 'package:manpower_station/app/modules/service_list/controller/service_controller.dart';
+import 'package:manpower_station/app/modules/user_profile/user_controller/user_controller.dart';
 
 class DashboardBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<DashBoardController>(
-          () => DashBoardController(),
-    );Get.lazyPut<OrderController>(
-          () => OrderController(),
+          () => DashBoardController(),fenix: true
+    );
+    Get.lazyPut<OrderController>(
+          () => OrderController(),fenix: true
     );
     Get.lazyPut<HomeController>(
           () => HomeController(),
@@ -25,7 +27,9 @@ class DashboardBinding extends Bindings {
     );Get.lazyPut<MenusController>(
           () => MenusController(),
     );Get.lazyPut<ServiceController>(
-          () => ServiceController(),
+          () => ServiceController(),fenix: true
+    );Get.lazyPut<UserController>(
+          () => UserController(),fenix: true
     );
   }
 }

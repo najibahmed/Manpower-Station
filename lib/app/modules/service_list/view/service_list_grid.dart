@@ -48,8 +48,8 @@ import '../model/service_list_model.dart';
 class ServiceCard extends StatelessWidget {
   final String title;
   final String image;
-
-  const ServiceCard({required this.title, required this.image});
+  final ServiceModel service;
+  const ServiceCard({super.key, required this.title, required this.image, required this.service});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class ServiceCard extends StatelessWidget {
             child: Hero(
               tag: title,
               child: Image.network(
-                'http://172.16.154.43/images/services/${image}',
+                'http://172.16.154.43/images/services/$image',
                 height: 120,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -95,7 +95,7 @@ class ServiceCard extends StatelessWidget {
                     width: size.width * 0.4,
                     child: ElevatedButton(
                         onPressed: () {
-                          Get.toNamed(AppPages.ServiceBooking,);
+                          Get.toNamed(AppPages.ServiceBooking,arguments:service);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
