@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:manpower_station/app/modules/service_list/controller/service_controller.dart';
+import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeBinding extends Bindings {

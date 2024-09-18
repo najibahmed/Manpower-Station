@@ -1,16 +1,25 @@
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
-import 'package:manpower_station/app/modules/service_list/model/service_list_model.dart';
+import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
+
 
 import '../../../services/api_client.dart';
 
-class ServiceController extends BaseController  {
+class ServiceController extends BaseController with GetSingleTickerProviderStateMixin  {
   var serviceData = <dynamic>[].obs;
   RxInt selectedTime=3.obs;
   RxString selectedTimeKey='Hours'.obs;
   RxList time = [3, 4, 5, 6, 7, 8].obs;
+  late TabController tabController;
+  var tabIndex = 0.obs;
+
+  // Function to update tab index
+  void changeTabIndex(int index) {
+    tabIndex.value = index;
+  }
+
 
   TextEditingController nameController=TextEditingController();
   TextEditingController phoneNumberController=TextEditingController();
@@ -22,6 +31,8 @@ class ServiceController extends BaseController  {
   @override
   void onInit() {
     // getServiceData();
+    tabController = TabController(length: 3, initialIndex: 0, vsync: this);
+
     // TODO: implement onInit
     super.onInit();
   }
@@ -34,6 +45,7 @@ class ServiceController extends BaseController  {
     areaController.dispose();
     thanaController.dispose();
     postCodeController.dispose();
+    tabController.dispose();
     super.onClose();
   }
 

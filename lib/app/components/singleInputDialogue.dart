@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,12 +20,12 @@ showSingleTextInputDialog({
           child: TextField(
             controller: txtController,
             decoration: InputDecoration(
-              focusedBorder:  UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.green, width: 1.0)),
-              enabledBorder:  UnderlineInputBorder(
+              focusedBorder:  const UnderlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.green, width: 1.0)),
+              enabledBorder:  const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 1.0)),
               labelText: 'Enter $title',
-              labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.normal)
+              labelStyle: const TextStyle(color: Colors.grey,fontWeight: FontWeight.normal)
             ),
           ),
         ),
@@ -36,8 +38,8 @@ showSingleTextInputDialog({
             onPressed: () {
               if (txtController.text.isEmpty) return Get.back();
               final textString = txtController.text;
-              Navigator.pop(context);
               onSubmit(textString);
+              Navigator.pop(context);
             },
             child: Text(positiveButtonText),
           )

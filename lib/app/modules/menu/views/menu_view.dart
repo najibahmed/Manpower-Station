@@ -8,10 +8,8 @@ import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/menu/controller/menu_controller.dart';
 import 'package:manpower_station/app/modules/menu/widgets/menu_item.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 
-import '../../../../config/theme/dark_theme_colors.dart';
 
 
 class MenuView extends BaseView<MenusController>{

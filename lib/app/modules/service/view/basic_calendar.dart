@@ -10,7 +10,7 @@ class TableBasicsExample extends StatefulWidget {
 
 class _TableBasicsExampleState extends State<TableBasicsExample> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now().add(Duration(days: 1));
+  DateTime _focusedDay = DateTime.now().add(const Duration(days: 1));
   DateTime? _selectedDay;
   DateFormat format = DateFormat('dd/MMM/yyyy');
   @override
@@ -20,7 +20,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
       children: [
         Text("From which date you want to start your Service?",style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold)),
         TableCalendar(
-          firstDay: DateTime.now().add(Duration(days: 1)),
+          firstDay: DateTime.now().add(const Duration(days: 1)),
           pageAnimationEnabled: false,
           availableGestures: AvailableGestures.horizontalSwipe,
           lastDay: DateTime(2025),
@@ -56,8 +56,8 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
             _focusedDay = focusedDay;
           },
         ),
-        SizedBox(height: 20),
-        _selectedDay==null?SizedBox(): Text('Selected Date: ${format.format(_selectedDay!)}'),
+        const SizedBox(height: 20),
+        _selectedDay==null?const SizedBox(): Text('Selected Date: ${format.format(_selectedDay!)}'),
       ],
     );
   }

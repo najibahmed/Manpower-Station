@@ -6,6 +6,8 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 
 class ResendSmsTile extends StatefulWidget {
+  const ResendSmsTile({super.key});
+
   @override
   _ResendSmsTileState createState() => _ResendSmsTileState();
 }
@@ -25,7 +27,7 @@ class _ResendSmsTileState extends State<ResendSmsTile> {
   void _startTimer() {
     _isTileActive = false;
     _start = 30;
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (_start == 0) {
         setState(() {
           timer.cancel();
@@ -48,7 +50,7 @@ class _ResendSmsTileState extends State<ResendSmsTile> {
       onTap: _isTileActive ? _resendSms : null,
       leading: Icon(Icons.sms, color: _isTileActive ? LightThemeColors.primaryColor :LightThemeColors.opacityTextColor),
       title: Text('${Strings.resendSms.tr}'),
-      trailing:  _isTileActive ? Text(''):Text('Wait $_start s',
+      trailing:  _isTileActive ? const Text(''):Text('Wait $_start s',
         style: TextStyle(
           fontSize: MyFonts.bodySmallTextSize,
           color:LightThemeColors.primaryColor

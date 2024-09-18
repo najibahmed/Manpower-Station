@@ -5,8 +5,7 @@ import '../../config/theme/light_theme_colors.dart';
 import '../../config/theme/my_fonts.dart';
 
 class LinkButton extends StatelessWidget {
-  const LinkButton({Key? key, required this.urlLabel, required this.url})
-      : super(key: key);
+  const LinkButton({super.key, required this.urlLabel, required this.url});
 
   final String urlLabel;
   final String url;

@@ -1,13 +1,11 @@
 
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/components/link_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
-import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
@@ -56,7 +54,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
             ),
             Text("${Strings.enterEmailPhnNum.tr}",
                 style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
-            SizedBox(
+            const SizedBox(
               height: 2,
             ),
             Text("${Strings.getVerification.tr}.",
@@ -174,12 +172,12 @@ class RegistrationView extends BaseView<AuthenticationController> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(child: Divider(thickness: 1,color: Colors.grey,)),
+                const Expanded(child: Divider(thickness: 1,color: Colors.grey,)),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  padding: EdgeInsets.symmetric(horizontal: 18.0),
                   child: Text("Or",style: TextStyle(color: Colors.black54),),
                 ),
                 Expanded(child: Divider(thickness: 1,color: Colors.grey,))
@@ -214,10 +212,10 @@ class RegistrationView extends BaseView<AuthenticationController> {
                                   fit: BoxFit.fill,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 20,
                               ),
-                              Text(
+                              const Text(
                                 'Continue with Google',
                                 style: TextStyle(
                                     color: Colors.black54,

@@ -1,10 +1,9 @@
-import 'dart:io';
+
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';

@@ -33,6 +33,6 @@ class RedirectScreen extends StatelessWidget {
         height: Get.height,
         fit: BoxFit.cover,
       ),
-    );;
+    );
   }
 }

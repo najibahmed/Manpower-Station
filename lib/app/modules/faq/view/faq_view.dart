@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/preferred_size.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/faq/controller/faq_controller.dart';
@@ -17,7 +15,7 @@ class FaqView extends BaseView<FaqController> {
             onPressed: () {
               Get.back();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: LightThemeColors.primaryColor,
             )),
@@ -49,7 +47,7 @@ class FaqView extends BaseView<FaqController> {
         return ExpansionPanelList(
           expandIconColor: LightThemeColors.primaryColor,
           elevation: 3,
-          expandedHeaderPadding: EdgeInsets.symmetric(vertical: 10),
+          expandedHeaderPadding: const EdgeInsets.symmetric(vertical: 10),
           expansionCallback: (int e, bool isExpanded) {
             controller.toggleExpansion(indexItem);
           },

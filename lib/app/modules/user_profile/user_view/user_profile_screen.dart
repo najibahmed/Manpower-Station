@@ -24,7 +24,7 @@ class UserProfileScreen extends BaseView<UserController> {
       leading: IconButton(onPressed: (){
         Get.back();
       },
-          icon: Icon(Icons.arrow_back,color: LightThemeColors.primaryColor,)),
+          icon: const Icon(Icons.arrow_back,color: LightThemeColors.primaryColor,)),
       backgroundColor:
           Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
       centerTitle: true,
@@ -103,7 +103,7 @@ class UserProfileScreen extends BaseView<UserController> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(.45),
-                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                      borderRadius: const BorderRadius.all(Radius.circular(100)),
                       border: Border.all(color: Colors.black.withOpacity(0.65))
                     ),
                       child: Padding(
@@ -150,17 +150,22 @@ class UserProfileScreen extends BaseView<UserController> {
           //     // ),
           //   ],
           // ),
-          CustomListTileEditButton(context:context,title:'Name',onEdit:(value){
+          CustomListTileEditButton(context:context,title:'Name',onEdit:(value)async{
+            controller.showLoading();
+            await controller.updateUserProfileField(FieldType.username, value);
             print('this is value-->$value');
+            controller.hideLoading();
           }, icon: Icons.person),
-          SizedBox(height: 15,),
+          const SizedBox(height: 15,),
           CustomListTileEditButton(context:context,title:'Phone Number',onEdit:(value){
             print('this is value-->$value');
           }, icon: Icons.phone_android_outlined),
-          SizedBox(height: 15,),
-          CustomListTileEditButton(context:context,icon:Icons.pin_drop,title:'Area', onEdit:(value){
-
-    print('this is value-->$value');
+          const SizedBox(height: 15,),
+          CustomListTileEditButton(context:context,icon:Icons.pin_drop,title:'Address', onEdit:(value)async{
+            controller.showLoading();
+            await controller.updateUserProfileField(FieldType.address, value);
+            print('this is value-->$value');
+            controller.hideLoading();
     },)
         ],
       ),
@@ -174,13 +179,13 @@ class UserProfileScreen extends BaseView<UserController> {
           leading: Icon(icon),
           title: Text(
             title,
-            style: TextStyle(color: Colors.black54),
+            style: const TextStyle(color: Colors.black54),
           ),
           trailing: IconButton(
             onPressed: () {
               showSingleTextInputDialog(context: context, title: 'Your ${title}', onSubmit:onEdit);
             },
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
           ),
         );
   }

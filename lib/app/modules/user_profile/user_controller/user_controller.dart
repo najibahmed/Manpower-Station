@@ -12,6 +12,7 @@ class UserController extends BaseController {
   var phoneNumber = '+8801712345678'.obs;
   final profilePic = Rx<File?>(null);
 
+
   Future<void> pickImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
 
@@ -57,7 +58,7 @@ class UserController extends BaseController {
     try {
       String userid = MySharedPref.getUserId().toString();
       String url =
-          "http://172.16.154.43/api/clients/update/client/profile/:$userid";
+          "http://172.16.154.43/api/clients/get/unique/client/profile/:$userid";
       await BaseClient.safeApiCall(
         url,
         RequestType.get,
@@ -74,7 +75,31 @@ class UserController extends BaseController {
     }
   }
 
-  Future<void> updateUserProfileField(String field, dynamic value) async {}
+
+  Future<void> updateUserProfileField(FieldType fieldType, dynamic value) async {
+    Map<String, dynamic> requestData = {
+      '$fieldType' : value.toString().trim(),
+    };
+    try {
+      String userid = MySharedPref.getUserId().toString();
+      String url =
+          "http://172.16.154.43/api/clients/update/client/profile/:$userid";
+      await BaseClient.safeApiCall(
+        url,
+        RequestType.put,
+        data: requestData,
+        onSuccess: (response) {
+          if (response.statusCode == 200) {
+            Get.snackbar('Success', '${response.data['message']}');
+          } else {
+            Get.snackbar('Error', 'Having problem to update user data!');
+          }
+        },
+      );
+    } catch (e) {
+      Get.snackbar('Error :', e.toString());
+    }
+  }
 
   @override
   void onInit() {
@@ -90,4 +115,11 @@ class UserController extends BaseController {
   void onClose() {
     super.onClose();
   }
+}
+enum FieldType {
+  username,
+  description,
+  address,
+  area,
+  avatar_image
 }

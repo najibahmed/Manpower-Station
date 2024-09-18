@@ -9,7 +9,7 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
   @override
   void onInit() {
     print('tab controller ready');
-    tabController = TabController(length: 2,vsync: this);
+    tabController = TabController(length: 2,initialIndex: 0,vsync: this);
     super.onInit();
   }
 
@@ -20,6 +20,7 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
 
   @override
   void onClose() {
+    // tabController.dispose();
     super.onClose();
   }
 

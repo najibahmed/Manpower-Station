@@ -47,7 +47,7 @@ abstract class BaseView<Controller extends BaseController>
   Widget? connectionStatusView(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
-      child: Container(
+      child: SizedBox(
           width: double.infinity,
           height: 30,
           // TODO: color: add your color here,

@@ -21,11 +21,11 @@ class DashboardScreen extends BaseView<DashBoardController>{
     return SafeArea(
         child: IndexedStack(
           index: controller.selectedIndex.value,
-          children: [
-            const HomeView(),
-            const OrderHistoryView(),
-            const HelpView(),
-            const MenuView(),
+          children: const [
+            HomeView(),
+            OrderHistoryView(),
+            HelpView(),
+            MenuView(),
 
           ],
         ));
@@ -37,20 +37,20 @@ class DashboardScreen extends BaseView<DashBoardController>{
       currentIndex: controller.selectedIndex.value,
       selectedItemColor: LightThemeColors.primaryColor,
       unselectedItemColor: Colors.grey,
-      items: [
-        const BottomNavigationBarItem(
+      items: const [
+        BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',
         ),
-        const BottomNavigationBarItem(
+        BottomNavigationBarItem(
           icon: Icon(Icons.task_outlined),
           label: 'Order',
         ),
-        const BottomNavigationBarItem(
+        BottomNavigationBarItem(
           icon: Icon(Icons.support_agent),
           label: 'Support',
         ),
-        const BottomNavigationBarItem(
+        BottomNavigationBarItem(
           icon: Icon(Icons.menu),
           label: 'Menu',
         ),

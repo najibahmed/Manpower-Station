@@ -1,62 +1,55 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/modules/service_list/model/service_list_model.dart';
-import 'package:manpower_station/app/modules/service_list/view/service_reviews.dart';
+import 'package:manpower_station/app/core/base/base_view.dart';
+import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
+import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
+import 'package:manpower_station/app/modules/service/view/service_reviews.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 
-class ServiceDetailsScreen extends StatefulWidget {
+class ServiceDetailsScreen extends BaseView<ServiceController> {
   const ServiceDetailsScreen({
     super.key,
   });
 
   @override
-  _ServiceDetailsScreenState createState() => _ServiceDetailsScreenState();
-}
-
-class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
-    with SingleTickerProviderStateMixin {
-  TabController? _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, initialIndex: 0, vsync: this);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final ServiceModel service = Get.arguments;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Service Details"),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              _buildHeader(service),
-              TabBar(
-                onTap: (_) {
-                  setState(() {});
-                },
-                controller: _tabController,
-                tabs: [
-                  const Tab(text: "Service Overview"),
-                  const Tab(text: "Reviews"),
-                  const Tab(text: "FAQ"),
-                ],
-              ), // Adding header with image, title, rating, etc.
-              _getTabAtIndex(_tabController!.index, service),
-            ],
-          ),
-        ),
-      ),
+  PreferredSizeWidget? appBar(BuildContext context) {
+    return AppBar(
+      title: const Text("Service Details"),
     );
   }
 
-  Widget _buildHeader(ServiceModel service) {
+  @override
+  Widget body(BuildContext context) {
+    final ServiceModel service = Get.arguments;
+   return SingleChildScrollView(
+     child: Padding(
+       padding: const EdgeInsets.all(8.0),
+       child: Column(
+         children: [
+           _buildHeader(service,context),
+           // Adding header with image, title, rating, etc.
+           TabBar(
+             onTap: (index){
+                    controller.changeTabIndex(index);
+             },
+             controller: controller.tabController,
+             tabs: [
+               const Tab(text: "Service Overview"),
+               const Tab(text: "Reviews"),
+               const Tab(text: "FAQ"),
+             ],
+           ),
+           _getTabAtIndex(controller.tabIndex.value, service),
+
+         ],
+       ),
+     ),
+   );
+  }
+  Widget _buildHeader(ServiceModel service,context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
@@ -120,7 +113,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ],
             ),
           ),
-
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -141,6 +133,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     );
   }
 
+
   Widget _getTabAtIndex(int index, ServiceModel service) {
     var list = [
       ServiceDescription(
@@ -158,14 +151,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       child: Text("FAQs will be displayed here"),
     );
   }
-
-  @override
-  void dispose() {
-    _tabController?.dispose();
-    super.dispose();
-  }
 }
-
 class ServiceDescription extends StatelessWidget {
   ServiceModel service;
   ServiceDescription({
@@ -207,13 +193,12 @@ class ServiceDescription extends StatelessWidget {
             const Text(
               textAlign: TextAlign.justify,
               "This service does not include any repair or maintenance work."
-              "Elevate your casual style with our premium men's t-shirt.Elevate your casual style with our premium men's t-shirt. Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to your wardrobe."
-              "Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to "
-              "your wardrobe.",
+                  "Elevate your casual style with our premium men's t-shirt.Elevate your casual style with our premium men's t-shirt. Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to your wardrobe."
+                  "Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to "
+                  "your wardrobe.",
             ),
           ],
         ),
       ),
     );
-  }
-}
+  }}

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/modules/home/controllers/home_controller.dart';
-import 'package:manpower_station/app/modules/service_list/controller/service_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import '../model/service_list_model.dart';
 

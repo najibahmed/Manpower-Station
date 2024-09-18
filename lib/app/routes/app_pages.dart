@@ -1,4 +1,9 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:get/get.dart';
+import 'package:manpower_station/app/modules/service/bindings/service_binding.dart';
+import 'package:manpower_station/app/modules/service/view/service_booking_screen.dart';
+import 'package:manpower_station/app/modules/service/view/service_details.dart';
 import 'package:manpower_station/app/modules/user_profile/user_bindings/user_binding.dart';
 import 'package:manpower_station/app/modules/user_profile/user_view/user_profile_screen.dart';
 import 'package:manpower_station/app/modules/authentication/verification_done.dart';
@@ -11,10 +16,6 @@ import 'package:manpower_station/app/modules/menu/bindings/menu_bindings.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
 import 'package:manpower_station/app/modules/order_history/binding/order_binding.dart';
 import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
-import 'package:manpower_station/app/modules/service_list/bindings/service_binding.dart';
-import 'package:manpower_station/app/modules/service_list/view/service_booking_screen.dart';
-import 'package:manpower_station/app/modules/service_list/view/service_details.dart';
-import 'package:manpower_station/app/modules/service_list/view/service_list_grid.dart';
 import 'package:manpower_station/redirect_screen.dart';
 import '../modules/authentication/Auth Bindings/authentication_binding.dart';
 import '../modules/authentication/views/registration/registration_view.dart';

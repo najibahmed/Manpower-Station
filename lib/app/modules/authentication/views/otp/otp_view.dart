@@ -1,9 +1,8 @@
 
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/preferred_size.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -79,7 +78,7 @@ class OtpView extends BaseView<AuthenticationController> {
             ),
             Text("${Strings.verifyNumMsg.tr}",
                 style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
-            SizedBox(
+            const SizedBox(
               height: 2,
             ),
             Text('''${Strings.verificationCodeSent.tr}
@@ -146,7 +145,7 @@ class OtpView extends BaseView<AuthenticationController> {
                           ..onTap = () {
                             Get.toNamed(AppPages.RegistrationDone);
                           },
-                        style: TextStyle(
+                        style: const TextStyle(
                             decoration: TextDecoration.underline,
                             color: LightThemeColors.primaryColor,
                             fontWeight: FontWeight.bold)),
