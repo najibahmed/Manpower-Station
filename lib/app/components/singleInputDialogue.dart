@@ -14,7 +14,7 @@ showSingleTextInputDialog({
   showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(title),
+        title: Text('Update $title'),
         content: Padding(
           padding: const EdgeInsets.all(12),
           child: TextField(

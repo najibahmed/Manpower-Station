@@ -76,6 +76,7 @@ class AuthenticationController extends BaseController {
             MySharedPref.setAccessToken(refToken);
             // Success handling (for example, navigate to another screen)
             Get.snackbar('Success', '${otpData.message}');
+            Get.offAllNamed(AppPages.DashboardView);
           }else{
             // Handle error
             errorMessage.value = 'Error: ${response.data['message']}';

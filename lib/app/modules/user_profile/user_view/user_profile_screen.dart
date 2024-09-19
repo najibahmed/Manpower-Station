@@ -40,7 +40,7 @@ class UserProfileScreen extends BaseView<UserController> {
   Widget body(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // TODO: implement body
-    return Padding(
+    return controller.isLoading.value? const Center(child: CircularProgressIndicator()):Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 22, right: 22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -155,25 +155,34 @@ class UserProfileScreen extends BaseView<UserController> {
             await controller.updateUserProfileField(FieldType.username, value);
             print('this is value-->$value');
             controller.hideLoading();
-          }, icon: Icons.person),
+          }, icon: Icons.person, subTitle: 'Update name' ?? 'name'),
           const SizedBox(height: 15,),
           CustomListTileEditButton(context:context,title:'Phone Number',onEdit:(value){
             print('this is value-->$value');
-          }, icon: Icons.phone_android_outlined),
+          }, icon: Icons.phone_android_outlined, subTitle:  'Update phone number' ?? 'name'),
+          const SizedBox(height: 15,),
+          CustomListTileEditButton(
+              context:context,
+              title:  'Email',
+              onEdit:(value) async {
+                await controller.updateUserProfileField(FieldType.email, value);
+                controller.hideLoading();
+            print('this is value-->$value');
+          }, icon: Icons.phone_android_outlined, subTitle:  controller.userData.value.phoneOrEmail??'Update Email Address'),
           const SizedBox(height: 15,),
           CustomListTileEditButton(context:context,icon:Icons.pin_drop,title:'Address', onEdit:(value)async{
             controller.showLoading();
             await controller.updateUserProfileField(FieldType.address, value);
             print('this is value-->$value');
             controller.hideLoading();
-    },)
+    }, subTitle:  'Update address' ?? 'name',)
         ],
       ),
     );
   }
 
   ListTile CustomListTileEditButton(
-      {required BuildContext context, required title,required  onEdit, required IconData icon})
+      {required BuildContext context,required title, required subTitle,required  onEdit, required IconData icon})
   {
     return ListTile(
           leading: Icon(icon),
@@ -181,9 +190,13 @@ class UserProfileScreen extends BaseView<UserController> {
             title,
             style: const TextStyle(color: Colors.black54),
           ),
+          subtitle: Text(
+            subTitle,
+            style: const TextStyle(color: Colors.black54),
+          ),
           trailing: IconButton(
             onPressed: () {
-              showSingleTextInputDialog(context: context, title: 'Your ${title}', onSubmit:onEdit);
+              showSingleTextInputDialog(context: context, title: title, onSubmit:onEdit);
             },
             icon: const Icon(Icons.edit),
           ),

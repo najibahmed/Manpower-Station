@@ -17,6 +17,7 @@ abstract class Routes {
   static const serviceBooking = _Paths.ServiceBooking;
   static const serviceDetailsScreen = _Paths.ServiceDetailsScreen;
   static const redirectScreen = _Paths.RedirectScreen;
+  static const checkOutScreen = _Paths.CheckOutScreen;
 
 }
 
@@ -34,4 +35,5 @@ abstract class _Paths {
   static const ServiceBooking = '/service_booking';
   static const ServiceDetailsScreen = '/service_details';
   static const RedirectScreen = '/redirect_screen';
+  static const CheckOutScreen = '/checkOut_screen';
 }

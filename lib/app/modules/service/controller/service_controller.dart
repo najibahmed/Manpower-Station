@@ -15,18 +15,38 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
   late TabController tabController;
   var tabIndex = 0.obs;
 
+  //Get price
+   getServicePrice(time,timeKey,price){
+    if(timeKey=='Hours'){
+      var servicePrice=(price/time)*time;
+      return servicePrice;
+    }else if(timeKey=='Days'){
+      var servicePrice=price*time;
+      return servicePrice;
+    }else if(timeKey=='Weeks'){
+      var servicePrice=price*(time*7);
+      return servicePrice;
+    }else if(timeKey=='Months'){
+      var servicePrice=price*(time*30);
+      return servicePrice;
+    }
+  }
+
+
   // Function to update tab index
   void changeTabIndex(int index) {
     tabIndex.value = index;
   }
 
 
-  TextEditingController nameController=TextEditingController();
+  TextEditingController firstNameController=TextEditingController();
+  TextEditingController lastNameController=TextEditingController();
   TextEditingController phoneNumberController=TextEditingController();
-  TextEditingController houseNoController=TextEditingController();
-  TextEditingController areaController=TextEditingController();
-  TextEditingController thanaController=TextEditingController();
-  TextEditingController postCodeController=TextEditingController();
+  TextEditingController emailController=TextEditingController();
+  TextEditingController addressLine1Controller=TextEditingController();
+  TextEditingController cityController=TextEditingController();
+  TextEditingController stateController=TextEditingController();
+  TextEditingController zipCodeController=TextEditingController();
 
   @override
   void onInit() {
@@ -39,13 +59,14 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
 
   @override
   void onClose() {
-    nameController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
     phoneNumberController.dispose();
-    houseNoController.dispose();
-    areaController.dispose();
-    thanaController.dispose();
-    postCodeController.dispose();
-    tabController.dispose();
+    emailController.dispose();
+    addressLine1Controller.dispose();
+    cityController.dispose();
+    stateController.dispose();
+    zipCodeController.dispose();
     super.onClose();
   }
 

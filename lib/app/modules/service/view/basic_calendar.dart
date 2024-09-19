@@ -18,7 +18,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("From which date you want to start your Service?",style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold)),
+        Text("From which date you want to start your Service?",style: TextStyle(fontSize: MyFonts.bodyLargeSize, fontWeight: FontWeight.bold, color: Colors.grey)),
         TableCalendar(
           firstDay: DateTime.now().add(const Duration(days: 1)),
           pageAnimationEnabled: false,

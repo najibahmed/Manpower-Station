@@ -1,16 +1,18 @@
-import 'dart:io';
 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
+import 'package:manpower_station/app/modules/user_profile/model/user_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
+import 'package:manpower_station/utils/constants.dart';
 
 class UserController extends BaseController {
-  var userName = 'James Carlo'.obs;
-  var phoneNumber = '+8801712345678'.obs;
   final profilePic = Rx<File?>(null);
+  late Rx<UserModel> userData=UserModel().obs;
+  RxBool isLoading=true.obs;
 
 
   Future<void> pickImage(BuildContext context) async {
@@ -58,13 +60,16 @@ class UserController extends BaseController {
     try {
       String userid = MySharedPref.getUserId().toString();
       String url =
-          "http://172.16.154.43/api/clients/get/unique/client/profile/:$userid";
+          "http://172.16.154.43/api/clients/get/unique/client/profile/${Constants.userId}";
       await BaseClient.safeApiCall(
         url,
         RequestType.get,
         onSuccess: (response) {
-          if (response.statusCode == 200) {
-            Get.snackbar('Success', '${response.data['message']}');
+          if (response.statusCode == 201) {
+            final responseData=response.data['client'];
+            userData.value= UserModel.fromJson(responseData);
+            print(userData.value.phoneOrEmail);
+            // Get.snackbar('Success', '${response.data['message']}');
           } else {
             Get.snackbar('Error', 'Having problem to get user data!');
           }
@@ -83,7 +88,7 @@ class UserController extends BaseController {
     try {
       String userid = MySharedPref.getUserId().toString();
       String url =
-          "http://172.16.154.43/api/clients/update/client/profile/:$userid";
+          "http://172.16.154.43/api/clients/update/client/profile/${Constants.userId}";
       await BaseClient.safeApiCall(
         url,
         RequestType.put,
@@ -103,6 +108,10 @@ class UserController extends BaseController {
 
   @override
   void onInit() {
+    getUserInformation();
+    Future.delayed(Duration(seconds:1),(){
+      isLoading.value=false;
+    });
     super.onInit();
   }
 
@@ -118,6 +127,7 @@ class UserController extends BaseController {
 }
 enum FieldType {
   username,
+  email,
   description,
   address,
   area,

@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:logger/logger.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
+import 'package:manpower_station/utils/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'api_exceptions.dart';
@@ -23,6 +24,7 @@ class BaseClient {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Authorization': Constants.accessToken
     },
     connectTimeout: const Duration(seconds: 30),
     sendTimeout: const Duration(seconds: 30),
@@ -33,7 +35,7 @@ class BaseClient {
         // Attach the access token to every request
         String? accessToken = await MySharedPref.getAccessToken();
         if (accessToken != null) {
-          options.headers['Authorization'] = 'Bearer $accessToken';
+          options.headers['Authorization'] = '$accessToken';
         }
         return handler.next(options); // Continue
       },

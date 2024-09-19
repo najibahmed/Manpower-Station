@@ -38,7 +38,7 @@ class _DateRangeCalendarState extends State<DateRangeCalendar> {
     return  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("From which date you want to start your Service?",style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold)),
+        Text("From which date you want to start your Service?",style: TextStyle(fontSize: MyFonts.bodyLargeSize, fontWeight: FontWeight.bold, color: Colors.grey)),
         TableCalendar(
           pageAnimationEnabled: false,
           availableGestures: AvailableGestures.horizontalSwipe,

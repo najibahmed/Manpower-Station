@@ -10,6 +10,8 @@ import 'package:manpower_station/app/modules/menu/widgets/menu_item.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 
+import '../../user_profile/user_controller/user_controller.dart';
+
 
 
 class MenuView extends BaseView<MenusController>{
@@ -18,39 +20,30 @@ class MenuView extends BaseView<MenusController>{
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
-    // return AppBar(
-    //     centerTitle: true,
-    //     backgroundColor:
-    //     Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.green,
-    //     title: Text(
-    //       'Menu',
-    //       style: TextStyle(
-    //         fontSize: MyFonts.appBarTittleSize,
-    //       ),
-    //     ));
    return null;
   }
 
   @override
   Widget body(BuildContext context) {
+    final userController=Get.put(UserController());
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-           SizedBox(height: 10.h),
+           SizedBox(height: 40.h),
           CircleAvatar(
             radius: 40,
             backgroundColor: Colors.grey.shade300,
             child: const Icon(Icons.person, size: 50, color: Colors.white),
           ),
            SizedBox(height: 10.h),
+          // Text(
+          //   controller.userName.value,
+          //   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          // ),
           Text(
-            controller.userName.value,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            controller.phoneNumber.value,
+            userController.userData.value.phoneOrEmail.toString(),
             style: const TextStyle(fontSize: 16, color: Colors.grey),
           ),
           SizedBox(height: 30.h),
