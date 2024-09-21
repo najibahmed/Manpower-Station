@@ -186,7 +186,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     text: TextSpan(text: 'SUB TOTAL:  ',
                         style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold,color: Colors.grey),
                         children:[
-                          TextSpan(text: '${controller.getServicePrice(controller.selectedTime.value, controller.selectedTimeKey,service.servicePrice)}${Constants.banglaCurrency}',
+                          TextSpan(text: '${controller.getServicePrice(service.servicePrice)}${Constants.banglaCurrency}',
                             style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold,color: Colors.black),)
                         ]
                     ),

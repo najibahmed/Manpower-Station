@@ -16,25 +16,28 @@ class ServiceOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size=MediaQuery.of(context).size;
-    return InkWell(
-      onTap: onTap,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Container(
-          height: size.height*.12,
-          width: size.width*.2,
-        color: LightThemeColors.primaryColor,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  image,
-                  fit: BoxFit.fill,
-                ),
-                SizedBox(height: size.height*.02,),
-                Text(label,textAlign:TextAlign.center,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: MyFonts.bodyMediumSize),),
-              ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: InkWell(
+        onTap: onTap,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            height: size.height*.12,
+            width: size.width*.26,
+          color: LightThemeColors.primaryColor,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Image.asset(
+                  //   image,
+                  //   fit: BoxFit.fill,
+                  // ),
+                  // SizedBox(height: size.height*.02,),
+                  Text(label,textAlign:TextAlign.center,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: MyFonts.bodyMediumSize),),
+                ],
+              ),
             ),
           ),
         ),

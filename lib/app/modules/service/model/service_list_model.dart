@@ -1,3 +1,5 @@
+import 'package:manpower_station/app/models/category_services.dart';
+
 /// service_discount : {"discount":10,"discount_type":"Percentage Discount"}
 /// _id : "66d2d4df926a5372012d8f04"
 /// service_category_id : {"_id":"66d2d18a926a5372012d8e9b","parentId":null,"category_name":"Cleaning","description":"Responsible for all basic cleaning in and around residences or office buildings. Cleans floors and rooms. including dust mopping, damp mopping, sweeping, vacuuming, dusting, picking up larger objects off the floor, and spot cleaning glass and windows.","createdAt":"2024-08-31T08:17:14.997Z","updatedAt":"2024-08-31T08:17:14.997Z","__v":0}
@@ -21,7 +23,7 @@ class ServiceModel {
     num? servicePrice,
     String? image,
     num? ratings,
-    List<dynamic>? reviews,
+    List<Reviews>? reviews,
     String? createdAt,
     String? updatedAt,
     num? v,}){
@@ -67,7 +69,7 @@ class ServiceModel {
   num? _servicePrice;
   String? _image;
   num? _ratings;
-  List<dynamic>? _reviews;
+  List<Reviews>? _reviews;
   String? _createdAt;
   String? _updatedAt;
   num? _v;
@@ -79,7 +81,7 @@ class ServiceModel {
     num? servicePrice,
     String? image,
     num? ratings,
-    List<dynamic>? reviews,
+    List<Reviews>? reviews,
     String? createdAt,
     String? updatedAt,
     num? v,

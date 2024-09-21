@@ -1,6 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:get/get.dart';
+import 'package:manpower_station/app/modules/category/bindings/category_bindings.dart';
+import 'package:manpower_station/app/modules/category/views/single_category_services.dart';
 import 'package:manpower_station/app/modules/checkOut/bindings/checkout_binding.dart';
 import 'package:manpower_station/app/modules/checkOut/views/checkout_screen.dart';
 import 'package:manpower_station/app/modules/service/bindings/service_binding.dart';
@@ -42,6 +44,7 @@ class AppPages {
   static const ServiceDetails = Routes.serviceDetailsScreen;
   static const DashboardView = Routes.dashBoard;
   static const CheckoutScreen = Routes.checkOutScreen;
+  static const SingleCateServicesScreen = Routes.singleCatServices;
 
   static final routes = [
     GetPage(
@@ -110,6 +113,11 @@ class AppPages {
       page: () =>  CheckOutScreen(),
         binding: CheckoutBinding(),
       transition: Transition.rightToLeft
+    ),GetPage(
+      name: _Paths.SingleCatServices,
+      page: () =>  SingelCategoryServices(),
+        binding: CategoryBindings(),
+      transition: Transition.fadeIn
     ),
   ];
 }

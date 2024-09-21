@@ -18,6 +18,7 @@ abstract class Routes {
   static const serviceDetailsScreen = _Paths.ServiceDetailsScreen;
   static const redirectScreen = _Paths.RedirectScreen;
   static const checkOutScreen = _Paths.CheckOutScreen;
+  static const singleCatServices = _Paths.SingleCatServices;
 
 }
 
@@ -36,4 +37,5 @@ abstract class _Paths {
   static const ServiceDetailsScreen = '/service_details';
   static const RedirectScreen = '/redirect_screen';
   static const CheckOutScreen = '/checkOut_screen';
+  static const SingleCatServices = '/single_category_services';
 }

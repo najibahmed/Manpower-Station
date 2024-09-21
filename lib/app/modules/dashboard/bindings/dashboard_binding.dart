@@ -15,7 +15,7 @@ class DashboardBinding extends Bindings {
           () => DashBoardController(),fenix: true
     );
     Get.lazyPut<OrderController>(
-          () => OrderController(),fenix: true
+          () => OrderController(),
     );
     Get.lazyPut<HomeController>(
           () => HomeController(),
@@ -27,9 +27,9 @@ class DashboardBinding extends Bindings {
     );Get.lazyPut<MenusController>(
           () => MenusController(),
     );Get.lazyPut<ServiceController>(
-          () => ServiceController(),fenix: true
+          () => ServiceController(),
     );Get.lazyPut<UserController>(
-          () => UserController(),fenix: true
+          () => UserController(),
     );
   }
 }

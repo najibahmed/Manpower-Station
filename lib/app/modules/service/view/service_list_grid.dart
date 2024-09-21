@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/models/category_services.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import '../model/service_list_model.dart';
 
@@ -73,6 +74,7 @@ class ServiceCard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               title,
+              overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 16,

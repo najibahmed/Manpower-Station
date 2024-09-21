@@ -16,18 +16,33 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
   var tabIndex = 0.obs;
 
   //Get price
-   getServicePrice(time,timeKey,price){
-    if(timeKey=='Hours'){
-      var servicePrice=(price/time)*time;
+  //  getServicePrice(time,timeKey,price){
+  //   if(timeKey=='Hours'){
+  //     var servicePrice=(price/time)*time;
+  //     return servicePrice;
+  //   }else if(timeKey=='Days'){
+  //     var servicePrice=price*time;
+  //     return servicePrice;
+  //   }else if(timeKey=='Weeks'){
+  //     var servicePrice=price*(time*7);
+  //     return servicePrice;
+  //   }else if(timeKey=='Months'){
+  //     var servicePrice=price*(time*30);
+  //     return servicePrice;
+  //   }
+  // }
+ getServicePrice(price){
+    if(selectedTimeKey.value=='Hours'){
+      var servicePrice=(price/selectedTime)*selectedTime;
       return servicePrice;
-    }else if(timeKey=='Days'){
-      var servicePrice=price*time;
+    }else if(selectedTimeKey.value=='Days'){
+      var servicePrice=price*selectedTime;
       return servicePrice;
-    }else if(timeKey=='Weeks'){
-      var servicePrice=price*(time*7);
+    }else if(selectedTimeKey.value=='Weeks'){
+      var servicePrice=price*(selectedTime*7);
       return servicePrice;
-    }else if(timeKey=='Months'){
-      var servicePrice=price*(time*30);
+    }else if(selectedTimeKey.value=='Months'){
+      var servicePrice=price*(selectedTime*30);
       return servicePrice;
     }
   }
