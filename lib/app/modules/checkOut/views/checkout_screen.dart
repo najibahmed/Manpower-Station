@@ -4,6 +4,7 @@ import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/app/modules/checkOut/views/shipping_form.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
+import 'package:manpower_station/utils/constants.dart';
 
 class CheckOutScreen extends BaseView<CheckoutController>{
   CheckOutScreen({super.key});
@@ -137,15 +138,7 @@ class OrderSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Subtotal:'),
-                Text('\$450'),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Shipping (Standard 5-8 Days):'),
-                Text('\$13.55'),
+                Text('${Constants.banglaCurrency}450'),
               ],
             ),
             SizedBox(height: 10),
@@ -153,7 +146,7 @@ class OrderSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Tax:'),
-                Text('\$6.70'),
+                Text('${Constants.banglaCurrency}6.70'),
               ],
             ),
             Divider(),
@@ -161,7 +154,7 @@ class OrderSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Total:', style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('\$470.25', style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('${Constants.banglaCurrency}470.25', style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
           ],

@@ -9,7 +9,6 @@ import 'package:manpower_station/app/modules/service/controller/service_controll
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/modules/service/view/basic_calendar.dart';
 import 'package:manpower_station/app/modules/service/view/table_calender.dart';
-import 'package:manpower_station/app/modules/worker/worker_list_view.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
@@ -44,9 +43,9 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                    }, icon: const Icon(Icons.arrow_back)),
                    const SizedBox(width: 20,),
                    Text(
-                    '${service.name}',
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: LightThemeColors.primaryColor),
-                             ),
+                    '${service.name}',overflow: TextOverflow.clip,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: LightThemeColors.primaryColor),
+                   ),
                  ],
                ),
               const SizedBox(height: 8),
@@ -186,7 +185,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     text: TextSpan(text: 'SUB TOTAL:  ',
                         style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold,color: Colors.grey),
                         children:[
-                          TextSpan(text: '${controller.getServicePrice(service.servicePrice)}${Constants.banglaCurrency}',
+                          TextSpan(text: '${controller.getServicePrice(controller.selectedTime.value, controller.selectedTimeKey,service.servicePrice)}${Constants.banglaCurrency}',
                             style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold,color: Colors.black),)
                         ]
                     ),

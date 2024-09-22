@@ -31,7 +31,7 @@ class SingelCategoryServices extends BaseView<CategoryController>{
             title: Text('')
             ),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
           sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,

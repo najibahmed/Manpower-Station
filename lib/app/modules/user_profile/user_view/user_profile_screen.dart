@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/singleInputDialogue.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/user_profile/user_controller/user_controller.dart';
+import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
@@ -29,10 +30,19 @@ class UserProfileScreen extends BaseView<UserController> {
           Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
       centerTitle: true,
       title: Text(
-        "${Strings.createProfile.tr}",
+        "User Profile",
         style: myTextStyle.copyWith(
             color: LightThemeColors.primaryColor, fontWeight: FontWeight.bold),
       ),
+      actions: [
+        IconButton(onPressed: (){
+          Get.toNamed(AppPages.UpdateProfile);
+        },
+            icon: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Icon(Icons.edit,color: Colors.green,),
+            ))
+      ],
     );
   }
 
@@ -48,14 +58,6 @@ class UserProfileScreen extends BaseView<UserController> {
           SizedBox(
             height: size.height * 0.04,
           ),
-          // Center(
-          //   child: Text( "${Strings.editFindSetting.tr}.",
-          //       style: TextStyle(
-          //           fontSize: MyFonts.bodyMediumSize,
-          //           color: LightThemeColors.opacityTextColor,
-          //           fontWeight: FontWeight.normal)
-          //   ),
-          // ),
           SizedBox(
             height: size.height * 0.03,
           ),
@@ -67,51 +69,46 @@ class UserProfileScreen extends BaseView<UserController> {
                   child: Container(
                     height: 110,
                     width: 110,
-                    child: InkWell(
-                      onTap: () {
-                        controller.pickImage(context);
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey.withOpacity(.30),
-                        radius: 100,
-                        child: Stack(
-                          children: [
-                            controller.profilePic.value != null
-                                ? Image.file(
-                                    controller.profilePic.value!,
-                                    fit: BoxFit.cover,
-                                  )
-                                : const Icon(
-                                    Icons.add_a_photo,
-                                    color: LightThemeColors.primaryColor,
-                                    size: 60,
-                                  )
-                          ],
-                        ),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey.withOpacity(.30),
+                      radius: 100,
+                      child: Stack(
+                        children: [
+                          controller.profilePic.value != null
+                              ? Image.file(
+                                  controller.profilePic.value!,
+                                  fit: BoxFit.cover,
+                                )
+                              : const Icon(
+                                  Icons.person,
+                                  color: LightThemeColors.primaryColor,
+                                  size: 60,
+                                )
+                        ],
                       ),
                     ),
                   ),
                 ),
               ),
-              Positioned(
-                right: 0,
-                bottom: 0,
-                child: InkWell(
-                  onTap: (){
-                    controller.pickImage(context);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.45),
-                      borderRadius: const BorderRadius.all(Radius.circular(100)),
-                      border: Border.all(color: Colors.black.withOpacity(0.65))
-                    ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Icon(Icons.edit,size: 20,color: Colors.black.withOpacity(.75),),
-                      )),
-                ),
-              )
+          //     Positioned(
+          //       right: 0,
+          //       bottom: 0,
+          //       child: InkWell(
+          //         onTap: (){
+          //           controller.pickImage(context);
+          //         },
+          //         child: Container(
+          //           decoration: BoxDecoration(
+          //             color: Colors.white.withOpacity(.45),
+          //             borderRadius: const BorderRadius.all(Radius.circular(100)),
+          //             border: Border.all(color: Colors.black.withOpacity(0.65))
+          //           ),
+          //             child: Padding(
+          //               padding: const EdgeInsets.all(2.0),
+          //               child: Icon(Icons.edit,size: 20,color: Colors.black.withOpacity(.75),),
+          //             )),
+          //       ),
+          //     )
             ],
           ),
           SizedBox(
@@ -194,12 +191,12 @@ class UserProfileScreen extends BaseView<UserController> {
             subTitle,
             style: const TextStyle(color: Colors.black54),
           ),
-          trailing: IconButton(
-            onPressed: () {
-              showSingleTextInputDialog(context: context, title: title, onSubmit:onEdit);
-            },
-            icon: const Icon(Icons.edit),
-          ),
+          // trailing: IconButton(
+          //   onPressed: () {
+          //     showSingleTextInputDialog(context: context, title: title, onSubmit:onEdit);
+          //   },
+          //   icon: const Icon(Icons.edit),
+          // ),
         );
   }
 }

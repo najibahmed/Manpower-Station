@@ -8,6 +8,7 @@ import 'package:manpower_station/app/modules/service/model/service_list_model.da
 import 'package:manpower_station/app/modules/service/view/service_reviews.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/utils/helper_function.dart';
 
 class ServiceDetailsScreen extends BaseView<ServiceController> {
   const ServiceDetailsScreen({
@@ -92,11 +93,18 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Text( "${service.servicePrice} ৳",
+                    Text( "${calculatePriceAfterDiscount(service.servicePrice!, service.serviceDiscount!.discount!)}৳ ",
                       style: const TextStyle(
-                          fontSize: 18, color: Colors.green, fontWeight: FontWeight.bold),
+                          fontSize: 20, color: Colors.green, fontWeight: FontWeight.bold),
                     ),
-                    const Text(
+                     Text(
+                      "${service.servicePrice}",
+                      style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                          fontSize: 16,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.bold),
+                    ),const Text(
                       " (starting with)",
                       style: TextStyle(
                           fontSize: 11,
@@ -106,10 +114,10 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  "Experienced cleaners for home and apartment services.",
-                  style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-                ),
+                // Text(
+                //   "Experienced cleaners for home and apartment services.",
+                //   style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                // ),
               ],
             ),
           ),
@@ -139,7 +147,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
       ServiceDescription(
         service: service,
       ),
-      ReviewsScreen(service: service,),
+      ReviewsScreen(reviews: service.reviews!,),
       _buildFAQTab(),
     ];
     return list[index];

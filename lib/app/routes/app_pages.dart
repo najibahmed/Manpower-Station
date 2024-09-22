@@ -9,6 +9,7 @@ import 'package:manpower_station/app/modules/service/bindings/service_binding.da
 import 'package:manpower_station/app/modules/service/view/service_booking_screen.dart';
 import 'package:manpower_station/app/modules/service/view/service_details.dart';
 import 'package:manpower_station/app/modules/user_profile/user_bindings/user_binding.dart';
+import 'package:manpower_station/app/modules/user_profile/user_view/update_profile.dart';
 import 'package:manpower_station/app/modules/user_profile/user_view/user_profile_screen.dart';
 import 'package:manpower_station/app/modules/authentication/verification_done.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_view.dart';
@@ -35,7 +36,7 @@ class AppPages {
   static const Registration = Routes.registrationScreen;
   static const OtpScreen = Routes.otpScreen;
   static const RegistrationDone = Routes.verificationDone;
-  static const CreateProfile = Routes.createProfile;
+  static const UserProfile = Routes.createProfile;
   static const OrderHistory = Routes.orderHistory;
   static const MenusPage = Routes.menusPage;
   static const INITIAL = Routes.redirectScreen;
@@ -45,6 +46,7 @@ class AppPages {
   static const DashboardView = Routes.dashBoard;
   static const CheckoutScreen = Routes.checkOutScreen;
   static const SingleCateServicesScreen = Routes.singleCatServices;
+  static const UpdateProfile = Routes.updateProfile;
 
   static final routes = [
     GetPage(
@@ -117,6 +119,11 @@ class AppPages {
       name: _Paths.SingleCatServices,
       page: () =>  SingelCategoryServices(),
         binding: CategoryBindings(),
+      transition: Transition.fadeIn
+    ),GetPage(
+      name: _Paths.updateProfile,
+      page: () =>  UpdateProfileScreen(),
+        binding: UserBinding(),
       transition: Transition.fadeIn
     ),
   ];

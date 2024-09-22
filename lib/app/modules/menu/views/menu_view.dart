@@ -47,7 +47,7 @@ class MenuView extends BaseView<MenusController>{
             style: const TextStyle(fontSize: 16, color: Colors.grey),
           ),
           SizedBox(height: 30.h),
-          MenuItem(icon: Icons.person, text: 'Profile', onTap: () { Get.toNamed(AppPages.CreateProfile); },),
+          MenuItem(icon: Icons.person, text: 'Profile', onTap: () { Get.toNamed(AppPages.UserProfile); },),
           // MenuItem(icon: Icons.payment, text: 'Digital payment', onTap: () {  },),
           MenuItem(icon: Icons.language, text: '${Strings.changeLanguage.tr}', onTap: () {  },),
           MenuItem(icon: Icons.privacy_tip, text: 'Privacy policy', onTap: () {  },),
