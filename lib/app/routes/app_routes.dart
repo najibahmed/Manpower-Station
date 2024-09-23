@@ -30,7 +30,7 @@ abstract class _Paths {
   static const Registration = '/registration';
   static const OtpScreen = '/otp';
   static const VerificationDone = '/registration_done';
-  static const CreateProfile = '/create_profile';
+  static const CreateProfile = '/user_profile';
   static const MenusPage = '/menus_page';
   static const OrderHistory = '/order_history';
   static const FaqScreen = '/faq';

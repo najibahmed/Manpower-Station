@@ -48,9 +48,9 @@ class _DateRangeCalendarState extends State<DateRangeCalendar> {
               _calendarFormat = format;
             });
           },
-          firstDay: DateTime.now().add(Duration(days: 1)),
+          firstDay: DateTime.now().add(const Duration(days: 1)),
           lastDay: DateTime(2025),
-          focusedDay: _selectedDate ?? DateTime.now().add(Duration(days: 1)),
+          focusedDay: _selectedDate ?? DateTime.now().add(const Duration(days: 1)),
           selectedDayPredicate: (day) =>
           _selectedDate != null && isSameDay(_selectedDate, day),
           onDaySelected: _onDaySelected,

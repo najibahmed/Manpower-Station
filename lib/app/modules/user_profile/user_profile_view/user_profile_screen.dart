@@ -1,14 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/singleInputDialogue.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/modules/user_profile/user_controller/user_controller.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
-import 'package:manpower_station/config/translations/strings_enum.dart';
 
 // ignore: must_be_immutable
 class UserProfileScreen extends BaseView<UserController> {
@@ -38,8 +36,8 @@ class UserProfileScreen extends BaseView<UserController> {
         IconButton(onPressed: (){
           Get.toNamed(AppPages.UpdateProfile);
         },
-            icon: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            icon: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Icon(Icons.edit,color: Colors.green,),
             ))
       ],
@@ -66,7 +64,7 @@ class UserProfileScreen extends BaseView<UserController> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: Material(
-                  child: Container(
+                  child: SizedBox(
                     height: 110,
                     width: 110,
                     child: CircleAvatar(

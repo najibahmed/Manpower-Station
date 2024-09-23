@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
@@ -9,6 +9,8 @@ import 'package:manpower_station/app/modules/order_history/view/order_history_vi
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 
 class DashboardScreen extends BaseView<DashBoardController>{
+  const DashboardScreen({super.key});
+
 
 
   @override

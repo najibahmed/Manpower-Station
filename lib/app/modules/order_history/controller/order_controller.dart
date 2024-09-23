@@ -13,10 +13,7 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+
 
   @override
   void onClose() {

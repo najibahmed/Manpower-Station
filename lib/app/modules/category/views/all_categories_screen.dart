@@ -50,7 +50,7 @@ class AllCategories extends BaseView<CategoryController> {
                     child: Text(
                       category.name,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                     ),
                   ),
                   SizedBox(
@@ -59,7 +59,7 @@ class AllCategories extends BaseView<CategoryController> {
                   Text(
                     category.description,
                     style:
-                        TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+                        const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
                   ),
                 ],
               ),

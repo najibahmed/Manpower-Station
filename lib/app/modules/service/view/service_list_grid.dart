@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/models/category_services.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import '../model/service_list_model.dart';
 
@@ -60,14 +59,11 @@ class ServiceCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-            child: Hero(
-              tag: title,
-              child: Image.network(
-                'http://172.16.154.43/images/services/$image',
-                height: 120,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+            child: Image.network(
+              'http://172.16.154.43/images/services/$image',
+              height: 120,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
           ),
           Padding(

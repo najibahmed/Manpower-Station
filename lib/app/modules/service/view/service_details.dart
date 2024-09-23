@@ -37,10 +37,10 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                     controller.changeTabIndex(index);
              },
              controller: controller.tabController,
-             tabs: [
-               const Tab(text: "Service Overview"),
-               const Tab(text: "Reviews"),
-               const Tab(text: "FAQ"),
+             tabs: const [
+               Tab(text: "Service Overview"),
+               Tab(text: "Reviews"),
+               Tab(text: "FAQ"),
              ],
            ),
            _getTabAtIndex(controller.tabIndex.value, service),

@@ -26,8 +26,8 @@ class BaseClient {
       'Accept': 'application/json',
       'Authorization': Constants.accessToken
     },
-    connectTimeout: const Duration(seconds: 30),
-    sendTimeout: const Duration(seconds: 30),
+    // connectTimeout: const Duration(seconds: 30),
+    // sendTimeout: const Duration(seconds: 30),
   ))
 
     ..interceptors.add(InterceptorsWrapper(
@@ -115,6 +115,7 @@ class BaseClient {
           onReceiveProgress: onReceiveProgress,
           queryParameters: queryParameters,
           options: Options(
+            receiveTimeout: const Duration(seconds: _timeoutInSeconds),
             headers: headers,
           ),
         );

@@ -56,13 +56,13 @@ class _MyPayState extends State<MyPay> {
           // When the application goes to the producation the isSandbox must be false
           isSandBox: true,
           child: isLoading
-              ? Center(
+              ? const Center(
             child: CircularProgressIndicator(),
           )
               : Container(
             color: Colors.orange,
             height: 50,
-            child: Center(
+            child: const Center(
               child: Text(
                 "Payment",
                 style: TextStyle(

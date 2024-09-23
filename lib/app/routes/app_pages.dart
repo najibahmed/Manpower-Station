@@ -8,9 +8,9 @@ import 'package:manpower_station/app/modules/checkOut/views/checkout_screen.dart
 import 'package:manpower_station/app/modules/service/bindings/service_binding.dart';
 import 'package:manpower_station/app/modules/service/view/service_booking_screen.dart';
 import 'package:manpower_station/app/modules/service/view/service_details.dart';
-import 'package:manpower_station/app/modules/user_profile/user_bindings/user_binding.dart';
-import 'package:manpower_station/app/modules/user_profile/user_view/update_profile.dart';
-import 'package:manpower_station/app/modules/user_profile/user_view/user_profile_screen.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_bindings/user_binding.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_view/update_profile.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_view/user_profile_screen.dart';
 import 'package:manpower_station/app/modules/authentication/verification_done.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_view.dart';
 import 'package:manpower_station/app/modules/dashboard/bindings/dashboard_binding.dart';
@@ -74,7 +74,7 @@ class AppPages {
       name: _Paths.CreateProfile,
       page: () =>  UserProfileScreen(),
       binding: UserBinding(),
-      transition: Transition.rightToLeft
+      transition: Transition.native
     ),GetPage(
       name: _Paths.OrderHistory,
       page: () => const OrderHistoryView(),
@@ -82,7 +82,7 @@ class AppPages {
       transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.DashBoard,
-      page: () =>  DashboardScreen(),
+      page: () =>  const DashboardScreen(),
         binding: DashboardBinding(),
       transition: Transition.rightToLeft
     ),GetPage(
@@ -117,7 +117,7 @@ class AppPages {
       transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.SingleCatServices,
-      page: () =>  SingelCategoryServices(),
+      page: () =>  SingleCategoryServices(),
         binding: CategoryBindings(),
       transition: Transition.fadeIn
     ),GetPage(

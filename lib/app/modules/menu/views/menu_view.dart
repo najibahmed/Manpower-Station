@@ -7,10 +7,9 @@ import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/menu/controller/menu_controller.dart';
 import 'package:manpower_station/app/modules/menu/widgets/menu_item.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
-
-import '../../user_profile/user_controller/user_controller.dart';
 
 
 

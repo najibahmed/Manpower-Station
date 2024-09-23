@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
+import 'package:manpower_station/app/modules/service/model/address_model.dart';
 import 'package:manpower_station/app/modules/user_profile/model/user_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 import 'package:manpower_station/utils/constants.dart';
@@ -13,6 +14,13 @@ class UserController extends BaseController {
   final profilePic = Rx<File?>(null);
   late Rx<UserModel> userData=UserModel().obs;
   RxBool isLoading=true.obs;
+  TextEditingController updateNameController=TextEditingController();
+  late TextEditingController updateEmailController;
+  TextEditingController updateAddressController=TextEditingController();
+  TextEditingController updateAreaController=TextEditingController();
+  TextEditingController updatePostCodeController=TextEditingController();
+
+
 
 
   Future<void> pickImage(BuildContext context) async {
@@ -68,13 +76,14 @@ class UserController extends BaseController {
           if (response.statusCode == 201) {
             final responseData=response.data['client'];
             userData.value= UserModel.fromJson(responseData);
-            print(userData.value.phoneOrEmail);
             // Get.snackbar('Success', '${response.data['message']}');
           } else {
             Get.snackbar('Error', 'Having problem to get user data!');
           }
         },
       );
+      /// for pre-fill to update email initializing controller;
+      updateEmailController=TextEditingController(text: userData.value.phoneOrEmail);
     } catch (e) {
       Get.snackbar('Error :', e.toString());
     }
@@ -109,16 +118,13 @@ class UserController extends BaseController {
   @override
   void onInit() {
     getUserInformation();
-    Future.delayed(Duration(seconds:1),(){
+    Future.delayed(const Duration(seconds:1),(){
       isLoading.value=false;
     });
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+
 
   @override
   void onClose() {

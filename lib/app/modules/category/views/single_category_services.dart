@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/models/category_services.dart';
 import 'package:manpower_station/app/modules/category/controller/category_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 
 import '../../service/view/service_list_grid.dart';
 
-class SingelCategoryServices extends BaseView<CategoryController>{
+class SingleCategoryServices extends BaseView<CategoryController>{
+  const SingleCategoryServices({super.key});
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return null;
@@ -21,14 +22,15 @@ class SingelCategoryServices extends BaseView<CategoryController>{
     return CustomScrollView(
       slivers: [
         SliverAppBar(
+          floating: true,
             centerTitle: true,
             leading: IconButton(
                 onPressed: (){
                   Get.back();
                 },
-                icon: Icon(Icons.arrow_back)
+                icon: const Icon(Icons.arrow_back)
             ),
-            title: Text('')
+            title: const Text('')
             ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),

@@ -175,7 +175,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Expanded(child: Divider(thickness: 1,color: Colors.grey,)),
+                Expanded(child: Divider(thickness: 1,color: Colors.grey,)),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 18.0),
                   child: Text("Or",style: TextStyle(color: Colors.black54),),

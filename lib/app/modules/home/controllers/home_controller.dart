@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:manpower_station/app/models/category_model.dart';
-import 'package:manpower_station/app/models/category_services.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 

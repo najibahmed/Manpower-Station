@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/models/category_model.dart';
-import 'package:manpower_station/app/models/category_services.dart';
 import 'package:manpower_station/app/modules/home/views/service_option.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/modules/service/view/service_list_grid.dart';
@@ -83,7 +82,7 @@ class HomeView extends BaseView<HomeController> {
                           )),
                       InkWell(
                         onTap: () => MyTheme.changeTheme(),
-                        child: Container(
+                        child: SizedBox(
                           height: 39.h,
                           width: 39.h,
                           // decoration:
@@ -139,14 +138,14 @@ class HomeView extends BaseView<HomeController> {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              '${Strings.help.tr}',
+                              Strings.help.tr,
                               style: TextStyle(
                                   fontSize: MyFonts.bodySmallTextSize,
                                   color: Colors.black.withOpacity(.65),
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '${Strings.chooseService.tr}',
+                              Strings.chooseService.tr,
                               style: TextStyle(
                                   fontSize: MyFonts.bodyMediumSize,
                                   color: Colors.black.withOpacity(.65),

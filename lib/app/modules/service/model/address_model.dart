@@ -1,5 +1,4 @@
-const String addressFieldFirstName= 'firstName';
-const String addressFieldLastName = 'lastName';
+const String addressFieldFirstName= 'name';
 const String addressFieldPhoneNumber = 'phoneNumber';
 const String addressFieldEmail = 'email';
 const String addressFieldAddressLine1 = 'addressLine1';
@@ -8,8 +7,7 @@ const String addressFieldCity = 'city';
 const String addressFieldZipcode = 'zipcode';
 
 class AddressModel {
-  String? firstName;
-  String? lastName;
+  String? name;
   String? phoneNumber;
   String? email;
   String? addressLine1;
@@ -17,12 +15,12 @@ class AddressModel {
   String? city;
   String? zipcode;
 
-  AddressModel({this.firstName, this.lastName, this.phoneNumber, this.email,this.addressLine1, this.state, this.city, this.zipcode});
+  AddressModel({this.name,this.phoneNumber, this.email,this.addressLine1, this.state, this.city, this.zipcode});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      addressFieldFirstName: firstName,
-      addressFieldLastName: lastName,
+      addressFieldFirstName: name,
+
       addressFieldPhoneNumber: phoneNumber,
       addressFieldEmail: email,
       addressFieldAddressLine1: addressLine1,
@@ -33,8 +31,7 @@ class AddressModel {
   }
 
   factory AddressModel.fromMap(Map<String, dynamic> map) => AddressModel(
-    firstName: map[addressFieldFirstName],
-    lastName: map[addressFieldLastName],
+    name: map[addressFieldFirstName],
     phoneNumber: map[addressFieldPhoneNumber],
     email: map[addressFieldEmail],
     addressLine1: map[addressFieldAddressLine1],

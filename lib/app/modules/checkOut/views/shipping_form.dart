@@ -6,10 +6,10 @@ class ShippingInfoFormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Shipping Information"),
+        title: const Text("Shipping Information"),
         backgroundColor: Colors.green,
       ),
-      body: Padding(
+      body: const Padding(
         padding: EdgeInsets.all(20),
         child: ShippingForm(),
       ),
@@ -19,6 +19,8 @@ class ShippingInfoFormScreen extends StatelessWidget {
 
 // Widget for shipping form
 class ShippingForm extends StatefulWidget {
+  const ShippingForm({super.key});
+
   @override
   _ShippingFormState createState() => _ShippingFormState();
 }
@@ -40,48 +42,24 @@ class _ShippingFormState extends State<ShippingForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      style: const TextStyle(fontWeight: FontWeight.normal),
-                      decoration: const InputDecoration(
-                        labelText: 'First Name',
-                        labelStyle: TextStyle(
-                            color: Colors.grey, fontWeight: FontWeight.w500),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black54, width: 1.0),
-                        ),
-                      ),
-                    ),
+              TextFormField(
+                style: const TextStyle(fontWeight: FontWeight.normal),
+                decoration: const InputDecoration(
+                  labelText: 'Your Name',
+                  labelStyle: TextStyle(
+                      color: Colors.grey, fontWeight: FontWeight.w500),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.green, width: 1.0)),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.black54, width: 1.0),
                   ),
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: TextFormField(
-                      style: const TextStyle(fontWeight: FontWeight.normal),
-                      decoration: InputDecoration(
-                        labelText: 'Last Name',
-                        labelStyle: TextStyle(
-                            color: Colors.grey, fontWeight: FontWeight.w500),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1.0)),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black54, width: 1.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
               TextFormField(
                 style: const TextStyle(fontWeight: FontWeight.normal),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Phone Number',
                   labelStyle: TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.w500),
@@ -95,7 +73,7 @@ class _ShippingFormState extends State<ShippingForm> {
               ),
               TextFormField(
                 style: const TextStyle(fontWeight: FontWeight.normal),
-                decoration: InputDecoration(labelText: 'Email Adress',
+                decoration: const InputDecoration(labelText: 'Email Address',
                   labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w500),
                   focusedBorder:  UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.green, width: 1.0)),
@@ -105,7 +83,7 @@ class _ShippingFormState extends State<ShippingForm> {
               ),
               TextFormField(
                 style: const TextStyle(fontWeight: FontWeight.normal),
-                decoration: InputDecoration(labelText: 'Address Line 1',
+                decoration: const InputDecoration(labelText: 'Address Line 1',
                   labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w500),
                   focusedBorder:  UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.green, width: 1.0)),
@@ -115,7 +93,7 @@ class _ShippingFormState extends State<ShippingForm> {
               ),
               TextFormField(
                 style: const TextStyle(fontWeight: FontWeight.normal),
-                decoration: InputDecoration(labelText: 'City',
+                decoration: const InputDecoration(labelText: 'City',
                   labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w500),
                   focusedBorder:  UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.green, width: 1.0)),
@@ -128,7 +106,7 @@ class _ShippingFormState extends State<ShippingForm> {
                   Expanded(
                     child: TextFormField(
                       style: const TextStyle(fontWeight: FontWeight.normal),
-                      decoration: InputDecoration(labelText: 'State',
+                      decoration: const InputDecoration(labelText: 'State',
                         labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w500),
                         focusedBorder:  UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green, width: 1.0)),
@@ -137,11 +115,11 @@ class _ShippingFormState extends State<ShippingForm> {
                         ),),
                     ),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: TextFormField(
                       style: const TextStyle(fontWeight: FontWeight.normal),
-                      decoration: InputDecoration(labelText: 'Zip Code',
+                      decoration: const InputDecoration(labelText: 'Zip Code',
                         labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w500),
                         focusedBorder:  UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green, width: 1.0)),

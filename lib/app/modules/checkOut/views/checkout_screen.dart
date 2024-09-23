@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/custom_loading_overlay.dart';
+import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
+import 'package:manpower_station/app/models/order_model.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/app/modules/checkOut/views/shipping_form.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/utils/constants.dart';
 
-class CheckOutScreen extends BaseView<CheckoutController>{
+class CheckOutScreen extends BaseView<CheckoutController> {
   CheckOutScreen({super.key});
 
   @override
@@ -16,6 +19,7 @@ class CheckOutScreen extends BaseView<CheckoutController>{
       backgroundColor: Colors.green,
     );
   }
+
   String paymentMethodGroupValue = PaymentMethod.cod;
   @override
   Widget body(BuildContext context) {
@@ -24,7 +28,7 @@ class CheckOutScreen extends BaseView<CheckoutController>{
     final ServiceModel service = Get.arguments;
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -32,105 +36,86 @@ class CheckOutScreen extends BaseView<CheckoutController>{
             // ProductInfo(),
             customServiceTile(
               'Maid Service',
-              'Complete floor cleaning and sanitization for a sparkling clean space.',
-              4.9,
-              2125,
               service.image.toString(),
             ),
-            SizedBox(height: screenHeight*0.02),
+            SizedBox(height: screenHeight * 0.02),
             buildHeaderSection('Order Summary'),
-            OrderSummary(),
-            SizedBox(height: screenHeight*0.02),
+            orderSummary(),
+            SizedBox(height: screenHeight * 0.02),
             buildHeaderSection('Service Address'),
-            ShippingForm(),
-            SizedBox(height: screenHeight*0.01),
+            const ShippingForm(),
+            SizedBox(height: screenHeight * 0.01),
             // PaymentMethod(),
-            buildPaymentMethodSection( controller:controller),
-            SizedBox(height: screenHeight*0.1),
-            ConfirmButton(),
+            buildPaymentMethodSection(controller: controller),
+            SizedBox(height: screenHeight * 0.1),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _saveOrder,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  backgroundColor: Colors.green,
+                ),
+                child: const Text(
+                  'CONFIRM ORDER',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-}
-Widget buildHeaderSection(String title) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 10),
-    child: Text(
-      title,
-      style: const TextStyle(
-          fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
-    ),
-  );
-}
-// Widget to display product info
-class ProductInfo extends StatelessWidget {
-  const ProductInfo({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Image.network('https://via.placeholder.com/100'),
-      title: Text('Maid Service'),
-      subtitle: Text('Size: M 11.5\nIn Stock'),
-      // trailing: IconButton(
-      //   onPressed: () {},
-      // icon: Icon(Icons.edit),
-      // ),
-    );
+  void _saveOrder() async{
+
+    if (controller.nameController.text.isEmpty) {
+      CustomSnackBar.showCustomToast(message:  'Please provide your address');
+      return;
+    }
+    if (controller.addressLine1Controller.text.isEmpty) {
+      CustomSnackBar.showCustomToast(message:  'Please provide your zip code');
+      return;
+    }
+    if (controller.cityController.text.isEmpty) {
+      CustomSnackBar.showCustomToast(message:  'Please type your city');
+      return;
+    }if (controller.phoneNumberController.text.isEmpty) {
+      CustomSnackBar.showCustomToast(message:  'Please enter your phone number');
+      return;
+    }
+    // final orderModel = OrderModel(
+    //
+    // );
+    try {
+
+    } catch (error) {
+
+      rethrow;
+    }
   }
-}
 
-// Widget to display shipping information
-class ShippingInfo extends StatelessWidget {
-  const ShippingInfo({super.key});
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text('1. Shipping Information'),
-        subtitle: Text('Michael Gallagher\n1234 Pike Street #555\nSeattle, WA 98101'),
-        trailing: TextButton(
-          onPressed: () {},
-          child: Text('Edit'),
-        ),
+  Widget buildHeaderSection(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+      child: Text(
+        title,
+        style: const TextStyle(
+            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
       ),
     );
   }
-}
-
-// Widget to display payment method
-// class PaymentMethod extends StatelessWidget {
-//   const PaymentMethod({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       child: ListTile(
-//         title: Text('2. Payment Method'),
-//         subtitle: Text('Michael Gallagher\nVisa Platinum\n**** **** **** 6789\nEXP 10/22'),
-//         trailing: TextButton(
-//           onPressed: () {},
-//           child: Text('Edit'),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 // Widget to display order summary
-class OrderSummary extends StatelessWidget {
-  const OrderSummary({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
+  Widget orderSummary() {
+    return const Card(
       elevation: 3,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -138,7 +123,7 @@ class OrderSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Subtotal:'),
-                Text('${Constants.banglaCurrency}450'),
+                Text('450${Constants.banglaCurrency}'),
               ],
             ),
             SizedBox(height: 10),
@@ -146,15 +131,28 @@ class OrderSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Tax:'),
-                Text('${Constants.banglaCurrency}6.70'),
+                Text('+6.70${Constants.banglaCurrency}'),
               ],
             ),
-            Divider(),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Total:', style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('${Constants.banglaCurrency}470.25', style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('Discount 10%:'),
+                Text('- 6.70${Constants.banglaCurrency}'),
+              ],
+            ),
+            Divider(
+              thickness: 0.5,
+              color: Colors.grey,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Grand Total:',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('470.25${Constants.banglaCurrency}',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
           ],
@@ -162,39 +160,17 @@ class OrderSummary extends StatelessWidget {
       ),
     );
   }
-}
 
-// Widget for confirm order button
-class ConfirmButton extends StatelessWidget {
-  const ConfirmButton({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-        },
-        child: Text('CONFIRM ORDER',style: TextStyle(color: Colors.white),),
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 15),
-          backgroundColor: Colors.green,
-        ),
-      ),
-    );
-  }
-}
-Widget customServiceTile(String title, String subtitle, double rating,
-    int reviews, String imagePath) {
+Widget customServiceTile(String title, String imagePath) {
   return Card(
       elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
       child: ListTile(
-
-        contentPadding: EdgeInsets.all(16.0),
-        leading: Container(
+        contentPadding: const EdgeInsets.all(16.0),
+        leading: SizedBox(
           height: 70,
           width: 80,
           child: Image.network(
@@ -204,9 +180,9 @@ Widget customServiceTile(String title, String subtitle, double rating,
         ),
         title: Text(
           title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        subtitle: Column(
+        subtitle: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Text(subtitle),
@@ -224,8 +200,8 @@ Widget customServiceTile(String title, String subtitle, double rating,
         ),
       ));
 }
-Widget buildPaymentMethodSection({required CheckoutController controller}) {
 
+Widget buildPaymentMethodSection({required CheckoutController controller}) {
   return Card(
     elevation: 3,
     child: Padding(
@@ -237,7 +213,7 @@ Widget buildPaymentMethodSection({required CheckoutController controller}) {
             value: PaymentMethod.cod,
             groupValue: controller.paymentMethodGroupValue.value,
             onChanged: (value) {
-                controller.paymentMethodGroupValue.value = value!;
+              controller.paymentMethodGroupValue.value = value!;
             },
           ),
           const Text(PaymentMethod.cod),
@@ -255,6 +231,7 @@ Widget buildPaymentMethodSection({required CheckoutController controller}) {
     ),
   );
 }
+
 abstract class PaymentMethod {
   static const String cod = 'Cash on Delivery';
   static const String online = 'Online Payment';

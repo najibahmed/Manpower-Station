@@ -22,9 +22,9 @@ class WorkerListPage extends BaseView<ServiceController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
    return AppBar(
-     title: Text('Domestic Workers'),
+     title: const Text('Domestic Workers'),
      leading: IconButton(
-       icon: Icon(Icons.arrow_back),
+       icon: const Icon(Icons.arrow_back),
        onPressed: () {
          Navigator.pop(context);
        },
@@ -69,7 +69,7 @@ class WorkerListPage extends BaseView<ServiceController> {
                  Center(
                    child: Text(
                      worker.name,
-                     style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),
+                     style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 14),
                    ),
                  ),
                  SizedBox(height: size.height * 0.01,),

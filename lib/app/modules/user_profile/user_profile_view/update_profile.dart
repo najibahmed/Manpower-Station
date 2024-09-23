@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/modules/user_profile/user_controller/user_controller.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
@@ -36,17 +36,14 @@ class UpdateProfileScreen extends BaseView<UserController> {
             color: LightThemeColors.primaryColor, fontWeight: FontWeight.bold),
       ),
       actions: [
-        IconButton(
+        TextButton(
             onPressed: () {
               Get.offNamed(AppPages.UserProfile);
             },
-            icon: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Icon(
-                Icons.edit,
-                color: Colors.green,
-              ),
-            ))
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Save",style: TextStyle(color: Colors.green),),
+          ),)
       ],
     );
   }
@@ -56,26 +53,23 @@ class UpdateProfileScreen extends BaseView<UserController> {
     final size = MediaQuery.of(context).size;
     // TODO: implement body
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0, left: 15, right: 15),
+      padding: const EdgeInsets.only(top: 8.0, left: 10, right: 10,bottom: 15),
       child: Card(
         elevation: 5,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 height: size.height * 0.04,
               ),
-              SizedBox(
-                height: size.height * 0.03,
-              ),
               Stack(
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(100),
                     child: Material(
-                      child: Container(
+                      child: SizedBox(
                         height: 110,
                         width: 110,
                         child: InkWell(
@@ -96,7 +90,7 @@ class UpdateProfileScreen extends BaseView<UserController> {
                                         Icons.add_a_photo,
                                         color: LightThemeColors.primaryColor,
                                         size: 60,
-                                      )
+                                      ),
                               ],
                             ),
                           ),
@@ -137,21 +131,23 @@ class UpdateProfileScreen extends BaseView<UserController> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 3.0),
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
                     child: Icon(
                       Icons.person,
-                      size: 35,
+                      size: 25,
                       color: LightThemeColors.primaryColor,
                     ),
                   ),
                   Expanded(
                     child: TextFormField(
+                      style: const TextStyle(fontWeight: FontWeight.normal),
                       keyboardType: TextInputType.name,
-                      // controller: controller.nameController,
+                      controller: controller.updateNameController,
                       decoration: InputDecoration(
                           focusedBorder: const UnderlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: LightThemeColors.primaryColor, width: 2.0),
+                            borderSide: BorderSide(
+                                color: LightThemeColors.primaryColor,
+                                width: 2.0),
                           ),
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -176,21 +172,23 @@ class UpdateProfileScreen extends BaseView<UserController> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 3.0),
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
                     child: Icon(
                       Icons.mail,
-                      size: 35,
+                      size: 25,
                       color: LightThemeColors.primaryColor,
                     ),
                   ),
                   Expanded(
                     child: TextFormField(
-                      keyboardType: TextInputType.name,
-                      // controller: controller.nameController,
+                      style: const TextStyle(fontWeight: FontWeight.normal),
+                      keyboardType: TextInputType.emailAddress,
+                      controller: controller.updateEmailController,
                       decoration: InputDecoration(
                           focusedBorder: const UnderlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: LightThemeColors.primaryColor, width: 2.0),
+                            borderSide: BorderSide(
+                                color: LightThemeColors.primaryColor,
+                                width: 2.0),
                           ),
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -215,21 +213,23 @@ class UpdateProfileScreen extends BaseView<UserController> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 3.0),
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
                     child: Icon(
                       Icons.home,
-                      size: 35,
+                      size: 25,
                       color: LightThemeColors.primaryColor,
                     ),
                   ),
                   Expanded(
                     child: TextFormField(
-                      keyboardType: TextInputType.name,
-                      // controller: controller.nameController,
+                      style: const TextStyle(fontWeight: FontWeight.normal),
+                      keyboardType: TextInputType.streetAddress,
+                      controller: controller.updateAddressController,
                       decoration: InputDecoration(
                           focusedBorder: const UnderlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: LightThemeColors.primaryColor, width: 2.0),
+                            borderSide: BorderSide(
+                                color: LightThemeColors.primaryColor,
+                                width: 2.0),
                           ),
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -251,19 +251,29 @@ class UpdateProfileScreen extends BaseView<UserController> {
                 height: size.height * .02,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Icon(
+                        Icons.signpost,
+                        size: 25,
+                        color: LightThemeColors.primaryColor,
+                      ),
+                    ),
                     Expanded(
                       child: TextFormField(
-                        keyboardType: TextInputType.name,
-                        // controller: controller.nameController,
+                        style: const TextStyle(fontWeight: FontWeight.normal),
+                        keyboardType: TextInputType.streetAddress,
+                        controller: controller.updateAreaController,
                         decoration: InputDecoration(
                             focusedBorder: const UnderlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: LightThemeColors.primaryColor, width: 2.0),
+                              borderSide: BorderSide(
+                                  color: LightThemeColors.primaryColor,
+                                  width: 2.0),
                             ),
                             enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -279,15 +289,27 @@ class UpdateProfileScreen extends BaseView<UserController> {
                         validator: (String? value) {},
                       ),
                     ),
-                    SizedBox(width: size.width*0.1,),
+                    SizedBox(
+                      width: size.width * 0.1,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Icon(
+                        Icons.local_post_office_outlined,
+                        size: 25,
+                        color: LightThemeColors.primaryColor,
+                      ),
+                    ),
                     Expanded(
                       child: TextFormField(
-                        keyboardType: TextInputType.name,
-                        // controller: controller.nameController,
+                        style: const TextStyle(fontWeight: FontWeight.normal),
+                        keyboardType: TextInputType.number,
+                        controller: controller.updatePostCodeController,
                         decoration: InputDecoration(
                             focusedBorder: const UnderlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: LightThemeColors.primaryColor, width: 2.0),
+                              borderSide: BorderSide(
+                                  color: LightThemeColors.primaryColor,
+                                  width: 2.0),
                             ),
                             enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -300,7 +322,12 @@ class UpdateProfileScreen extends BaseView<UserController> {
                             labelText: "Post Code",
                             hintStyle: const TextStyle(
                                 color: LightThemeColors.hintTextColor)),
-                        validator: (String? value) {},
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Provide a post code.';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                   ],
