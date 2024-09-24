@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
+import 'package:manpower_station/config/theme/my_fonts.dart';
 
 class ServiceOption extends StatelessWidget {
   final String image;
@@ -14,27 +15,33 @@ class ServiceOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: onTap,
-          child: Material(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: CircleAvatar(
-                radius: 30,
-                backgroundColor: LightThemeColors.primaryColor,
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
-                ),
+    var size=MediaQuery.of(context).size;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: InkWell(
+        onTap: onTap,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            height: size.height*.12,
+            width: size.width*.26,
+          color: LightThemeColors.primaryColor,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Image.asset(
+                  //   image,
+                  //   fit: BoxFit.fill,
+                  // ),
+                  // SizedBox(height: size.height*.02,),
+                  Text(label,textAlign:TextAlign.center,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: MyFonts.bodyMediumSize),),
+                ],
               ),
             ),
           ),
         ),
-        SizedBox(height: 8),
-        Text(label),
-      ],
+      ),
     );
   }
 }

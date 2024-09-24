@@ -17,7 +17,7 @@ const Map<String, String> bnBD = {
   Strings.goodMorning : 'সুপ্রভাত',
   Strings.name : 'নাম',
   Strings.help : 'আমরা আপনাকে সাহায্য করার জন্য সবসময় এখানে আছি।',
-  Strings.chooseService: 'পরিষেবা নির্বাচন করুন।',
+  Strings.chooseService: 'এখানে আপনি জনশক্তি পরিষেবা পাবেন।',
   Strings.time : '09:00 am',
 
   Strings.days : 'Days',
@@ -59,5 +59,5 @@ const Map<String, String> bnBD = {
   Strings.careGiver : 'পরিচর্যাকারী',
   Strings.babySitter : 'বাচ্চার যত্ন',
   Strings.more : 'আরো',
-  Strings.askTypeOfService : 'আপনার কোন ধরনের পরিষেবা প্রয়োজন',
+  Strings.askTypeOfService : 'আপনি কি ধরনের জনবল প্রয়োজন?',
 };

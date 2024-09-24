@@ -1,9 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../app/routes/app_pages.dart';
-
 class AwesomeNotificationsHelper {
   // prevent making instance
   AwesomeNotificationsHelper._();
@@ -141,12 +139,13 @@ class NotificationController {
   /// Use this method to detect when the user taps on a notification or action button
   @pragma("vm:entry-point")
   static Future <void> onActionReceivedMethod(ReceivedAction receivedAction) async {
+    // ignore: unused_local_variable
     Map<String,String?>? payload = receivedAction.payload;
     // TODO handle clicking on notification
     // example
     // String routeToGetTo = payload['route'];
     // normal navigation (Get.toNamed) will throw error
-    Get.key.currentState?.pushNamed(Routes.HOME);
+    Get.key.currentState?.pushNamed(Routes.homeScreen);
   }
 }
 

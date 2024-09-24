@@ -1,12 +1,16 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
+import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/menu/controller/menu_controller.dart';
 import 'package:manpower_station/app/modules/menu/widgets/menu_item.dart';
-import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
+import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 
-import '../../../../config/theme/dark_theme_colors.dart';
 
 
 class MenuView extends BaseView<MenusController>{
@@ -15,46 +19,43 @@ class MenuView extends BaseView<MenusController>{
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
-    return AppBar(
-        centerTitle: true,
-        backgroundColor:
-        Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
-        title: Text(
-          'Menu',
-          style: TextStyle(
-            fontSize: MyFonts.appBarTittleSize,
-          ),
-        ));
+   return null;
   }
 
   @override
   Widget body(BuildContext context) {
+    final userController=Get.put(UserController());
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 20),
+           SizedBox(height: 40.h),
           CircleAvatar(
             radius: 40,
             backgroundColor: Colors.grey.shade300,
             child: const Icon(Icons.person, size: 50, color: Colors.white),
           ),
-          const SizedBox(height: 10),
-          Obx(() => Text(
-            controller.userName.value,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          )),
-          Obx(() => Text(
-            controller.phoneNumber.value,
+           SizedBox(height: 10.h),
+          // Text(
+          //   controller.userName.value,
+          //   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          // ),
+          Text(
+            userController.userData.value.phoneOrEmail.toString(),
             style: const TextStyle(fontSize: 16, color: Colors.grey),
-          )),
-          const SizedBox(height: 30),
-          MenuItem(icon: Icons.payment, text: 'Digital payment'),
-          MenuItem(icon: Icons.language, text: '${Strings.changeLanguage.tr}'),
-          MenuItem(icon: Icons.privacy_tip, text: 'Privacy policy'),
-          MenuItem(icon: Icons.document_scanner, text: 'Terms & Conditions'),
-          MenuItem(icon: Icons.info_outline, text: 'About Us'),
+          ),
+          SizedBox(height: 30.h),
+          MenuItem(icon: Icons.person, text: 'Profile', onTap: () { Get.toNamed(AppPages.UserProfile); },),
+          // MenuItem(icon: Icons.payment, text: 'Digital payment', onTap: () {  },),
+          MenuItem(icon: Icons.language, text: '${Strings.changeLanguage.tr}', onTap: () {  },),
+          MenuItem(icon: Icons.privacy_tip, text: 'Privacy policy', onTap: () {  },),
+          // MenuItem(icon: Icons.document_scanner, text: 'Terms & Conditions', onTap: () {  },),
+          MenuItem(icon: Icons.info_outline, text: 'About Us', onTap: () {  },),
+          MenuItem(icon: Icons.exit_to_app_outlined, text: 'Exit', onTap: () {
+            MySharedPref.setLoginStatus(false);
+            Get.offAllNamed(AppPages.Registration);
+          },),
         ],
       ),
     );

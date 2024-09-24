@@ -1,24 +1,23 @@
-import 'dart:ffi';
 
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/preferred_size.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/resend_tile.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
-import 'package:manpower_station/config/theme/my_fonts.dart';
-import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:pinput/pinput.dart';
+import '../../../../../config/theme/light_theme_colors.dart';
+import '../../../../../config/theme/my_fonts.dart';
+import '../../../../../config/translations/strings_enum.dart';
+import '../../../../core/base/base_view.dart';
 import '../../Auth controller/authentication_controller.dart';
 
 class OtpView extends BaseView<AuthenticationController> {
-  OtpView({super.key});
+  const OtpView({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
@@ -79,11 +78,11 @@ class OtpView extends BaseView<AuthenticationController> {
             ),
             Text("${Strings.verifyNumMsg.tr}",
                 style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
-            SizedBox(
+            const SizedBox(
               height: 2,
             ),
             Text('''${Strings.verificationCodeSent.tr}
-            +88${controller.phoneNumberController.text?? '+8801XXXXXXXXX'}''',
+            ${controller.phoneNumberEmailController.text?? '+8801XXXXXXXXX'}''',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     fontSize: MyFonts.bodyMediumSize,
@@ -97,10 +96,19 @@ class OtpView extends BaseView<AuthenticationController> {
               length: length,
               controller: controller.otpController,
               defaultPinTheme: defaultPinTheme,
+              // validator: (value) {
+              //   return controller.isOtpWrong.value ? "Pin is incorrect" : null;
+              // },
+              hapticFeedbackType: HapticFeedbackType.lightImpact,
               onCompleted: (pin) {
-                controller.showError.value = pin != '5555';
-                Get.snackbar("Welcome", "Sucessfully Logged In");
+                authenticateOtp(pin);
               },
+              // onCompleted: (pin) {
+              //   print(pin);
+              //   // controller.showError.value = pin != '5555';
+              //   // controller.otpVerification();
+              //   // Get.snackbar("Welcome", "Sucessfully Logged In");
+              // },
               focusedPinTheme: defaultPinTheme.copyWith(
                 height: 68,
                 width: 64,
@@ -137,16 +145,25 @@ class OtpView extends BaseView<AuthenticationController> {
                           ..onTap = () {
                             Get.toNamed(AppPages.RegistrationDone);
                           },
-                        style: TextStyle(
+                        style: const TextStyle(
                             decoration: TextDecoration.underline,
                             color: LightThemeColors.primaryColor,
                             fontWeight: FontWeight.bold)),
                   ]),
             ),
+          SizedBox(height: 12.h,),
           ResendSmsTile()
           ],
         ),
       )),
     );
+  }
+
+  void authenticateOtp(String pin) {
+    try{
+      controller.otpVerification(pin);
+    }catch(e){
+      print("Verify otp error: $e");
+    }
   }
 }

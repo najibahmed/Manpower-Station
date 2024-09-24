@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'base_controller.dart';
 
 abstract class BaseView<Controller extends BaseController>
@@ -48,7 +47,7 @@ abstract class BaseView<Controller extends BaseController>
   Widget? connectionStatusView(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
-      child: Container(
+      child: SizedBox(
           width: double.infinity,
           height: 30,
           // TODO: color: add your color here,

@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/modules/authentication/create_profile.dart';
 import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:manpower_station/app/modules/help_support/view/help_view.dart';
 import 'package:manpower_station/app/modules/home/views/home_view.dart';
@@ -9,7 +8,9 @@ import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
 import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 
-class DashboardView extends BaseView<DashBoardController>{
+class DashboardScreen extends BaseView<DashBoardController>{
+  const DashboardScreen({super.key});
+
 
 
   @override
@@ -22,7 +23,7 @@ class DashboardView extends BaseView<DashBoardController>{
     return SafeArea(
         child: IndexedStack(
           index: controller.selectedIndex.value,
-          children: [
+          children: const [
             HomeView(),
             OrderHistoryView(),
             HelpView(),
@@ -38,7 +39,7 @@ class DashboardView extends BaseView<DashBoardController>{
       currentIndex: controller.selectedIndex.value,
       selectedItemColor: LightThemeColors.primaryColor,
       unselectedItemColor: Colors.grey,
-      items: [
+      items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',

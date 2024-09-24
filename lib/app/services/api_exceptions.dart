@@ -25,7 +25,7 @@ class ApiException implements Exception {
     result += response?.data?['error'] ?? '';
 
     if(result.isEmpty){
-      result += message; // message is the (dio error message) so usualy its not user friendly
+      result += message; // message is the (dio error message) so usually its not user friendly
     }
 
     return result;

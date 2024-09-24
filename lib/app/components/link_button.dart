@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
-import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../config/theme/light_theme_colors.dart';
+import '../../config/theme/my_fonts.dart';
+
 class LinkButton extends StatelessWidget {
-  const LinkButton({Key? key, required this.urlLabel, required this.url})
-      : super(key: key);
+  const LinkButton({super.key, required this.urlLabel, required this.url});
 
   final String urlLabel;
   final String url;
