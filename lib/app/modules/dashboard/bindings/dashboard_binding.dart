@@ -7,6 +7,7 @@ import 'package:manpower_station/app/modules/menu/controller/menu_controller.dar
 import 'package:manpower_station/app/modules/order_history/controller/order_controller.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
+import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 
 
 class DashboardBinding extends Bindings {
@@ -31,6 +32,8 @@ class DashboardBinding extends Bindings {
           () => ServiceController(),
     );Get.lazyPut<UserController>(
           () => UserController(),
+    );Get.lazyPut<WorkerController>(
+          () => WorkerController(),
     );
   }
 }

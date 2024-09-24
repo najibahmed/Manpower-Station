@@ -1,9 +1,9 @@
-
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
@@ -26,37 +26,50 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
   @override
   Widget body(BuildContext context) {
     final ServiceModel service = Get.arguments;
-    // TODO: implement body
     return Stack(
       children: [
         SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Your Service Section
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                 children: [
-                   IconButton(onPressed: (){
-                     Get.back();
-                   }, icon: const Icon(Icons.arrow_back)),
-                   const SizedBox(width: 20,),
-                   Text(
-                    '${service.name}',overflow: TextOverflow.clip,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: LightThemeColors.primaryColor),
-                   ),
-                 ],
-               ),
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.arrow_back)),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '${service.name}',
+                    overflow: TextOverflow.clip,
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: LightThemeColors.primaryColor),
+                  ),
+                ],
+              ),
               const SizedBox(height: 8),
               Image.network(
                 'http://172.16.154.43/images/services/${service.image}', // Placeholder for the image
-                height: 150,
+                height: 200,
                 width: double.infinity,
                 fit: BoxFit.fill,
               ),
               const SizedBox(height: 16),
-              Text('Select Your Time',style: TextStyle(fontSize: MyFonts.bodyLargeSize, fontWeight: FontWeight.bold, color: Colors.grey),),
+              Text(
+                'Select Your Time',
+                style: TextStyle(
+                    fontSize: MyFonts.bodyLargeSize,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -69,16 +82,18 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         elevation: 5,
                         decoration: const InputDecoration(
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 2),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 2),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green, width: 2),
+                            borderSide:
+                                BorderSide(color: Colors.green, width: 2),
                           ),
                           filled: true,
                           // fillColor: Colors.grey,
                         ),
                         hint: const Text('Select Your Time'),
-                        value: controller.selectedTime.value,
+                        value: controller.timeLimit.value,
                         items: controller.time.map((time) {
                           return DropdownMenuItem<int>(
                             value: time,
@@ -86,7 +101,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           );
                         }).toList(),
                         onChanged: (value) {
-                          controller.selectedTime.value = value!;
+                          controller.timeLimit.value = value!;
                         },
                       ),
                     ),
@@ -98,17 +113,20 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         isExpanded: true,
                         decoration: const InputDecoration(
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 2),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 2),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green, width: 2),
+                            borderSide:
+                                BorderSide(color: Colors.green, width: 2),
                           ),
                           filled: true,
                           // fillColor: Colors.grey,
                         ),
                         hint: const Text('Select Your Time Key'),
                         value: controller.selectedTimeKey.value,
-                        items: ['Hours', 'Days', 'Weeks', 'Months'].map((String key) {
+                        items: ['Hours', 'Days', 'Weeks', 'Months']
+                            .map((String key) {
                           return DropdownMenuItem<String>(
                             value: key,
                             child: Text(key),
@@ -128,9 +146,38 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                   ? TableBasicsExample()
                   : controller.selectedTimeKey.value == 'Days'
                       ? DateRangeCalendar(
-                          rangeLength: controller.selectedTime.value,
+                          rangeLength: controller.timeLimit.value,
                         )
-                      : const SizedBox(),
+                      : controller.selectedTimeKey.value == 'Months'
+                          ? Center(
+                              child: Column(
+                                children: [
+                                  CustomButton(
+                                    title: 'Choose Starting Date',
+                                    width: 250,
+                                    height: 50,
+                                    onTap: () async {
+                                      final picked = await showDatePicker(
+                                        context: context,
+                                        initialDate:
+                                            controller.selectedMonth.value,
+                                        firstDate: DateTime.now().add(Duration(days: 1)),
+                                        lastDate: DateTime(2025),
+                                      );
+                                      if (picked != null &&
+                                          picked !=
+                                              controller.selectedMonth.value) {
+                                        controller.selectedMonth.value = picked;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 30,),
+                                  Text(
+                                      'Your starting Date is: ${Constants.formatDate.format(controller.selectedMonth.value)}')
+                                ],
+                              ),
+                            )
+                          : const SizedBox(),
               // Text(
               //   'Select Work Start Time',
               //   style: TextStyle(color: Colors.red),
@@ -141,29 +188,8 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                 height: 5,
                 color: Colors.grey.withOpacity(.52),
               ),
-              const SizedBox(height: 32),
-              // Center(
-              //   child: SizedBox(
-              //     height: 40,
-              //     width: 170,
-              //     child: ElevatedButton(
-              //       onPressed: () {
-              //         Get.toNamed(AppPages.CheckoutScreen,arguments: service);
-              //         // Get.to(WorkerListPage());
-              //       },
-              //       style: ElevatedButton.styleFrom(
-              //         backgroundColor: Colors.green,
-              //       ),
-              //       child: Text(
-              //         'Book Service',
-              //         style: TextStyle(
-              //             color: Colors.white, fontSize: MyFonts.buttonTextSize),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               const SizedBox(
-                height: 60,
+                height: 90,
               ),
             ],
           ),
@@ -175,32 +201,41 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
           child: Card(
             elevation: 9,
             // color: Colors.green.withOpacity(.85),
-            child: Container(
+            child: SizedBox(
               height: 60,
-              width:MediaQuery.of(context).size.width*.9,
+              width: MediaQuery.of(context).size.width * .9,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   RichText(
-                    text: TextSpan(text: 'SUB TOTAL:  ',
-                        style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold,color: Colors.grey),
-                        children:[
-                          TextSpan(text: '${controller.getServicePrice(controller.selectedTime.value, controller.selectedTimeKey,service.servicePrice)}${Constants.banglaCurrency}',
-                            style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold,color: Colors.black),)
-                        ]
-                    ),
-
+                    text: TextSpan(
+                        text: 'SUB TOTAL:  ',
+                        style: TextStyle(
+                            fontSize: MyFonts.bodyLargeSize,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
+                        children: [
+                          TextSpan(
+                            text:
+                                '${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, service.servicePrice)}${Constants.banglaCurrency}',
+                            style: TextStyle(
+                                fontSize: MyFonts.bodyLargeSize,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          )
+                        ]),
                   ),
                   OutlinedButton(
                     style: ElevatedButton.styleFrom(
-                      side: BorderSide(
-                        color: Colors.green
-                      )
-                    ),
-                    onPressed:(){
-                      Get.toNamed(AppPages.CheckoutScreen,arguments: service);
+                        side: const BorderSide(color: Colors.green)),
+                    onPressed: () {
+                      // Get.toNamed(AppPages.CheckoutScreen, arguments: service);
+                    Get.toNamed(AppPages.WorkerListView);
                     },
-                    child:  const Text('CHECKOUT',style: TextStyle(color: Colors.green),),
+                    child: const Text(
+                      'CHECKOUT',
+                      style: TextStyle(color: Colors.green),
+                    ),
                   )
                 ],
               ),

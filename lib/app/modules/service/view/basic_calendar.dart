@@ -4,6 +4,8 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TableBasicsExample extends StatefulWidget {
+  const TableBasicsExample({super.key});
+
   @override
   _TableBasicsExampleState createState() => _TableBasicsExampleState();
 }
@@ -20,6 +22,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
       children: [
         Text("From which date you want to start your Service?",style: TextStyle(fontSize: MyFonts.bodyLargeSize, fontWeight: FontWeight.bold, color: Colors.grey)),
         TableCalendar(
+          headerStyle: const HeaderStyle(formatButtonVisible: false),
           firstDay: DateTime.now().add(const Duration(days: 1)),
           pageAnimationEnabled: false,
           availableGestures: AvailableGestures.horizontalSwipe,

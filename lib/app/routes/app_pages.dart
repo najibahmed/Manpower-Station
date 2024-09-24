@@ -21,6 +21,8 @@ import 'package:manpower_station/app/modules/menu/bindings/menu_bindings.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
 import 'package:manpower_station/app/modules/order_history/binding/order_binding.dart';
 import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
+import 'package:manpower_station/app/modules/worker/bindings/worker_binding.dart';
+import 'package:manpower_station/app/modules/worker/view/worker_list_screen.dart';
 import 'package:manpower_station/redirect_screen.dart';
 import '../modules/authentication/Auth Bindings/authentication_binding.dart';
 import '../modules/authentication/views/registration/registration_view.dart';
@@ -47,6 +49,7 @@ class AppPages {
   static const CheckoutScreen = Routes.checkOutScreen;
   static const SingleCateServicesScreen = Routes.singleCatServices;
   static const UpdateProfile = Routes.updateProfile;
+  static const WorkerListView = Routes.workerList;
 
   static final routes = [
     GetPage(
@@ -117,14 +120,19 @@ class AppPages {
       transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.SingleCatServices,
-      page: () =>  SingleCategoryServices(),
+      page: () =>  const SingleCategoryServices(),
         binding: CategoryBindings(),
       transition: Transition.fadeIn
     ),GetPage(
-      name: _Paths.updateProfile,
+      name: _Paths.UpdateProfile,
       page: () =>  UpdateProfileScreen(),
         binding: UserBinding(),
       transition: Transition.fadeIn
+    ),GetPage(
+      name: _Paths.WorkerList,
+      page: () =>   WorkerListScreen(),
+        binding: WorkerBinding(),
+      transition: Transition.leftToRight
     ),
   ];
 }

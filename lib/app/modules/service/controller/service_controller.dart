@@ -9,11 +9,16 @@ import '../../../services/api_client.dart';
 
 class ServiceController extends BaseController with GetSingleTickerProviderStateMixin  {
   var serviceData = <dynamic>[].obs;
-  RxInt selectedTime=3.obs;
+  RxInt timeLimit=3.obs;
   RxString selectedTimeKey='Hours'.obs;
   RxList time = [3, 4, 5, 6, 7, 8].obs;
   late TabController tabController;
   var tabIndex = 0.obs;
+  RxList<DateTime> highlightedDates = <DateTime>[].obs;
+  Rx<DateTime> selectedMonth=DateTime.now().add(Duration(days: 1)).obs;
+
+
+
 
   // Get price
    getServicePrice(time,timeKey,price){

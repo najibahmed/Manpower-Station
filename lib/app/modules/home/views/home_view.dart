@@ -38,9 +38,9 @@ class HomeView extends BaseView<HomeController> {
     ];
     return SafeArea(
       child: RefreshIndicator(
+        color: Colors.green,
         onRefresh: _handleRefresh,
         child: CustomScrollView(
-
           slivers: [
             SliverAppBar(
                 centerTitle: true,
@@ -228,7 +228,7 @@ class HomeView extends BaseView<HomeController> {
                             )
                           : ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: 5,
+                              itemCount:  controller.allCategoryData.length,
                               itemBuilder: (BuildContext context, int index) {
                                 CategoryModel category =
                                     controller.allCategoryData[index];

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/utils/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class DateRangeCalendar extends StatefulWidget {
   final rangeLength;
-  const DateRangeCalendar({super.key,required this.rangeLength});
+  const DateRangeCalendar({super.key, required this.rangeLength});
 
   @override
   _DateRangeCalendarState createState() => _DateRangeCalendarState();
@@ -14,7 +17,6 @@ class DateRangeCalendar extends StatefulWidget {
 class _DateRangeCalendarState extends State<DateRangeCalendar> {
   DateTime? _selectedDate;
   List<DateTime> _highlightedDates = [];
-  DateFormat format = DateFormat('dd/MMM/yyyy');
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
@@ -24,35 +26,37 @@ class _DateRangeCalendarState extends State<DateRangeCalendar> {
   }
 
   List<DateTime> _calculateDateRange(DateTime selectedDate) {
-    // const  rangeLength=4;
-     // Range of 7 days before the selected date
-    return List<DateTime>.generate(
-     widget.rangeLength,
+    final serviceController = Get.find<ServiceController>();
+    var selectedList = List<DateTime>.generate(
+      widget.rangeLength,
       (index) => selectedDate.add(Duration(days: index)),
     );
+    serviceController.highlightedDates.value = selectedList;
+    print("------->${serviceController.highlightedDates}");
+    return selectedList;
   }
-  var _calendarFormat = CalendarFormat.month;
+
   @override
   Widget build(BuildContext context) {
-
-    return  Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("From which date you want to start your Service?",style: TextStyle(fontSize: MyFonts.bodyLargeSize, fontWeight: FontWeight.bold, color: Colors.grey)),
+        Text("From which date you want to start your Service?",
+            style: TextStyle(
+                fontSize: MyFonts.bodyLargeSize,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey)),
         TableCalendar(
+          pageJumpingEnabled: true,
+          headerStyle: const HeaderStyle(formatButtonVisible: false),
           pageAnimationEnabled: false,
           availableGestures: AvailableGestures.horizontalSwipe,
-          calendarFormat: _calendarFormat,
-          onFormatChanged: (format) {
-            setState(() {
-              _calendarFormat = format;
-            });
-          },
           firstDay: DateTime.now().add(const Duration(days: 1)),
           lastDay: DateTime(2025),
-          focusedDay: _selectedDate ?? DateTime.now().add(const Duration(days: 1)),
+          focusedDay:
+              _selectedDate ?? DateTime.now().add(const Duration(days: 1)),
           selectedDayPredicate: (day) =>
-          _selectedDate != null && isSameDay(_selectedDate, day),
+              _selectedDate != null && isSameDay(_selectedDate, day),
           onDaySelected: _onDaySelected,
           calendarBuilders: CalendarBuilders(
             defaultBuilder: (context, day, focusedDay) {
@@ -75,10 +79,7 @@ class _DateRangeCalendarState extends State<DateRangeCalendar> {
             todayBuilder: (context, day, focusedDay) {
               return Container(
                 decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Colors.grey
-                  ),
-
+                  border: Border.all(color: Colors.grey),
                   shape: BoxShape.circle,
                 ),
                 child: Center(
@@ -106,10 +107,12 @@ class _DateRangeCalendarState extends State<DateRangeCalendar> {
           ),
         ),
         if (_selectedDate != null) ...[
-          const SizedBox(height: 20),
-          Text('Selected Date: ${format.format(_selectedDate!)}'),
-          const Text('Highlighted Date Range:'),
-          Text("${format.format(_highlightedDates.first)} to ${format.format(_highlightedDates.last)}")
+          // const SizedBox(height: 20),
+          // Text('Selected Date: ${Constants.formatDate.format(_selectedDate!)}'),
+          const Text('Selected Date Range:'),
+          Text(
+              "${Constants.formatDate.format(_highlightedDates.first)} "
+                  "to ${Constants.formatDate.format(_highlightedDates.last)}")
           // for (var date in _highlightedDates) Text(date.toString()),
         ]
       ],
