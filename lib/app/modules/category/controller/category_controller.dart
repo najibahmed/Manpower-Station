@@ -9,6 +9,9 @@ import 'package:manpower_station/app/services/api_client.dart';
 class CategoryController extends BaseController {
   RxBool isLoading=true.obs;
   var allCategoryData = <dynamic>[].obs;
+  RxList oneCategoryServicesData = <dynamic>[].obs;
+
+
   Future<void> getAllServiceCategories() async {
     try {
       var url="http://172.16.154.43/api/services/categories/get/all";
@@ -21,7 +24,6 @@ class CategoryController extends BaseController {
             // }
             if (response.statusCode == 200) {
               var jsonData = response.data['categories'];
-              print('Category Data--------->$jsonData');
               var categoryList = jsonData.map((e) => CategoryModel.fromJson(e))
                   .toList();
               allCategoryData.assignAll(categoryList);// Update the RxList with new data
@@ -35,6 +37,30 @@ class CategoryController extends BaseController {
     }
   }
 
+  Future<void> getOneCategoryServices(String id) async {
+    try {
+      var url="http://172.16.154.43/api/services/categories/services/$id";
+      await BaseClient.safeApiCall(
+          url,
+          RequestType.get,
+          onSuccess: (response) {
+            // if (kDebugMode) {
+            //   print(response.data);
+            // }
+            if (response.statusCode == 200) {
+              var jsonData = response.data['servicesLists'];
+              var serviceList = jsonData.map((item) => ServiceModel.fromJson(item))
+                  .toList();
+              oneCategoryServicesData.assignAll(serviceList);// Update the RxList with new data
+            } else {
+              print('Failed to load services by one category: ${response.statusMessage}');
+            }
+          }
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   void onInit() async{

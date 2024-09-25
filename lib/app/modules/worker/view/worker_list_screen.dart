@@ -2,101 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/preferred_size.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
+import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 
-class WorkerListScreen extends BaseView<WorkerController>{
-   WorkerListScreen({super.key});
-  final List<Worker> workers = [
-    Worker(
-        name: 'Samia Farhana Sumi',
-        gender: 'Female',
-        country: 'Mirpur',
-        age: 43,
-        fee: 15000,
-        imagePath: 'assets/jarin.jpg',
-        taskCompleted: 16),
-    Worker(
-        name: 'AIBE',
-        gender: 'Female',
-        country: 'Gulshan',
-        age: 28,
-        fee: 15000,
-        imagePath: 'assets/jarin.jpg',
-        taskCompleted: 22),
-    Worker(
-        name: 'MARY ',
-        gender: 'Female',
-        country: 'Uttara',
-        age: 36,
-        fee: 15000,
-        imagePath: 'assets/jarin.jpg',
-        taskCompleted: 25),
-    Worker(
-        name: 'Jane',
-        gender: 'Female',
-        country: 'Banani',
-        age: 29,
-        fee: 15000,
-        imagePath: 'assets/jarin.jpg',
-        taskCompleted: 15),
-    Worker(
-        name: 'Tamima',
-        gender: 'Female',
-        country: 'Banani',
-        age: 29,
-        fee: 15000,
-        imagePath: 'assets/jarin.jpg',
-        taskCompleted: 27),
-    Worker(
-        name: 'Taslima',
-        gender: 'Female',
-        country: 'Banani',
-        age: 29,
-        fee: 15000,
-        imagePath: 'assets/jarin.jpg',
-        taskCompleted: 14),
-    Worker(
-        name: 'Suborna',
-        gender: 'Female',
-        country: 'Banani',
-        age: 29,
-        fee: 15000,
-        imagePath: 'assets/jarin.jpg',
-        taskCompleted: 27),
-    Worker(
-        name: 'Samia',
-        gender: 'Female',
-        country: 'Banani',
-        age: 29,
-        fee: 15000,
-        imagePath: 'assets/jarin.jpg',
-        taskCompleted: 29),
-    Worker(
-        name: 'Akter',
-        gender: 'Female',
-        country: 'Banani',
-        age: 29,
-        fee: 15000,
-        imagePath: 'assets/jarin.jpg',
-        taskCompleted: 13),
-    // Add more workers if needed
-  ];
+class WorkerListScreen extends BaseView<WorkerController> {
+  WorkerListScreen({super.key});
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    // AppBar(
-    //   leading: IconButton(onPressed: (){
-    //     Get.back();
-    //   },
-    //       icon: const Icon(
-    //         Icons.arrow_back,
-    //         color: Colors.white,
-    //       )),
-    // );
     return null;
-    throw UnimplementedError();
   }
 
   @override
@@ -106,14 +24,17 @@ class WorkerListScreen extends BaseView<WorkerController>{
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            leading: IconButton(onPressed: (){
-          Get.back();
-        },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            )),
+            leading: IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                )),
           ),
+
+          /// Search Bar
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -161,101 +82,110 @@ class WorkerListScreen extends BaseView<WorkerController>{
               ),
             ),
           ),
+
+          /// Worker list Widget
           SliverPadding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 childAspectRatio:
-                0.7, // Adjust the aspect ratio based on your design
+                    0.7, // Adjust the aspect ratio based on your design
               ),
               delegate: SliverChildBuilderDelegate(
-                childCount: workers.length,
-                    (context, index) {
-                  final worker = workers[index];
-                  return Card(
-                    elevation: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 4),
-                            child: Center(
-                              child: Image.asset(
-                                worker.imagePath,
-                                height: size.height * 0.1,
-                                width: size.width * 0.1,
-                                fit: BoxFit.cover,
+                childCount: controller.isLoading.value
+                    ? 6
+                    : controller.allWorkerList.length,
+                (context, index) {
+                  if (controller.isLoading.value) {
+                    return _buildServiceCardShimmer();
+                  } else {
+                    WorkerModel worker = controller.allWorkerList[index];
+                    return Card(
+                      elevation: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 4),
+                              child: Center(
+                                child: Image.network(
+                                  'http://172.16.154.43/images/avatars/${worker.avatar}',
+                                  height: size.height * 0.1,
+                                  width: size.width * 0.1,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                          ),
-                          Center(
-                            child: Text(
-                              worker.name,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14),
+                            Center(
+                              child: Text(
+                                worker.username!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 14),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: size.height * 0.01,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Area:'),
-                                  Text('Age:'),
-                                  Text('Completed:'),
-                                  // Text('Fee:'),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(worker.country),
-                                  Text('${worker.age}'),
-                                  Text('${worker.taskCompleted} Task'),
-                                  // Text('${worker.fee} Tk'),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: size.height * 0.02,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: size.height * 0.035,
-                                width: size.width * 0.23,
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      // Get.toNamed(AppPages.CheckoutScreen);
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green,
-                                    ),
-                                    child: const Text(
-                                      'Proceed',
-                                      style: TextStyle(
-                                          fontSize: 12, color: Colors.white),
-                                    )),
-                              )
-                            ],
-                          )
-                        ],
+                            SizedBox(
+                              height: size.height * 0.01,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Area:'),
+                                    Text('Gender:'),
+                                    Text('Ratings:'),
+                                    // Text('Fee:'),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(worker.area!),
+                                    Text('${worker.gender}'),
+                                    Text('${worker.ratings} Stars'),
+                                    // Text('${worker.fee} Tk'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: size.height * 0.02,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: size.height * 0.035,
+                                  width: size.width * 0.23,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        // Get.toNamed(AppPages.CheckoutScreen);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            LightThemeColors.primaryColor,
+                                      ),
+                                      child: const Text(
+                                        'Proceed',
+                                        style: TextStyle(
+                                            fontSize: 12, color: Colors.white),
+                                      )),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
               ),
             ),
@@ -265,24 +195,36 @@ class WorkerListScreen extends BaseView<WorkerController>{
     );
   }
 }
-class Worker {
-  final String name;
-  final String gender;
-  final String country;
-  final int age;
-  final int fee;
-  final String imagePath;
-  final int taskCompleted;
 
-  Worker({
-    required this.name,
-    required this.taskCompleted,
-    required this.gender,
-    required this.country,
-    required this.age,
-    required this.fee,
-    required this.imagePath,
-  });
+Widget _buildServiceCardShimmer() {
+  return Card(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    ),
+    elevation: 4,
+    child: const Column(
+      children: [
+        ShimmerWidget.rectangular(height: 120),
+        SizedBox(
+          height: 10,
+        ),
+        ShimmerWidget.rectangular(
+          height: 20,
+          width: 110,
+        ),
+        Spacer(),
+        Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            child: Align(
+                alignment: Alignment.center,
+                child: ShimmerWidget.rectangular(
+                  height: 20,
+                  width: 150,
+                ))),
+        SizedBox(height: 10),
+      ],
+    ),
+  );
 }
 
 final categoryList = [

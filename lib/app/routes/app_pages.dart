@@ -132,7 +132,7 @@ class AppPages {
       name: _Paths.WorkerList,
       page: () =>   WorkerListScreen(),
         binding: WorkerBinding(),
-      transition: Transition.leftToRight
+      transition: Transition.rightToLeftWithFade
     ),
   ];
 }

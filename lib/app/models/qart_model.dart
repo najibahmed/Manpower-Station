@@ -4,11 +4,13 @@ const String cartFieldProductImageUrl = 'productImageUrl';
 const String cartFieldQuantity = 'quantity';
 const String cartFieldSalePrice = 'salePrice';
 const String cartFieldCategoryId = 'categoryId';
+const String cartFieldWorkerId = 'workerId';
 const String cartFieldTimekey = 'timeKey';
 
 class CartModel {
   String productId;
   String categoryId;
+  String workerId;
   String productName;
   String productImageUrl;
   num timeLimit;
@@ -18,6 +20,7 @@ class CartModel {
   CartModel(
       {required this.productId,
         required this.categoryId,
+        required this.workerId,
         required this.productName,
         required this.productImageUrl,
         this.timeLimit = 3,
@@ -28,6 +31,7 @@ class CartModel {
     return <String, dynamic>{
       cartFieldProductId: productId,
       cartFieldCategoryId: categoryId,
+      cartFieldWorkerId: workerId,
       cartFieldProductName: productName,
       cartFieldProductImageUrl: productImageUrl,
       cartFieldQuantity: timeLimit,
@@ -44,5 +48,6 @@ class CartModel {
     timeLimit: map[cartFieldQuantity],
     salePrice: map[cartFieldSalePrice],
     timeKey: map[cartFieldTimekey],
+    workerId: map[cartFieldWorkerId],
   );
 }

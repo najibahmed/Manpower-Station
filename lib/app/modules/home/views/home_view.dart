@@ -173,16 +173,17 @@ class HomeView extends BaseView<HomeController> {
                                 pauseAutoPlayOnTouch: true,
                                 viewportFraction: 1.0,
                               ),
-                              items: imageUrls.map((url) {
+                              items: controller.activeBanners.value.images?.map((url) {
+                                var image=url.image;
                                 return Builder(
                                   builder: (BuildContext context) {
                                     return Container(
                                       width: MediaQuery.of(context).size.width,
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 5.0),
-                                      child: Image.asset(
-                                        url,
-                                        fit: BoxFit.fill,
+                                      child: Image.network(
+                                        'http://172.16.154.43/images/banners/$image',
+                                        fit: BoxFit.fitWidth,
                                       ),
                                     );
                                   },

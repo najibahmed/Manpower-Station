@@ -19,7 +19,7 @@ class AuthenticationController extends BaseController {
   // final RxBool isOtpWrong= false.obs;
 
 
-
+/// Login with email or phone Number
   Future<void> loginWithPhoneOrEmail() async {
     try {
       Map<String, dynamic> requestData = {
@@ -31,10 +31,10 @@ class AuthenticationController extends BaseController {
         data: requestData,
         onSuccess: (response){
           if(response.statusCode==201){
-            if (kDebugMode) {
-              print('Success data here------${response.data['success']}');
-              print('Message data here------${response.data['message']}');
-            }
+            // if (kDebugMode) {
+            //   print('Success data here------${response.data['success']}');
+            //   print('Message data here------${response.data['message']}');
+            // }
             Get.snackbar('Success','${response.data['message']}');
             if(response.data['success'] == true){
               Get.toNamed(AppPages.OtpScreen);
@@ -48,7 +48,35 @@ class AuthenticationController extends BaseController {
       Get.snackbar('Error :',e.toString());
     }
   }
+  /// Login with email or phone Number
+  Future<void> loginWithGmail() async {
+    try {
+    //   Map<String, dynamic> requestData = {
+    //     'phone_or_email': phoneNumberEmailController.text.trim(),
+    //   };
+      await BaseClient.safeApiCall(
+        " 172.16.154.43/api/users/google",
+        RequestType.get,
+        onSuccess: (response){
+          if(response.statusCode==200){
+            // if (kDebugMode) {
+            //   print('Success data here------${response.data['success']}');
+            //   print('Message data here------${response.data['message']}');
+            // }
+            // if(response.data['success'] == true){
+            //   Get.toNamed(AppPages.OtpScreen);
+            // }else{
+            //   Get.snackbar('Error','Having problem to send otp');
+            // }
+          }
+        },
+      );
+    } catch (e) {
+      Get.snackbar('Error :',e.toString());
+    }
+  }
 
+  /// Otp verification
   Future<void> otpVerification(String pin) async {
     try {
       Map<String, dynamic> requestData = {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import '../model/service_list_model.dart';
 
 // class ServiceListView extends BaseView<ServiceController> {
@@ -92,7 +93,7 @@ class ServiceCard extends StatelessWidget {
                           Get.toNamed(AppPages.ServiceBooking,arguments:service);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: LightThemeColors.primaryColor,
                         ),
                         child: const Text(
                           'Book',
