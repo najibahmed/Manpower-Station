@@ -9,8 +9,6 @@ class HomeBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<HomeController>(
       () => HomeController(),
-    );Get.lazyPut<ServiceController>(
-      () => ServiceController(),
     );Get.lazyPut<CategoryController>(
       () => CategoryController(),
     );Get.lazyPut<OrderController>(

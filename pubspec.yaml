@@ -69,7 +69,10 @@ dependencies:
 #  rename_app: # rename app
   pinput: ^5.0.0
   table_calendar: ^3.1.2
-  webview_flutter: ^4.9.0
+  omni_datetime_picker: ^2.0.4
+
+#  webview_flutter: ^4.9.0
+#  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:

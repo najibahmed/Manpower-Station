@@ -24,6 +24,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
+            pinned: true,
             leading: IconButton(
                 onPressed: () {
                   Get.back();
@@ -32,56 +33,108 @@ class WorkerListScreen extends BaseView<WorkerController> {
                   Icons.arrow_back,
                   color: Colors.white,
                 )),
+            bottom:PreferredSize(preferredSize: const Size.fromHeight(60),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: InkWell(
+                        onTap: () {
+                          // showSearch(
+                          //     useRootNavigator: true,
+                          //     query: '',
+                          //     context: context,
+                          //     delegate: _itemSearchDelegate());
+                        },
+                        child: Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(.25),
+                            borderRadius: BorderRadius.circular(20),
+                            // border: Border.all(width: 1, color: Colors.black),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.search_outlined,
+                                color: Colors.black54,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Search',
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  // letterSpacing: 1,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )) ,
           ),
 
           /// Search Bar
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: InkWell(
-                  onTap: () {
-                    // showSearch(
-                    //     useRootNavigator: true,
-                    //     query: '',
-                    //     context: context,
-                    //     delegate: _itemSearchDelegate());
-                  },
-                  child: Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(.25),
-                      borderRadius: BorderRadius.circular(20),
-                      // border: Border.all(width: 1, color: Colors.black),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(
-                          Icons.search_outlined,
-                          color: Colors.black54,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Search',
-                          style: TextStyle(
-                            color: Colors.black54,
-                            // letterSpacing: 1,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: ClipRRect(
+          //       borderRadius: BorderRadius.circular(20),
+          //       child: InkWell(
+          //         onTap: () {
+          //           // showSearch(
+          //           //     useRootNavigator: true,
+          //           //     query: '',
+          //           //     context: context,
+          //           //     delegate: _itemSearchDelegate());
+          //         },
+          //         child: Container(
+          //           height: 40,
+          //           decoration: BoxDecoration(
+          //             color: Colors.grey.withOpacity(.25),
+          //             borderRadius: BorderRadius.circular(20),
+          //             // border: Border.all(width: 1, color: Colors.black),
+          //           ),
+          //           child: const Row(
+          //             mainAxisAlignment: MainAxisAlignment.start,
+          //             children: [
+          //               SizedBox(
+          //                 width: 10,
+          //               ),
+          //               Icon(
+          //                 Icons.search_outlined,
+          //                 color: Colors.black54,
+          //               ),
+          //               SizedBox(
+          //                 width: 10,
+          //               ),
+          //               Text(
+          //                 'Search',
+          //                 style: TextStyle(
+          //                   color: Colors.black54,
+          //                   // letterSpacing: 1,
+          //                 ),
+          //               )
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
           /// Worker list Widget
           SliverPadding(
@@ -102,7 +155,8 @@ class WorkerListScreen extends BaseView<WorkerController> {
                   if (controller.isLoading.value) {
                     return _buildServiceCardShimmer();
                   } else {
-                    WorkerModel worker = controller.allWorkerList[index];
+                    WorkerModel
+                    worker = controller.allWorkerList[index];
                     return Card(
                       elevation: 4,
                       child: Padding(
@@ -167,6 +221,10 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                   width: size.width * 0.23,
                                   child: ElevatedButton(
                                       onPressed: () {
+                                        if(controller.selectedWorkerList.length<=1){
+                                          return
+                                          controller.addWorker(worker);
+                                        }
                                         // Get.toNamed(AppPages.CheckoutScreen);
                                       },
                                       style: ElevatedButton.styleFrom(

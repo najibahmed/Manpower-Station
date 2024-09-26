@@ -4,27 +4,23 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/order_history/controller/order_controller.dart';
-import 'package:manpower_station/config/theme/dark_theme_colors.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+
+import '../../../../config/theme/dark_theme_colors.dart';
 
 class OrderHistoryView extends BaseView<OrderController> {
   const OrderHistoryView({super.key});
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
-    return AppBar(
-      centerTitle: true,
+    return null;
+      AppBar(
       backgroundColor:
-          Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
-      title: Text(
-        'Order History',
-        style: TextStyle(
-          fontSize: MyFonts.appBarTittleSize,
-        ),
-      ),
+          Get.isDarkMode ? DarkThemeColors.backgroundColor :LightThemeColors.backgroundColor,
       bottom:  PreferredSize(
-        preferredSize: const Size.fromHeight(20),
+        preferredSize: const Size.fromHeight(10),
         child: SizedBox(
           height: 40,
           child: TabBar(
@@ -44,19 +40,47 @@ class OrderHistoryView extends BaseView<OrderController> {
   @override
   Widget body(BuildContext context) {
     // TODO: implement body
-    return Column(
-      children: [
-        SizedBox(
-          height: 600,
-          child: TabBarView(
-            controller: controller.tabController,
-            children: const [
-              ActiveOrder(),
-              OrderHistory(),
-            ],
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Colors.white30,
+            bottom:  PreferredSize(
+              preferredSize: const Size.fromHeight(10),
+              child: SizedBox(
+                height: 40,
+                child: TabBar(
+                  indicatorWeight: 6,
+                  dividerColor: Colors.grey,
+                  indicatorColor: Colors.green,
+                  labelStyle: const TextStyle(color: Colors.green),
+                  controller: controller.tabController,
+                  tabs: const [
+                    Tab(text: 'Active Order'),
+                    Tab(text: 'Order History'),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
-      ],
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 600,
+                  child: TabBarView(
+                    controller: controller.tabController,
+                    children: const [
+                      ActiveOrder(),
+                      OrderHistory(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

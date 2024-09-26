@@ -9,6 +9,7 @@ import '../views/checkout_screen.dart';
 class CheckoutController extends BaseController {
   final serviceController = Get.put(ServiceController());
   RxString paymentMethodGroupValue = PaymentMethod.cod.obs;
+  RxList cartItems=[].obs;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();

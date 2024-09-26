@@ -7,6 +7,7 @@ import 'package:manpower_station/app/modules/service/controller/service_controll
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/modules/service/view/service_reviews.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
@@ -95,7 +96,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                   children: [
                     Text( "${calculatePriceAfterDiscount(service.servicePrice!, service.serviceDiscount!.discount!)}৳ ",
                       style: const TextStyle(
-                          fontSize: 20, color: Colors.green, fontWeight: FontWeight.bold),
+                          fontSize: 20, color: LightThemeColors.primaryColor, fontWeight: FontWeight.bold),
                     ),
                      Text(
                       "${service.servicePrice}",

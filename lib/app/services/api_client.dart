@@ -26,7 +26,7 @@ class BaseClient {
       'Accept': 'application/json',
       'Authorization': Constants.accessToken
     },
-    // connectTimeout: const Duration(seconds: 30),
+    connectTimeout: const Duration(seconds: 10),
     // sendTimeout: const Duration(seconds: 30),
   ))
 
@@ -115,7 +115,6 @@ class BaseClient {
           onReceiveProgress: onReceiveProgress,
           queryParameters: queryParameters,
           options: Options(
-            receiveTimeout: const Duration(seconds: _timeoutInSeconds),
             headers: headers,
           ),
         );
@@ -148,6 +147,7 @@ class BaseClient {
       // 3) return response (api done successfully)
       await onSuccess(response);
     } on DioException catch (error) {
+      print('api error');
       // dio error (api reach the server but not performed successfully
       _handleDioError(error: error, url: url, onError: onError);
     } on SocketException {

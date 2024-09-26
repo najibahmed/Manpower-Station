@@ -38,7 +38,7 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
 
   @override
   void onInit() {
-     getAllBookingsByUid();
+     // getAllBookingsByUid();
     tabController = TabController(length: 2,initialIndex: 0,vsync: this);
     super.onInit();
   }

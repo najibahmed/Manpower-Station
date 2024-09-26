@@ -15,7 +15,8 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
   late TabController tabController;
   var tabIndex = 0.obs;
   RxList<DateTime> highlightedDates = <DateTime>[].obs;
-  Rx<DateTime> selectedMonth=DateTime.now().add(Duration(days: 1)).obs;
+  Rx<DateTime>? selectedDay=DateTime.now().obs;
+  Rx<DateTime?>selectedDateTime=DateTime.now().obs;
 
 
 

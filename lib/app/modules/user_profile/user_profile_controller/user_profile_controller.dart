@@ -117,7 +117,7 @@ class UserController extends BaseController {
 
   @override
   void onInit() {
-    getUserInformation();
+    // getUserInformation();
     Future.delayed(const Duration(seconds:1),(){
       isLoading.value=false;
     });

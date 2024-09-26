@@ -6,6 +6,16 @@ import 'package:manpower_station/app/services/api_client.dart';
 class WorkerController extends BaseController{
   var allWorkerList= <dynamic>[].obs;
   RxBool isLoading=true.obs;
+  RxList<WorkerModel>selectedWorkerList=<WorkerModel>[].obs;
+
+ void addWorker(WorkerModel worker){
+   return selectedWorkerList.add(worker);
+ }
+
+ void removeWorker( workerId){
+    var temp=selectedWorkerList.where((worker)=>worker.id!=workerId).toList();
+    selectedWorkerList.value=temp;
+ }
 
   Future<void> getAllWorkerData() async {
     try {
@@ -33,7 +43,7 @@ class WorkerController extends BaseController{
   @override
   void onInit() {
     getAllWorkerData();
-    Future.delayed(const Duration(seconds:2),(){
+    Future.delayed(const Duration(seconds:1),(){
       isLoading.value=false;
     });
     // TODO: implement onInit
