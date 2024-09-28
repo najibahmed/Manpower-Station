@@ -222,6 +222,8 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       style: ElevatedButton.styleFrom(
                           side: const BorderSide(color: Colors.green)),
                       onPressed: () {
+                            controller.selectedService=service;
+                            controller.addToCartList();
                         // Get.toNamed(AppPages.CheckoutScreen, arguments: service);
                         Get.toNamed(AppPages.WorkerListView);
                       },

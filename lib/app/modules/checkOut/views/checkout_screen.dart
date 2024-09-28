@@ -49,7 +49,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: _saveOrder,
+                onPressed: controller.saveOrder,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   backgroundColor: Colors.green,
@@ -66,51 +66,8 @@ class CheckOutScreen extends BaseView<CheckoutController> {
     );
   }
 
-  void _saveOrder() async{
-
-    if (controller.nameController.text.isEmpty) {
-      CustomSnackBar.showCustomToast(message:  'Please provide your address');
-      return;
-    }
-    if (controller.addressLine1Controller.text.isEmpty) {
-      CustomSnackBar.showCustomToast(message:  'Please provide your zip code');
-      return;
-    }
-    if (controller.cityController.text.isEmpty) {
-      CustomSnackBar.showCustomToast(message:  'Please type your city');
-      return;
-    }if (controller.phoneNumberController.text.isEmpty) {
-      CustomSnackBar.showCustomToast(message:  'Please enter your phone number');
-      return;
-    }
-    // final orderModel = OrderModel(
-    //
-    // );
-    try {
-
-    } catch (error) {
-
-      rethrow;
-    }
-  }
-
-  }
-
-  Widget buildHeaderSection(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-      child: Text(
-        title,
-        style: const TextStyle(
-            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
-      ),
-    );
-  }
-
-// Widget to display order summary
-
   Widget orderSummary() {
-    return const Card(
+    return  Card(
       elevation: 3,
       child: Padding(
         padding: EdgeInsets.all(16.0),
@@ -121,7 +78,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Subtotal:'),
-                Text('450${Constants.banglaCurrency}'),
+                Text('${controller.cartItem.first.servicePrice}${Constants.banglaCurrency}'),
               ],
             ),
             SizedBox(height: 10),
@@ -136,8 +93,8 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Discount 10%:'),
-                Text('- 6.70${Constants.banglaCurrency}'),
+                Text('${controller.cartItem.first.discountModel.discount}%:'),
+                Text('- ${controller.getDiscountAmount(controller.cartItem.first.discountModel.hashCode, controller.cartItem.first.servicePrice)}${Constants.banglaCurrency}'),
               ],
             ),
             Divider(
@@ -158,6 +115,23 @@ class CheckOutScreen extends BaseView<CheckoutController> {
       ),
     );
   }
+
+  }
+
+  Widget buildHeaderSection(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+      child: Text(
+        title,
+        style: const TextStyle(
+            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
+      ),
+    );
+  }
+
+// Widget to display order summary
+
+
 
 
 Widget customServiceTile(String title, String imagePath) {

@@ -4,7 +4,9 @@ import 'package:flutter/src/widgets/preferred_size.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
+import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
+import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -12,6 +14,7 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 
 class WorkerListScreen extends BaseView<WorkerController> {
   WorkerListScreen({super.key});
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return null;
@@ -19,7 +22,9 @@ class WorkerListScreen extends BaseView<WorkerController> {
 
   @override
   Widget body(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery
+        .of(context)
+        .size;
     return SafeArea(
       child: CustomScrollView(
         slivers: [
@@ -33,14 +38,17 @@ class WorkerListScreen extends BaseView<WorkerController> {
                   Icons.arrow_back,
                   color: Colors.white,
                 )),
-            bottom:PreferredSize(preferredSize: const Size.fromHeight(60),
+            bottom: PreferredSize(preferredSize: const Size.fromHeight(60),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10))
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 8),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: InkWell(
@@ -84,7 +92,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                       ),
                     ),
                   ),
-                )) ,
+                )),
           ),
 
           /// Search Bar
@@ -145,13 +153,13 @@ class WorkerListScreen extends BaseView<WorkerController> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 childAspectRatio:
-                    0.7, // Adjust the aspect ratio based on your design
+                0.7, // Adjust the aspect ratio based on your design
               ),
               delegate: SliverChildBuilderDelegate(
                 childCount: controller.isLoading.value
                     ? 6
                     : controller.allWorkerList.length,
-                (context, index) {
+                    (context, index) {
                   if (controller.isLoading.value) {
                     return _buildServiceCardShimmer();
                   } else {
@@ -170,7 +178,8 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                   horizontal: 8.0, vertical: 4),
                               child: Center(
                                 child: Image.network(
-                                  'http://172.16.154.43/images/avatars/${worker.avatar}',
+                                  'http://172.16.154.43/images/avatars/${worker
+                                      .avatar}',
                                   height: size.height * 0.1,
                                   width: size.width * 0.1,
                                   fit: BoxFit.cover,
@@ -221,15 +230,17 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                   width: size.width * 0.23,
                                   child: ElevatedButton(
                                       onPressed: () {
-                                        if(controller.selectedWorkerList.length<=1){
+                                        if (controller.selectedWorkerList
+                                            .length == 1) {
                                           return
-                                          controller.addWorker(worker);
+                                            controller.addWorker(worker);
                                         }
+                                        print(controller.allWorkerList);
                                         // Get.toNamed(AppPages.CheckoutScreen);
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:
-                                            LightThemeColors.primaryColor,
+                                        LightThemeColors.primaryColor,
                                       ),
                                       child: const Text(
                                         'Proceed',
@@ -252,51 +263,52 @@ class WorkerListScreen extends BaseView<WorkerController> {
       ),
     );
   }
-}
 
-Widget _buildServiceCardShimmer() {
-  return Card(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15),
-    ),
-    elevation: 4,
-    child: const Column(
-      children: [
-        ShimmerWidget.rectangular(height: 120),
-        SizedBox(
-          height: 10,
-        ),
-        ShimmerWidget.rectangular(
-          height: 20,
-          width: 110,
-        ),
-        Spacer(),
-        Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Align(
-                alignment: Alignment.center,
-                child: ShimmerWidget.rectangular(
-                  height: 20,
-                  width: 150,
-                ))),
-        SizedBox(height: 10),
-      ],
-    ),
-  );
-}
 
-final categoryList = [
-  "Home Cleaning",
-  "Office Cleaning",
-  "Cloth Washing",
-  "Printer Service",
-  "Desktop Service",
-  "Laptop Service",
-  "Over Service",
-  "Commercial Shifting",
-  "Painting Service",
-  "Carpentry Service",
-  "CCTv Camera Service",
-  "Driver Service",
-  "Car Wash",
-];
+  Widget _buildServiceCardShimmer() {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      elevation: 4,
+      child: const Column(
+        children: [
+          ShimmerWidget.rectangular(height: 120),
+          SizedBox(
+            height: 10,
+          ),
+          ShimmerWidget.rectangular(
+            height: 20,
+            width: 110,
+          ),
+          Spacer(),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Align(
+                  alignment: Alignment.center,
+                  child: ShimmerWidget.rectangular(
+                    height: 20,
+                    width: 150,
+                  ))),
+          SizedBox(height: 10),
+        ],
+      ),
+    );
+  }
+
+  final categoryList = [
+    "Home Cleaning",
+    "Office Cleaning",
+    "Cloth Washing",
+    "Printer Service",
+    "Desktop Service",
+    "Laptop Service",
+    "Over Service",
+    "Commercial Shifting",
+    "Painting Service",
+    "Carpentry Service",
+    "CCTv Camera Service",
+    "Driver Service",
+    "Car Wash",
+  ];
+}

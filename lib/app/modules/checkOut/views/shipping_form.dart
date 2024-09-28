@@ -1,5 +1,7 @@
 // Shipping Info Form Screen
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 
 // Widget for shipping form
 class ShippingForm extends StatefulWidget {
@@ -10,15 +12,16 @@ class ShippingForm extends StatefulWidget {
 }
 
 class _ShippingFormState extends State<ShippingForm> {
-  final _formKey = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
+    final controller=Get.put(CheckoutController());
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Form(
-      key: _formKey,
+      key: controller.formKey,
       child: Card(
         elevation: 4,
         child: Padding(
@@ -40,6 +43,12 @@ class _ShippingFormState extends State<ShippingForm> {
                         BorderSide(color: Colors.black54, width: 1.0),
                   ),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Provide Your name';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 style: const TextStyle(fontWeight: FontWeight.normal),
@@ -54,6 +63,12 @@ class _ShippingFormState extends State<ShippingForm> {
                     borderSide: BorderSide(color: Colors.black54, width: 1.0),
                   ),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Provide a valid phone number';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 style: const TextStyle(fontWeight: FontWeight.normal),
@@ -64,6 +79,12 @@ class _ShippingFormState extends State<ShippingForm> {
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color:  Colors.black54 , width: 1.0),
                   ),),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Provide a valid Address';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 style: const TextStyle(fontWeight: FontWeight.normal),
@@ -74,6 +95,12 @@ class _ShippingFormState extends State<ShippingForm> {
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color:  Colors.black54 , width: 1.0),
                   ),),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Provide a Area name';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 style: const TextStyle(fontWeight: FontWeight.normal),
@@ -84,6 +111,12 @@ class _ShippingFormState extends State<ShippingForm> {
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color:  Colors.black54 , width: 1.0),
                   ),),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Provide a city name';
+                  }
+                  return null;
+                },
               ),
               Row(
                 children: [
@@ -97,6 +130,12 @@ class _ShippingFormState extends State<ShippingForm> {
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color:  Colors.black54 , width: 1.0),
                         ),),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Provide a state name';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   // const SizedBox(width: 20),

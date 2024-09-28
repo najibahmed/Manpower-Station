@@ -147,7 +147,6 @@ class BaseClient {
       // 3) return response (api done successfully)
       await onSuccess(response);
     } on DioException catch (error) {
-      print('api error');
       // dio error (api reach the server but not performed successfully
       _handleDioError(error: error, url: url, onError: onError);
     } on SocketException {
@@ -211,7 +210,7 @@ class BaseClient {
         url: url,
       ));
     } else {
-      _handleError(Strings.serverNotResponding.tr);
+      _handleError("TimeOut here ${Strings.serverNotResponding.tr}");
     }
   }
 

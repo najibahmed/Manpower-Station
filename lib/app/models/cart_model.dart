@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-import 'package:manpower_station/app/models/worker_model.dart';
+import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
+
+
 
 const String cartFieldServiceId = '_id';
 const String cartFieldServiceName = 'name';
