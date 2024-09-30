@@ -17,12 +17,21 @@ class HelpView extends BaseView<HelpController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
     return AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: LightThemeColors.primaryColor,
+            )),
         centerTitle: true,
         backgroundColor:
             Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
         title: Text(
           'Help & Support',
           style: TextStyle(
+            color: Colors.black54,
             fontSize: MyFonts.appBarTittleSize,
           ),
         ));

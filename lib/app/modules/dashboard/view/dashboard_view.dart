@@ -6,6 +6,7 @@ import 'package:manpower_station/app/modules/help_support/view/help_view.dart';
 import 'package:manpower_station/app/modules/home/views/home_view.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
 import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
+import 'package:manpower_station/app/modules/search_view/view/search_screen.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 
 class DashboardScreen extends BaseView<DashBoardController>{
@@ -26,7 +27,7 @@ class DashboardScreen extends BaseView<DashBoardController>{
           children: const [
             HomeView(),
             OrderHistoryView(),
-            HelpView(),
+            SearchScreen(),
             MenuView(),
 
           ],
@@ -49,8 +50,8 @@ class DashboardScreen extends BaseView<DashBoardController>{
           label: 'Order',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.support_agent),
-          label: 'Support',
+          icon: Icon(Icons.search_outlined),
+          label: 'Search',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.menu),

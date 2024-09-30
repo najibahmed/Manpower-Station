@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
-import 'package:manpower_station/app/modules/service/model/address_model.dart';
 import 'package:manpower_station/app/modules/user_profile/model/user_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 import 'package:manpower_station/utils/constants.dart';

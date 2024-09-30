@@ -146,10 +146,8 @@ class UserProfileScreen extends BaseView<UserController> {
           //   ],
           // ),
           CustomListTileEditButton(context:context,title:'Name',onEdit:(value)async{
-            controller.showLoading();
             await controller.updateUserProfileField(FieldType.username, value);
             print('this is value-->$value');
-            controller.hideLoading();
           }, icon: Icons.person, subTitle: 'Update name' ?? 'name'),
           const SizedBox(height: 15,),
           CustomListTileEditButton(context:context,title:'Phone Number',onEdit:(value){
@@ -161,15 +159,12 @@ class UserProfileScreen extends BaseView<UserController> {
               title:  'Email',
               onEdit:(value) async {
                 await controller.updateUserProfileField(FieldType.email, value);
-                controller.hideLoading();
             print('this is value-->$value');
           }, icon: Icons.phone_android_outlined, subTitle:  controller.userData.value.phoneOrEmail??'Update Email Address'),
           const SizedBox(height: 15,),
           CustomListTileEditButton(context:context,icon:Icons.pin_drop,title:'Address', onEdit:(value)async{
-            controller.showLoading();
             await controller.updateUserProfileField(FieldType.address, value);
             print('this is value-->$value');
-            controller.hideLoading();
     }, subTitle:  'Update address' ?? 'name',)
         ],
       ),

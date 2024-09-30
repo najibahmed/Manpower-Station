@@ -4,6 +4,7 @@ import 'package:manpower_station/app/modules/help_support/controller/help_contro
 import 'package:manpower_station/app/modules/home/controllers/home_controller.dart';
 import 'package:manpower_station/app/modules/menu/controller/menu_controller.dart';
 import 'package:manpower_station/app/modules/order_history/controller/order_controller.dart';
+import 'package:manpower_station/app/modules/search_view/controller/search_controller.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
@@ -31,6 +32,8 @@ class DashboardBinding extends Bindings {
           () => UserController(),
     );Get.lazyPut<WorkerController>(
           () => WorkerController(),
+    );Get.lazyPut<SearchViewController>(
+          () => SearchViewController(),
     );
   }
 }

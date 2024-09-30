@@ -86,8 +86,8 @@ class ServiceController extends BaseController
         startingDate: selectedDateTime.value.toString(),
         servicePrice: selectedService.servicePrice!,
         serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey.value}");
-    print(cartModel.toMap());
     cartItems.add(cartModel);
+    print("----cart first item---->${cartItems.first.toMap()}");
   }
 
   @override

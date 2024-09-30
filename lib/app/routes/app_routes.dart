@@ -21,6 +21,9 @@ abstract class Routes {
   static const singleCatServices = _Paths.SingleCatServices;
   static const updateProfile = _Paths.UpdateProfile;
   static const workerList = _Paths.WorkerList;
+  static const workerDetails = _Paths.WorkerDetails;
+  static const supportScreen = _Paths.SupportView;
+
 }
 
 abstract class _Paths {
@@ -41,5 +44,7 @@ abstract class _Paths {
   static const SingleCatServices = '/single_category_services';
   static const UpdateProfile = '/update_profile';
   static const WorkerList = '/worker_list';
+  static const WorkerDetails = '/worker_details';
+  static const SupportView = '/support_view';
 
 }

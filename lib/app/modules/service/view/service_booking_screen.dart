@@ -18,10 +18,10 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return  null;
+    return null;
   }
 
-  DateFormat format = DateFormat('dd/MMM/yyyy');
+  DateFormat format = DateFormat('dd/MMM/yyyy HH:mm a');
   @override
   Widget body(BuildContext context) {
     final ServiceModel service = Get.arguments;
@@ -32,11 +32,14 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
             slivers: [
               SliverAppBar(
                 pinned: true,
-                leading:IconButton(
+                leading: IconButton(
                     onPressed: () {
                       Get.back();
                     },
-                    icon: const Icon(Icons.arrow_back,color: Colors.white,)),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    )),
                 title: Text(
                   '${service.name}',
                   overflow: TextOverflow.clip,
@@ -47,14 +50,16 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                 ),
               ),
               SliverToBoxAdapter(
-                child:Padding(
-                  padding:  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 8),
                       ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
                         child: Image.network(
                           'http://172.16.154.43/images/services/${service.image}', // Placeholder for the image
                           height: 180,
@@ -82,12 +87,12 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                 elevation: 5,
                                 decoration: const InputDecoration(
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Colors.grey, width: 2),
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 2),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Colors.green, width: 2),
+                                    borderSide: BorderSide(
+                                        color: Colors.green, width: 2),
                                   ),
                                   filled: true,
                                   // fillColor: Colors.grey,
@@ -113,12 +118,12 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                 isExpanded: true,
                                 decoration: const InputDecoration(
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Colors.grey, width: 2),
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 2),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Colors.green, width: 2),
+                                    borderSide: BorderSide(
+                                        color: Colors.green, width: 2),
                                   ),
                                   filled: true,
                                   // fillColor: Colors.grey,
@@ -143,31 +148,46 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       const SizedBox(height: 16),
                       Center(
                         child: CustomButton(
-                            title: "Select Schedule",
-                            height: 40, width: 200, onTap: ()
-                       async {
-                          controller.selectedDateTime.value = await showOmniDateTimePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2024),
-                            lastDate: DateTime(2025),
-                            is24HourMode: false,
-                            isShowSeconds: false,
-                            minutesInterval: 1,
-                            secondsInterval: 1,
-                            borderRadius: const BorderRadius.all(Radius.circular(16)),
-                            constraints: const BoxConstraints(
-                              maxWidth: 400,
-                              maxHeight: 650,
-                            ),
-                            barrierDismissible: true,
-                          );
-                          print(controller.selectedDateTime.value);
-                        },),
+                          title: "Select Schedule",
+                          height: 40,
+                          width: 200,
+                          onTap: () async {
+                            controller.selectedDateTime.value =
+                                await showOmniDateTimePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2025),
+                              is24HourMode: false,
+                              isShowSeconds: false,
+                              minutesInterval: 1,
+                              secondsInterval: 1,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(16)),
+                              constraints: const BoxConstraints(
+                                maxWidth: 400,
+                                maxHeight: 650,
+                              ),
+                              barrierDismissible: true,
+                            );
+                            print(controller.selectedDateTime.value);
+                          },
+                        ),
                       ),
-                      Text('Selected Date: ${format.format(controller.selectedDateTime.value!)}'),
                       const SizedBox(height: 16),
-                      TableBasicsExample(),
+                      Card(
+                          elevation: 5,
+                          child: SizedBox(
+                            height: 40,
+                            width: double.infinity,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                  'Selected Date: ${format.format(controller.selectedDateTime.value!)}'),
+                            ),
+                          )),
+                      const SizedBox(height: 16),
+                      // TableBasicsExample(),
                       // Text(
                       //   'Select Work Start Time',
                       //   style: TextStyle(color: Colors.red),
@@ -222,8 +242,8 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       style: ElevatedButton.styleFrom(
                           side: const BorderSide(color: Colors.green)),
                       onPressed: () {
-                            controller.selectedService=service;
-                            controller.addToCartList();
+                        controller.selectedService = service;
+                        controller.addToCartList();
                         // Get.toNamed(AppPages.CheckoutScreen, arguments: service);
                         Get.toNamed(AppPages.WorkerListView);
                       },

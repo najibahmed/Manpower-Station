@@ -10,7 +10,7 @@ class LightThemeColors
   static const Color accentColor = Color(0xFFD9EDE1);
 
   //APPBAR
-  static const Color appBarColor = primaryColor;
+  static const Color appBarColor = Colors.white;
 
   //SCAFFOLD
   static const Color scaffoldBackgroundColor = Colors.white;

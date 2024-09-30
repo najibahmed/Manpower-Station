@@ -23,7 +23,6 @@ class CheckOutScreen extends BaseView<CheckoutController> {
   Widget body(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    final ServiceModel service = Get.arguments;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -33,8 +32,8 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             buildHeaderSection('Service Info'),
             // ProductInfo(),
             customServiceTile(
-              'Maid Service',
-              service.image.toString(),
+              controller.cartItem.first.serviceName,
+              controller.cartItem.first.serviceImageUrl.toString(),
             ),
             SizedBox(height: screenHeight * 0.02),
             buildHeaderSection('Order Summary'),
@@ -94,7 +93,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('${controller.cartItem.first.discountModel.discount}%:'),
-                Text('- ${controller.getDiscountAmount(controller.cartItem.first.discountModel.hashCode, controller.cartItem.first.servicePrice)}${Constants.banglaCurrency}'),
+                Text('- ${controller.getDiscountAmount(controller.cartItem.first.discountModel.discount!, controller.cartItem.first.servicePrice)}${Constants.banglaCurrency}'),
               ],
             ),
             Divider(

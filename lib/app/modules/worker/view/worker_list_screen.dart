@@ -165,92 +165,97 @@ class WorkerListScreen extends BaseView<WorkerController> {
                   } else {
                     WorkerModel
                     worker = controller.allWorkerList[index];
-                    return Card(
-                      elevation: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0, vertical: 4),
-                              child: Center(
-                                child: Image.network(
-                                  'http://172.16.154.43/images/avatars/${worker
-                                      .avatar}',
-                                  height: size.height * 0.1,
-                                  width: size.width * 0.1,
-                                  fit: BoxFit.cover,
+                    return InkWell(
+                      onTap: (){
+                        Get.toNamed(AppPages.WorkerDetails,arguments: worker);
+                      },
+                      child: Card(
+                        elevation: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0, vertical: 4),
+                                child: Center(
+                                  child: Image.network(
+                                    'http://172.16.154.43/images/avatars/${worker
+                                        .avatar}',
+                                    height: size.height * 0.1,
+                                    width: size.width * 0.1,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Center(
-                              child: Text(
-                                worker.username!,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 14),
+                              Center(
+                                child: Text(
+                                  worker.username!,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 14),
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: size.height * 0.01,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Area:'),
-                                    Text('Gender:'),
-                                    Text('Ratings:'),
-                                    // Text('Fee:'),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(worker.area!),
-                                    Text('${worker.gender}'),
-                                    Text('${worker.ratings} Stars'),
-                                    // Text('${worker.fee} Tk'),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: size.height * 0.035,
-                                  width: size.width * 0.23,
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        if (controller.selectedWorkerList
-                                            .length == 1) {
-                                          return
-                                            controller.addWorker(worker);
-                                        }
-                                        print(controller.allWorkerList);
-                                        // Get.toNamed(AppPages.CheckoutScreen);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                        LightThemeColors.primaryColor,
-                                      ),
-                                      child: const Text(
-                                        'Proceed',
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.white),
-                                      )),
-                                )
-                              ],
-                            )
-                          ],
+                              SizedBox(
+                                height: size.height * 0.01,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Area:'),
+                                      Text('Gender:'),
+                                      Text('Ratings:'),
+                                      // Text('Fee:'),
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(worker.area!),
+                                      Text('${worker.gender}'),
+                                      Text('${worker.ratings} Stars'),
+                                      // Text('${worker.fee} Tk'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: size.height * 0.02,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: size.height * 0.035,
+                                    width: size.width * 0.23,
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          if (controller.selectedWorkerList
+                                              .length == 1) {
+                                            return
+                                              controller.addWorker(worker);
+                                          }
+                                          print('-----selected worker list---->${controller.selectedWorkerList.first.toJson()}');
+                                          Get.toNamed(AppPages.CheckoutScreen);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                          LightThemeColors.primaryColor,
+                                        ),
+                                        child: const Text(
+                                          'Proceed',
+                                          style: TextStyle(
+                                              fontSize: 12, color: Colors.white),
+                                        )),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     );

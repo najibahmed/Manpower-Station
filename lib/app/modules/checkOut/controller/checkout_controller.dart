@@ -60,21 +60,21 @@ class CheckoutController extends BaseController {
           },
         };
         var url="http://172.16.154.43/api/payments/ammerpay/create";
-        await BaseClient.safeApiCall(
-            url,
-            RequestType.post,
-            data: requestData,
-            onSuccess: (response) {
-              // if (kDebugMode) {
-              //   print(response.data);
-              // }
-              if (response.statusCode == 200) {
-
-              } else {
-                print('Failed to Book Service: ${response.statusMessage}');
-              }
-            }
-        );
+        // await BaseClient.safeApiCall(
+        //     url,
+        //     RequestType.post,
+        //     data: requestData,
+        //     onSuccess: (response) {
+        //       // if (kDebugMode) {
+        //       //   print(response.data);
+        //       // }
+        //       if (response.statusCode == 200) {
+        //
+        //       } else {
+        //         print('Failed to Book Service: ${response.statusMessage}');
+        //       }
+        //     }
+        // );
 
       } catch (error) {
         rethrow;

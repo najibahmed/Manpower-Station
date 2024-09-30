@@ -5,6 +5,8 @@ import 'package:manpower_station/app/modules/category/bindings/category_bindings
 import 'package:manpower_station/app/modules/category/views/single_category_services.dart';
 import 'package:manpower_station/app/modules/checkOut/bindings/checkout_binding.dart';
 import 'package:manpower_station/app/modules/checkOut/views/checkout_screen.dart';
+import 'package:manpower_station/app/modules/help_support/binding/help_binding.dart';
+import 'package:manpower_station/app/modules/help_support/view/help_view.dart';
 import 'package:manpower_station/app/modules/service/bindings/service_binding.dart';
 import 'package:manpower_station/app/modules/service/view/service_booking_screen.dart';
 import 'package:manpower_station/app/modules/service/view/service_details.dart';
@@ -15,13 +17,13 @@ import 'package:manpower_station/app/modules/authentication/verification_done.da
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_view.dart';
 import 'package:manpower_station/app/modules/dashboard/bindings/dashboard_binding.dart';
 import 'package:manpower_station/app/modules/dashboard/view/dashboard_view.dart';
-import 'package:manpower_station/app/modules/faq/bindings/faq_bindings.dart';
-import 'package:manpower_station/app/modules/faq/view/faq_view.dart';
+import 'package:manpower_station/app/modules/help_support/view/faq_view.dart';
 import 'package:manpower_station/app/modules/menu/bindings/menu_bindings.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
 import 'package:manpower_station/app/modules/order_history/binding/order_binding.dart';
 import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
 import 'package:manpower_station/app/modules/worker/bindings/worker_binding.dart';
+import 'package:manpower_station/app/modules/worker/view/worker_details.dart';
 import 'package:manpower_station/app/modules/worker/view/worker_list_screen.dart';
 import 'package:manpower_station/redirect_screen.dart';
 import '../modules/authentication/Auth Bindings/authentication_binding.dart';
@@ -50,6 +52,8 @@ class AppPages {
   static const SingleCateServicesScreen = Routes.singleCatServices;
   static const UpdateProfile = Routes.updateProfile;
   static const WorkerListView = Routes.workerList;
+  static const WorkerDetails = Routes.workerDetails;
+  static const SupportScreen = Routes.supportScreen;
 
   static final routes = [
     GetPage(
@@ -96,7 +100,7 @@ class AppPages {
     ),GetPage(
       name: _Paths.FaqScreen,
       page: () =>   FaqView(),
-        binding: FaqBindings(),
+        binding: HelpBinding(),
       transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.ServiceBooking,
@@ -132,6 +136,16 @@ class AppPages {
       name: _Paths.WorkerList,
       page: () =>   WorkerListScreen(),
         binding: WorkerBinding(),
+      transition: Transition.rightToLeftWithFade
+    ),GetPage(
+      name: _Paths.WorkerDetails,
+      page: () =>   WorkerDetailsScreen(),
+        binding: WorkerBinding(),
+      transition: Transition.rightToLeftWithFade
+    ),GetPage(
+      name: _Paths.SupportView,
+      page: () =>   HelpView(),
+        binding: HelpBinding(),
       transition: Transition.rightToLeftWithFade
     ),
   ];

@@ -49,6 +49,9 @@ class MenuView extends BaseView<MenusController>{
           MenuItem(icon: Icons.person, text: 'Profile', onTap: () { Get.toNamed(AppPages.UserProfile); },),
           // MenuItem(icon: Icons.payment, text: 'Digital payment', onTap: () {  },),
           MenuItem(icon: Icons.language, text: '${Strings.changeLanguage.tr}', onTap: () {  },),
+          MenuItem(icon: Icons.support_agent_outlined, text: 'Customer Support', onTap: () { 
+            Get.toNamed(AppPages.SupportScreen);
+          },),
           MenuItem(icon: Icons.privacy_tip, text: 'Privacy policy', onTap: () {  },),
           // MenuItem(icon: Icons.document_scanner, text: 'Terms & Conditions', onTap: () {  },),
           MenuItem(icon: Icons.info_outline, text: 'About Us', onTap: () {  },),
