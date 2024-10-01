@@ -13,6 +13,7 @@ import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+import 'package:manpower_station/utils/helper_function.dart';
 import '../../../../config/theme/my_theme.dart';
 import '../../../../config/translations/localization_service.dart';
 import '../../../core/base/base_view.dart';
@@ -36,6 +37,7 @@ class HomeView extends BaseView<HomeController> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
+              backgroundColor: Colors.white,
                 centerTitle: true,
                 leading: InkWell(
                   onTap: () => LocalizationService.updateLanguage(
@@ -263,7 +265,7 @@ class HomeView extends BaseView<HomeController> {
                         : controller.allCategoryData.length,
                     (context, index) {
                       if (controller.allCategoryData.isEmpty) {
-                        return _buildServiceCardShimmer();
+                        return buildServiceCardShimmer();
                       } else {
                         CategoryModel category =
                         controller.allCategoryData[index];
@@ -288,6 +290,7 @@ class HomeView extends BaseView<HomeController> {
                                     height: 120,
                                     width: double.infinity,
                                     fit: BoxFit.cover,
+                                    color: Colors.green,
                                   ),
                                 ),
                                 Padding(
@@ -377,6 +380,7 @@ class HomeView extends BaseView<HomeController> {
   Future<void> _handleRefresh() async {
    controller.getAllServiceData();
    controller.getAllServiceCategories();
+   controller.getActiveBanners();
     return Future.delayed(const Duration(seconds: 3));
   }
   Widget _buildBannerShimmer() {
@@ -396,36 +400,5 @@ class HomeView extends BaseView<HomeController> {
             width: 110,
           ),
         ));
-  }
-
-  Widget _buildServiceCardShimmer() {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      elevation: 4,
-      child: const Column(
-        children: [
-          ShimmerWidget.rectangular(height: 120),
-          SizedBox(
-            height: 10,
-          ),
-          ShimmerWidget.rectangular(
-            height: 20,
-            width: 110,
-          ),
-          Spacer(),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Align(
-                  alignment: Alignment.center,
-                  child: ShimmerWidget.rectangular(
-                    height: 20,
-                    width: 150,
-                  ))),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
   }
 }

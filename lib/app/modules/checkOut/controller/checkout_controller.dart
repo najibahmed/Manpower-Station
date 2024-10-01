@@ -59,7 +59,7 @@ class CheckoutController extends BaseController {
             'address': addressLine1Controller.text.trim(),
           },
         };
-        var url="http://172.16.154.43/api/payments/ammerpay/create";
+        var url="/api/payments/ammerpay/create";
         // await BaseClient.safeApiCall(
         //     url,
         //     RequestType.post,

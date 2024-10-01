@@ -14,7 +14,7 @@ class UserController extends BaseController {
   late Rx<UserModel> userData=UserModel().obs;
   RxBool isLoading=true.obs;
   TextEditingController updateNameController=TextEditingController();
-  late TextEditingController updateEmailController;
+   TextEditingController updateEmailController=TextEditingController();
   TextEditingController updateAddressController=TextEditingController();
   TextEditingController updateAreaController=TextEditingController();
   TextEditingController updatePostCodeController=TextEditingController();
@@ -67,7 +67,7 @@ class UserController extends BaseController {
     try {
       String userid = MySharedPref.getUserId().toString();
       String url =
-          "http://172.16.154.43/api/clients/get/unique/client/profile/${Constants.userId}";
+          "/api/clients/get/unique/client/profile/${Constants.userId}";
       await BaseClient.safeApiCall(
         url,
         RequestType.get,
@@ -88,7 +88,7 @@ class UserController extends BaseController {
     }
   }
 
-
+/// Update user profile field
   Future<void> updateUserProfileField(FieldType fieldType, dynamic value) async {
     Map<String, dynamic> requestData = {
       '$fieldType' : value.toString().trim(),
@@ -96,7 +96,7 @@ class UserController extends BaseController {
     try {
       String userid = MySharedPref.getUserId().toString();
       String url =
-          "http://172.16.154.43/api/clients/update/client/profile/${Constants.userId}";
+          "/api/clients/update/client/profile/${Constants.userId}";
       await BaseClient.safeApiCall(
         url,
         RequestType.put,

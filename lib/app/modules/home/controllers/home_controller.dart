@@ -16,7 +16,7 @@ class HomeController extends BaseController {
       // Map<String, dynamic> requestData = {
       //   'phone_or_email': phoneNumberEmailController.text.trim(),
       // };
-      var url="http://172.16.154.43/api/services/get/all";
+      var url="/api/services/get/all";
       await BaseClient.safeApiCall(
           url,
           RequestType.get,
@@ -42,7 +42,7 @@ class HomeController extends BaseController {
   /// Get all service categories
   Future<void> getAllServiceCategories() async {
     try {
-      var url="http://172.16.154.43/api/services/categories/get/all";
+      var url="/api/services/categories/get/all";
       await BaseClient.safeApiCall(
           url,
           RequestType.get,
@@ -69,7 +69,7 @@ class HomeController extends BaseController {
   RxList oneCategoryServicesData = <dynamic>[].obs;
   Future<void> getOneCategoryServices(String id) async {
     try {
-      var url="http://172.16.154.43/api/services/categories/services/$id";
+      var url="/api/services/categories/services/$id";
       await BaseClient.safeApiCall(
           url,
           RequestType.get,
@@ -96,7 +96,7 @@ class HomeController extends BaseController {
   late Rx<ActiveBanner> activeBanners=ActiveBanner().obs;
   Future<void> getActiveBanners() async {
     try {
-      var url="http://172.16.154.43/api/banners/get/active";
+      var url="/api/banners/get/active";
       await BaseClient.safeApiCall(
           url,
           RequestType.get,

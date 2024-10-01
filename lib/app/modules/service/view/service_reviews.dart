@@ -1,6 +1,10 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:manpower_station/app/components/custom_snackbar.dart';
+import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
@@ -12,6 +16,7 @@ class ReviewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller=Get.put(ServiceController());
     return  Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -20,8 +25,9 @@ class ReviewsScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 8,),
               _buildRatingBars(),
-              const TextField(
-                decoration: InputDecoration(
+               TextFormField(
+                controller: controller.reviewController,
+                decoration: const InputDecoration(
                   labelText: 'Give a review',
                   labelStyle: TextStyle(color: Colors.grey),
                   focusedBorder: OutlineInputBorder(
@@ -36,6 +42,12 @@ class ReviewsScreen extends StatelessWidget {
                      )
                   ),
                 ),
+                 validator: (value){
+                  if(value!=null){
+                    CustomSnackBar.showCustomErrorToast(message: 'Please write review');
+                  }
+                  return null;
+                 },
               ),
               const SizedBox(height: 8),
               ElevatedButton(
@@ -100,6 +112,7 @@ class ReviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller= Get.put(ServiceController());
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -117,6 +130,25 @@ class ReviewCard extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: RatingBar.builder(
+                initialRating: 0.0,
+                minRating: 0.0,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                ignoreGestures: false,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  controller.userRating.value = rating;
+                },
+              ),
             ),
             const SizedBox(height: 8),
             Text(

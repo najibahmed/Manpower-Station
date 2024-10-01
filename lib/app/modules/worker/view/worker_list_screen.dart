@@ -36,7 +36,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                 },
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Colors.white,
+                  color: Colors.green,
                 )),
             bottom: PreferredSize(preferredSize: const Size.fromHeight(60),
                 child: Container(
@@ -152,8 +152,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio:
-                0.7, // Adjust the aspect ratio based on your design
+                childAspectRatio: 0.7, // Adjust the aspect ratio based on your design
               ),
               delegate: SliverChildBuilderDelegate(
                 childCount: controller.isLoading.value
@@ -206,7 +205,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                   const Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('Area:'),
+                                      // Text('Area:'),
                                       Text('Gender:'),
                                       Text('Ratings:'),
                                       // Text('Fee:'),
@@ -215,7 +214,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(worker.area!),
+                                      // Text(worker.area ??'null'),
                                       Text('${worker.gender}'),
                                       Text('${worker.ratings} Stars'),
                                       // Text('${worker.fee} Tk'),

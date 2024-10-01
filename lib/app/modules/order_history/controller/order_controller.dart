@@ -7,12 +7,13 @@ import 'package:manpower_station/utils/constants.dart';
 class OrderController extends BaseController with GetSingleTickerProviderStateMixin{
    late TabController tabController;
    var bookingsList= <dynamic>[].obs;
+   RxDouble userRating=0.0.obs;
 
 
    Future<void> getAllBookingsByUid() async {
      var userID=Constants.userId;
      try {
-       var url="172.16.154.43/api/booking/get/unique/user/booking/$userID";
+       var url="/api/booking/get/unique/user/booking/$userID";
        await BaseClient.safeApiCall(
            url,
            RequestType.get,

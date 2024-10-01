@@ -26,7 +26,7 @@ class AuthenticationController extends BaseController {
         'phone_or_email': phoneNumberEmailController.text.trim(),
       };
       await BaseClient.safeApiCall(
-        "http://172.16.154.43/api/users/sign_in/sign_up",
+        "/api/users/sign_in/sign_up",
         RequestType.post,
         data: requestData,
         onSuccess: (response){
@@ -48,14 +48,14 @@ class AuthenticationController extends BaseController {
       Get.snackbar('Error :',e.toString());
     }
   }
-  /// Login with email or phone Number
+  /// Login with Gmail
   Future<void> loginWithGmail() async {
     try {
     //   Map<String, dynamic> requestData = {
     //     'phone_or_email': phoneNumberEmailController.text.trim(),
     //   };
       await BaseClient.safeApiCall(
-        " 172.16.154.43/api/users/google",
+        "/api/users/google",
         RequestType.get,
         onSuccess: (response){
           if(response.statusCode==200){
@@ -83,7 +83,7 @@ class AuthenticationController extends BaseController {
         'otp': pin,
       };
       await BaseClient.safeApiCall(
-        "http://172.16.154.43/api/users/signup/phone_email/verified",
+        "/api/users/signup/phone_email/verified",
         RequestType.put,
         data: requestData,
         onError: (p0) {

@@ -19,7 +19,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
-      title: const Text("Service Details"),
+      title: const Text("Service Details",),
     );
   }
 

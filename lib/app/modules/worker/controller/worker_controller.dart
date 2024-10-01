@@ -19,7 +19,7 @@ class WorkerController extends BaseController{
 
   Future<void> getAllWorkerData() async {
     try {
-      var url="http://172.16.154.43/api/workers/get/all";
+      var url="/api/workers/get/all";
       await BaseClient.safeApiCall(
           url,
           RequestType.get,

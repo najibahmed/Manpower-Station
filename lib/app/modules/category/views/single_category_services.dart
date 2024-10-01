@@ -5,6 +5,7 @@ import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/category/controller/category_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/utils/helper_function.dart';
 
 import '../../service/view/service_list_grid.dart';
 
@@ -28,7 +29,7 @@ class SingleCategoryServices extends BaseView<CategoryController>{
                 onPressed: (){
                   Get.back();
                 },
-                icon: const Icon(Icons.arrow_back)
+                icon: const Icon(Icons.arrow_back,)
             ),
             title: const Text('')
             ),
@@ -47,7 +48,7 @@ class SingleCategoryServices extends BaseView<CategoryController>{
                     : services.length,
                     (context, index) {
                   if (controller.isLoading.value) {
-                    return _buildServiceCardShimmer();
+                    return buildServiceCardShimmer();
                   } else {
                     ServiceModel service = services[index];
                     return InkWell(
@@ -70,33 +71,4 @@ class SingleCategoryServices extends BaseView<CategoryController>{
   }
 
 }
-Widget _buildServiceCardShimmer() {
-  return Card(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15),
-    ),
-    elevation: 4,
-    child: const Column(
-      children: [
-        ShimmerWidget.rectangular(height: 120),
-        SizedBox(
-          height: 10,
-        ),
-        ShimmerWidget.rectangular(
-          height: 20,
-          width: 110,
-        ),
-        Spacer(),
-        Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Align(
-                alignment: Alignment.center,
-                child: ShimmerWidget.rectangular(
-                  height: 20,
-                  width: 150,
-                ))),
-        SizedBox(height: 10),
-      ],
-    ),
-  );
-}
+

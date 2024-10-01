@@ -12,34 +12,34 @@ class CategoryController extends BaseController {
   RxList oneCategoryServicesData = <dynamic>[].obs;
 
 
-  Future<void> getAllServiceCategories() async {
-    try {
-      var url="http://172.16.154.43/api/services/categories/get/all";
-      await BaseClient.safeApiCall(
-          url,
-          RequestType.get,
-          onSuccess: (response) {
-            // if (kDebugMode) {
-            //   print(response.data);
-            // }
-            if (response.statusCode == 200) {
-              var jsonData = response.data['categories'];
-              var categoryList = jsonData.map((e) => CategoryModel.fromJson(e))
-                  .toList();
-              allCategoryData.assignAll(categoryList);// Update the RxList with new data
-            } else {
-              print('Failed to load Categories: ${response.statusMessage}');
-            }
-          }
-      );
-    } catch (e) {
-      print(e);
-    }
-  }
-
+  // Future<void> getAllServiceCategories() async {
+  //   try {
+  //     var url="/api/services/categories/get/all";
+  //     await BaseClient.safeApiCall(
+  //         url,
+  //         RequestType.get,
+  //         onSuccess: (response) {
+  //           // if (kDebugMode) {
+  //           //   print(response.data);
+  //           // }
+  //           if (response.statusCode == 200) {
+  //             var jsonData = response.data['categories'];
+  //             var categoryList = jsonData.map((e) => CategoryModel.fromJson(e))
+  //                 .toList();
+  //             allCategoryData.assignAll(categoryList);// Update the RxList with new data
+  //           } else {
+  //             print('Failed to load Categories: ${response.statusMessage}');
+  //           }
+  //         }
+  //     );
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+/// Get one category service list
   Future<void> getOneCategoryServices(String id) async {
     try {
-      var url="http://172.16.154.43/api/services/categories/services/$id";
+      var url="/api/services/categories/services/$id";
       await BaseClient.safeApiCall(
           url,
           RequestType.get,

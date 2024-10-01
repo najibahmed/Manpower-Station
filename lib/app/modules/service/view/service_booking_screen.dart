@@ -178,12 +178,14 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       Card(
                           elevation: 5,
                           child: SizedBox(
-                            height: 40,
+                            height: 50,
                             width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                  'Selected Date: ${format.format(controller.selectedDateTime.value!)}'),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                    'Selected Date:   ${format.format(controller.selectedDateTime.value!)}'),
+                              ),
                             ),
                           )),
                       const SizedBox(height: 16),
@@ -201,6 +203,18 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       const SizedBox(
                         height: 90,
                       ),
+                      Center(
+                        child: CustomButton(
+                            title: "Choose Wroker",
+                            height: 40,
+                            width: 200,
+                            onTap: (){
+                              controller.selectedService = service;
+                              controller.addToCartList();
+                              // Get.toNamed(AppPages.CheckoutScreen, arguments: service);
+                              Get.toNamed(AppPages.WorkerListView);
+                            })
+                      )
                     ],
                   ),
                 ),
@@ -238,20 +252,6 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                             )
                           ]),
                     ),
-                    OutlinedButton(
-                      style: ElevatedButton.styleFrom(
-                          side: const BorderSide(color: Colors.green)),
-                      onPressed: () {
-                        controller.selectedService = service;
-                        controller.addToCartList();
-                        // Get.toNamed(AppPages.CheckoutScreen, arguments: service);
-                        Get.toNamed(AppPages.WorkerListView);
-                      },
-                      child: const Text(
-                        'CHECKOUT',
-                        style: TextStyle(color: Colors.green),
-                      ),
-                    )
                   ],
                 ),
               ),
