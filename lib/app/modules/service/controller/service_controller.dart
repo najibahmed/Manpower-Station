@@ -22,22 +22,26 @@ class ServiceController extends BaseController
   late ServiceModel selectedService;
   RxList<CartModel> cartItems = <CartModel>[].obs;
   RxDouble userRating=0.0.obs;
+  late ServiceModel serviceModel;
+   RxInt cartSubtotal=0.obs;
 
   // Get price
   getServicePrice(time, timeKey, price) {
+    var servicePrice;
     if (timeKey == 'Hours') {
-      var servicePrice = (price ~/ 3) * time;
-      return servicePrice;
+       servicePrice = (price ~/ 3) * time;
+
     } else if (timeKey == 'Days') {
-      var servicePrice = price * time;
-      return servicePrice;
+       servicePrice = price * time;
+
     } else if (timeKey == 'Weeks') {
-      var servicePrice = price * (time * 7);
-      return servicePrice;
+       servicePrice = price * (time * 7);
+
     } else if (timeKey == 'Months') {
-      var servicePrice = price * (time * 30);
-      return servicePrice;
+       servicePrice = price * (time * 30);
     }
+    cartSubtotal.value=servicePrice;
+    return servicePrice;
   }
 
   // Function to update tab index
@@ -123,6 +127,7 @@ class ServiceController extends BaseController
   @override
   void onInit() {
     // getServiceData();
+     serviceModel = Get.arguments;
     tabController = TabController(length: 3, initialIndex: 0, vsync: this);
 
     // TODO: implement onInit

@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/custom_snackbar.dart';
+
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/cart_model.dart';
+import 'package:manpower_station/app/models/worker_model.dart';
+
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
-import 'package:manpower_station/app/services/api_client.dart';
 import 'package:uuid/uuid.dart';
-
 import '../views/checkout_screen.dart';
 
 class CheckoutController extends BaseController {
   final serviceController = Get.put(ServiceController());
   RxString paymentMethodGroupValue = PaymentMethod.cod.obs;
   final formKey = GlobalKey<FormState>();
-  final worker=Get.put(WorkerController()).selectedWorkerList;
+  final List<WorkerModel> worker=Get.put(WorkerController()).selectedWorkerList;
   final List<CartModel> cartItem=Get.put(ServiceController()).cartItems;
 
   TextEditingController nameController = TextEditingController();
@@ -46,10 +46,11 @@ class CheckoutController extends BaseController {
       try {
         var amount=99;
         var transId =const Uuid();
+        // print("-----> To json: ${worker.first.toJson()}");
         Map<String, dynamic> requestData = {
           'amount': amount,
-          'workersItems': [worker.first.toJson()],
-          'cartItems': cartItem,
+          'workersItems': [worker.first.toMap()],
+          'cartItems': [cartItem.first.toMap()],
           'addressInfo': {
             'name':  nameController.text.trim(),
             'phone': phoneNumberController.text.trim(),
@@ -59,6 +60,7 @@ class CheckoutController extends BaseController {
             'address': addressLine1Controller.text.trim(),
           },
         };
+        print("request data----->${requestData}");
         var url="/api/payments/ammerpay/create";
         // await BaseClient.safeApiCall(
         //     url,
@@ -91,6 +93,11 @@ class CheckoutController extends BaseController {
   //   final priceAfterDiscount = cartSubTotal - getDiscountAmount(cartSubTotal);
   //   return ((priceAfterDiscount * orderConstantModel.vat) / 100).round();
   // }
+  int getGrandTotal() {
+    return ((serviceController.cartSubtotal.value -
+        getDiscountAmount(cartItem.first.discountModel.discount!,serviceController.cartSubtotal.value)
+        ).round());
+  }
   // int getGrandTotal(num cartSubTotal) {
   //   return ((cartSubTotal -
   //       getDiscountAmount(cartSubTotal) +

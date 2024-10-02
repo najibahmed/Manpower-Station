@@ -1,7 +1,6 @@
 
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
-import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 
@@ -10,6 +9,7 @@ class CategoryController extends BaseController {
   RxBool isLoading=true.obs;
   var allCategoryData = <dynamic>[].obs;
   RxList oneCategoryServicesData = <dynamic>[].obs;
+   late RxList<dynamic>serviceList;
 
 
   // Future<void> getAllServiceCategories() async {
@@ -64,9 +64,11 @@ class CategoryController extends BaseController {
 
   @override
   void onInit() async{
-    Future.delayed(const Duration(seconds:2),(){
+    Future.delayed(const Duration(seconds:1),(){
       isLoading.value=false;
+      serviceList= Get.arguments;
     });
+
     super.onInit();
   }
 }

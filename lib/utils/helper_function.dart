@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 
-getFormattedDate(DateTime dt, {String pattern = 'dd/MM/yyyy'}) =>
+getFormattedDate(DateTime dt, {String pattern = 'yyyy-MM-dd – kk:mm'}) =>
     DateFormat(pattern).format(dt);
+
+getParsedDate(String dt, {String pattern = 'yyyy-MM-dd – kk:mm'}) =>
+    DateFormat(pattern).parse(dt);
 
 String get generateOrderId =>
     'PB_${getFormattedDate(DateTime.now(), pattern: 'yyyyMMdd_HH:mm:ss')}';

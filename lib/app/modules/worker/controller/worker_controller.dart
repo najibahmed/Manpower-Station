@@ -5,7 +5,8 @@ import 'package:manpower_station/app/services/api_client.dart';
 
 class WorkerController extends BaseController{
   var allWorkerList= <dynamic>[].obs;
-  RxBool isLoading=true.obs;
+  // RxBool isLoading=true.obs;
+  RxDouble userRating=0.0.obs;
   RxList<WorkerModel>selectedWorkerList=<WorkerModel>[].obs;
 
  void addWorker(WorkerModel worker){
@@ -43,9 +44,9 @@ class WorkerController extends BaseController{
   @override
   void onInit() {
     getAllWorkerData();
-    Future.delayed(const Duration(seconds:1),(){
-      isLoading.value=false;
-    });
+    // Future.delayed(const Duration(seconds:1),(){
+    //   isLoading.value=false;
+    // });
     // TODO: implement onInit
     super.onInit();
   }

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
-import 'package:manpower_station/utils/helper_function.dart';
+
 
 
 
@@ -107,7 +107,7 @@ class ReviewsScreen extends StatelessWidget {
 
 // Custom widget for a review card
 class ReviewCard extends StatelessWidget {
-  final Reviews review;
+  final Reviews review ;
    const ReviewCard({super.key, required this.review});
 
   @override
@@ -184,61 +184,3 @@ class ReviewCard extends StatelessWidget {
   }
 }
 
-/// Dummy data for reviews
-// class Review {
-//   final int rating;
-//   final String author;
-//   final String date;
-//   final bool isVerified;
-//   final String comment;
-//
-//   Review({
-//     required this.rating,
-//     required this.author,
-//     required this.date,
-//     required this.isVerified,
-//     required this.comment,
-//   });
-// }
-//
-// // Sample review data
-// List<Review> reviewData = [
-//   Review(
-//     rating: 5,
-//     author: 'Vin Gough',
-//     date: 'November 18, 2024 at 15:35',
-//     isVerified: true,
-//     comment:
-//     'My old IMAC was from 2013. This replacement was well needed. Very fast, and the colour matches my office set up perfectly.',
-//   ),
-//   Review(
-//     rating: 4,
-//     author: 'Sarah Lee',
-//     date: 'November 19, 2024 at 12:20',
-//     isVerified: true,
-//     comment:
-//     'Great product, but the shipping took longer than expected.',
-//   ),Review(
-//     rating: 4,
-//     author: 'Sarah Lee',
-//     date: 'November 19, 2024 at 12:20',
-//     isVerified: true,
-//     comment:
-//     'Great product, but the shipping took longer than expected.',
-//   ),Review(
-//     rating: 4,
-//     author: 'Sarah Lee',
-//     date: 'November 19, 2024 at 12:20',
-//     isVerified: true,
-//     comment:
-//     'Great product, but the shipping took longer than expected.',
-//   ),Review(
-//     rating: 4,
-//     author: 'Sarah Lee',
-//     date: 'November 19, 2024 at 12:20',
-//     isVerified: true,
-//     comment:
-//     'Great product, but the shipping took longer than expected.',
-//   ),
-//   // Add more reviews here
-// ];

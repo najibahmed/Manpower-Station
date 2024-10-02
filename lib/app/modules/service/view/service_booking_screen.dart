@@ -6,8 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
-import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
-import 'package:manpower_station/app/modules/service/view/basic_calendar.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
@@ -21,10 +19,9 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
     return null;
   }
 
-  DateFormat format = DateFormat('dd/MMM/yyyy HH:mm a');
   @override
   Widget body(BuildContext context) {
-    final ServiceModel service = Get.arguments;
+    // final ServiceModel service = Get.arguments;
     return SafeArea(
       child: Stack(
         children: [
@@ -41,7 +38,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       color: Colors.white,
                     )),
                 title: Text(
-                  '${service.name}',
+                  '${controller.serviceModel.name}',
                   overflow: TextOverflow.clip,
                   style: const TextStyle(
                       fontSize: 20,
@@ -61,7 +58,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
                         child: Image.network(
-                          'http://172.16.154.43/images/services/${service.image}', // Placeholder for the image
+                          'http://172.16.154.43/images/services/${controller.serviceModel.image}', // Placeholder for the image
                           height: 180,
                           width: double.infinity,
                           fit: BoxFit.fill,
@@ -184,7 +181,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                    'Selected Date:   ${format.format(controller.selectedDateTime.value!)}'),
+                                    'Selected Date:   ${Constants.formatDate.format(controller.selectedDateTime.value!)}'),
                               ),
                             ),
                           )),
@@ -204,17 +201,16 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         height: 90,
                       ),
                       Center(
-                        child: CustomButton(
-                            title: "Choose Wroker",
-                            height: 40,
-                            width: 200,
-                            onTap: (){
-                              controller.selectedService = service;
-                              controller.addToCartList();
-                              // Get.toNamed(AppPages.CheckoutScreen, arguments: service);
-                              Get.toNamed(AppPages.WorkerListView);
-                            })
-                      )
+                          child: CustomButton(
+                              title: "Choose Worker",
+                              height: 40,
+                              width: 200,
+                              onTap: () {
+                                controller.selectedService =
+                                    controller.serviceModel;
+                                controller.addToCartList();
+                                Get.toNamed(AppPages.WorkerListView);
+                              }))
                     ],
                   ),
                 ),
@@ -244,7 +240,8 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           children: [
                             TextSpan(
                               text:
-                                  '${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, service.servicePrice)}${Constants.banglaCurrency}',
+                                  '${controller.getServicePrice(controller.timeLimit.value,
+                                      controller.selectedTimeKey, controller.serviceModel.servicePrice)}${Constants.banglaCurrency}',
                               style: TextStyle(
                                   fontSize: MyFonts.bodyLargeSize,
                                   fontWeight: FontWeight.bold,

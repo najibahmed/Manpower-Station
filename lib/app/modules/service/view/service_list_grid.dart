@@ -87,10 +87,10 @@ class ServiceCard extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: size.height * 0.035,
-                    width: size.width * 0.4,
+                    width: size.width * 0.35,
                     child: ElevatedButton(
                         onPressed: () {
-                          Get.toNamed(AppPages.ServiceBooking,arguments:service);
+                          Get.toNamed(AppPages.ServiceBooking,arguments: service);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: LightThemeColors.primaryColor,

@@ -4,10 +4,7 @@ import 'package:flutter/src/widgets/preferred_size.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
-import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
-import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
@@ -36,7 +33,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                 },
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Colors.green,
+                  color: Colors.white,
                 )),
             bottom: PreferredSize(preferredSize: const Size.fromHeight(60),
                 child: Container(
@@ -152,14 +149,14 @@ class WorkerListScreen extends BaseView<WorkerController> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: 0.7, // Adjust the aspect ratio based on your design
+                childAspectRatio: 0.75 // Adjust the aspect ratio based on your design
               ),
               delegate: SliverChildBuilderDelegate(
-                childCount: controller.isLoading.value
+                childCount: controller.allWorkerList.isEmpty
                     ? 6
                     : controller.allWorkerList.length,
                     (context, index) {
-                  if (controller.isLoading.value) {
+                  if (controller.allWorkerList.isEmpty) {
                     return _buildServiceCardShimmer();
                   } else {
                     WorkerModel
@@ -233,13 +230,14 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                     width: size.width * 0.23,
                                     child: ElevatedButton(
                                         onPressed: () {
-                                          if (controller.selectedWorkerList
-                                              .length == 1) {
-                                            return
-                                              controller.addWorker(worker);
+                                          if(controller.selectedWorkerList.isNotEmpty){
+                                            controller.selectedWorkerList.clear();
                                           }
-                                          print('-----selected worker list---->${controller.selectedWorkerList.first.toJson()}');
-                                          Get.toNamed(AppPages.CheckoutScreen);
+                                          if (controller.selectedWorkerList.length < 1) {
+                                            Get.toNamed(AppPages.CheckoutScreen);
+                                            controller.addWorker(worker);
+                                          }
+
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:

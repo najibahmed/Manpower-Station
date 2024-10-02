@@ -30,6 +30,7 @@ class _ShippingFormState extends State<ShippingForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                controller: controller.nameController,
                 style: const TextStyle(fontWeight: FontWeight.normal),
                 decoration: const InputDecoration(
                   labelText: 'Your Name',
@@ -51,6 +52,7 @@ class _ShippingFormState extends State<ShippingForm> {
                 },
               ),
               TextFormField(
+                controller: controller.phoneNumberController,
                 style: const TextStyle(fontWeight: FontWeight.normal),
                 decoration: const InputDecoration(
                   labelText: 'Phone Number',
@@ -71,6 +73,7 @@ class _ShippingFormState extends State<ShippingForm> {
                 },
               ),
               TextFormField(
+                controller: controller.addressLine1Controller,
                 style: const TextStyle(fontWeight: FontWeight.normal),
                 decoration: const InputDecoration(labelText: 'Address Line 1',
                   labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w500),
@@ -87,6 +90,7 @@ class _ShippingFormState extends State<ShippingForm> {
                 },
               ),
               TextFormField(
+                controller: controller.areaController,
                 style: const TextStyle(fontWeight: FontWeight.normal),
                 decoration: const InputDecoration(labelText: 'Area',
                   labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w500),
@@ -103,6 +107,7 @@ class _ShippingFormState extends State<ShippingForm> {
                 },
               ),
               TextFormField(
+                controller: controller.cityController,
                 style: const TextStyle(fontWeight: FontWeight.normal),
                 decoration: const InputDecoration(labelText: 'City',
                   labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w500),
@@ -122,6 +127,7 @@ class _ShippingFormState extends State<ShippingForm> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      controller: controller.stateController,
                       style: const TextStyle(fontWeight: FontWeight.normal),
                       decoration: const InputDecoration(labelText: 'State',
                         labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w500),

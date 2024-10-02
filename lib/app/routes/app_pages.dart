@@ -121,7 +121,7 @@ class AppPages {
       name: _Paths.CheckOutScreen,
       page: () =>  CheckOutScreen(),
         binding: CheckoutBinding(),
-      transition: Transition.rightToLeft
+      // transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.SingleCatServices,
       page: () =>  const SingleCategoryServices(),

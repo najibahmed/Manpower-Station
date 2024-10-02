@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/category/controller/category_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
@@ -16,10 +15,9 @@ class SingleCategoryServices extends BaseView<CategoryController>{
   PreferredSizeWidget? appBar(BuildContext context) {
     return null;
   }
-
   @override
   Widget body(BuildContext context) {
-    List<dynamic> services= Get.arguments;
+    // final serviceList= Get.arguments;
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -45,12 +43,12 @@ class SingleCategoryServices extends BaseView<CategoryController>{
               delegate: SliverChildBuilderDelegate(
                 childCount: controller.isLoading.value
                     ? 6
-                    : services.length,
+                    : controller.serviceList.length,
                     (context, index) {
                   if (controller.isLoading.value) {
                     return buildServiceCardShimmer();
                   } else {
-                    ServiceModel service = services[index];
+                    ServiceModel service = controller.serviceList[index];
                     return InkWell(
                       onTap: () {
                         Get.toNamed(AppPages.ServiceDetails,

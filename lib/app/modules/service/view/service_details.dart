@@ -25,7 +25,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
 
   @override
   Widget body(BuildContext context) {
-    final ServiceModel service = Get.arguments;
+     ServiceModel service = Get.arguments;
    return SingleChildScrollView(
      child: Padding(
        padding: const EdgeInsets.all(8.0),

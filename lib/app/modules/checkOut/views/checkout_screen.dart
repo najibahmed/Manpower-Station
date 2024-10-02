@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
+import 'package:manpower_station/app/models/cart_model.dart';
+import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/app/modules/checkOut/views/shipping_form.dart';
-import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/utils/constants.dart';
+
 
 class CheckOutScreen extends BaseView<CheckoutController> {
   CheckOutScreen({super.key});
@@ -14,6 +15,15 @@ class CheckOutScreen extends BaseView<CheckoutController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
       title: const Text("Checkout"),
+      leading: IconButton(
+          onPressed: () {
+            Get.back();
+            // controller.worker.clear();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          )),
       backgroundColor: Colors.green,
     );
   }
@@ -30,14 +40,15 @@ class CheckOutScreen extends BaseView<CheckoutController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildHeaderSection('Service Info'),
-            // ProductInfo(),
-            customServiceTile(
-              controller.cartItem.first.serviceName,
-              controller.cartItem.first.serviceImageUrl.toString(),
-            ),
+            // ProductInfo,
+            customServiceTile(controller.cartItem.first),
+            SizedBox(height: screenHeight * 0.02),
+            buildHeaderSection('Worker Info'),
+            // Worker Info,
+            customWorkerTile(controller.worker.first),
             SizedBox(height: screenHeight * 0.02),
             buildHeaderSection('Order Summary'),
-            orderSummary(),
+            orderSummary(controller.cartItem.first),
             SizedBox(height: screenHeight * 0.02),
             buildHeaderSection('Service Address'),
             const ShippingForm(),
@@ -65,8 +76,9 @@ class CheckOutScreen extends BaseView<CheckoutController> {
     );
   }
 
-  Widget orderSummary() {
-    return  Card(
+// Widget to display order summary
+  Widget orderSummary(CartModel item) {
+    return Card(
       elevation: 3,
       child: Padding(
         padding: EdgeInsets.all(16.0),
@@ -77,7 +89,8 @@ class CheckOutScreen extends BaseView<CheckoutController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Subtotal:'),
-                Text('${controller.cartItem.first.servicePrice}${Constants.banglaCurrency}'),
+                Text(
+                    '${controller.serviceController.cartSubtotal}${Constants.banglaCurrency}'),
               ],
             ),
             SizedBox(height: 10),
@@ -92,8 +105,9 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('${controller.cartItem.first.discountModel.discount}%:'),
-                Text('- ${controller.getDiscountAmount(controller.cartItem.first.discountModel.discount!, controller.cartItem.first.servicePrice)}${Constants.banglaCurrency}'),
+                Text('Discount:${item.discountModel.discount}%'),
+                Text(
+                    '- ${controller.getDiscountAmount(item.discountModel.discount!, controller.serviceController.cartSubtotal.value)}${Constants.banglaCurrency}'),
               ],
             ),
             Divider(
@@ -105,7 +119,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
               children: [
                 Text('Grand Total:',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('470.25${Constants.banglaCurrency}',
+                Text('${controller.getGrandTotal()}${Constants.banglaCurrency}',
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
@@ -114,26 +128,21 @@ class CheckOutScreen extends BaseView<CheckoutController> {
       ),
     );
   }
+}
 
-  }
+Widget buildHeaderSection(String title) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+    child: Text(
+      title,
+      style: const TextStyle(
+          fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
+    ),
+  );
+}
 
-  Widget buildHeaderSection(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-      child: Text(
-        title,
-        style: const TextStyle(
-            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
-      ),
-    );
-  }
-
-// Widget to display order summary
-
-
-
-
-Widget customServiceTile(String title, String imagePath) {
+// Custom Worker Tile
+Widget customWorkerTile(WorkerModel worker) {
   return Card(
       elevation: 3,
       shape: RoundedRectangleBorder(
@@ -145,15 +154,57 @@ Widget customServiceTile(String title, String imagePath) {
           height: 70,
           width: 80,
           child: Image.network(
-            'http://172.16.154.43/images/services/$imagePath',
+            'http://172.16.154.43/images/avatars/${worker.avatar}',
             fit: BoxFit.cover,
           ),
         ),
         title: Text(
-          title,
+          worker.username!,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        subtitle: const Column(
+        // subtitle: Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     // Text(subtitle),
+        //     SizedBox(height: 5),
+        //     Row(
+        //       mainAxisAlignment: MainAxisAlignment.start,
+        //       children: [
+        //         // Icon(Icons.star, color: Colors.green, size: 16),
+        //         Text('Duration \n${item.serviceTimeSchedule}'),
+        //         SizedBox(width: 5),
+        //         Expanded(
+        //             child: Text(
+        //                 'Starting From \n${Constants.formatDate.format(DateTime.parse(item.startingDate))}')),
+        //       ],
+        //     ),
+        //   ],
+        // ),
+      ));
+}
+
+// Custom Service Tile
+Widget customServiceTile(CartModel item) {
+  return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.all(16.0),
+        leading: SizedBox(
+          height: 70,
+          width: 80,
+          child: Image.network(
+            'http://172.16.154.43/images/services/${item.serviceImageUrl}',
+            fit: BoxFit.cover,
+          ),
+        ),
+        title: Text(
+          item.serviceName,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Text(subtitle),
@@ -162,9 +213,11 @@ Widget customServiceTile(String title, String imagePath) {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // Icon(Icons.star, color: Colors.green, size: 16),
-                Text('Duration \n3 Weeks  '),
+                Text('Duration \n${item.serviceTimeSchedule}'),
                 SizedBox(width: 5),
-                Expanded(child: Text('Starting From \n20 January 2024')),
+                Expanded(
+                    child: Text(
+                        'Starting From \n${Constants.formatDate.format(DateTime.parse(item.startingDate))}')),
               ],
             ),
           ],
