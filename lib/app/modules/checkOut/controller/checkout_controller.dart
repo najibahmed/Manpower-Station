@@ -48,10 +48,9 @@ class CheckoutController extends BaseController {
       try {
         var amount=99;
         var transId =const Uuid();
-        print("-----> To json: ${json.encode(worker.first.toJson())}");
         Map<String, dynamic> requestData = {
           'amount': amount,
-          'workersItems': [worker.first],
+          'workersItems': [worker.first.toJson()],
           'cartItems': [cartItem.first.toMap()],
           'addressInfo': {
             'name':  nameController.text.trim(),

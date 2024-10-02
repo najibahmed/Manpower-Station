@@ -75,7 +75,7 @@ class WorkerModel {
       });
     }
     if (json['reviews'] != null) {
-      _reviews = List<dynamic>.from(json["reviews"].map((x) => x));
+      List<dynamic>.from(json["reviews"].map((x) => x));
     }
     _createdAt = json['createdAt'];
     _updatedAt = json['updatedAt'];
@@ -185,7 +185,7 @@ class WorkerModel {
       map['services'] = _services?.map((v) => v.toJson()).toList();
     }
     if (_reviews != null) {
-      map['reviews'] = _reviews?.map((v) => v.toJson()).toList();
+      map['reviews'] = List<dynamic>.from(reviews!.map((x) => x));
     }
     map['createdAt'] = _createdAt;
     map['updatedAt'] = _updatedAt;
