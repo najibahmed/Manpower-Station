@@ -48,7 +48,7 @@ class MenuView extends BaseView<MenusController>{
           SizedBox(height: 30.h),
           MenuItem(icon: Icons.person, text: 'Profile', onTap: () { Get.toNamed(AppPages.UserProfile); },),
           // MenuItem(icon: Icons.payment, text: 'Digital payment', onTap: () {  },),
-          MenuItem(icon: Icons.language, text: '${Strings.changeLanguage.tr}', onTap: () {  },),
+          MenuItem(icon: Icons.language, text: Strings.changeLanguage.tr, onTap: () {  },),
           MenuItem(icon: Icons.support_agent_outlined, text: 'Customer Support', onTap: () { 
             Get.toNamed(AppPages.SupportScreen);
           },),

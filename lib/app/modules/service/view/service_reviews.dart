@@ -6,73 +6,76 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
-
-
-
+import 'package:manpower_station/utils/constants.dart';
 
 class ReviewsScreen extends StatelessWidget {
   List<dynamic> reviews;
-   ReviewsScreen({super.key,required this.reviews});
+  ReviewsScreen({super.key, required this.reviews});
 
   @override
   Widget build(BuildContext context) {
-    final controller=Get.put(ServiceController());
-    return  Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 8,),
-              _buildRatingBars(),
-               TextFormField(
-                controller: controller.reviewController,
-                decoration: const InputDecoration(
-                  labelText: 'Give a review',
-                  labelStyle: TextStyle(color: Colors.grey),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.green, width: 2),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 1),
-                  ),
-                  border: OutlineInputBorder(
-                     borderSide: BorderSide(
-                       color: Colors.black12
-                     )
-                  ),
+    final controller = Get.put(ServiceController());
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 8,
+            ),
+            _buildRatingBars(),
+            TextFormField(
+              controller: controller.reviewController,
+              decoration: const InputDecoration(
+                labelText: 'Give a review',
+                labelStyle: TextStyle(color: Colors.grey),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green, width: 2),
                 ),
-                 validator: (value){
-                  if(value!=null){
-                    CustomSnackBar.showCustomErrorToast(message: 'Please write review');
-                  }
-                  return null;
-                 },
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {
-                  // Add write review functionality
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
                 ),
-                child: const Text('Submit',style: TextStyle(color: Colors.white),),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black12)),
               ),
-              const SizedBox(height: 8),
-              reviews.isEmpty ? const Text("There is no review"): Column(
-                children: List.generate(reviews.length, (index) {
-                  var review=reviews[index];
-                  return ReviewCard(review:review);
-                },)
-              )
-            ],
-          ),
+              validator: (value) {
+                if (value != null) {
+                  CustomSnackBar.showCustomErrorToast(
+                      message: 'Please write review');
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () {
+                // Add write review functionality
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
+              child: const Text(
+                'Submit',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(height: 8),
+            reviews.isEmpty
+                ? const Text("There is no review")
+                : Column(
+                    children: List.generate(
+                    reviews.length,
+                    (index) {
+                      var review = reviews[index];
+                      return ReviewCard(review: review);
+                    },
+                  ))
+          ],
         ),
+      ),
     );
   }
-
-
 
   // Rating bars to visualize rating breakdown
   Widget _buildRatingBars() {
@@ -107,12 +110,12 @@ class ReviewsScreen extends StatelessWidget {
 
 // Custom widget for a review card
 class ReviewCard extends StatelessWidget {
-  final Reviews review ;
-   const ReviewCard({super.key, required this.review});
+  final Reviews review;
+  const ReviewCard({super.key, required this.review});
 
   @override
   Widget build(BuildContext context) {
-    final controller= Get.put(ServiceController());
+    final controller = Get.put(ServiceController());
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -123,7 +126,24 @@ class ReviewCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                _buildStarRating(review.rating!),
+                RatingBar.builder(
+                  itemSize: 25,
+                  initialRating: 0.0,
+                  minRating: 0.0,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  ignoreGestures: false,
+                  itemCount: 5,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    size: 5,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    controller.userRating.value = rating;
+                  },
+                ),
                 const SizedBox(width: 8),
                 Text(
                   review.user?.username ?? 'Undefined',
@@ -131,28 +151,9 @@ class ReviewCard extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: RatingBar.builder(
-                initialRating: 0.0,
-                minRating: 0.0,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                ignoreGestures: false,
-                itemCount: 5,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (rating) {
-                  controller.userRating.value = rating;
-                },
-              ),
-            ),
             const SizedBox(height: 8),
             Text(
-             review.date!,
+              Constants.formatDate.format(DateTime.parse(review.date!)),
               style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 8),
@@ -183,4 +184,3 @@ class ReviewCard extends StatelessWidget {
     );
   }
 }
-

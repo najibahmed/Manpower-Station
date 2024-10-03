@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
@@ -19,39 +20,49 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
-      title: const Text("Service Details",),
+      title: const Text(
+        "Service Details",
+      ),
     );
   }
 
   @override
   Widget body(BuildContext context) {
-     ServiceModel service = Get.arguments;
-   return SingleChildScrollView(
-     child: Padding(
-       padding: const EdgeInsets.all(8.0),
-       child: Column(
-         children: [
-           _buildHeader(service,context),
-           // Adding header with image, title, rating, etc.
-           TabBar(
-             onTap: (index){
-                    controller.changeTabIndex(index);
-             },
-             controller: controller.tabController,
-             tabs: const [
-               Tab(text: "Service Overview"),
-               Tab(text: "Reviews"),
-               Tab(text: "FAQ"),
-             ],
-           ),
-           _getTabAtIndex(controller.tabIndex.value, service),
-
-         ],
-       ),
-     ),
-   );
+    ServiceModel service = Get.arguments;
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            // Adding header with image, title, rating, etc.
+            _buildHeader(service, context),
+            TabBar(
+              labelPadding: const EdgeInsets.all(4),
+              dividerColor: Colors.black12,
+              indicatorColor: LightThemeColors.primaryColor,
+              labelColor: LightThemeColors.primaryColor,
+              labelStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold
+              ),
+              onTap: (index) {
+                controller.changeTabIndex(index);
+              },
+              controller: controller.tabController,
+              tabs: const [
+                Tab(text: "Service Overview"),
+                Tab(text: "Reviews"),
+                Tab(text: "FAQ"),
+              ],
+            ),
+            _getTabAtIndex(controller.tabIndex.value, service),
+          ],
+        ),
+      ),
+    );
   }
-  Widget _buildHeader(ServiceModel service,context) {
+
+  Widget _buildHeader(ServiceModel service, context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
@@ -77,36 +88,45 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
               children: [
                 Text(
                   service.name!,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
-                const Row(
-                  children: [
-                    Icon(Icons.star, color: Colors.amber, size: 20),
-                    Icon(Icons.star, color: Colors.amber, size: 20),
-                    Icon(Icons.star, color: Colors.amber, size: 20),
-                    Icon(Icons.star, color: Colors.amber, size: 20),
-                    Icon(Icons.star_border, color: Colors.amber, size: 20),
-                    SizedBox(width: 8),
-                    Text("4.65 (645 Reviews)"),
-                  ],
+                 SizedBox(
+                  child:RatingBar.builder(
+                    initialRating: 3.5,
+                    minRating: 0.0,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    ignoreGestures: true,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ), onRatingUpdate: (double value) {  },
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Text( "${calculatePriceAfterDiscount(service.servicePrice!, service.serviceDiscount!.discount!)}৳ ",
+                    Text(
+                      "${service.servicePrice} ",
                       style: const TextStyle(
-                          fontSize: 20, color: LightThemeColors.primaryColor, fontWeight: FontWeight.bold),
-                    ),
-                     Text(
-                      "${service.servicePrice}",
-                      style: TextStyle(
-                        decoration: TextDecoration.lineThrough,
+                          decoration: TextDecoration.lineThrough,
                           fontSize: 16,
                           color: Colors.black45,
                           fontWeight: FontWeight.bold),
-                    ),const Text(
-                      " (starting with)",
+                    ),
+                    Text(
+                      "${calculatePriceAfterDiscount(service.servicePrice!, service.serviceDiscount!.discount!)}৳ ",
+                      style: const TextStyle(
+                          fontSize: 22,
+                          color: LightThemeColors.primaryColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const Text(
+                      "(starting with)",
                       style: TextStyle(
                           fontSize: 11,
                           color: Colors.black45,
@@ -115,10 +135,6 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                // Text(
-                //   "Experienced cleaners for home and apartment services.",
-                //   style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-                // ),
               ],
             ),
           ),
@@ -126,13 +142,17 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                width: MediaQuery.of(context).size.width*0.3,
-                height: MediaQuery.of(context).size.width*0.09,
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: MediaQuery.of(context).size.width * 0.09,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(AppPages.ServiceBooking,arguments: service);
+                    Get.toNamed(AppPages.ServiceBooking, arguments: service);
                   },
-                  child:  Text('Book now',style: TextStyle(color: Colors.white,fontSize: MyFonts.buttonTextSize),),
+                  child: Text(
+                    'Book now',
+                    style: TextStyle(
+                        color: Colors.white, fontSize: MyFonts.buttonTextSize),
+                  ),
                 ),
               ),
             ),
@@ -142,18 +162,18 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
     );
   }
 
-
   Widget _getTabAtIndex(int index, ServiceModel service) {
     var list = [
       ServiceDescription(
         service: service,
       ),
-      ReviewsScreen(reviews: service.reviews!,),
+      ReviewsScreen(
+        reviews: service.reviews!,
+      ),
       _buildFAQTab(),
     ];
     return list[index];
   }
-
 
   Widget _buildFAQTab() {
     return const Center(
@@ -161,6 +181,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
     );
   }
 }
+
 class ServiceDescription extends StatelessWidget {
   ServiceModel service;
   ServiceDescription({
@@ -202,12 +223,13 @@ class ServiceDescription extends StatelessWidget {
             const Text(
               textAlign: TextAlign.justify,
               "This service does not include any repair or maintenance work."
-                  "Elevate your casual style with our premium men's t-shirt.Elevate your casual style with our premium men's t-shirt. Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to your wardrobe."
-                  "Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to "
-                  "your wardrobe.",
+              "Elevate your casual style with our premium men's t-shirt.Elevate your casual style with our premium men's t-shirt. Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to your wardrobe."
+              "Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to "
+              "your wardrobe.",
             ),
           ],
         ),
       ),
     );
-  }}
+  }
+}

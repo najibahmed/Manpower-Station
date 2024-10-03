@@ -5,11 +5,10 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/order_history/controller/order_controller.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 
-import '../../../../config/theme/dark_theme_colors.dart';
+
 
 class OrderHistoryView extends BaseView<OrderController> {
   const OrderHistoryView({super.key});
@@ -17,26 +16,6 @@ class OrderHistoryView extends BaseView<OrderController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
     return null;
-    AppBar(
-      backgroundColor: Get.isDarkMode
-          ? DarkThemeColors.backgroundColor
-          : LightThemeColors.backgroundColor,
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(10),
-        child: SizedBox(
-          height: 40,
-          child: TabBar(
-            indicatorColor: Colors.green,
-            labelStyle: const TextStyle(color: Colors.green),
-            controller: controller.tabController,
-            tabs: const [
-              Tab(text: 'Active Order'),
-              Tab(text: 'Order History'),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   @override
@@ -125,7 +104,7 @@ class ActiveOrder extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _buildButtonRow(context),
-                Text(
+                const Text(
                   'Office Cleaning',
                   style: TextStyle(
                     fontSize: 20,
@@ -180,9 +159,9 @@ class ActiveOrder extends StatelessWidget {
         const SizedBox(width: 10),
         Chip(
           elevation: 5,
-          label: Row(
+          label: const Row(
             children: [
-              const Text(
+              Text(
                 'Confirmed',
                 style: TextStyle(
                     color: Colors.black87,
@@ -223,36 +202,34 @@ class ActiveOrder extends StatelessWidget {
   // Action Buttons (Cancel Booking & Payment)
   Widget _buildActionButtons(BuildContext context) {
     final double buttonWidth = MediaQuery.of(context).size.width * 0.5;
-    return Container(
-      child: Center(
-        child: Column(
-          children: [
-            // Cancel booking button
-            SizedBox(
-              height: 40,
-              width: buttonWidth,
-              child: OutlinedButton(
-                onPressed: () {
-                  // Handle cancel booking
-                },
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.red),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
-                  'Cancel booking',
-                  style: TextStyle(color: Colors.red),
+    return Center(
+      child: Column(
+        children: [
+          // Cancel booking button
+          SizedBox(
+            height: 40,
+            width: buttonWidth,
+            child: OutlinedButton(
+              onPressed: () {
+                // Handle cancel booking
+              },
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Colors.red),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
+              child: const Text(
+                'Cancel booking',
+                style: TextStyle(color: Colors.red),
+              ),
             ),
-            const SizedBox(height: 10),
-            // Payment button
-            CustomButton(
-                title: "Payment", height: 40, width: buttonWidth, onTap: () {}),
-          ],
-        ),
+          ),
+          const SizedBox(height: 10),
+          // Payment button
+          CustomButton(
+              title: "Payment", height: 40, width: buttonWidth, onTap: () {}),
+        ],
       ),
     );
   }
@@ -291,12 +268,10 @@ class OrderHistory extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.2,
             ),
-            Container(
-              child: Center(
-                child: Image.asset(
-                  'assets/images/no_order_history.png',
-                  fit: BoxFit.cover,
-                ),
+            Center(
+              child: Image.asset(
+                'assets/images/no_order_history.png',
+                fit: BoxFit.cover,
               ),
             ),
             SizedBox(

@@ -6,7 +6,7 @@ import 'package:manpower_station/app/modules/service/model/service_list_model.da
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
-import '../../service/view/service_list_grid.dart';
+import '../../service/view/service_card.dart';
 
 class SingleCategoryServices extends BaseView<CategoryController>{
   const SingleCategoryServices({super.key});

@@ -269,6 +269,7 @@ class HomeView extends BaseView<HomeController> {
                         var id = category.id.toString();
                         return InkWell(
                             onTap: () {
+                              controller.oneCategoryServicesData.clear();
                               controller.getOneCategoryServices(id);
                               var serviceList =
                                   controller.oneCategoryServicesData;

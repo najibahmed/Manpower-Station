@@ -6,6 +6,7 @@ import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/modules/worker/view/worker_review_card.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import '../../../models/worker_model.dart';
 
 class WorkerDetailsScreen extends BaseView<WorkerController> {
@@ -25,10 +26,11 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
         children: [
           CustomScrollView(slivers: [
             SliverAppBar(
+              backgroundColor: LightThemeColors.primaryColor,
               leading: IconButton(
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Colors.white,
+                  color: Colors.black26,
                 ),
                 onPressed: () {
                   Get.back();
@@ -36,7 +38,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
               ),
             ),
             SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 10,vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 12),
               sliver: SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,24 +125,20 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                                   style: const TextStyle(fontSize: 16));
                             }),
                           ),
-                      Container(
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: SizedBox(
-                              width: 200,
-                              child: ElevatedButton.icon(
-                                      icon: const Icon(Icons.file_download,color: Colors.white,),
-                                      label: const Text('CV',style: TextStyle(color: Colors.white),),
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
-                                          vertical: 10,
-                                        ),
-                                      ),
-                                      ),
-                            ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SizedBox(
+                            width: screenWidth*0.5,
+                            child: ElevatedButton.icon(
+                                    icon: const Icon(Icons.file_download,color: Colors.white,),
+                                    label: const Text('Download CV',style: TextStyle(color: Colors.white),),
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.symmetric(horizontal: 30,), // padding
+                                      minimumSize: Size(200, 50), // minimum size
+                                    ),
+                                    ),
                           ),
                         ),
                       ),
@@ -159,41 +157,6 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                             },
                           )),
                     const SizedBox(height: 20),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     ElevatedButton.icon(
-                    //       icon: const Icon(Icons.file_download,color: Colors.white,),
-                    //       label: const Text('CV',style: TextStyle(color: Colors.white),),
-                    //       onPressed: () {},
-                    //       style: ElevatedButton.styleFrom(
-                    //         padding: const EdgeInsets.symmetric(
-                    //           horizontal: 20,
-                    //           vertical: 10,
-                    //         ),
-                    //       ),
-                    //       ),
-                    //     ElevatedButton.icon(
-                    //       icon: const Icon(Icons.check_circle_outline,color: Colors.white,),
-                    //       label: const Text('Proceed',style: TextStyle(color: Colors.white)),
-                    //       onPressed: () {
-                    //         if (controller.selectedWorkerList.length < 1) {
-                    //           return controller.addWorker(worker);
-                    //         }
-                    //         print(
-                    //             '-----worker DetailsPage selected worker list---->'
-                    //                 '${controller.selectedWorkerList}');
-                    //         Get.toNamed(AppPages.CheckoutScreen);
-                    //       },
-                    //       style: ElevatedButton.styleFrom(
-                    //         padding: const EdgeInsets.symmetric(
-                    //           horizontal: 20,
-                    //           vertical: 10,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
@@ -207,7 +170,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
               elevation: 9,
               // color: Colors.green.withOpacity(.85),
               child: SizedBox(
-                height: 60,
+                height: 50,
                 width: MediaQuery.of(context).size.width * .9,
                 child: ElevatedButton.icon(
                   icon: const Icon(Icons.check_circle_outline,color: Colors.white,),
@@ -230,8 +193,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                 ),
               ),
             ),
-          )
-
+          ),
         ],
       ),
     );

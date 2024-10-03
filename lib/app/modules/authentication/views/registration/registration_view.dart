@@ -41,12 +41,10 @@ class RegistrationView extends BaseView<AuthenticationController> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
             ),
-            Container(
-              child: Center(
-                child: Image.asset(
-                  'assets/images/registration_vactor.png',
-                  fit: BoxFit.cover,
-                ),
+            Center(
+              child: Image.asset(
+                'assets/images/registration_vactor.png',
+                fit: BoxFit.cover,
               ),
             ),
             SizedBox(

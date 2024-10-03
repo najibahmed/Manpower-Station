@@ -118,7 +118,7 @@ class ServiceController extends BaseController
         serviceImageUrl: selectedService.image!,
         discountModel: selectedService.serviceDiscount!,
         startingDate: selectedDateTime.value.toString(),
-        servicePrice: selectedService.servicePrice!,
+        servicePrice: cartSubtotal.value,
         serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey.value}");
     cartItems.add(cartModel);
     print("----cart first item---->${cartItems.first.toMap()}");

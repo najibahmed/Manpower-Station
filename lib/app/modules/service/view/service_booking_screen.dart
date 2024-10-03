@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
@@ -12,7 +11,7 @@ import 'package:manpower_station/utils/constants.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class ServiceBookingScreen extends BaseView<ServiceController> {
-  ServiceBookingScreen({super.key});
+  const ServiceBookingScreen({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
@@ -21,7 +20,6 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
 
   @override
   Widget body(BuildContext context) {
-    // final ServiceModel service = Get.arguments;
     return SafeArea(
       child: Stack(
         children: [
@@ -167,30 +165,25 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                               ),
                               barrierDismissible: true,
                             );
-                            print(controller.selectedDateTime.value);
                           },
                         ),
                       ),
                       const SizedBox(height: 16),
                       Card(
-                          elevation: 5,
-                          child: SizedBox(
-                            height: 50,
-                            width: double.infinity,
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                    'Selected Date:   ${Constants.formatDate.format(controller.selectedDateTime.value!)}'),
-                              ),
+                        elevation: 5,
+                        child: SizedBox(
+                          height: 50,
+                          width: double.infinity,
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                  'Selected Date:   ${Constants.formatDate.format(controller.selectedDateTime.value!)}'),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 16),
-                      // TableBasicsExample(),
-                      // Text(
-                      //   'Select Work Start Time',
-                      //   style: TextStyle(color: Colors.red),
-                      // ),
                       const SizedBox(height: 16),
                       Divider(
                         thickness: 1,
@@ -214,7 +207,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
           Positioned(
@@ -240,20 +233,19 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           children: [
                             TextSpan(
                               text:
-                                  '${controller.getServicePrice(controller.timeLimit.value,
-                                      controller.selectedTimeKey, controller.serviceModel.servicePrice)}${Constants.banglaCurrency}',
+                                  '${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}${Constants.banglaCurrency}',
                               style: TextStyle(
                                   fontSize: MyFonts.bodyLargeSize,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
-                            )
+                            ),
                           ]),
                     ),
                   ],
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

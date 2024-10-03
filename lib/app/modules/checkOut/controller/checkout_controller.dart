@@ -1,14 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 
+
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
+import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
+import 'package:manpower_station/app/services/api_client.dart';
 import 'package:uuid/uuid.dart';
 import '../views/checkout_screen.dart';
 
@@ -63,21 +67,21 @@ class CheckoutController extends BaseController {
         };
         print("request data----->${requestData}");
         var url="/api/payments/ammerpay/create";
-        // await BaseClient.safeApiCall(
-        //     url,
-        //     RequestType.post,
-        //     data: requestData,
-        //     onSuccess: (response) {
-        //       // if (kDebugMode) {
-        //       //   print(response.data);
-        //       // }
-        //       if (response.statusCode == 200) {
-        //
-        //       } else {
-        //         print('Failed to Book Service: ${response.statusMessage}');
-        //       }
-        //     }
-        // );
+        await BaseClient.safeApiCall(
+            url,
+            RequestType.post,
+            data: requestData,
+            onSuccess: (response) {
+              if (kDebugMode) {
+                print(response.data);
+              }
+              if (response.statusCode == 200) {
+
+              } else {
+                print('Failed to Book Service: ${response.statusMessage}');
+              }
+            }
+        );
 
       } catch (error) {
         rethrow;
@@ -86,8 +90,13 @@ class CheckoutController extends BaseController {
 
   }
   /// calculated discount amount on behalf of  price and percentage
-  int getDiscountAmount(num discount,num price) {
-    return ((price * discount) / 100).round();
+  num getDiscountAmount(discount,num price) {
+    if(discount.discountType=="Percentage Discount"){
+    return ((price * discount.discount!) / 100).round();
+    }else{
+    return discount.discount!;
+    }
+
   }
   //
   // int getVatAmount(num cartSubTotal) {
@@ -96,7 +105,7 @@ class CheckoutController extends BaseController {
   // }
   int getGrandTotal() {
     return ((serviceController.cartSubtotal.value -
-        getDiscountAmount(cartItem.first.discountModel.discount!,serviceController.cartSubtotal.value)
+        getDiscountAmount(cartItem.first.discountModel,serviceController.cartSubtotal.value)
         ).round());
   }
   // int getGrandTotal(num cartSubTotal) {

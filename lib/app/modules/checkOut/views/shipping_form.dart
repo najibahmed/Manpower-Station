@@ -144,19 +144,6 @@ class _ShippingFormState extends State<ShippingForm> {
                       },
                     ),
                   ),
-                  // const SizedBox(width: 20),
-                  // Expanded(
-                  //   child: TextFormField(
-                  //     style: const TextStyle(fontWeight: FontWeight.normal),
-                  //     decoration: const InputDecoration(labelText: 'Zip Code',
-                  //       labelStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w500),
-                  //       focusedBorder:  UnderlineInputBorder(
-                  //           borderSide: BorderSide(color: Colors.green, width: 1.0)),
-                  //       enabledBorder: UnderlineInputBorder(
-                  //         borderSide: BorderSide(color:  Colors.black54 , width: 1.0),
-                  //       ),),
-                  //   ),
-                  // ),
                 ],
               ),
             ],

@@ -6,7 +6,7 @@ import 'page_state.dart';
 abstract class BaseController extends GetxController {
   final isAuthenticated = false.obs;
   final isTopBgRequired = false.obs;
-  final resizeToAvoidBottomInset = false.obs;
+  final resizeToAvoidBottomInset = true.obs;
 
   //final logger = Logger();
 

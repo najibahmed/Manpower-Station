@@ -5,6 +5,7 @@ import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/app/modules/checkOut/views/shipping_form.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
 
 
@@ -24,7 +25,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             Icons.arrow_back,
             color: Colors.white,
           )),
-      backgroundColor: Colors.green,
+      backgroundColor: LightThemeColors.primaryColor,
     );
   }
 
@@ -81,46 +82,46 @@ class CheckOutScreen extends BaseView<CheckoutController> {
     return Card(
       elevation: 3,
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Subtotal:'),
+                const Text('Subtotal:'),
                 Text(
                     '${controller.serviceController.cartSubtotal}${Constants.banglaCurrency}'),
               ],
             ),
-            SizedBox(height: 10),
-            Row(
+            const SizedBox(height: 10),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Tax:'),
                 Text('+6.70${Constants.banglaCurrency}'),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Discount:${item.discountModel.discount}%'),
+                Text('Discount: ${item.discountModel.discount}${item.discountModel.discountType=="Percentage Discount"? '%' : Constants.banglaCurrency }'),
                 Text(
-                    '- ${controller.getDiscountAmount(item.discountModel.discount!, controller.serviceController.cartSubtotal.value)}${Constants.banglaCurrency}'),
+                    '- ${controller.getDiscountAmount(item.discountModel, controller.serviceController.cartSubtotal.value)}${Constants.banglaCurrency}'),
               ],
             ),
-            Divider(
+            const Divider(
               thickness: 0.5,
               color: Colors.grey,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Grand Total:',
+                const Text('Grand Total:',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 Text('${controller.getGrandTotal()}${Constants.banglaCurrency}',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
           ],
@@ -208,13 +209,13 @@ Widget customServiceTile(CartModel item) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Text(subtitle),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // Icon(Icons.star, color: Colors.green, size: 16),
                 Text('Duration \n${item.serviceTimeSchedule}'),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 Expanded(
                     child: Text(
                         'Starting From \n${Constants.formatDate.format(DateTime.parse(item.startingDate))}')),
