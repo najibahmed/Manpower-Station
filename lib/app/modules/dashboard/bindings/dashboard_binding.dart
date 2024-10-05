@@ -28,12 +28,12 @@ class DashboardBinding extends Bindings {
           () => MenusController(),
     );Get.lazyPut<ServiceController>(
           () => ServiceController(),
-    );Get.lazyPut<UserController>(
-          () => UserController(),
     );Get.lazyPut<WorkerController>(
           () => WorkerController(),
     );Get.lazyPut<SearchViewController>(
           () => SearchViewController(),
+    );Get.lazyPut<UserController>(
+          () => UserController(),
     );
   }
 }

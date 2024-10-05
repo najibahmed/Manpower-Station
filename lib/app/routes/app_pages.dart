@@ -11,6 +11,8 @@ import 'package:manpower_station/app/modules/service/bindings/service_binding.da
 import 'package:manpower_station/app/modules/service/view/service_booking_screen.dart';
 import 'package:manpower_station/app/modules/service/view/service_details.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_bindings/user_binding.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_view/updatePhone_otp_view.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_view/update_phoneOrEmail_view.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_view/update_profile.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_view/user_profile_screen.dart';
 import 'package:manpower_station/app/modules/authentication/verification_done.dart';
@@ -40,7 +42,7 @@ class AppPages {
   static const Registration = Routes.registrationScreen;
   static const OtpScreen = Routes.otpScreen;
   static const RegistrationDone = Routes.verificationDone;
-  static const UserProfile = Routes.createProfile;
+  static const UserProfile = Routes.userProfile;
   static const OrderHistory = Routes.orderHistory;
   static const MenusPage = Routes.menusPage;
   static const INITIAL = Routes.redirectScreen;
@@ -54,6 +56,8 @@ class AppPages {
   static const WorkerListView = Routes.workerList;
   static const WorkerDetails = Routes.workerDetails;
   static const SupportScreen = Routes.supportScreen;
+  static const UpdateEmailPhone = Routes.updateEmailPhone;
+  static const UpdateOtp = Routes.updateOtp;
 
   static final routes = [
     GetPage(
@@ -78,7 +82,7 @@ class AppPages {
       page: () =>  VerificationCompleted(),
         transition: Transition.rightToLeft
     ),GetPage(
-      name: _Paths.CreateProfile,
+      name: _Paths.UserProfile,
       page: () =>  UserProfileScreen(),
       binding: UserBinding(),
       transition: Transition.native
@@ -139,14 +143,22 @@ class AppPages {
       transition: Transition.rightToLeftWithFade
     ),GetPage(
       name: _Paths.WorkerDetails,
-      page: () =>   WorkerDetailsScreen(),
+      page: () =>   const WorkerDetailsScreen(),
         binding: WorkerBinding(),
       transition: Transition.rightToLeftWithFade
     ),GetPage(
       name: _Paths.SupportView,
-      page: () =>   HelpView(),
+      page: () =>   const HelpView(),
         binding: HelpBinding(),
       transition: Transition.rightToLeftWithFade
+    ),GetPage(
+      name: _Paths.UpdateEmailPhone,
+      page: () =>  UpdatePhoneEmail(),
+        binding: UserBinding(),
+    ),GetPage(
+      name: _Paths.UpdateOtp,
+      page: () =>  const UpdatePhoneOtpView(),
+        binding: UserBinding(),
     ),
   ];
 }

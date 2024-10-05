@@ -23,7 +23,15 @@ class OtpView extends BaseView<AuthenticationController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
     return AppBar(
-      centerTitle: false,
+      leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: LightThemeColors.primaryColor,
+          )),
+      centerTitle: true,
       // titleSpacing: -30.0,
       backgroundColor: Get.isDarkMode
           ?  DarkThemeColors.backgroundColor:Colors.white,

@@ -346,7 +346,6 @@ class HomeView extends BaseView<HomeController> {
                                   const SizedBox(height: 10),
                                 ],
                               ),
-
                             ));
                       }
                     },

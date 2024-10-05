@@ -117,8 +117,7 @@ class ActiveOrder extends StatelessWidget {
                 const SizedBox(height: 10),
                 _buildServiceDetails(),
                 const SizedBox(height: 5),
-                _buildReviewSection(controller: controller),
-                const SizedBox(height: 20),
+
                 _buildActionButtons(context),
               ],
             ),

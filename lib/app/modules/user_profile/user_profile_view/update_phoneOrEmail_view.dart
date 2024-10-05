@@ -1,24 +1,32 @@
-
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/components/link_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
+import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 
-class RegistrationView extends BaseView<AuthenticationController> {
-  RegistrationView({super.key});
+class UpdatePhoneEmail extends BaseView<UserController> {
+  UpdatePhoneEmail({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
     return AppBar(
-      centerTitle: false,
+      leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: LightThemeColors.primaryColor,
+          )),
+      centerTitle: true,
       // titleSpacing: -30.0,
       backgroundColor:
           Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
@@ -28,6 +36,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
       ),
     );
   }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget body(BuildContext context) {
@@ -51,7 +60,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.07,
               ),
-              Text("${Strings.enterEmailPhnNum.tr}",
+              Text("Enter email or phone Number to update.",
                   style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
               const SizedBox(
                 height: 2,
@@ -66,7 +75,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
               TextFormField(
                 // autofocus: true,
                 keyboardType: TextInputType.phone,
-                controller: controller.phoneNumberEmailController,
+                controller: controller.oldEmailPhoneController,
                 decoration: const InputDecoration(
                     // prefixIcon: Padding(
                     //   padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -88,31 +97,91 @@ class RegistrationView extends BaseView<AuthenticationController> {
                       borderSide: BorderSide(
                           color: LightThemeColors.opacityTextColor, width: 2.0),
                     ),
-                    hintText: '01********** or abc@gmail.com',
+                    hintText: 'Enter your old email or phone number.',
                     hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
                 validator: (String? value) {
                   // Define the regex pattern for the allowed prefixes and 11 digits.
                   String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
-                  String emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+                  String emailPattern =
+                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
                   // Create the regex object.
                   RegExp regExpEmail = RegExp(emailPattern);
                   RegExp regExp = RegExp(phonePattern);
                   // Check if the input is null or empty.
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your phone number';
+                    return 'Please enter your new phone or email';
                   }
-                  if(value.isEmail){
+                  if (value.isEmail) {
                     // Validate the input using the regex.
                     if (!regExpEmail.hasMatch(value)) {
                       return 'Please enter a valid email address';
                     }
-                  }else if(value.isPhoneNumber){
+                  } else if (value.isPhoneNumber) {
                     // Validate the input using the regex.
                     if (!regExp.hasMatch(value)) {
                       return 'Please enter a valid phone number.';
                     }
-                  }else{
-                    return 'Please enter a valid credential.' ;
+                  } else {
+                    return 'Please enter a valid credential.';
+                  }
+                  // If the input is valid, return null (no error).
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+              TextFormField(
+                // autofocus: true,
+                keyboardType: TextInputType.phone,
+                controller: controller.newEmailPhoneController,
+                decoration: const InputDecoration(
+                    // prefixIcon: Padding(
+                    //   padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    //   child: Container(
+                    //     width: 70,
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //       children: [Icon(Icons.flag_outlined), Text(' +88  |')],
+                    //     ),
+                    //   ),
+                    // ),
+                    focusedBorder: UnderlineInputBorder(
+                      // borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                          color: LightThemeColors.primaryColor, width: 2.0),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      // borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                          color: LightThemeColors.opacityTextColor, width: 2.0),
+                    ),
+                    hintText: 'Enter your new phone number or email',
+                    hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
+                validator: (String? value) {
+                  // Define the regex pattern for the allowed prefixes and 11 digits.
+                  String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
+                  String emailPattern =
+                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+                  // Create the regex object.
+                  RegExp regExpEmail = RegExp(emailPattern);
+                  RegExp regExp = RegExp(phonePattern);
+                  // Check if the input is null or empty.
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your new phone or email';
+                  }
+                  if (value.isEmail) {
+                    // Validate the input using the regex.
+                    if (!regExpEmail.hasMatch(value)) {
+                      return 'Please enter a valid email address';
+                    }
+                  } else if (value.isPhoneNumber) {
+                    // Validate the input using the regex.
+                    if (!regExp.hasMatch(value)) {
+                      return 'Please enter a valid phone number.';
+                    }
+                  } else {
+                    return 'Please enter a valid credential.';
                   }
                   // If the input is valid, return null (no error).
                   return null;
@@ -164,70 +233,12 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 height: 38,
                 width: 298,
                 onTap: () {
-                 _sendOtp();
-                  // Get.toNamed(AppPages.OtpScreen);
+                  _sendOtp();
                 },
               )),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(child: Divider(thickness: 1,color: Colors.grey,)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18.0),
-                    child: Text("Or",style: TextStyle(color: Colors.black54),),
-                  ),
-                  Expanded(child: Divider(thickness: 1,color: Colors.grey,))
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 260,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              backgroundColor: Colors.white,
-                              elevation: 5),
-                          onPressed: () {
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: Image.asset(
-                                    'assets/images/google.png',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                const Text(
-                                  'Continue with Google',
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.w400),
-                                )
-                              ],
-                            ),
-                          )),
-                    ),
-                  ],
-                ),
-              ),
-      
             ],
           ),
         ),
@@ -235,18 +246,17 @@ class RegistrationView extends BaseView<AuthenticationController> {
     );
   }
 
-void _sendOtp() async {
-  if (_formKey.currentState!.validate()) {
-    controller.showLoading();
-    try {
-      await controller.loginWithPhoneOrEmail();
-      controller.hideLoading();
+  void _sendOtp() async {
+    if (_formKey.currentState!.validate()) {
+      controller.showLoading();
+      try {
+        await controller.updatePhoneOrEmail();
 
-    } catch (error) {
-      controller.hideLoading();
-      //   controller.errMsg.value = error.message;
-      print(error);
+        controller.hideLoading();
+      } catch (error) {
+        controller.hideLoading();
+        print(error);
+      }
     }
   }
-}
 }

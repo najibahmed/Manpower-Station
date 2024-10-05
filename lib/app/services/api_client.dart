@@ -53,7 +53,7 @@ class BaseClient {
             // Retry the original request with new access token
             RequestOptions requestOptions = error.requestOptions;
             requestOptions.headers['Authorization'] =
-                'Bearer ${newTokens['access_token']}';
+                '${newTokens['access_token']}';
 
             final response = await _dio.request(
               requestOptions.path,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
-import 'package:manpower_station/app/modules/help_support/view/help_view.dart';
 import 'package:manpower_station/app/modules/home/views/home_view.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
 import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';

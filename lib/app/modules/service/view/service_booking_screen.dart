@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
@@ -199,9 +200,11 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                               height: 40,
                               width: 200,
                               onTap: () {
+                                controller.showLoading();
                                 controller.selectedService =
                                     controller.serviceModel;
                                 controller.addToCartList();
+                                controller.hideLoading();
                                 Get.toNamed(AppPages.WorkerListView);
                               }))
                     ],
