@@ -21,15 +21,15 @@ enum RequestType {
 
 class BaseClient {
   static final Dio _dio = Dio(BaseOptions(
+    baseUrl: Constants.baseUrl,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': Constants.accessToken
+      'Authorization':MySharedPref.getAccessToken()
     },
-    // connectTimeout: const Duration(seconds: 30),
+    connectTimeout: const Duration(seconds: 15),
     // sendTimeout: const Duration(seconds: 30),
   ))
-
     ..interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         // Attach the access token to every request
@@ -52,7 +52,7 @@ class BaseClient {
             // Retry the original request with new access token
             RequestOptions requestOptions = error.requestOptions;
             requestOptions.headers['Authorization'] =
-                'Bearer ${newTokens['access_token']}';
+                '${newTokens['access_token']}';
 
             final response = await _dio.request(
               requestOptions.path,
@@ -73,7 +73,6 @@ class BaseClient {
         }
       },
     ))
-
     ..interceptors.add(PrettyDioLogger(
       requestHeader: true,
       requestBody: true,
@@ -115,7 +114,6 @@ class BaseClient {
           onReceiveProgress: onReceiveProgress,
           queryParameters: queryParameters,
           options: Options(
-            receiveTimeout: const Duration(seconds: _timeoutInSeconds),
             headers: headers,
           ),
         );
@@ -211,7 +209,7 @@ class BaseClient {
         url: url,
       ));
     } else {
-      _handleError(Strings.serverNotResponding.tr);
+      _handleError("TimeOut here ${Strings.serverNotResponding.tr}");
     }
   }
 
@@ -304,14 +302,20 @@ Future<Map<String, String>> _refreshToken() async {
   String? refreshToken = await MySharedPref.getRefreshToken();
 
   if (refreshToken == null) {
-    throw Exception('No refresh token available');
+    throw Exception('No Access token available');
   }
-
-  final response = await BaseClient._dio.post(
-    '/auth/refresh', // Replace with your token refresh endpoint
-    data: {
-      'refresh_token': refreshToken,
-    },
+  Dio dio = Dio(
+    BaseOptions(
+      baseUrl: Constants.baseUrl,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': refreshToken
+      },
+    ),
+  );
+  final response = await dio.post(
+    '/api/users/refresh/token',
   );
 
   if (response.statusCode == 200) {

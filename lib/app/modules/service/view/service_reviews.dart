@@ -1,66 +1,81 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:manpower_station/app/components/custom_snackbar.dart';
+import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
-import 'package:manpower_station/utils/helper_function.dart';
-
-
+import 'package:manpower_station/utils/constants.dart';
 
 class ReviewsScreen extends StatelessWidget {
   List<dynamic> reviews;
-   ReviewsScreen({super.key,required this.reviews});
+  ReviewsScreen({super.key, required this.reviews});
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 8,),
-              _buildRatingBars(),
-              const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Give a review',
-                  labelStyle: TextStyle(color: Colors.grey),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.green, width: 2),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 1),
-                  ),
-                  border: OutlineInputBorder(
-                     borderSide: BorderSide(
-                       color: Colors.black12
-                     )
-                  ),
+    final controller = Get.put(ServiceController());
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 8,
+            ),
+            _buildRatingBars(),
+            TextFormField(
+              controller: controller.reviewController,
+              decoration: const InputDecoration(
+                labelText: 'Give a review',
+                labelStyle: TextStyle(color: Colors.grey),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green, width: 2),
                 ),
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {
-                  // Add write review functionality
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 1),
                 ),
-                child: const Text('Submit',style: TextStyle(color: Colors.white),),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black12)),
               ),
-              const SizedBox(height: 8),
-              reviews.isEmpty ? const Text("There is no review"): Column(
-                children: List.generate(reviews.length, (index) {
-                  var review=reviews[index];
-                  return ReviewCard(review:review);
-                },)
-              )
-            ],
-          ),
+              validator: (value) {
+                if (value != null) {
+                  CustomSnackBar.showCustomErrorToast(
+                      message: 'Please write review');
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () {
+                // Add write review functionality
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
+              child: const Text(
+                'Submit',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(height: 8),
+            reviews.isEmpty
+                ? const Text("There is no review")
+                : Column(
+                    children: List.generate(
+                    reviews.length,
+                    (index) {
+                      var review = reviews[index];
+                      return ReviewCard(review: review);
+                    },
+                  ))
+          ],
         ),
+      ),
     );
   }
-
-
 
   // Rating bars to visualize rating breakdown
   Widget _buildRatingBars() {
@@ -96,10 +111,11 @@ class ReviewsScreen extends StatelessWidget {
 // Custom widget for a review card
 class ReviewCard extends StatelessWidget {
   final Reviews review;
-   const ReviewCard({super.key, required this.review});
+  const ReviewCard({super.key, required this.review});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ServiceController());
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -110,7 +126,24 @@ class ReviewCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                _buildStarRating(review.rating!),
+                RatingBar.builder(
+                  itemSize: 25,
+                  initialRating: 0.0,
+                  minRating: 0.0,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  ignoreGestures: false,
+                  itemCount: 5,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    size: 5,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    controller.userRating.value = rating;
+                  },
+                ),
                 const SizedBox(width: 8),
                 Text(
                   review.user?.username ?? 'Undefined',
@@ -120,7 +153,7 @@ class ReviewCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-             review.date!,
+              Constants.formatDate.format(DateTime.parse(review.date!)),
               style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 8),
@@ -151,62 +184,3 @@ class ReviewCard extends StatelessWidget {
     );
   }
 }
-
-/// Dummy data for reviews
-// class Review {
-//   final int rating;
-//   final String author;
-//   final String date;
-//   final bool isVerified;
-//   final String comment;
-//
-//   Review({
-//     required this.rating,
-//     required this.author,
-//     required this.date,
-//     required this.isVerified,
-//     required this.comment,
-//   });
-// }
-//
-// // Sample review data
-// List<Review> reviewData = [
-//   Review(
-//     rating: 5,
-//     author: 'Vin Gough',
-//     date: 'November 18, 2024 at 15:35',
-//     isVerified: true,
-//     comment:
-//     'My old IMAC was from 2013. This replacement was well needed. Very fast, and the colour matches my office set up perfectly.',
-//   ),
-//   Review(
-//     rating: 4,
-//     author: 'Sarah Lee',
-//     date: 'November 19, 2024 at 12:20',
-//     isVerified: true,
-//     comment:
-//     'Great product, but the shipping took longer than expected.',
-//   ),Review(
-//     rating: 4,
-//     author: 'Sarah Lee',
-//     date: 'November 19, 2024 at 12:20',
-//     isVerified: true,
-//     comment:
-//     'Great product, but the shipping took longer than expected.',
-//   ),Review(
-//     rating: 4,
-//     author: 'Sarah Lee',
-//     date: 'November 19, 2024 at 12:20',
-//     isVerified: true,
-//     comment:
-//     'Great product, but the shipping took longer than expected.',
-//   ),Review(
-//     rating: 4,
-//     author: 'Sarah Lee',
-//     date: 'November 19, 2024 at 12:20',
-//     isVerified: true,
-//     comment:
-//     'Great product, but the shipping took longer than expected.',
-//   ),
-//   // Add more reviews here
-// ];

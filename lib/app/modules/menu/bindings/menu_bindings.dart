@@ -7,6 +7,6 @@ class MenuBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<MenusController>(() => MenusController());
-    Get.lazyPut<UserController>(() => UserController());
+    // Get.lazyPut<UserController>(() => UserController(),fenix: true);
   }
 }

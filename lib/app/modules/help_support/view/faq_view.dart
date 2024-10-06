@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/modules/faq/controller/faq_controller.dart';
+import 'package:manpower_station/app/modules/help_support/controller/help_controller.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 
-class FaqView extends BaseView<FaqController> {
+class FaqView extends BaseView<HelpController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar

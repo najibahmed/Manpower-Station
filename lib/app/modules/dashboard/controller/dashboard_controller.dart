@@ -10,6 +10,7 @@ class DashBoardController extends BaseController{
 
   @override
   void onInit() {
+    selectedIndex.value=0;
     super.onInit();
   }
 

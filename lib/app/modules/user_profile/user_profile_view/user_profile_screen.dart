@@ -88,88 +88,45 @@ class UserProfileScreen extends BaseView<UserController> {
                   ),
                 ),
               ),
-          //     Positioned(
-          //       right: 0,
-          //       bottom: 0,
-          //       child: InkWell(
-          //         onTap: (){
-          //           controller.pickImage(context);
-          //         },
-          //         child: Container(
-          //           decoration: BoxDecoration(
-          //             color: Colors.white.withOpacity(.45),
-          //             borderRadius: const BorderRadius.all(Radius.circular(100)),
-          //             border: Border.all(color: Colors.black.withOpacity(0.65))
-          //           ),
-          //             child: Padding(
-          //               padding: const EdgeInsets.all(2.0),
-          //               child: Icon(Icons.edit,size: 20,color: Colors.black.withOpacity(.75),),
-          //             )),
-          //       ),
-          //     )
             ],
           ),
           SizedBox(
             height: size.height * 0.04,
           ),
-          // Row(
-          //   crossAxisAlignment: CrossAxisAlignment.end,
-          //   children: [
-          //     const Padding(
-          //       padding: EdgeInsets.symmetric(horizontal: 10.0),
-          //       child: Icon(
-          //         Icons.person,
-          //         size: 35,
-          //         color: LightThemeColors.primaryColor,
-          //       ),
-          //     ),
-          //     // Expanded(
-          //     //   child: TextFormField(
-          //     //     keyboardType: TextInputType.name,
-          //     //     controller: controller.nameController,
-          //     //     decoration: InputDecoration(
-          //     //         focusedBorder: const UnderlineInputBorder(
-          //     //           borderSide: const BorderSide(
-          //     //               color: LightThemeColors.primaryColor, width: 2.0),
-          //     //         ),
-          //     //         enabledBorder: const UnderlineInputBorder(
-          //     //           borderSide: BorderSide(
-          //     //               color: LightThemeColors.opacityTextColor, width: 2.0),
-          //     //         ),
-          //     //         hintText: 'Your name',
-          //     //         labelStyle: myTextStyle.copyWith(fontWeight: FontWeight.normal,fontSize:MyFonts.bodyMediumSize),
-          //     //         labelText: "${Strings.name.tr}",
-          //     //         hintStyle: const TextStyle(color: LightThemeColors.hintTextColor)),
-          //     //     validator: (String? value) {},
-          //     //   ),
-          //     // ),
-          //   ],
-          // ),
+
           CustomListTileEditButton(context:context,title:'Name',onEdit:(value)async{
-            controller.showLoading();
-            await controller.updateUserProfileField(FieldType.username, value);
-            print('this is value-->$value');
-            controller.hideLoading();
+            // await controller.updateUserProfileField(FieldType.username, value);
+            // print('this is value-->$value');
           }, icon: Icons.person, subTitle: 'Update name' ?? 'name'),
           const SizedBox(height: 15,),
-          CustomListTileEditButton(context:context,title:'Phone Number',onEdit:(value){
-            print('this is value-->$value');
-          }, icon: Icons.phone_android_outlined, subTitle:  'Update phone number' ?? 'name'),
+          ListTile(
+            leading: const Icon(Icons.phone_android),
+            title:  Text( controller.userData.value.phoneOrEmail??"Login Email or phone number here."),
+            subtitle: const Text(
+            "Update your phone or email.",
+            style: TextStyle(color: Colors.black54),
+          ),
+            trailing: IconButton(onPressed: (){
+              Get.toNamed(AppPages.UpdateEmailPhone);
+            },
+                icon: const Icon(Icons.edit)),
+          ),
+          // CustomListTileEditButton(
+          //     context:context,title:'Phone Number',onEdit:(value){
+          //   print('this is value-->$value');
+          // }, icon: Icons.phone_android_outlined, subTitle:  'Update phone number' ?? 'name'),
           const SizedBox(height: 15,),
-          CustomListTileEditButton(
-              context:context,
-              title:  'Email',
-              onEdit:(value) async {
-                await controller.updateUserProfileField(FieldType.email, value);
-                controller.hideLoading();
-            print('this is value-->$value');
-          }, icon: Icons.phone_android_outlined, subTitle:  controller.userData.value.phoneOrEmail??'Update Email Address'),
+          // CustomListTileEditButton(
+          //     context:context,
+          //     title:  'Email',
+          //     onEdit:(value) async {
+          //       await controller.updateUserProfileField(FieldType.email, value);
+          //   print('this is value-->$value');
+          // }, icon: Icons.phone_android_outlined, subTitle:  controller.userData.value.phoneOrEmail??'Update Email Address'),
           const SizedBox(height: 15,),
           CustomListTileEditButton(context:context,icon:Icons.pin_drop,title:'Address', onEdit:(value)async{
-            controller.showLoading();
-            await controller.updateUserProfileField(FieldType.address, value);
-            print('this is value-->$value');
-            controller.hideLoading();
+            // await controller.updateUserProfileField(FieldType.address, value);
+            // print('this is value-->$value');
     }, subTitle:  'Update address' ?? 'name',)
         ],
       ),
@@ -185,10 +142,10 @@ class UserProfileScreen extends BaseView<UserController> {
             title,
             style: const TextStyle(color: Colors.black54),
           ),
-          subtitle: Text(
-            subTitle,
-            style: const TextStyle(color: Colors.black54),
-          ),
+          // subtitle: Text(
+          //   subTitle,
+          //   style: const TextStyle(color: Colors.black54),
+          // ),
           // trailing: IconButton(
           //   onPressed: () {
           //     showSingleTextInputDialog(context: context, title: title, onSubmit:onEdit);

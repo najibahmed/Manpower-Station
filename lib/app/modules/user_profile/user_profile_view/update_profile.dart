@@ -38,7 +38,10 @@ class UpdateProfileScreen extends BaseView<UserController> {
       actions: [
         TextButton(
             onPressed: () {
-              Get.offNamed(AppPages.UserProfile);
+              controller.updateUserProfileField().then((value) {
+                Get.back();
+              },);
+
             },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -52,10 +55,8 @@ class UpdateProfileScreen extends BaseView<UserController> {
   Widget body(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // TODO: implement body
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0, left: 10, right: 10,bottom: 15),
-      child: Card(
-        elevation: 5,
+    return SafeArea(
+      child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 12),
           child: Column(
@@ -115,7 +116,7 @@ class UpdateProfileScreen extends BaseView<UserController> {
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: Icon(
-                              Icons.edit,
+                              Icons.camera_alt,
                               size: 20,
                               color: Colors.black.withOpacity(.75),
                             ),
@@ -182,8 +183,8 @@ class UpdateProfileScreen extends BaseView<UserController> {
                   Expanded(
                     child: TextFormField(
                       style: const TextStyle(fontWeight: FontWeight.normal),
-                      keyboardType: TextInputType.emailAddress,
-                      controller: controller.updateEmailController,
+                      keyboardType: TextInputType.text,
+                      controller: controller.updateDescriptionController,
                       decoration: InputDecoration(
                           focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -198,7 +199,7 @@ class UpdateProfileScreen extends BaseView<UserController> {
                           labelStyle: myTextStyle.copyWith(
                               fontWeight: FontWeight.normal,
                               fontSize: MyFonts.bodyMediumSize),
-                          labelText: "Email",
+                          labelText: "Description",
                           hintStyle: const TextStyle(
                               color: LightThemeColors.hintTextColor)),
                       validator: (String? value) {},
@@ -289,47 +290,47 @@ class UpdateProfileScreen extends BaseView<UserController> {
                         validator: (String? value) {},
                       ),
                     ),
-                    SizedBox(
-                      width: size.width * 0.1,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Icon(
-                        Icons.local_post_office_outlined,
-                        size: 25,
-                        color: LightThemeColors.primaryColor,
-                      ),
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        style: const TextStyle(fontWeight: FontWeight.normal),
-                        keyboardType: TextInputType.number,
-                        controller: controller.updatePostCodeController,
-                        decoration: InputDecoration(
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: LightThemeColors.primaryColor,
-                                  width: 2.0),
-                            ),
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: LightThemeColors.opacityTextColor,
-                                  width: 2.0),
-                            ),
-                            labelStyle: myTextStyle.copyWith(
-                                fontWeight: FontWeight.normal,
-                                fontSize: MyFonts.bodyMediumSize),
-                            labelText: "Post Code",
-                            hintStyle: const TextStyle(
-                                color: LightThemeColors.hintTextColor)),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Provide a post code.';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
+                    // SizedBox(
+                    //   width: size.width * 0.1,
+                    // ),
+                    // const Padding(
+                    //   padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    //   child: Icon(
+                    //     Icons.local_post_office_outlined,
+                    //     size: 25,
+                    //     color: LightThemeColors.primaryColor,
+                    //   ),
+                    // ),
+                    // Expanded(
+                    //   child: TextFormField(
+                    //     style: const TextStyle(fontWeight: FontWeight.normal),
+                    //     keyboardType: TextInputType.number,
+                    //     controller: controller.updatePostCodeController,
+                    //     decoration: InputDecoration(
+                    //         focusedBorder: const UnderlineInputBorder(
+                    //           borderSide: BorderSide(
+                    //               color: LightThemeColors.primaryColor,
+                    //               width: 2.0),
+                    //         ),
+                    //         enabledBorder: const UnderlineInputBorder(
+                    //           borderSide: BorderSide(
+                    //               color: LightThemeColors.opacityTextColor,
+                    //               width: 2.0),
+                    //         ),
+                    //         labelStyle: myTextStyle.copyWith(
+                    //             fontWeight: FontWeight.normal,
+                    //             fontSize: MyFonts.bodyMediumSize),
+                    //         labelText: "Post Code",
+                    //         hintStyle: const TextStyle(
+                    //             color: LightThemeColors.hintTextColor)),
+                    //     validator: (String? value) {
+                    //       if (value == null || value.isEmpty) {
+                    //         return 'Provide a post code.';
+                    //       }
+                    //       return null;
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

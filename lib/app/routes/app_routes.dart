@@ -10,7 +10,7 @@ abstract class Routes {
   static const registrationScreen = _Paths.Registration;
   static const otpScreen = _Paths.OtpScreen;
   static const verificationDone = _Paths.VerificationDone;
-  static const createProfile = _Paths.CreateProfile;
+  static const userProfile = _Paths.UserProfile;
   static const orderHistory = _Paths.OrderHistory;
   static const menusPage = _Paths.MenusPage;
   static const faqScreen = _Paths.FaqScreen;
@@ -21,6 +21,11 @@ abstract class Routes {
   static const singleCatServices = _Paths.SingleCatServices;
   static const updateProfile = _Paths.UpdateProfile;
   static const workerList = _Paths.WorkerList;
+  static const workerDetails = _Paths.WorkerDetails;
+  static const supportScreen = _Paths.SupportView;
+  static const updateEmailPhone = _Paths.UpdateEmailPhone;
+  static const updateOtp = _Paths.UpdateOtp;
+
 }
 
 abstract class _Paths {
@@ -30,7 +35,7 @@ abstract class _Paths {
   static const Registration = '/registration';
   static const OtpScreen = '/otp';
   static const VerificationDone = '/registration_done';
-  static const CreateProfile = '/user_profile';
+  static const UserProfile = '/user_profile';
   static const MenusPage = '/menus_page';
   static const OrderHistory = '/order_history';
   static const FaqScreen = '/faq';
@@ -41,5 +46,9 @@ abstract class _Paths {
   static const SingleCatServices = '/single_category_services';
   static const UpdateProfile = '/update_profile';
   static const WorkerList = '/worker_list';
+  static const WorkerDetails = '/worker_details';
+  static const SupportView = '/support_view';
+  static const UpdateEmailPhone = '/updateEmailPhone';
+  static const UpdateOtp = '/updateOtp';
 
 }

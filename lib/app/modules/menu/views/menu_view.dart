@@ -19,7 +19,14 @@ class MenuView extends BaseView<MenusController>{
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
-   return null;
+   return AppBar(
+     centerTitle: true,
+     title: Image.asset(
+       'assets/images/manpower_name_logo.png',
+       fit: BoxFit.cover,
+       color: Colors.white,
+     ),
+   );
   }
 
   @override
@@ -48,7 +55,10 @@ class MenuView extends BaseView<MenusController>{
           SizedBox(height: 30.h),
           MenuItem(icon: Icons.person, text: 'Profile', onTap: () { Get.toNamed(AppPages.UserProfile); },),
           // MenuItem(icon: Icons.payment, text: 'Digital payment', onTap: () {  },),
-          MenuItem(icon: Icons.language, text: '${Strings.changeLanguage.tr}', onTap: () {  },),
+          MenuItem(icon: Icons.language, text: Strings.changeLanguage.tr, onTap: () {  },),
+          MenuItem(icon: Icons.support_agent_outlined, text: 'Customer Support', onTap: () { 
+            Get.toNamed(AppPages.SupportScreen);
+          },),
           MenuItem(icon: Icons.privacy_tip, text: 'Privacy policy', onTap: () {  },),
           // MenuItem(icon: Icons.document_scanner, text: 'Terms & Conditions', onTap: () {  },),
           MenuItem(icon: Icons.info_outline, text: 'About Us', onTap: () {  },),

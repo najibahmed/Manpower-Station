@@ -4,16 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
+import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/models/category_model.dart';
-import 'package:manpower_station/app/modules/home/views/service_option.dart';
-import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
-import 'package:manpower_station/app/modules/service/view/service_list_grid.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
-import '../../../../config/theme/my_theme.dart';
+import 'package:manpower_station/utils/helper_function.dart';
 import '../../../../config/translations/localization_service.dart';
 import '../../../core/base/base_view.dart';
 import '../controllers/home_controller.dart';
@@ -28,14 +25,7 @@ class HomeView extends BaseView<HomeController> {
 
   @override
   Widget body(BuildContext context) {
-    final List<String> imageUrls = [
-      'assets/images/carosal_img.jpg',
-      'assets/images/carosal_img.jpg',
-      'assets/images/carosal_img.jpg',
-      'assets/images/carosal_img.jpg',
-      'assets/images/carosal_img.jpg',
-      'assets/images/carosal_img.jpg',
-    ];
+    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: RefreshIndicator(
         color: Colors.green,
@@ -43,6 +33,7 @@ class HomeView extends BaseView<HomeController> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
+                backgroundColor: Colors.white,
                 centerTitle: true,
                 leading: InkWell(
                   onTap: () => LocalizationService.updateLanguage(
@@ -53,7 +44,6 @@ class HomeView extends BaseView<HomeController> {
                   child: SizedBox(
                     height: 30.h,
                     width: 30.h,
-                    // decoration: theme.extension<HeaderContainerThemeData>()?.decoration,
                     child: SvgPicture.asset(
                       'assets/vectors/language.svg',
                       color: LightThemeColors.primaryColor,
@@ -63,9 +53,6 @@ class HomeView extends BaseView<HomeController> {
                     ),
                   ),
                 ),
-                backgroundColor: Get.isDarkMode
-                    ? DarkThemeColors.backgroundColor
-                    : Colors.white,
                 title: Image.asset(
                   'assets/images/manpower_name_logo.png',
                   fit: BoxFit.cover,
@@ -75,37 +62,42 @@ class HomeView extends BaseView<HomeController> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                          onPressed: () {},
+                          onPressed: ()async {
+                            print('access token----${MySharedPref.getAccessToken()}');
+                            print("refresh token---${await MySharedPref.getRefreshToken()}");
+                            print("userId----${await MySharedPref.getUserId()}");
+                          },
                           icon: const Icon(
                             Icons.notifications_active_outlined,
                             color: LightThemeColors.primaryColor,
                           )),
-                      InkWell(
-                        onTap: () => MyTheme.changeTheme(),
-                        child: SizedBox(
-                          height: 39.h,
-                          width: 39.h,
-                          // decoration:
-                          // theme.extension<HeaderContainerThemeData>()?.decoration,
-                          child: SvgPicture.asset(
-                            Get.isDarkMode
-                                ? 'assets/vectors/sun.svg'
-                                : 'assets/vectors/moon.svg',
-                            fit: BoxFit.none,
-                            color: Get.isDarkMode
-                                ? LightThemeColors.backgroundColor
-                                : DarkThemeColors.backgroundColor,
-                            height: 10,
-                            width: 10,
-                          ),
-                        ),
-                      ),
+                      // InkWell(
+                      //   onTap: () => MyTheme.changeTheme(),
+                      //   child: SizedBox(
+                      //     height: 39.h,
+                      //     width: 39.h,
+                      //     // decoration:
+                      //     // theme.extension<HeaderContainerThemeData>()?.decoration,
+                      //     child: SvgPicture.asset(
+                      //       Get.isDarkMode
+                      //           ? 'assets/vectors/sun.svg'
+                      //           : 'assets/vectors/moon.svg',
+                      //       fit: BoxFit.none,
+                      //       color: Get.isDarkMode
+                      //           ? LightThemeColors.backgroundColor
+                      //           : DarkThemeColors.backgroundColor,
+                      //       height: 10,
+                      //       width: 10,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ]),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -173,16 +165,18 @@ class HomeView extends BaseView<HomeController> {
                                 pauseAutoPlayOnTouch: true,
                                 viewportFraction: 1.0,
                               ),
-                              items: imageUrls.map((url) {
+                              items: controller.activeBanners.value.images
+                                  ?.map((url) {
+                                var image = url.image;
                                 return Builder(
                                   builder: (BuildContext context) {
                                     return Container(
                                       width: MediaQuery.of(context).size.width,
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 5.0),
-                                      child: Image.asset(
-                                        url,
-                                        fit: BoxFit.fill,
+                                      child: Image.network(
+                                        'http://172.16.154.43/images/banners/$image',
+                                        fit: BoxFit.fitWidth,
                                       ),
                                     );
                                   },
@@ -191,60 +185,61 @@ class HomeView extends BaseView<HomeController> {
                             ),
                     ),
                     SizedBox(height: 15.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Service Categories',
-                          style: TextStyle(
-                              fontSize: MyFonts.bodyLargeSize,
-                              color: Colors.black.withOpacity(.65),
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                'see all',
-                                style: TextStyle(
-                                    fontSize: MyFonts.bodyLargeSize,
-                                    color: Colors.black.withOpacity(.65),
-                                    fontWeight: FontWeight.normal),
-                              )),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 5.h),
-                    SizedBox(
-                      height: 100,
-                      child: controller.allCategoryData.isEmpty
-                          ? ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 5,
-                              itemBuilder: (BuildContext context, int index) {
-                                return _buildCategoryShimmer();
-                              },
-                            )
-                          : ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount:  controller.allCategoryData.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                CategoryModel category =
-                                    controller.allCategoryData[index];
-                                var id =category.id.toString();
-                                return ServiceOption(
-                                  label: category.categoryName!,
-                                  image: 'assets/images/maid_icon.png',
-                                  onTap: () {
-                                     controller.getOneCategoryServices(id);
-                                      var serviceList=controller.oneCategoryServicesData.value;
-                                      Get.toNamed(AppPages.SingleCateServicesScreen,arguments: serviceList);
-
-                                  });
-                              }),
-                    ),
-                    SizedBox(height: 15.h),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       'Service Categories',
+                    //       style: TextStyle(
+                    //           fontSize: MyFonts.bodyLargeSize,
+                    //           color: Colors.black.withOpacity(.65),
+                    //           fontWeight: FontWeight.w500),
+                    //     ),
+                    //     Padding(
+                    //       padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    //       child: TextButton(
+                    //           onPressed: () {},
+                    //           child: Text(
+                    //             'see all',
+                    //             style: TextStyle(
+                    //                 fontSize: MyFonts.bodyLargeSize,
+                    //                 color: Colors.black.withOpacity(.65),
+                    //                 fontWeight: FontWeight.normal),
+                    //           )),
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(height: 5.h),
+                    // SizedBox(
+                    //   height: 100,
+                    //   child: controller.allCategoryData.isEmpty
+                    //       ? ListView.builder(
+                    //           scrollDirection: Axis.horizontal,
+                    //           itemCount: 5,
+                    //           itemBuilder: (BuildContext context, int index) {
+                    //             return _buildCategoryShimmer();
+                    //           },
+                    //         )
+                    //       : ListView.builder(
+                    //           scrollDirection: Axis.horizontal,
+                    //           itemCount:  controller.allCategoryData.length,
+                    //           itemBuilder: (BuildContext context, int index) {
+                    //             CategoryModel category =
+                    //                 controller.allCategoryData[index];
+                    //             var id =category.id.toString();
+                    //             return
+                    //               ServiceOption(
+                    //               label: category.categoryName!,
+                    //               image: 'assets/images/maid_icon.png',
+                    //               onTap: () {
+                    //                  controller.getOneCategoryServices(id);
+                    //                   var serviceList=controller.oneCategoryServicesData.value;
+                    //                   Get.toNamed(AppPages.SingleCateServicesScreen,arguments: serviceList);
+                    //
+                    //               });
+                    //           }),
+                    // ),
+                    SizedBox(height: 10.h),
                     Text(
                       '${Strings.askTypeOfService.tr}?',
                       style: TextStyle(
@@ -267,25 +262,96 @@ class HomeView extends BaseView<HomeController> {
                     childAspectRatio: 0.9,
                   ),
                   delegate: SliverChildBuilderDelegate(
-                    childCount: controller.allServiceData.isEmpty
+                    childCount: controller.allCategoryData.isEmpty
                         ? 6
-                        : controller.allServiceData.length,
+                        : controller.allCategoryData.length,
                     (context, index) {
-                      if (controller.allServiceData.isEmpty) {
-                        return _buildServiceCardShimmer();
+                      if (controller.allCategoryData.isEmpty) {
+                        return buildServiceCardShimmer();
                       } else {
-                        ServiceModel service = controller.allServiceData[index];
+                        CategoryModel category =
+                            controller.allCategoryData[index];
+                        var id = category.id.toString();
                         return InkWell(
-                          onTap: () {
-                            Get.toNamed(AppPages.ServiceDetails,
-                                arguments: service);
-                          },
-                          child: ServiceCard(
-                            title: service.name!,
-                            image: service.image!,
-                            service: service,
-                          ),
-                        );
+                            onTap: () {
+                              controller.oneCategoryServicesData.clear();
+                              controller.getOneCategoryServices(id);
+                              var serviceList =
+                                  controller.oneCategoryServicesData;
+                              Get.toNamed(AppPages.SingleCateServicesScreen,
+                                  arguments: serviceList);
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              elevation: 4,
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(15)),
+                                    child: Image.asset(
+                                      'assets/images/maid_icon.png',
+                                      height: 120,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      category.categoryName!,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            height: size.height * 0.035,
+                                            width: size.width * 0.4,
+                                            child: ElevatedButton(
+                                                onPressed: () {
+                                                  controller
+                                                      .getOneCategoryServices(
+                                                          id);
+                                                  var serviceList = controller
+                                                      .oneCategoryServicesData;
+                                                  Get.toNamed(
+                                                      AppPages
+                                                          .SingleCateServicesScreen,
+                                                      arguments: serviceList);
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      LightThemeColors
+                                                          .primaryColor,
+                                                ),
+                                                child: const Text(
+                                                  'View All',
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.white),
+                                                )),
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(height: 10),
+                                ],
+                              ),
+                            ));
                       }
                     },
                   )),
@@ -295,16 +361,19 @@ class HomeView extends BaseView<HomeController> {
       ),
     );
   }
+
   Future<void> _handleRefresh() async {
-   controller.getAllServiceData();
-   controller.getAllServiceCategories();
+    controller.getAllServiceData();
+    controller.getAllServiceCategories();
+    controller.getActiveBanners();
     return Future.delayed(const Duration(seconds: 3));
   }
+
   Widget _buildBannerShimmer() {
     return Card(
         elevation: 5,
         child: Container(
-          child: ShimmerWidget.rectangular(height: 180),
+          child: const ShimmerWidget.rectangular(height: 180),
         ));
   }
 
@@ -317,36 +386,5 @@ class HomeView extends BaseView<HomeController> {
             width: 110,
           ),
         ));
-  }
-
-  Widget _buildServiceCardShimmer() {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      elevation: 4,
-      child: const Column(
-        children: [
-          ShimmerWidget.rectangular(height: 120),
-          SizedBox(
-            height: 10,
-          ),
-          ShimmerWidget.rectangular(
-            height: 20,
-            width: 110,
-          ),
-          Spacer(),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Align(
-                  alignment: Alignment.center,
-                  child: ShimmerWidget.rectangular(
-                    height: 20,
-                    width: 150,
-                  ))),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
   }
 }

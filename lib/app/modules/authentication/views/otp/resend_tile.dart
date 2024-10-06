@@ -47,7 +47,9 @@ class _ResendSmsTileState extends State<ResendSmsTile> {
       focusNode: emailFocusNode,
       focusColor: LightThemeColors.primaryColor,
       enabled: _isTileActive,
-      onTap: _isTileActive ? _resendSms : null,
+      onTap: (){
+        _isTileActive ? _resendSms : null;
+      },
       leading: Icon(Icons.sms, color: _isTileActive ? LightThemeColors.primaryColor :LightThemeColors.opacityTextColor),
       title: Text('${Strings.resendSms.tr}'),
       trailing:  _isTileActive ? const Text(''):Text('Wait $_start s',

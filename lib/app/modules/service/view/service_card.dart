@@ -1,51 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import '../model/service_list_model.dart';
-
-// class ServiceListView extends BaseView<ServiceController> {
-//   ServiceListView({super.key});
-//   @override
-//   PreferredSizeWidget? appBar(BuildContext context) {
-//     return AppBar(
-//       title: const Text('Service List'),
-//     );
-//   }
-//
-//   @override
-//   Widget body(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(8.0),
-//       child: GridView.builder(
-//         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//           crossAxisCount: 2,
-//           crossAxisSpacing: 10,
-//           mainAxisSpacing: 10,
-//           childAspectRatio: 0.9,
-//         ),
-//         itemCount: controller.serviceData.length,
-//         itemBuilder: (context, index) {
-//           ServiceModel service = controller.serviceData[index];
-//           return InkWell(
-//             onTap: (){
-//               Get.toNamed(AppPages.ServiceDetails,arguments:service);
-//             },
-//             child: ServiceCard(
-//               title: service.name!,
-//               image: service.image!,
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
 
 class ServiceCard extends StatelessWidget {
   final String title;
   final String image;
   final ServiceModel service;
-  const ServiceCard({super.key, required this.title, required this.image, required this.service});
+  const ServiceCard(
+      {super.key,
+      required this.title,
+      required this.image,
+      required this.service});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +22,7 @@ class ServiceCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       elevation: 4,
-      child:Column(
+      child: Column(
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
@@ -86,13 +53,14 @@ class ServiceCard extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: size.height * 0.035,
-                    width: size.width * 0.4,
+                    width: size.width * 0.35,
                     child: ElevatedButton(
                         onPressed: () {
-                          Get.toNamed(AppPages.ServiceBooking,arguments:service);
+                          Get.toNamed(AppPages.ServiceBooking,
+                              arguments: service);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: LightThemeColors.primaryColor,
                         ),
                         child: const Text(
                           'Book',

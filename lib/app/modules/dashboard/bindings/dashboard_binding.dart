@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
 import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:manpower_station/app/modules/help_support/controller/help_controller.dart';
 import 'package:manpower_station/app/modules/home/controllers/home_controller.dart';
 import 'package:manpower_station/app/modules/menu/controller/menu_controller.dart';
 import 'package:manpower_station/app/modules/order_history/controller/order_controller.dart';
+import 'package:manpower_station/app/modules/search_view/controller/search_controller.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
@@ -13,8 +13,8 @@ import 'package:manpower_station/app/modules/worker/controller/worker_controller
 class DashboardBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<DashBoardController>(
-          () => DashBoardController(),fenix: true
+    Get.put<DashBoardController>(
+           DashBoardController(),
     );
     Get.lazyPut<OrderController>(
           () => OrderController(),
@@ -22,18 +22,19 @@ class DashboardBinding extends Bindings {
     Get.lazyPut<HomeController>(
           () => HomeController(),
     );
-    Get.lazyPut<AuthenticationController>(
-          () => AuthenticationController(),
-    );Get.lazyPut<HelpController>(
+    Get.lazyPut<HelpController>(
           () => HelpController(),
     );Get.lazyPut<MenusController>(
           () => MenusController(),
     );Get.lazyPut<ServiceController>(
           () => ServiceController(),
-    );Get.lazyPut<UserController>(
-          () => UserController(),
     );Get.lazyPut<WorkerController>(
           () => WorkerController(),
+    );Get.lazyPut<SearchViewController>(
+          () => SearchViewController(),
     );
+    // Get.lazyPut<UserController>(
+    //       () => UserController(),
+    // );
   }
 }
