@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 class Constants {
-  static const String baseUrl = 'https://manpower-test-deploy.onrender.com';
+  // static const String baseUrl = 'https://manpower-test-deploy.onrender.com';
+  static const String baseUrl = 'http://172.16.154.11';
   static const String appSplashUrl = "assets/images/splash_screen.png";
   static const String banglaCurrency = '৳';
   static const String userId = '66ebe7e89805d827adaa690a';

@@ -51,16 +51,10 @@ class UpdatePhoneEmail extends BaseView<UserController> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              Center(
-                child: Image.asset(
-                  'assets/images/registration_vactor.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.07,
               ),
-              Text("Enter email or phone Number to update.",
+              Text("Change Email or Phone number.",
                   style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
               const SizedBox(
                 height: 2,
@@ -77,54 +71,24 @@ class UpdatePhoneEmail extends BaseView<UserController> {
                 keyboardType: TextInputType.phone,
                 controller: controller.oldEmailPhoneController,
                 decoration: const InputDecoration(
-                    // prefixIcon: Padding(
-                    //   padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    //   child: Container(
-                    //     width: 70,
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [Icon(Icons.flag_outlined), Text(' +88  |')],
-                    //     ),
-                    //   ),
-                    // ),
-                    focusedBorder: UnderlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       // borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide(
                           color: LightThemeColors.primaryColor, width: 2.0),
                     ),
-                    enabledBorder: UnderlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
                       // borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide(
                           color: LightThemeColors.opacityTextColor, width: 2.0),
                     ),
-                    hintText: 'Enter your old email or phone number.',
-                    hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
+                    // hintText: 'Your Old email or phone number.',
+                    labelText: "Old Email or Phone number",
+                    labelStyle:TextStyle(color: LightThemeColors.hintTextColor)),
+                    // hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
                 validator: (String? value) {
-                  // Define the regex pattern for the allowed prefixes and 11 digits.
-                  String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
-                  String emailPattern =
-                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-                  // Create the regex object.
-                  RegExp regExpEmail = RegExp(emailPattern);
-                  RegExp regExp = RegExp(phonePattern);
-                  // Check if the input is null or empty.
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your new phone or email';
+                    return 'Please enter your old phone or email';
                   }
-                  if (value.isEmail) {
-                    // Validate the input using the regex.
-                    if (!regExpEmail.hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
-                  } else if (value.isPhoneNumber) {
-                    // Validate the input using the regex.
-                    if (!regExp.hasMatch(value)) {
-                      return 'Please enter a valid phone number.';
-                    }
-                  } else {
-                    return 'Please enter a valid credential.';
-                  }
-                  // If the input is valid, return null (no error).
                   return null;
                 },
               ),
@@ -136,28 +100,18 @@ class UpdatePhoneEmail extends BaseView<UserController> {
                 keyboardType: TextInputType.phone,
                 controller: controller.newEmailPhoneController,
                 decoration: const InputDecoration(
-                    // prefixIcon: Padding(
-                    //   padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    //   child: Container(
-                    //     width: 70,
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [Icon(Icons.flag_outlined), Text(' +88  |')],
-                    //     ),
-                    //   ),
-                    // ),
-                    focusedBorder: UnderlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       // borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide(
                           color: LightThemeColors.primaryColor, width: 2.0),
                     ),
-                    enabledBorder: UnderlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
                       // borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide(
                           color: LightThemeColors.opacityTextColor, width: 2.0),
                     ),
-                    hintText: 'Enter your new phone number or email',
-                    hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
+                    labelText: "New Email or Phone number",
+                    labelStyle:TextStyle(color: LightThemeColors.hintTextColor)),
                 validator: (String? value) {
                   // Define the regex pattern for the allowed prefixes and 11 digits.
                   String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
@@ -188,43 +142,6 @@ class UpdatePhoneEmail extends BaseView<UserController> {
                 },
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: '${Strings.acceptTermMsg.tr}',
-                        style: TextStyle(
-                            color: LightThemeColors.opacityTextColor,
-                            fontSize: MyFonts.bodyMediumSize),
-                        children: <InlineSpan>[
-                          WidgetSpan(
-                            alignment: PlaceholderAlignment.baseline,
-                            baseline: TextBaseline.alphabetic,
-                            child: LinkButton(
-                                urlLabel: " ${Strings.termsAndCondition.tr}",
-                                url: "https://example.com/terms-and-conditions"),
-                          ),
-                          TextSpan(
-                            text: ' ${Strings.and.tr} ',
-                          ),
-                          WidgetSpan(
-                            alignment: PlaceholderAlignment.baseline,
-                            baseline: TextBaseline.alphabetic,
-                            child: LinkButton(
-                                urlLabel: "${Strings.privacyPolicy.tr}.",
-                                url: "https://example.com/privacy-policy"),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
               Center(
@@ -234,6 +151,7 @@ class UpdatePhoneEmail extends BaseView<UserController> {
                 width: 298,
                 onTap: () {
                   _sendOtp();
+                  Get.toNamed(AppPages.UpdateOtp);
                 },
               )),
               SizedBox(

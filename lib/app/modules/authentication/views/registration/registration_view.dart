@@ -6,6 +6,7 @@ import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/components/link_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
+import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
@@ -18,7 +19,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
     return AppBar(
-      centerTitle: false,
+      centerTitle: true,
       // titleSpacing: -30.0,
       backgroundColor:
           Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
@@ -65,7 +66,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
               ),
               TextFormField(
                 // autofocus: true,
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.text,
                 controller: controller.phoneNumberEmailController,
                 decoration: const InputDecoration(
                     // prefixIcon: Padding(
@@ -237,13 +238,9 @@ class RegistrationView extends BaseView<AuthenticationController> {
 
 void _sendOtp() async {
   if (_formKey.currentState!.validate()) {
-    controller.showLoading();
     try {
       await controller.loginWithPhoneOrEmail();
-      controller.hideLoading();
-
     } catch (error) {
-      controller.hideLoading();
       //   controller.errMsg.value = error.message;
       print(error);
     }

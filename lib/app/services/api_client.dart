@@ -25,12 +25,11 @@ class BaseClient {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': Constants.accessToken
+      'Authorization':MySharedPref.getAccessToken()
     },
-    connectTimeout: const Duration(seconds: 10),
+    connectTimeout: const Duration(seconds: 15),
     // sendTimeout: const Duration(seconds: 30),
   ))
-
     ..interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         // Attach the access token to every request
@@ -74,7 +73,6 @@ class BaseClient {
         }
       },
     ))
-
     ..interceptors.add(PrettyDioLogger(
       requestHeader: true,
       requestBody: true,
@@ -304,14 +302,20 @@ Future<Map<String, String>> _refreshToken() async {
   String? refreshToken = await MySharedPref.getRefreshToken();
 
   if (refreshToken == null) {
-    throw Exception('No refresh token available');
+    throw Exception('No Access token available');
   }
-
-  final response = await BaseClient._dio.post(
-    '/auth/refresh', // Replace with your token refresh endpoint
-    data: {
-      'refresh_token': refreshToken,
-    },
+  Dio dio = Dio(
+    BaseOptions(
+      baseUrl: Constants.baseUrl,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': refreshToken
+      },
+    ),
+  );
+  final response = await dio.post(
+    '/api/users/refresh/token',
   );
 
   if (response.statusCode == 200) {

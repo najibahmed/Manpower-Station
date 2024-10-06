@@ -48,7 +48,7 @@ class SearchViewController extends BaseController {
 
   @override
   void onClose() {
-    // searchController.dispose();
+    searchController.dispose();
     super.onClose();
   }
 }

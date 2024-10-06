@@ -31,7 +31,7 @@ class Strings {
   static const String termsAndCondition = 'Terms and Conditions';
   static const String privacyPolicy = 'Privacy Policy';
   static const String sendOtp = 'Send OTP';
-  static const String verifyNumMsg = 'Verifying your number';
+  static const String verifyNumMsg = 'Verifying your Phone number and Email';
   static const String verificationCodeSent = 'A verification code has been sent to';
   static const String enterCode = 'Enter 4-digit code';
   static const String dintGetCode = "Didn't recieve code";

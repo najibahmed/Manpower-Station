@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
+import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
@@ -61,7 +62,11 @@ class HomeView extends BaseView<HomeController> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                          onPressed: () {},
+                          onPressed: ()async {
+                            print('access token----${MySharedPref.getAccessToken()}');
+                            print("refresh token---${await MySharedPref.getRefreshToken()}");
+                            print("userId----${await MySharedPref.getUserId()}");
+                          },
                           icon: const Icon(
                             Icons.notifications_active_outlined,
                             color: LightThemeColors.primaryColor,

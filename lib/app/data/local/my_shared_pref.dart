@@ -14,7 +14,7 @@ class MySharedPref {
   static const String _accessTokenKey = 'access_token';
   static const String _currentLocalKey = 'current_local';
   static const String _lightThemeKey = 'is_theme_light';
-  static const String refreshTokenKey='USER_JWT';
+  static const String refreshTokenKey='refresh_token';
   static const String isLoggedIn = 'isLoggedIn';
   static const String userId = 'adminId';
 

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -12,7 +13,6 @@ import '../../../core/base/base_controller.dart';
 
 class AuthenticationController extends BaseController {
   TextEditingController phoneNumberEmailController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
   TextEditingController otpController = TextEditingController();
   RxBool showError = false.obs;
   final RxString errorMessage = ''.obs;
@@ -77,10 +77,10 @@ class AuthenticationController extends BaseController {
   }
 
   /// Otp verification
-  Future<void> otpVerification(String pin) async {
+  Future<void> otpVerification() async {
     try {
       Map<String, dynamic> requestData = {
-        'otp': pin,
+        'otp': otpController.text.trim(),
       };
       await BaseClient.safeApiCall(
         "/api/users/signup/phone_email/verified",
@@ -89,7 +89,7 @@ class AuthenticationController extends BaseController {
         onError: (p0) {
          var response= p0.response;
           otpController.clear();
-          Get.snackbar('Wrong otp',"${response!.data['message']}");
+          CustomSnackBar.showCustomErrorSnackBar(title:" Wrong otp", message: "${response!.data['message']}");
         },
         onSuccess: (response) {
           if (response.statusCode == 200) {
@@ -100,8 +100,11 @@ class AuthenticationController extends BaseController {
 
              String accToken=otpData.token!.accesstoken!;
              String refToken=otpData.token!.refreshtoken!;
+             String userId=otpData.user!.id!;
             MySharedPref.setAccessToken(accToken);
-            MySharedPref.setAccessToken(refToken);
+            MySharedPref.setRefreshToken(refToken);
+            MySharedPref.setUserId(userId as int);
+            MySharedPref.setLoginStatus(true);
             // Success handling (for example, navigate to another screen)
             Get.snackbar('Success', '${otpData.message}');
             Get.offAllNamed(AppPages.DashboardView);
@@ -135,9 +138,8 @@ class AuthenticationController extends BaseController {
 
   @override
   void onClose() {
-    phoneNumberEmailController;
-    nameController;
-    otpController;
+    phoneNumberEmailController.dispose();
+    otpController.dispose();
     super.onClose();
   }
 }

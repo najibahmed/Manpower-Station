@@ -16,13 +16,13 @@ class UserController extends BaseController {
   RxString errorMessage=''.obs;
   late Rx<UserModel> userData=UserModel().obs;
   RxBool isLoading=true.obs;
-  TextEditingController oldEmailPhoneController=TextEditingController();
-  TextEditingController newEmailPhoneController=TextEditingController();
-  TextEditingController updateOtpController=TextEditingController();
-  TextEditingController updateNameController=TextEditingController();
-   TextEditingController updateDescriptionController=TextEditingController();
-  TextEditingController updateAddressController=TextEditingController();
-  TextEditingController updateAreaController=TextEditingController();
+  late TextEditingController oldEmailPhoneController;
+  late TextEditingController newEmailPhoneController;
+  late TextEditingController updateOtpController;
+  late TextEditingController updateNameController;
+   late TextEditingController updateDescriptionController;
+  late TextEditingController updateAddressController;
+  late TextEditingController updateAreaController;
   // TextEditingController updatePostCodeController=TextEditingController();
 
 
@@ -97,13 +97,13 @@ class UserController extends BaseController {
 
   /// update email or phone Number
   Future<void> updatePhoneOrEmail() async {
-    var userId=await MySharedPref.getUserId();
     try {
       Map<String, dynamic> requestData = {
-        'phone_or_email': oldEmailPhoneController.text.trim(),
+        'oldPhoneNumber_Or_email': oldEmailPhoneController.text.trim(),
+        'newPhoneNumber_Or_email': newEmailPhoneController.text.trim(),
       };
       await BaseClient.safeApiCall(
-        "/api/users/update/user/phone_or_email/${Constants.userId}",
+        "/api/users/update/user/phone_or_email",
         RequestType.put,
         data: requestData,
         onSuccess: (response){
@@ -154,17 +154,17 @@ class UserController extends BaseController {
 
 
   /// Update Email Otp verification
-  Future<void> otpVerification(String pin) async {
+  Future<void> updateOtpVerification() async {
     try {
       Map<String, dynamic> requestData = {
-        'otp': pin,
+        'otp': updateOtpController.text.trim(),
       };
       await BaseClient.safeApiCall(
         "/api/users/update/user/phone_email/verified",
         RequestType.put,
         data: requestData,
-        onError: (p0) {
-          var response= p0.response;
+        onError: (err) {
+          var response= err.response;
           updateOtpController.clear();
           Get.snackbar('Wrong otp',"${response!.data['message']}");
         },
@@ -178,7 +178,7 @@ class UserController extends BaseController {
             String accToken=otpData.token!.accesstoken!;
             String refToken=otpData.token!.refreshtoken!;
             MySharedPref.setAccessToken(accToken);
-            MySharedPref.setAccessToken(refToken);
+            MySharedPref.setRefreshToken(refToken);
             // Success handling (for example, navigate to another screen)
             Get.snackbar('Success', '${otpData.message}');
             Get.offAllNamed(AppPages.UserProfile);
@@ -196,10 +196,16 @@ class UserController extends BaseController {
     } finally {
     }
   }
-
   @override
   void onInit() {
     // getUserInformation();
+    oldEmailPhoneController=TextEditingController();
+    newEmailPhoneController=TextEditingController();
+    updateOtpController=TextEditingController();
+    updateAddressController=TextEditingController();
+    updateNameController=TextEditingController();
+    updateDescriptionController=TextEditingController();
+    updateAreaController=TextEditingController();
     Future.delayed(const Duration(seconds:1),(){
       isLoading.value=false;
     });
@@ -207,12 +213,13 @@ class UserController extends BaseController {
   }
   @override
   void onClose() {
-    // updateEmailPhoneController.dispose();
-    // updateOtpController.dispose();
-    // updateNameController.dispose();
-    // updateDescriptionController.dispose();
-    // updateAddressController.dispose();
-    // updateAreaController.dispose();
+    oldEmailPhoneController.dispose();
+    newEmailPhoneController.dispose();
+    updateOtpController.dispose();
+    updateNameController.dispose();
+    updateDescriptionController.dispose();
+    updateAddressController.dispose();
+    updateAreaController.dispose();
     super.onClose();
   }
 }

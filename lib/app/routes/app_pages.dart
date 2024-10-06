@@ -73,7 +73,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.OtpScreen,
-      page: () =>  const OtpView(),
+      page: () =>   OtpView(),
       binding: AuthenticationBinding(),
         transition: Transition.rightToLeft
     ),
@@ -157,7 +157,7 @@ class AppPages {
         binding: UserBinding(),
     ),GetPage(
       name: _Paths.UpdateOtp,
-      page: () =>  const UpdatePhoneOtpView(),
+      page: () =>   UpdatePhoneOtpView(),
         binding: UserBinding(),
     ),
   ];

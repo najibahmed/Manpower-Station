@@ -32,7 +32,7 @@ const Map<String, String> enUs = {
   Strings.termsAndCondition : 'Terms and Conditions',
   Strings.privacyPolicy : 'Privacy Policy',
   Strings.sendOtp : 'Send OTP',
-  Strings.verifyNumMsg : 'Verifying your number',
+  Strings.verifyNumMsg : 'Verifying your Phone number and Email',
   Strings.verificationCodeSent : 'A verification code has been sent to',
   Strings.enterCode : 'Enter 4-digit code',
   Strings.dintGetCode : "Didn't recieve code",

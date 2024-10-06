@@ -38,8 +38,10 @@ class UpdateProfileScreen extends BaseView<UserController> {
       actions: [
         TextButton(
             onPressed: () {
-              controller.updateUserProfileField();
-              Get.offNamed(AppPages.UserProfile);
+              controller.updateUserProfileField().then((value) {
+                Get.back();
+              },);
+
             },
           child: Padding(
             padding: const EdgeInsets.all(8.0),

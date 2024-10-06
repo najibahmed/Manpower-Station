@@ -29,7 +29,14 @@ class CheckoutController extends BaseController {
   TextEditingController cityController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController areaController = TextEditingController();
-
+   String cartFieldServiceId = '_id';
+   String cartFieldServiceName = 'name';
+   String cartFieldServiceImageUrl = 'image';
+   String cartFieldServiceDiscountModel = 'service_discount';
+   String cartFieldServicePrice = 'service_price';
+   String cartFieldServiceTotalPrice = 'totalPrice';
+   String cartFieldServiceStartingDate = 'startWork';
+   String cartFieldServiceSchedule = 'timeSchedule';
 
  /// Save order or create bookings & payment
   Future<void> saveOrder() async{
@@ -55,7 +62,9 @@ class CheckoutController extends BaseController {
         Map<String, dynamic> requestData = {
           'amount': amount,
           'workersItems': [worker.first.toJson()],
-          'cartItems': [cartItem.first.toMap()],
+          'cartItems': [
+            cartItem.first.toMap()
+          ],
           'addressInfo': {
             'name':  nameController.text.trim(),
             'phone': phoneNumberController.text.trim(),
@@ -65,7 +74,7 @@ class CheckoutController extends BaseController {
             'address': addressLine1Controller.text.trim(),
           },
         };
-        print("request data----->${requestData}");
+        // print("request data----->${requestData}");
         var url="/api/payments/ammerpay/create";
         await BaseClient.safeApiCall(
             url,
@@ -75,7 +84,7 @@ class CheckoutController extends BaseController {
               if (kDebugMode) {
                 print(response.data);
               }
-              if (response.statusCode == 200) {
+              if (response.statusCode == 201) {
 
               } else {
                 print('Failed to Book Service: ${response.statusMessage}');
@@ -108,13 +117,7 @@ class CheckoutController extends BaseController {
         getDiscountAmount(cartItem.first.discountModel,serviceController.cartSubtotal.value)
         ).round());
   }
-  // int getGrandTotal(num cartSubTotal) {
-  //   return ((cartSubTotal -
-  //       getDiscountAmount(cartSubTotal) +
-  //       getVatAmount(cartSubTotal) +
-  //       orderConstantModel.deliveryCharge))
-  //       .round();
-  // }
+
   @override
   void onInit() {
     super.onInit();
