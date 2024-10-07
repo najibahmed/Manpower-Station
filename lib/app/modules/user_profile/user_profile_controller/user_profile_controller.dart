@@ -107,10 +107,10 @@ class UserController extends BaseController {
         RequestType.put,
         data: requestData,
         onSuccess: (response){
-          if(response.statusCode==201){
+          if(response.statusCode==200){
             print('${response.data['message']}');
             if(response.data['success'] == true){
-              // Get.toNamed(AppPages.UpdateOtp);
+              Get.toNamed(AppPages.UpdateOtp);
             }else{
               Get.snackbar('Error','Having problem to send otp');
             }
@@ -127,7 +127,7 @@ class UserController extends BaseController {
     Map<String, dynamic> requestData = {
       'avatar' : profilePic.value,
       'username' : updateNameController.text.trim(),
-      'description' : updateDescriptionController.text.trim(),
+      'profile_description' : updateDescriptionController.text.trim(),
       'address' : updateAddressController.text.trim(),
       'area' : updateAreaController.text.trim(),
     };
@@ -180,8 +180,8 @@ class UserController extends BaseController {
             MySharedPref.setAccessToken(accToken);
             MySharedPref.setRefreshToken(refToken);
             // Success handling (for example, navigate to another screen)
-            Get.snackbar('Success', '${otpData.message}');
-            Get.offAllNamed(AppPages.UserProfile);
+            Get.snackbar('Successfully Changed', '${otpData.message}');
+            Get.offNamed(AppPages.UserProfile);
           }else{
             // Handle error
             errorMessage.value = 'Error: ${response.data['message']}';
@@ -198,7 +198,7 @@ class UserController extends BaseController {
   }
   @override
   void onInit() {
-    // getUserInformation();
+    getUserInformation();
     oldEmailPhoneController=TextEditingController();
     newEmailPhoneController=TextEditingController();
     updateOtpController=TextEditingController();
@@ -206,7 +206,7 @@ class UserController extends BaseController {
     updateNameController=TextEditingController();
     updateDescriptionController=TextEditingController();
     updateAreaController=TextEditingController();
-    Future.delayed(const Duration(seconds:1),(){
+    Future.delayed(const Duration(seconds:3),(){
       isLoading.value=false;
     });
     super.onInit();

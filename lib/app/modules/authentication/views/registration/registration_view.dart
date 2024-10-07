@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
+import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/link_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
@@ -239,7 +240,8 @@ class RegistrationView extends BaseView<AuthenticationController> {
 void _sendOtp() async {
   if (_formKey.currentState!.validate()) {
     try {
-      await controller.loginWithPhoneOrEmail();
+      showLoadingOverLay(asyncFunction: controller.loginWithPhoneOrEmail(),msg: "Loading");
+      // await controller.loginWithPhoneOrEmail();
     } catch (error) {
       //   controller.errMsg.value = error.message;
       print(error);

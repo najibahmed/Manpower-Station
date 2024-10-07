@@ -13,11 +13,11 @@ import '../../config/translations/strings_enum.dart';
 /// this will make sure user cant interact with ui until
 /// any (async) method is executing cuz it will wait for async function
 /// to end and then it will dismiss the overlay
-showLoadingOverLay({required Future<dynamic> Function() asyncFunction,String? msg,}) async
+showLoadingOverLay({required Future<void>  asyncFunction,String? msg,}) async
 {
   await Get.showOverlay(asyncFunction: () async {
     try{
-      await asyncFunction();
+      await asyncFunction;
     }catch(error){
       Logger().e(error);
       Logger().e(StackTrace.current);
@@ -28,6 +28,7 @@ showLoadingOverLay({required Future<dynamic> Function() asyncFunction,String? ms
     opacityColor: Colors.black,
   );
 }
+
 
 Widget _getLoadingIndicator({String? msg}){
   return Container(
@@ -40,7 +41,7 @@ Widget _getLoadingIndicator({String? msg}){
       color: Colors.white,
     ),
     child: Column(mainAxisSize: MainAxisSize.min,children: [
-      Image.asset('assets/images/app_icon.png',height: 45.h,),
+      Image.asset('assets/images/manpower_name_logo.png',height: 45.h,),
       SizedBox(width: 8.h,),
       Text(msg ?? Strings.loading.tr,style: Get.theme.textTheme.bodyLarge),
     ],),

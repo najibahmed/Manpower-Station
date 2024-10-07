@@ -39,7 +39,7 @@ Future<void> main() async {
           debugShowCheckedModeBanner: false,
           builder: (context, widget) {
             bool themeIsLight = MySharedPref.getThemeIsLight();
-            return Theme(
+            return  Theme(
               data: MyTheme.getThemeData(isLight: themeIsLight),
               child: MediaQuery(
                 // prevent font from scaling (some people use big/small device fonts)

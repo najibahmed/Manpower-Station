@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
+import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 import 'package:manpower_station/utils/constants.dart';
 
@@ -13,7 +14,7 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
    Future<void> getAllBookingsByUid() async {
      var userID=Constants.userId;
      try {
-       var url="/api/booking/get/unique/user/booking/$userID";
+       var url="/api/bookings/get/unique/user/booking/$userID";
        await BaseClient.safeApiCall(
            url,
            RequestType.get,
@@ -22,11 +23,10 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
            },
            onSuccess: (response) {
              if (response.statusCode == 201) {
-               var jsonData = response.data;//['bookings'];
-               print("--------->${jsonData}");
-               // var bookings = jsonData.map((e) => BookingsModel.fromJson(e))
-               //     .toList();
-               // bookingsList.assignAll(bookings);// Update the RxList with new data
+               var jsonData = response.data['bookings'];
+               var bookings = jsonData.map((e) => BookingsModel.fromJson(e))
+                   .toList();
+               bookingsList.assignAll(bookings);// Update the RxList with new data
              } else {
                print('Failed to load Workers: ${response.statusMessage}');
              }
@@ -39,7 +39,7 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
 
   @override
   void onInit() {
-     // getAllBookingsByUid();
+     getAllBookingsByUid();
     tabController = TabController(length: 2,initialIndex: 0,vsync: this);
     super.onInit();
   }

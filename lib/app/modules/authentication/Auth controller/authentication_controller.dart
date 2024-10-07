@@ -14,9 +14,8 @@ import '../../../core/base/base_controller.dart';
 class AuthenticationController extends BaseController {
   TextEditingController phoneNumberEmailController = TextEditingController();
   TextEditingController otpController = TextEditingController();
-  RxBool showError = false.obs;
   final RxString errorMessage = ''.obs;
-  // final RxBool isOtpWrong= false.obs;
+  RxBool isLoading=false.obs;
 
 
 /// Login with email or phone Number
@@ -30,7 +29,7 @@ class AuthenticationController extends BaseController {
         RequestType.post,
         data: requestData,
         onSuccess: (response){
-          if(response.statusCode==201){
+          if(response.statusCode==200){
             // if (kDebugMode) {
             //   print('Success data here------${response.data['success']}');
             //   print('Message data here------${response.data['message']}');

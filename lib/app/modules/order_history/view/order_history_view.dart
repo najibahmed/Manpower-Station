@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
+import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/modules/order_history/controller/order_controller.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
-
-
+import 'package:manpower_station/utils/constants.dart';
 
 class OrderHistoryView extends BaseView<OrderController> {
   const OrderHistoryView({super.key});
@@ -44,22 +43,22 @@ class OrderHistoryView extends BaseView<OrderController> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 600,
-                  child: TabBarView(
-                    controller: controller.tabController,
-                    children: const [
-                      ActiveOrder(),
-                      OrderHistory(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )
+          // SliverToBoxAdapter(
+          //   child: SizedBox(
+          //     height: 900,
+          //     child: Column(
+          //       children: [
+          //         TabBarView(
+          //           controller: controller.tabController,
+          //           children:  [
+          //             ActiveOrder( controller: controller,),
+          //             OrderHistory(),
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
@@ -67,64 +66,119 @@ class OrderHistoryView extends BaseView<OrderController> {
 }
 
 class ActiveOrder extends StatelessWidget {
-  const ActiveOrder({
+  final OrderController controller;
+  ActiveOrder({
     super.key,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OrderController());
+    final bookings = controller.bookingsList;
+
+    return SingleChildScrollView(
+        child: Padding(
+      padding: const EdgeInsets.only(top: 12.0, left: 22, right: 22),
+      child: Obx(
+        ()=> Column(
+            children: List.generate(
+          bookings.length,
+          (index) {
+            BookingsModel booking = bookings[index];
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: buildContainer(booking, context),
+            );
+          },
+        ).toList()
+            // [
+            //   Container(
+            //     width: cardWidth,
+            //     padding: EdgeInsets.all(cardPadding),
+            //     decoration: BoxDecoration(
+            //       color: Colors.green[100], // Background color of the card
+            //       borderRadius: BorderRadius.circular(12),
+            //       boxShadow: [
+            //         BoxShadow(
+            //           color: Colors.grey.withOpacity(0.2),
+            //           spreadRadius: 6,
+            //           blurRadius: 5,
+            //           offset: const Offset(0, 3), // changes position of shadow
+            //         ),
+            //       ],
+            //     ),
+            //     child: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       mainAxisSize: MainAxisSize.min,
+            //       children: [
+            //         _buildButtonRow(context),
+            //         const Text(
+            //           "Cleaning",
+            //           style: TextStyle(
+            //             fontSize: 20,
+            //             fontWeight: FontWeight.bold,
+            //             letterSpacing: 2,
+            //             color: Colors.black,
+            //           ),
+            //           textAlign: TextAlign.end,
+            //         ),
+            //         const SizedBox(height: 10),
+            //         _buildServiceDetails(),
+            //         const SizedBox(height: 5),
+            //
+            //         _buildActionButtons(context),
+            //       ],
+            //     ),
+            //   ),
+            // ],
+            ),
+      ),
+    ));
+  }
+
+  Container buildContainer(BookingsModel booking, BuildContext context) {
     // Get the screen size for responsive design
     final size = MediaQuery.of(context).size;
     final double cardWidth = size.width * 0.9; // 90% of screen width
     final double cardPadding = size.width * 0.05;
     // 5% padding
-    return SingleChildScrollView(
-        child: Padding(
-      padding: const EdgeInsets.only(top: 12.0, left: 22, right: 22),
-      child: Column(
-        children: [
-          Container(
-            width: cardWidth,
-            padding: EdgeInsets.all(cardPadding),
-            decoration: BoxDecoration(
-              color: Colors.green[100], // Background color of the card
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 6,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildButtonRow(context),
-                const Text(
-                  'Office Cleaning',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.end,
-                ),
-                const SizedBox(height: 10),
-                _buildServiceDetails(),
-                const SizedBox(height: 5),
-
-                _buildActionButtons(context),
-              ],
-            ),
+    return Container(
+      width: cardWidth,
+      padding: EdgeInsets.all(cardPadding),
+      decoration: BoxDecoration(
+        color: Colors.green[100], // Background color of the card
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 6,
+            blurRadius: 5,
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
-    ));
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildButtonRow(context),
+          // Text(
+          //   booking.services!.first.service!.name!,
+          //   style: TextStyle(
+          //     fontSize: 20,
+          //     fontWeight: FontWeight.bold,
+          //     letterSpacing: 2,
+          //     color: Colors.black,
+          //   ),
+          //   textAlign: TextAlign.end,
+          // ),
+          const SizedBox(height: 10),
+          // _buildServiceDetails(booking),
+          const SizedBox(height: 5),
+          _buildActionButtons(context),
+        ],
+      ),
+    );
   }
 
   // Button Row (Booking Info Button)
@@ -140,12 +194,13 @@ class ActiveOrder extends StatelessWidget {
   }
 
   // Service Details Section
-  Widget _buildServiceDetails() {
+  Widget _buildServiceDetails(BookingsModel booking) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildDetailRow('Total Price:', '549.00 Tk'),
-        _buildDetailRow('Advance:', '99.00 Tk'),
+        _buildDetailRow('Total Price:', "${booking.totalAmount.toString()}.00Tk" ),
+        _buildDetailRow('Advance:',  "${booking.advanceAmount.toString()}.00Tk"),
+        _buildDetailRow('Starting Date:',  Constants.formatDate.format(DateTime.parse(booking.services!.first.workStartDate!))),
       ],
     );
   }

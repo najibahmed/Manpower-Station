@@ -94,7 +94,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                 const SizedBox(height: 8),
                  SizedBox(
                   child:RatingBar.builder(
-                    initialRating: 3.5,
+                    initialRating: service.ratings! .toDouble() ,
                     minRating: 0.0,
                     direction: Axis.horizontal,
                     allowHalfRating: true,

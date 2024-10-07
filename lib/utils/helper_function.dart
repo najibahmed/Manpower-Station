@@ -16,6 +16,7 @@ String calculatePriceAfterDiscount(num price, num discount) {
   return (price - discountAmount).toStringAsFixed(0);
 }
 
+
 Widget buildServiceCardShimmer() {
   return Card(
     shape: RoundedRectangleBorder(
