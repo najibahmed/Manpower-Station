@@ -9,7 +9,9 @@ import 'package:manpower_station/app/modules/menu/controller/menu_controller.dar
 import 'package:manpower_station/app/modules/menu/widgets/menu_item.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+import 'package:manpower_station/utils/helper_function.dart';
 
 
 
@@ -38,10 +40,26 @@ class MenuView extends BaseView<MenusController>{
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
            SizedBox(height: 40.h),
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: Colors.grey.shade300,
-            child: const Icon(Icons.person, size: 50, color: Colors.white),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: Material(
+              child: SizedBox(
+                height: 80,
+                width: 80,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.30),
+                  ),
+                  child: userController.userData.value.avatar != null
+                      ? isSvgOrJpg("${userController.userData.value.avatar}", context)
+                      : const Icon(
+                    Icons.person,
+                    color: LightThemeColors.primaryColor,
+                    size: 60,
+                  ),
+                ),
+              ),
+            ),
           ),
            SizedBox(height: 10.h),
           // Text(

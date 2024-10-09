@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
-
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+
+import 'package:manpower_station/utils/helper_function.dart';
 
 import '../../../components/custom_loading_overlay.dart';
 
@@ -23,6 +24,7 @@ class UpdateProfileScreen extends BaseView<UserController> {
       automaticallyImplyLeading: false,
       leading: IconButton(
           onPressed: () {
+            controller.profilePic.value=null;
             Get.back();
           },
           icon: const Icon(
@@ -39,17 +41,22 @@ class UpdateProfileScreen extends BaseView<UserController> {
       ),
       actions: [
         TextButton(
-            onPressed: () {
-              _updateUser();
-            },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Save",style: TextStyle(color: Colors.green),),
-          ),)
+          onPressed: () {
+            _updateUser();
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "Save",
+              style: const TextStyle(color: Colors.green),
+            ),
+          ),
+        )
       ],
     );
   }
-final _formKey=GlobalKey<FormState>();
+
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget body(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -59,7 +66,7 @@ final _formKey=GlobalKey<FormState>();
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -78,23 +85,23 @@ final _formKey=GlobalKey<FormState>();
                             onTap: () {
                               controller.pickImage(context);
                             },
-                            child: CircleAvatar(
-                              backgroundColor: Colors.grey.withOpacity(.30),
-                              radius: 100,
-                              child: Stack(
-                                children: [
-                                  controller.profilePic.value != null
-                                      ? Image.file(
-                                          controller.profilePic.value!,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : const Icon(
-                                          Icons.add_a_photo,
-                                          color: LightThemeColors.primaryColor,
-                                          size: 60,
-                                        ),
-                                ],
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(.30),
                               ),
+                              child: controller.profilePic.value!= null
+                                  ?
+                              Image.file(
+                                controller.profilePic.value!,
+                                fit: BoxFit.cover,
+                              ):
+                              controller.userData.value.avatar!=null ?
+                              isSvgOrJpg("${controller.userData.value.avatar}", context)
+                                  : const Icon(
+                                      Icons.add_a_photo,
+                                      color: LightThemeColors.primaryColor,
+                                      size: 60,
+                                    ),
                             ),
                           ),
                         ),
@@ -110,8 +117,8 @@ final _formKey=GlobalKey<FormState>();
                         child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(.45),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(100)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(100)),
                                 border: Border.all(
                                     color: Colors.black.withOpacity(0.65))),
                             child: Padding(
@@ -162,12 +169,12 @@ final _formKey=GlobalKey<FormState>();
                             labelText: "${Strings.name.tr}",
                             hintStyle: const TextStyle(
                                 color: LightThemeColors.hintTextColor)),
-                        validator: (String? value) {
-                          if(value!.isEmpty){
-                            return 'Please Enter a name';
-                          }
-                          return null;
-                        },
+                        // validator: (String? value) {
+                        //   if(value!.isEmpty){
+                        //     return 'Please Enter a name';
+                        //   }
+                        //   return null;
+                        // },
                       ),
                     ),
                   ],
@@ -188,6 +195,7 @@ final _formKey=GlobalKey<FormState>();
                     ),
                     Expanded(
                       child: TextFormField(
+                        maxLines: 2,
                         style: const TextStyle(fontWeight: FontWeight.normal),
                         keyboardType: TextInputType.text,
                         controller: controller.updateDescriptionController,
@@ -208,12 +216,12 @@ final _formKey=GlobalKey<FormState>();
                             labelText: "Description",
                             hintStyle: const TextStyle(
                                 color: LightThemeColors.hintTextColor)),
-                        validator: (String? value) {
-                          if(value!.isEmpty){
-                            return 'Please Enter your Description.';
-                          }
-                          return null;
-                        },
+                        // validator: (String? value) {
+                        //   if(value!.isEmpty){
+                        //     return 'Please Enter your Description.';
+                        //   }
+                        //   return null;
+                        // },
                       ),
                     ),
                   ],
@@ -254,11 +262,11 @@ final _formKey=GlobalKey<FormState>();
                             labelText: "Address",
                             hintStyle: const TextStyle(
                                 color: LightThemeColors.hintTextColor)),
-                        validator: (String? value) {
-                          if(value!.isEmpty){
-                          return 'Please Enter your Address';
-                        }
-                        return null;},
+                        // validator: (String? value) {
+                        //   if(value!.isEmpty){
+                        //   return 'Please Enter your Address';
+                        // }
+                        // return null;},
                       ),
                     ),
                   ],
@@ -302,15 +310,14 @@ final _formKey=GlobalKey<FormState>();
                               labelText: "Area",
                               hintStyle: const TextStyle(
                                   color: LightThemeColors.hintTextColor)),
-                          validator: (String? value) {
-                            if(value!.isEmpty){
-                              return 'Please Enter your Area.';
-                            }
-                            return null;
-                          },
+                          // validator: (String? value) {
+                          //   if(value!.isEmpty){
+                          //     return 'Please Enter your Area.';
+                          //   }
+                          //   return null;
+                          // },
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -321,11 +328,15 @@ final _formKey=GlobalKey<FormState>();
       ),
     );
   }
-  void _updateUser()async{
+
+  void _updateUser() async {
     if (_formKey.currentState!.validate()) {
       try {
-        showLoadingOverLay(asyncFunction: controller.updateUserProfileField(),msg: "Updating");
-        Get.back();
+       // await controller.updateUserProfileField();
+        showLoadingOverLay(
+            asyncFunction: controller.updateUserProfileField(),
+            msg: "Updating");
+
       } catch (error) {
         //   controller.errMsg.value = error.message;
         print(error);

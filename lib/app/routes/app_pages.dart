@@ -1,6 +1,8 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, prefer_const_constructors
 
 import 'package:get/get.dart';
+import 'package:manpower_station/app/modules/bookings/binding/bookings_binding.dart';
+import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
 import 'package:manpower_station/app/modules/category/bindings/category_bindings.dart';
 import 'package:manpower_station/app/modules/category/views/single_category_services.dart';
 import 'package:manpower_station/app/modules/checkOut/bindings/checkout_binding.dart';
@@ -22,8 +24,6 @@ import 'package:manpower_station/app/modules/dashboard/view/dashboard_view.dart'
 import 'package:manpower_station/app/modules/help_support/view/faq_view.dart';
 import 'package:manpower_station/app/modules/menu/bindings/menu_bindings.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
-import 'package:manpower_station/app/modules/order_history/binding/order_binding.dart';
-import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
 import 'package:manpower_station/app/modules/worker/bindings/worker_binding.dart';
 import 'package:manpower_station/app/modules/worker/view/worker_details.dart';
 import 'package:manpower_station/app/modules/worker/view/worker_list_screen.dart';
@@ -88,8 +88,8 @@ class AppPages {
       transition: Transition.native
     ),GetPage(
       name: _Paths.OrderHistory,
-      page: () => const OrderHistoryView(),
-        binding: OrderBinding(),
+      page: () => const BookingHistoryView(),
+        binding: BookingsBinding(),
       transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.DashBoard,
@@ -140,7 +140,7 @@ class AppPages {
       name: _Paths.WorkerList,
       page: () =>   WorkerListScreen(),
         binding: WorkerBinding(),
-      transition: Transition.rightToLeftWithFade
+      // transition: Transition.rightToLeftWithFade
     ),GetPage(
       name: _Paths.WorkerDetails,
       page: () =>   const WorkerDetailsScreen(),

@@ -48,6 +48,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             // Worker Info,
             customWorkerTile(controller.worker.first),
             SizedBox(height: screenHeight * 0.02),
+            //Order Summary
             buildHeaderSection('Order Summary'),
             orderSummary(controller.cartItem.first),
             SizedBox(height: screenHeight * 0.02),
@@ -91,7 +92,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
               children: [
                 const Text('Subtotal:'),
                 Text(
-                    '${controller.serviceController.cartSubtotal}${Constants.banglaCurrency}'),
+                    '${controller.serviceController.cartSubtotal}.00${Constants.banglaCurrency}'),
               ],
             ),
             const SizedBox(height: 10),
@@ -120,7 +121,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
               children: [
                 const Text('Grand Total:',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('${controller.getGrandTotal()}${Constants.banglaCurrency}',
+                Text('${controller.getGrandTotal()}.00${Constants.banglaCurrency}',
                     style: const TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
@@ -155,7 +156,7 @@ Widget customWorkerTile(WorkerModel worker) {
           height: 70,
           width: 80,
           child: Image.network(
-            'http://172.16.154.43/images/avatars/${worker.avatar}',
+            '${Constants.avatarImgUrl}${worker.avatar}',
             fit: BoxFit.cover,
           ),
         ),
@@ -197,7 +198,7 @@ Widget customServiceTile(CartModel item) {
           height: 70,
           width: 80,
           child: Image.network(
-            'http://172.16.154.43/images/services/${item.serviceImageUrl}',
+            '${Constants.serviceImgUrl}${item.serviceImageUrl}',
             fit: BoxFit.cover,
           ),
         ),

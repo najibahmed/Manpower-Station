@@ -1,5 +1,6 @@
 
 import 'dart:io';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -64,11 +65,13 @@ class UserController extends BaseController {
     if (image != null) {
       // Handle the picked image file (e.g. display it in an Image widget)
       profilePic.value = File(image.path);
-      // Do something with the image file, like uploading or displaying it
       print('Image selected: ${image.path}');
+      // Do something with the image file, like uploading or displaying it
+    }else{
+      profilePic.value = File('');
     }
   }
-
+  /// Get user information
   Future<void> getUserInformation() async {
     try {
       String userid = MySharedPref.getUserId().toString();
@@ -88,12 +91,14 @@ class UserController extends BaseController {
         },
       );
       /// for pre-fill to update email initializing controller;
-      updateDescriptionController=TextEditingController(text: userData.value.phoneOrEmail);
+      updateDescriptionController=TextEditingController(text: userData.value.profileDescription?? 'null');
+      updateNameController=TextEditingController(text: userData.value.username??"null");
+      updateAddressController=TextEditingController(text: userData.value.address??"null");
+      updateAreaController=TextEditingController(text: userData.value.area??"null");
     } catch (e) {
       Get.snackbar('Error :', e.toString());
     }
   }
-
 
   /// update email or phone Number
   Future<void> updatePhoneOrEmail() async {
@@ -124,23 +129,51 @@ class UserController extends BaseController {
 
 /// Update user profile field
   Future<void> updateUserProfileField() async {
-    Map<String, dynamic> requestData = {
-      'avatar' : profilePic.value,
+    dio.FormData formData = dio.FormData.fromMap({
+      'avatar' : '',              // MultipartFile(imageData.path, filename: fileName),
       'username' : updateNameController.text.trim(),
       'profile_description' : updateDescriptionController.text.trim(),
       'address' : updateAddressController.text.trim(),
       'area' : updateAreaController.text.trim(),
-    };
+    });
+    // Map<String, dynamic> requestData = {
+    //   'avatar' :  null,
+    //   'username' : updateNameController.text.trim(),
+    //   'profile_description' : updateDescriptionController.text.trim(),
+    //   'address' : updateAddressController.text.trim(),
+    //   'area' : updateAreaController.text.trim(),
+    // };
+
     try {
+      if(profilePic.value!=null){
+       File imageData=profilePic.value!;
+        String fileName=imageData.path.split('/').last;
+        formData.files.add(MapEntry('avatar',
+            await dio.MultipartFile.fromFile(imageData.path, filename: fileName)));
+      };
+      // if(profilePic.value!=null){
+      //   File imageData=profilePic.value!;
+      //   String fileName=imageData.path.split('/').last;
+      //      requestData = {
+      //     'avatar' :   await dio.MultipartFile.fromFile(imageData.path, filename: fileName),
+      //     'username' : updateNameController.text.trim(),
+      //     'profile_description' : updateDescriptionController.text.trim(),
+      //     'address' : updateAddressController.text.trim(),
+      //     'area' : updateAreaController.text.trim(),
+      //   };
+      // }
       String userid = MySharedPref.getUserId().toString();
       String url =
           "/api/clients/update/client/profile/${Constants.userId}";
       await BaseClient.safeApiCall(
         url,
         RequestType.put,
-        data: requestData,
+        data: formData  ,
         onSuccess: (response) {
-          if (response.statusCode == 200) {
+          if (response.statusCode == 200){
+            getUserInformation();
+            profilePic.value=null;
+            Get.back();
             Get.snackbar('Success', '${response.data['message']}');
           } else {
             Get.snackbar('Error', 'Having problem to update user data!');
@@ -213,6 +246,7 @@ class UserController extends BaseController {
   }
   @override
   void onClose() {
+
     oldEmailPhoneController.dispose();
     newEmailPhoneController.dispose();
     updateOtpController.dispose();

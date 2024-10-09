@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
+import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
 import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:manpower_station/app/modules/home/views/home_view.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
-import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
 import 'package:manpower_station/app/modules/search_view/view/search_screen.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 
@@ -22,7 +22,7 @@ class DashboardScreen extends BaseView<DashBoardController> {
       index: controller.selectedIndex.value,
       children: const [
         HomeView(),
-        OrderHistoryView(),
+        BookingHistoryView(),
         SearchScreen(),
         MenuView(),
       ],

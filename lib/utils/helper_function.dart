@@ -1,6 +1,10 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
+import 'package:manpower_station/utils/constants.dart';
 
 getFormattedDate(DateTime dt, {String pattern = 'yyyy-MM-dd – kk:mm'}) =>
     DateFormat(pattern).format(dt);
@@ -16,6 +20,37 @@ String calculatePriceAfterDiscount(num price, num discount) {
   return (price - discountAmount).toStringAsFixed(0);
 }
 
+Widget isSvgOrJpg(String imageUrl, BuildContext context) {
+  // Check for .svg extension
+  if (imageUrl.toLowerCase().endsWith('.svg')) {
+    return SvgPicture.network(
+      '${Constants.avatarImgUrl}$imageUrl',
+      height: MediaQuery.of(context).size.height * 0.1,
+      width: MediaQuery.of(context).size.width * 0.1,
+      fit: BoxFit.cover,
+      placeholderBuilder: (BuildContext context) => Container(
+          padding: const EdgeInsets.all(30.0),
+          child: const CircularProgressIndicator()),
+    ); // It's an SVG file
+  }
+
+  // Check for .jpg or .jpeg extension
+  if (imageUrl.toLowerCase().endsWith('.jpg') ||
+      imageUrl.toLowerCase().endsWith('.jpeg') ||
+      imageUrl.toLowerCase().endsWith('.png')) {
+    return Image.network(
+      '${Constants.avatarImgUrl}$imageUrl',
+      height: 120,
+      width: double.infinity,
+      fit: BoxFit.cover,
+    ); // It's a JPG/JPEG file
+  }
+
+  // You can handle other cases or return false if it doesn't match SVG or JPG
+  return const SizedBox(child: Center(
+    child: Text("image file format nor jpg,jpeg,png neither svg"),
+  ),); // Assuming it's not a known image type
+}
 
 Widget buildServiceCardShimmer() {
   return Card(

@@ -17,9 +17,6 @@ class _ShippingFormState extends State<ShippingForm> {
   @override
   Widget build(BuildContext context) {
     final controller=Get.put(CheckoutController());
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Form(
       key: controller.formKey,
       child: Card(

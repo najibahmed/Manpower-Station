@@ -136,6 +136,7 @@ class ServiceController extends BaseController
 
   @override
   void onClose() {
+    tabController.dispose();
     super.onClose();
   }
 }

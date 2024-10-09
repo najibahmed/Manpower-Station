@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/preferred_size.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/modules/worker/view/worker_review_card.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
+import 'package:manpower_station/utils/constants.dart';
 import '../../../models/worker_model.dart';
 
 class WorkerDetailsScreen extends BaseView<WorkerController> {
   const WorkerDetailsScreen({super.key});
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-   return null;
+    return null;
   }
 
   @override
@@ -38,7 +37,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
               sliver: SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,7 +49,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                         borderRadius: BorderRadius.circular(8),
                         image: DecorationImage(
                           image: NetworkImage(
-                              'http://172.16.154.43/images/avatars/${worker.avatar}'),
+                              '${Constants.avatarImgUrl}${worker.avatar}'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -74,44 +73,106 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 2,
                             blurRadius: 5,
-                            offset:
-                                const Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Area: ${worker.area}',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Area:  ',
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${worker.area}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                   SizedBox(width: screenHeight*.01 ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Address:  ',
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 16,
+                                        ),
+                                      ),Text(
+                                        '${worker.address}',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Gender:  ',
+                                        style:
+                                        TextStyle(color: Colors.black54, fontSize: 16),
+                                      ),
+                                      Text(
+                                        '${worker.gender}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                   SizedBox(width: screenHeight*.01),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Rating:  ',
+                                        style: TextStyle(color:Colors.black54,fontSize: 16),
+                                      ),Text(
+                                        '${worker.ratings} Stars',
+                                        style: const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 5),
-                          Text(
-                            'Gender: ${worker.gender}',
-                            style: const TextStyle(fontSize: 16),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Profile Description  ',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
                           ),
-                          const SizedBox(height: 5),
                           Text(
-                            'Address: ${worker.address}',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            'Rating: ${worker.ratings} Stars',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            'Profile Description: ${worker.profileDescription}',
+                            textAlign: TextAlign.justify,
+                            '${worker.profileDescription}',
                             style: const TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 10),
                           const Text(
-                            'Description:',
+                            'Description',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -125,23 +186,23 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                                   style: const TextStyle(fontSize: 16));
                             }),
                           ),
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SizedBox(
-                            width: screenWidth*0.5,
-                            child: ElevatedButton.icon(
-                                    icon: const Icon(Icons.file_download,color: Colors.white,),
-                                    label: const Text('Download CV',style: TextStyle(color: Colors.white),),
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      padding: EdgeInsets.symmetric(horizontal: 30,), // padding
-                                      minimumSize: Size(200, 50), // minimum size
-                                    ),
-                                    ),
-                          ),
-                        ),
-                      ),
+                          // Center(
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(10.0),
+                          //     child: SizedBox(
+                          //       width: screenWidth*0.5,
+                          //       child: ElevatedButton.icon(
+                          //               icon: const Icon(Icons.file_download,color: Colors.white,),
+                          //               label: const Text('Download CV',style: TextStyle(color: Colors.white),),
+                          //               onPressed: () {},
+                          //               style: ElevatedButton.styleFrom(
+                          //                 padding: EdgeInsets.symmetric(horizontal: 30,), // padding
+                          //                 minimumSize: Size(200, 50), // minimum size
+                          //               ),
+                          //               ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -151,7 +212,8 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                             children: List.generate(
                             worker.services!.first.service!.reviews!.length,
                             (index) {
-                              var review = worker.services!.first.service!.reviews![index];
+                              var review = worker
+                                  .services!.first.service!.reviews![index];
 
                               return WorkerReviewCard(review: review);
                             },
@@ -173,10 +235,14 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                 height: 50,
                 width: MediaQuery.of(context).size.width * .9,
                 child: ElevatedButton.icon(
-                  icon: const Icon(Icons.check_circle_outline,color: Colors.white,),
-                  label: const Text('Proceed',style: TextStyle(color: Colors.white)),
+                  icon: const Icon(
+                    Icons.check_circle_outline,
+                    color: Colors.white,
+                  ),
+                  label: const Text('Proceed',
+                      style: TextStyle(color: Colors.white)),
                   onPressed: () {
-                    if(controller.selectedWorkerList.isNotEmpty){
+                    if (controller.selectedWorkerList.isNotEmpty) {
                       controller.selectedWorkerList.clear();
                     }
                     if (controller.selectedWorkerList.isEmpty) {

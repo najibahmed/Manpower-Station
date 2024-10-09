@@ -1,12 +1,12 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
+import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
@@ -21,6 +21,8 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
 
   @override
   Widget body(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Stack(
         children: [
@@ -48,22 +50,22 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
+                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 8),
+                      SizedBox(height: screenHeight * .01),
                       ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
                         child: Image.network(
-                          'http://172.16.154.43/images/services/${controller.serviceModel.image}', // Placeholder for the image
-                          height: 180,
+                          '${Constants.serviceImgUrl}${controller.serviceModel.image}', // Placeholder for the image
+                          height: screenHeight * .22,
                           width: double.infinity,
                           fit: BoxFit.fill,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: screenHeight * .02),
                       Text(
                         'Select Your Time',
                         style: TextStyle(
@@ -74,139 +76,304 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             SizedBox(
-                              width: 170,
-                              child: DropdownButtonFormField<int>(
-                                isExpanded: true,
-                                elevation: 5,
-                                decoration: const InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.grey, width: 2),
+                                width: screenWidth * .4,
+                                child: DropdownMenu(
+                                  inputDecorationTheme:
+                                      const InputDecorationTheme(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.green,
+                                      ),
+                                    ),
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.green, width: 2),
-                                  ),
-                                  filled: true,
-                                  // fillColor: Colors.grey,
+                                  textStyle: const TextStyle(
+                                      color: LightThemeColors.primaryColor),
+                                  onSelected: (value) {
+                                    controller.timeLimit.value = value!;
+                                  },
+                                  initialSelection: controller.timeLimit.value,
+                                  dropdownMenuEntries:
+                                      controller.time.map((time) {
+                                    return DropdownMenuEntry<int>(
+                                      value: time,
+                                      label: '$time',
+                                    );
+                                  }).toList(),
+                                )
+                                // DropdownButtonFormField<int>(
+                                //   isExpanded: true,
+                                //   elevation: 10,
+                                //   // style: const TextStyle(color: LightThemeColors.primaryColor),
+                                //   decoration:  const InputDecoration(
+                                //     enabledBorder: OutlineInputBorder(
+                                //       borderSide: BorderSide(
+                                //           color: Colors.grey, width: 2),
+                                //     ),
+                                //     focusedBorder: OutlineInputBorder(
+                                //       borderSide: BorderSide(
+                                //           color: Colors.green, width: 2),
+                                //     ),
+                                //     // filled: true,
+                                //     // fillColor: Colors.grey,
+                                //   ),
+                                //   dropdownColor: Colors.green[100],
+                                //   hint: const Text('Select Your Time'),
+                                //   value: controller.timeLimit.value,
+                                //   items: controller.time.map((time) {
+                                //     return DropdownMenuItem<int>(
+                                //       value: time,
+                                //       child: Text('$time'),
+                                //     );
+                                //   }).toList(),
+                                //   onChanged: (value) {
+                                //     controller.timeLimit.value = value!;
+                                //   },
+                                // ),
                                 ),
-                                hint: const Text('Select Your Time'),
-                                value: controller.timeLimit.value,
-                                items: controller.time.map((time) {
-                                  return DropdownMenuItem<int>(
-                                    value: time,
-                                    child: Text('$time'),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  controller.timeLimit.value = value!;
-                                },
-                              ),
-                            ),
                             // const SizedBox(width: 5),
                             // Text('Select Your Time Key',style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold),),
                             SizedBox(
-                              width: 170,
-                              child: DropdownButtonFormField<String>(
-                                isExpanded: true,
-                                decoration: const InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.grey, width: 2),
+                                width: screenWidth * .4,
+                                child: DropdownMenu<String>(
+                                  inputDecorationTheme:
+                                      const InputDecorationTheme(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.green,
+                                      ),
+                                    ),
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.green, width: 2),
-                                  ),
-                                  filled: true,
-                                  // fillColor: Colors.grey,
+                                  textStyle: const TextStyle(
+                                      color: LightThemeColors.primaryColor),
+                                  onSelected: (value) {
+                                    controller.selectedTimeKey.value = value!;
+                                  },
+                                  initialSelection:
+                                      controller.selectedTimeKey.value,
+                                  dropdownMenuEntries: [
+                                    'Hours',
+                                    'Days',
+                                    'Weeks',
+                                    'Months'
+                                  ].map((String key) {
+                                    return DropdownMenuEntry<String>(
+                                      value: key,
+                                      label: key,
+                                    );
+                                  }).toList(),
+                                )
+                                // DropdownButtonFormField<String>(
+                                //   elevation: 5,
+                                //   isExpanded: true,
+                                //   decoration: const InputDecoration(
+                                //     enabledBorder: OutlineInputBorder(
+                                //       borderSide: BorderSide(
+                                //           color: Colors.grey, width: 2),
+                                //     ),
+                                //     focusedBorder: OutlineInputBorder(
+                                //       borderSide: BorderSide(
+                                //           color: Colors.green, width: 2),
+                                //     ),
+                                //     filled: true,
+                                //     // fillColor: Colors.grey,
+                                //   ),
+                                //   hint: const Text('Select Your Time Key'),
+                                //   value: controller.selectedTimeKey.value,
+                                //   items: ['Hours', 'Days', 'Weeks', 'Months']
+                                //       .map((String key) {
+                                //     return DropdownMenuItem<String>(
+                                //       value: key,
+                                //       child: Text(key),
+                                //     );
+                                //   }).toList(),
+                                //   onChanged: (value) {
+                                //     controller.selectedTimeKey.value = value!;
+                                //   },
+                                // ),
                                 ),
-                                hint: const Text('Select Your Time Key'),
-                                value: controller.selectedTimeKey.value,
-                                items: ['Hours', 'Days', 'Weeks', 'Months']
-                                    .map((String key) {
-                                  return DropdownMenuItem<String>(
-                                    value: key,
-                                    child: Text(key),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  controller.selectedTimeKey.value = value!;
-                                },
-                              ),
-                            ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      Center(
-                        child: CustomButton(
-                          title: "Select Schedule",
-                          height: 40,
-                          width: 200,
-                          onTap: () async {
-                            controller.selectedDateTime.value =
-                                await showOmniDateTimePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2025),
-                              is24HourMode: false,
-                              isShowSeconds: false,
-                              minutesInterval: 1,
-                              secondsInterval: 1,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(16)),
-                              constraints: const BoxConstraints(
-                                maxWidth: 400,
-                                maxHeight: 650,
-                              ),
-                              barrierDismissible: true,
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Card(
-                        elevation: 5,
-                        child: SizedBox(
-                          height: 50,
-                          width: double.infinity,
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                  'Selected Date:   ${Constants.formatDate.format(controller.selectedDateTime.value!)}'),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      const SizedBox(height: 16),
+
+                      SizedBox(height: screenHeight * .01),
                       Divider(
                         thickness: 1,
                         height: 5,
                         color: Colors.grey.withOpacity(.52),
                       ),
-                      const SizedBox(
-                        height: 90,
+                      SizedBox(height: screenHeight * .01),
+                      Text(
+                        'Choose a start time to begin with.',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: MyFonts.bodyLargeSize,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: screenHeight * .01),
+                      Card(
+                        color: Colors.green[50],
+                        elevation: 3,
+                        child: SizedBox(
+                          height: screenHeight * 0.08,
+                          width: double.infinity,
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    'Selected Date:',
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: MyFonts.bodyLargeSize,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    Constants.formatDate.format(
+                                        controller.selectedDateTime.value!),
+                                    style: TextStyle(
+                                        fontSize: MyFonts.bodyLargeSize,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * .01),
+                      Center(
+                          child: SizedBox(
+                        height: screenHeight * .06,
+                        width: 200,
+                        child: ElevatedButton.icon(
+                            onPressed: () async {
+                              bool themeIsLight =
+                                  MySharedPref.getThemeIsLight();
+                              controller.selectedDateTime.value =
+                                  await showOmniDateTimePicker(
+                                    separator: const Column(
+                                      children: [
+                                        Divider(
+                                          thickness: 1,
+                                        ),
+                                         Text("Scroll to Select Time"),
+                                      ],
+                                    ),
+                                theme: ThemeData(
+                                    colorScheme: ColorScheme.light(
+                                  primary: LightThemeColors
+                                      .primaryColor, // header color
+                                  onPrimary: Colors.white, // text color
+                                  surface:
+                                      Colors.green[50]!, // background color
+                                )),
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2025),
+                                is24HourMode: false,
+                                isShowSeconds: false,
+                                minutesInterval: 1,
+                                secondsInterval: 1,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(16)),
+                                constraints: const BoxConstraints(
+                                  maxWidth: 400,
+                                  maxHeight: 650,
+                                ),
+                                barrierDismissible: true,
+                              );
+                            },
+                            label: const Text(
+                              "Select Schedule",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            icon: const Icon(
+                              Icons.calendar_month_outlined,
+                              color: Colors.white,
+                            )),
+                      )),
+                      SizedBox(height: screenHeight * .02),
+                      Divider(
+                        thickness: 1,
+                        height: 5,
+                        color: Colors.grey.withOpacity(.52),
+                      ),
+                      SizedBox(
+                        height: screenHeight * .02,
+                      ),
+                      Text(
+                        'Move on to the Worker selection process.',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: MyFonts.bodyLargeSize,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: screenHeight * .01,
                       ),
                       Center(
-                          child: CustomButton(
-                              title: "Choose Worker",
-                              height: 40,
-                              width: 200,
-                              onTap: () {
-                                controller.showLoading();
-                                controller.selectedService =
-                                    controller.serviceModel;
-                                controller.addToCartList();
-                                controller.hideLoading();
-                                Get.toNamed(AppPages.WorkerListView);
-                              }))
+                        child: InkWell(
+                          onTap: () {
+                            controller.showLoading();
+                            controller.selectedService =
+                                controller.serviceModel;
+                            controller.addToCartList();
+                            controller.hideLoading();
+                            Get.toNamed(AppPages.WorkerListView);
+                          },
+                          child: Card(
+                            color: LightThemeColors.primaryColor,
+                            elevation: 5,
+                            child: SizedBox(
+                              height: screenHeight * 0.06,
+                              width: screenWidth * 0.5,
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        "Choose Worker",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: MyFonts.bodyLargeSize,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const Icon(
+                                        Icons.arrow_forward_outlined,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // Center(
+                      //     child: CustomButton(
+                      //         title: "Choose Worker",
+                      //         height: 40,
+                      //         width: 200,
+                      //         onTap: () {
+                      //           controller.showLoading();
+                      //           controller.selectedService =
+                      //               controller.serviceModel;
+                      //           controller.addToCartList();
+                      //           controller.hideLoading();
+                      //           Get.toNamed(AppPages.WorkerListView);
+                      //         }))
                     ],
                   ),
                 ),
@@ -218,7 +385,8 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
             right: 5,
             left: 5,
             child: Card(
-              elevation: 9,
+              color: Colors.green[50],
+              elevation: 5,
               // color: Colors.green.withOpacity(.85),
               child: SizedBox(
                 height: 60,

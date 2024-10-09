@@ -5,12 +5,15 @@ import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 import 'package:manpower_station/utils/constants.dart';
 
-class OrderController extends BaseController with GetSingleTickerProviderStateMixin{
+class BookingsController extends BaseController with GetSingleTickerProviderStateMixin{
    late TabController tabController;
+   RxInt tabIndex=0.obs;
    var bookingsList= <dynamic>[].obs;
    RxDouble userRating=0.0.obs;
 
-
+   void changeTabIndex(int index) {
+     tabIndex.value = index;
+   }
    Future<void> getAllBookingsByUid() async {
      var userID=Constants.userId;
      try {
@@ -48,7 +51,7 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
 
   @override
   void onClose() {
-    // tabController.dispose();
+    tabController.dispose();
     super.onClose();
   }
 

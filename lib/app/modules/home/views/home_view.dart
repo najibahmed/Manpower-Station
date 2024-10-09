@@ -10,6 +10,7 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 import '../../../../config/translations/localization_service.dart';
 import '../../../core/base/base_view.dart';
@@ -167,7 +168,7 @@ class HomeView extends BaseView<HomeController> {
                               ),
                               items: controller.activeBanners.value.images
                                   ?.map((url) {
-                                var image = url.image;
+                                var banner = url.image;
                                 return Builder(
                                   builder: (BuildContext context) {
                                     return Container(
@@ -175,7 +176,7 @@ class HomeView extends BaseView<HomeController> {
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 5.0),
                                       child: Image.network(
-                                        'http://172.16.154.43/images/banners/$image',
+                                        '${Constants.bannerImgUrl}$banner',
                                         fit: BoxFit.fitWidth,
                                       ),
                                     );

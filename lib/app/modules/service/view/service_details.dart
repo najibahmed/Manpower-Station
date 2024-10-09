@@ -10,6 +10,7 @@ import 'package:manpower_station/app/modules/service/view/service_reviews.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
+import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
 class ServiceDetailsScreen extends BaseView<ServiceController> {
@@ -73,7 +74,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
             child: Hero(
               tag: "imgHero",
               child: Image.network(
-                'http://172.16.154.43/images/services/${service.image}', // Replace with actual image URL or asset path
+                '${Constants.serviceImgUrl}${service.image}', // Replace with actual image URL or asset path
                 height: 200,
                 width: double.infinity,
                 fit: BoxFit.cover,

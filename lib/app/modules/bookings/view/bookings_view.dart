@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
-import 'package:manpower_station/app/modules/order_history/controller/order_controller.dart';
+import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 
-class OrderHistoryView extends BaseView<OrderController> {
-  const OrderHistoryView({super.key});
+class BookingHistoryView extends BaseView<BookingsController> {
+  const BookingHistoryView({super.key});
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
@@ -24,12 +24,16 @@ class OrderHistoryView extends BaseView<OrderController> {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: Colors.white30,
+            floating: true,
+            backgroundColor: Colors.white,
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(10),
               child: SizedBox(
                 height: 40,
                 child: TabBar(
+                  onTap: (index) {
+                    controller.changeTabIndex(index);
+                  },
                   indicatorWeight: 6,
                   dividerColor: Colors.grey,
                   indicatorColor: Colors.green,
@@ -43,30 +47,43 @@ class OrderHistoryView extends BaseView<OrderController> {
               ),
             ),
           ),
-          // SliverToBoxAdapter(
-          //   child: SizedBox(
-          //     height: 900,
-          //     child: Column(
-          //       children: [
-          //         TabBarView(
-          //           controller: controller.tabController,
-          //           children:  [
-          //             ActiveOrder( controller: controller,),
-          //             OrderHistory(),
-          //           ],
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // )
+          SliverToBoxAdapter(
+            child: SizedBox(
+              child: Column(
+                children: [
+                  _getTabAtIndex(controller.tabIndex.value, controller),
+                  // TabBarView(
+                  //   controller: controller.tabController,
+                  //   children:  [
+                  //     ActiveOrder( controller: controller,),
+                  //     OrderHistory(),
+                  //   ],
+                  // ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
   }
 }
 
+Widget _getTabAtIndex(
+  int index,
+  BookingsController controller,
+) {
+  var list = [
+    ActiveOrder(
+      controller: controller,
+    ),
+    const OrderHistory(),
+  ];
+  return list[index];
+}
+
 class ActiveOrder extends StatelessWidget {
-  final OrderController controller;
+  final BookingsController controller;
   ActiveOrder({
     super.key,
     required this.controller,
@@ -80,7 +97,7 @@ class ActiveOrder extends StatelessWidget {
         child: Padding(
       padding: const EdgeInsets.only(top: 12.0, left: 22, right: 22),
       child: Obx(
-        ()=> Column(
+        () => Column(
             children: List.generate(
           bookings.length,
           (index) {
@@ -91,46 +108,7 @@ class ActiveOrder extends StatelessWidget {
             );
           },
         ).toList()
-            // [
-            //   Container(
-            //     width: cardWidth,
-            //     padding: EdgeInsets.all(cardPadding),
-            //     decoration: BoxDecoration(
-            //       color: Colors.green[100], // Background color of the card
-            //       borderRadius: BorderRadius.circular(12),
-            //       boxShadow: [
-            //         BoxShadow(
-            //           color: Colors.grey.withOpacity(0.2),
-            //           spreadRadius: 6,
-            //           blurRadius: 5,
-            //           offset: const Offset(0, 3), // changes position of shadow
-            //         ),
-            //       ],
-            //     ),
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       mainAxisSize: MainAxisSize.min,
-            //       children: [
-            //         _buildButtonRow(context),
-            //         const Text(
-            //           "Cleaning",
-            //           style: TextStyle(
-            //             fontSize: 20,
-            //             fontWeight: FontWeight.bold,
-            //             letterSpacing: 2,
-            //             color: Colors.black,
-            //           ),
-            //           textAlign: TextAlign.end,
-            //         ),
-            //         const SizedBox(height: 10),
-            //         _buildServiceDetails(),
-            //         const SizedBox(height: 5),
             //
-            //         _buildActionButtons(context),
-            //       ],
-            //     ),
-            //   ),
-            // ],
             ),
       ),
     ));
@@ -161,34 +139,63 @@ class ActiveOrder extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildButtonRow(context),
-          // Text(
-          //   booking.services!.first.service!.name!,
-          //   style: TextStyle(
-          //     fontSize: 20,
-          //     fontWeight: FontWeight.bold,
-          //     letterSpacing: 2,
-          //     color: Colors.black,
-          //   ),
-          //   textAlign: TextAlign.end,
-          // ),
-          const SizedBox(height: 10),
-          // _buildServiceDetails(booking),
-          const SizedBox(height: 5),
-          _buildActionButtons(context),
+          _buildButtonRow(context, booking),
+          Text(
+            booking.services!.first.service!.name!,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2,
+              color: Colors.black,
+            ),
+            textAlign: TextAlign.start,
+          ),
+          SizedBox(height: size.height * 0.01),
+          _buildServiceDetails(booking),
+          SizedBox(height: size.height * 0.02),
+          booking.isPaymentStatus == "Completed" ? const SizedBox():_buildActionButtons(context),
         ],
       ),
     );
   }
 
   // Button Row (Booking Info Button)
-  Widget _buildButtonRow(BuildContext context) {
+  Widget _buildButtonRow(BuildContext context, BookingsModel booking) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CustomButton(
-            title: 'Booking info', height: 35, width: 120, onTap: () {}),
-        _buildStatusRow()
+            title: 'Booking info',
+            height: screenWidth * 0.1,
+            width: screenWidth * 0.3,
+            onTap: () {}),
+        Row(
+          children: [
+            const Text('Status:',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(width: screenWidth * 0.02),
+            Chip(
+                elevation: 5,
+                label: Row(
+                  children: [
+                    Text(
+                      '${booking.isPaymentStatus}',
+                      style: const TextStyle(
+                          color: Colors.black87,
+                          wordSpacing: 5,
+                          fontWeight: FontWeight.w900),
+                    ),
+                  ],
+                ),
+                backgroundColor: booking.isPaymentStatus == "Pending"
+                    ? Colors.red
+                    : booking.isPaymentStatus == "Confirmed"
+                        ? Colors.amber[600]
+                        : Colors.green),
+          ],
+        )
       ],
     );
   }
@@ -198,34 +205,16 @@ class ActiveOrder extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildDetailRow('Total Price:', "${booking.totalAmount.toString()}.00Tk" ),
-        _buildDetailRow('Advance:',  "${booking.advanceAmount.toString()}.00Tk"),
-        _buildDetailRow('Starting Date:',  Constants.formatDate.format(DateTime.parse(booking.services!.first.workStartDate!))),
-      ],
-    );
-  }
-
-  // Status and Review Row
-  Widget _buildStatusRow() {
-    return Row(
-      children: [
-        const Text('Status:', style: TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(width: 10),
-        Chip(
-          elevation: 5,
-          label: const Row(
-            children: [
-              Text(
-                'Confirmed',
-                style: TextStyle(
-                    color: Colors.black87,
-                    wordSpacing: 5,
-                    fontWeight: FontWeight.w600),
-              ),
-            ],
-          ),
-          backgroundColor: Colors.amber[600],
-        ),
+        _buildDetailRow(
+            'Total Price:', "${booking.totalAmount.toString()}.00Tk"),
+        _buildDetailRow(
+            'Advance Payment:', "${booking.advanceAmount.toString()}.00Tk"),
+        _buildDetailRow(
+            'Due Payment:', "${booking.weWillGetPayment.toString()}.00Tk"),
+        _buildDetailRow(
+            'Starting Date:',
+            Constants.formatDate.format(
+                DateTime.parse(booking.services!.first.workStartDate!))),
       ],
     );
   }
@@ -255,13 +244,14 @@ class ActiveOrder extends StatelessWidget {
 
   // Action Buttons (Cancel Booking & Payment)
   Widget _buildActionButtons(BuildContext context) {
-    final double buttonWidth = MediaQuery.of(context).size.width * 0.5;
+    final double buttonWidth = MediaQuery.of(context).size.width * 0.35;
     return Center(
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           // Cancel booking button
           SizedBox(
-            height: 40,
+            height: 35,
             width: buttonWidth,
             child: OutlinedButton(
               onPressed: () {
@@ -274,15 +264,36 @@ class ActiveOrder extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                'Cancel booking',
-                style: TextStyle(color: Colors.red),
+                'Cancel Booking',
+                style: TextStyle(color: Colors.red, fontSize: 12),
               ),
             ),
           ),
           const SizedBox(height: 10),
           // Payment button
-          CustomButton(
-              title: "Payment", height: 40, width: buttonWidth, onTap: () {}),
+          SizedBox(
+            height: 35,
+            width: buttonWidth,
+            child: ElevatedButton(
+              onPressed: () {
+                // Handle cancel booking
+              },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text(
+                'Pay Due',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          // CustomButton(
+          //     title: "Payment", height: 25, width: buttonWidth, onTap: () {}),
         ],
       ),
     );
@@ -344,3 +355,5 @@ class OrderHistory extends StatelessWidget {
     );
   }
 }
+
+enum BookingStatus { Pending, Confirmed, Completed }

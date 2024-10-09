@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
+import 'package:manpower_station/utils/constants.dart';
 import '../model/service_list_model.dart';
 
 class ServiceCard extends StatelessWidget {
@@ -27,7 +28,7 @@ class ServiceCard extends StatelessWidget {
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
             child: Image.network(
-              'http://172.16.154.43/images/services/$image',
+              '${Constants.serviceImgUrl}$image',
               height: 120,
               width: double.infinity,
               fit: BoxFit.cover,

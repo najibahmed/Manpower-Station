@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'dart:async';
 import 'dart:io';
 
@@ -33,7 +35,7 @@ class BaseClient {
     ..interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         // Attach the access token to every request
-        String? accessToken = await MySharedPref.getAccessToken();
+        String? accessToken = MySharedPref.getAccessToken();
         if (accessToken != null) {
           options.headers['Authorization'] = '$accessToken';
         }

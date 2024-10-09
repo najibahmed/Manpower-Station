@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/utils/constants.dart';
 
@@ -42,7 +41,7 @@ class WorkerReviewCard extends StatelessWidget {
                   },
                 ),
                 const SizedBox(width: 8),
-                Container(
+                SizedBox(
                   width: 160,
                   child: Text(
                     overflow: TextOverflow.ellipsis,
