@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
+import '../../../../utils/helper_function.dart';
 import '../model/service_list_model.dart';
 
 class ServiceCard extends StatelessWidget {
@@ -36,14 +37,56 @@ class ServiceCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Text(
+                  "(starting with)",
+                  style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.black45,
+                      fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${Constants.banglaCurrency}"
+                            "${calculatePriceAfterDiscount(service.servicePrice!, service.serviceDiscount!.discount!)} ",
+                        style: const TextStyle(
+                            fontSize: 18,
+                            color: LightThemeColors.primaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "${service.servicePrice} ",
+                        style: const TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            fontSize: 14,
+                            color: Colors.black45,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      // const Text(
+                      //   "(starting with)",
+                      //   style: TextStyle(
+                      //       fontSize: 11,
+                      //       color: Colors.black45,
+                      //       fontWeight: FontWeight.bold),
+                      // ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           const Spacer(),

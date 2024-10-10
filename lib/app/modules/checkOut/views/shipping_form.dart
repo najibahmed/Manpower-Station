@@ -20,6 +20,7 @@ class _ShippingFormState extends State<ShippingForm> {
     return Form(
       key: controller.formKey,
       child: Card(
+        color: Colors.grey[100],
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(16.0),

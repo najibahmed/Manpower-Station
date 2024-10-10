@@ -18,6 +18,7 @@ class SingleCategoryServices extends BaseView<CategoryController>{
   @override
   Widget body(BuildContext context) {
     // final serviceList= Get.arguments;
+    ServiceModel serviceName = controller.serviceList[0];
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -38,7 +39,7 @@ class SingleCategoryServices extends BaseView<CategoryController>{
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: 0.9,
+                childAspectRatio: 0.75,
               ),
               delegate: SliverChildBuilderDelegate(
                 childCount: controller.isLoading.value

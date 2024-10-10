@@ -44,6 +44,7 @@ class SearchScreen extends BaseView<SearchViewController> {
                   cursorColor: Colors.green,
                   style: const TextStyle(fontWeight: FontWeight.normal),
                   decoration: const InputDecoration(
+                    hintText: 'Search Service',
                     filled: true,
                     isDense: true,
                     prefixIcon: Icon(Icons.search_outlined),
@@ -58,7 +59,7 @@ class SearchScreen extends BaseView<SearchViewController> {
                   ),
                   onChanged: (query) {
                     controller.deBouncer.call(() {
-                      if (controller.searchController.text.isNotEmpty) {
+                      // if (controller.searchController.text.isNotEmpty) {
                         controller.isLoading.value = true;
                         controller.findServices();
                         Future.delayed(
@@ -67,7 +68,7 @@ class SearchScreen extends BaseView<SearchViewController> {
                             ), () {
                           controller.isLoading.value = false;
                         });
-                      }
+                      // }
                     });
                   },
                 ),

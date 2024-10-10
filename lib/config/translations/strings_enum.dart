@@ -62,5 +62,5 @@ class Strings {
   static const String careGiver = 'Care Giver';
   static const String babySitter = 'Baby Sitter';
   static const String more = 'More';
-  static const String askTypeOfService = 'What type of manpower do you require';
+  static const String askTypeOfService = 'Which Category of manpower do you require';
 }

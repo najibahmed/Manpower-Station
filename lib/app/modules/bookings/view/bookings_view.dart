@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
+import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
@@ -124,13 +125,16 @@ class ActiveOrder extends StatelessWidget {
       width: cardWidth,
       padding: EdgeInsets.all(cardPadding),
       decoration: BoxDecoration(
-        color: Colors.green[100], // Background color of the card
+        border: Border.all(
+          color: Colors.black26
+        ),
+        color: Colors.grey[100], // Background color of the card
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 6,
-            blurRadius: 5,
+            color: Colors.green.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 6,
             offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
@@ -139,7 +143,9 @@ class ActiveOrder extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          ///Booking info Button & Status
           _buildButtonRow(context, booking),
+          /// Service Title
           Text(
             booking.services!.first.service!.name!,
             style: const TextStyle(
@@ -151,15 +157,29 @@ class ActiveOrder extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           SizedBox(height: size.height * 0.01),
+          /// Worker Name
+          // Text(
+          //   "${worker.username}",
+          //   style: const TextStyle(
+          //     fontSize: 16,
+          //     fontWeight: FontWeight.bold,
+          //     letterSpacing: 2,
+          //     color: Colors.black,
+          //   ),
+          //   textAlign: TextAlign.start,
+          // ),
+          SizedBox(height: size.height * 0.01),
+          /// Service Details
           _buildServiceDetails(booking),
           SizedBox(height: size.height * 0.02),
-          booking.isPaymentStatus == "Completed" ? const SizedBox():_buildActionButtons(context),
+          /// Bottom Action Buttons (Cancel Booking & Payment)
+           booking.isPaymentStatus == 'Completed' ? const SizedBox():_buildActionButtons(context),
         ],
       ),
     );
   }
 
-  // Button Row (Booking Info Button)
+  /// Button Row (Booking Info Button)
   Widget _buildButtonRow(BuildContext context, BookingsModel booking) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -183,25 +203,28 @@ class ActiveOrder extends StatelessWidget {
                     Text(
                       '${booking.isPaymentStatus}',
                       style: const TextStyle(
-                          color: Colors.black87,
-                          wordSpacing: 5,
-                          fontWeight: FontWeight.w900),
+                        fontSize: 14,
+                          color: Colors.white,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
                 backgroundColor: booking.isPaymentStatus == "Pending"
-                    ? Colors.red
+                    ? Colors.amber[600]
                     : booking.isPaymentStatus == "Confirmed"
-                        ? Colors.amber[600]
+                        ? Colors.blue
                         : Colors.green),
           ],
         )
       ],
     );
+
   }
 
-  // Service Details Section
+  /// Service Details Section
   Widget _buildServiceDetails(BookingsModel booking) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -213,13 +236,13 @@ class ActiveOrder extends StatelessWidget {
             'Due Payment:', "${booking.weWillGetPayment.toString()}.00Tk"),
         _buildDetailRow(
             'Starting Date:',
-            Constants.formatDate.format(
+            Constants.formatDateTime.format(
                 DateTime.parse(booking.services!.first.workStartDate!))),
       ],
     );
   }
 
-  // Rating (Stars)
+  /// Rating (Stars)
   Widget _buildReviewSection({required controller}) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       const Text('Review:', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -242,7 +265,7 @@ class ActiveOrder extends StatelessWidget {
     ]);
   }
 
-  // Action Buttons (Cancel Booking & Payment)
+  /// Action Buttons (Cancel Booking & Payment)
   Widget _buildActionButtons(BuildContext context) {
     final double buttonWidth = MediaQuery.of(context).size.width * 0.35;
     return Center(
@@ -255,7 +278,7 @@ class ActiveOrder extends StatelessWidget {
             width: buttonWidth,
             child: OutlinedButton(
               onPressed: () {
-                // Handle cancel booking
+                /// Handle cancel booking
               },
               style: OutlinedButton.styleFrom(
                 side: const BorderSide(color: Colors.red),
@@ -270,7 +293,7 @@ class ActiveOrder extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          // Payment button
+          /// Payment button
           SizedBox(
             height: 35,
             width: buttonWidth,
@@ -292,14 +315,12 @@ class ActiveOrder extends StatelessWidget {
               ),
             ),
           ),
-          // CustomButton(
-          //     title: "Payment", height: 25, width: buttonWidth, onTap: () {}),
         ],
       ),
     );
   }
 
-  // Utility function to create rows for price details
+  /// Utility function to create rows for price details
   Widget _buildDetailRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
@@ -356,4 +377,4 @@ class OrderHistory extends StatelessWidget {
   }
 }
 
-enum BookingStatus { Pending, Confirmed, Completed }
+

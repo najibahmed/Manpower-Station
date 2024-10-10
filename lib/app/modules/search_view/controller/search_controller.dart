@@ -40,6 +40,7 @@ class SearchViewController extends BaseController {
 
   @override
   void onInit() {
+    findServices();
     super.onInit();
   }
 

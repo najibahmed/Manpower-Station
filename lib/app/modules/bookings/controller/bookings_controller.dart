@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
+import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
+import 'package:manpower_station/app/services/api_service.dart';
 import 'package:manpower_station/utils/constants.dart';
 
 class BookingsController extends BaseController with GetSingleTickerProviderStateMixin{
    late TabController tabController;
    RxInt tabIndex=0.obs;
-   var bookingsList= <dynamic>[].obs;
+   RxList bookingsList= <dynamic>[].obs;
    RxDouble userRating=0.0.obs;
+   // late RxList workersData=<WorkerModel>[].obs;
+   // void getWorkerInformation(String id)async{
+   //   var worker= await ApiServices.getSingleWorker(id);
+   //   workersData.assign(worker);
+   //    }
+
 
    void changeTabIndex(int index) {
      tabIndex.value = index;

@@ -120,7 +120,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "${calculatePriceAfterDiscount(service.servicePrice!, service.serviceDiscount!.discount!)}৳ ",
+                      "${Constants.banglaCurrency}${calculatePriceAfterDiscount(service.servicePrice!, service.serviceDiscount!.discount!)}",
                       style: const TextStyle(
                           fontSize: 22,
                           color: LightThemeColors.primaryColor,

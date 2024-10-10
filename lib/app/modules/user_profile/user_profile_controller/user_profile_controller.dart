@@ -15,7 +15,7 @@ import 'package:manpower_station/utils/constants.dart';
 class UserController extends BaseController {
   final profilePic = Rx<File?>(null);
   RxString errorMessage=''.obs;
-  late Rx<UserModel> userData=UserModel().obs;
+  late Rx<UserModel>? userData=UserModel().obs;
   RxBool isLoading=true.obs;
   late TextEditingController oldEmailPhoneController;
   late TextEditingController newEmailPhoneController;
@@ -83,7 +83,7 @@ class UserController extends BaseController {
         onSuccess: (response) {
           if (response.statusCode == 201) {
             final responseData=response.data['client'];
-            userData.value= UserModel.fromJson(responseData);
+            userData?.value= UserModel.fromJson(responseData);
             // Get.snackbar('Success', '${response.data['message']}');
           } else {
             Get.snackbar('Error', 'Having problem to get user data!');
@@ -91,10 +91,10 @@ class UserController extends BaseController {
         },
       );
       /// for pre-fill to update email initializing controller;
-      updateDescriptionController=TextEditingController(text: userData.value.profileDescription?? 'null');
-      updateNameController=TextEditingController(text: userData.value.username??"null");
-      updateAddressController=TextEditingController(text: userData.value.address??"null");
-      updateAreaController=TextEditingController(text: userData.value.area??"null");
+      updateDescriptionController=TextEditingController(text: userData?.value.profileDescription?? 'null');
+      updateNameController=TextEditingController(text: userData?.value.username??"null");
+      updateAddressController=TextEditingController(text: userData?.value.address??"null");
+      updateAreaController=TextEditingController(text: userData?.value.area??"null");
     } catch (e) {
       Get.snackbar('Error :', e.toString());
     }

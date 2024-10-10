@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
@@ -26,10 +27,16 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
           CustomScrollView(slivers: [
             SliverAppBar(
               backgroundColor: LightThemeColors.primaryColor,
+              centerTitle: true,
+              title: Image.asset(
+                'assets/images/manpower_name_logo.png',
+                fit: BoxFit.cover,
+                color: Colors.white,
+              ),
               leading: IconButton(
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Colors.black26,
+                  color: Colors.white,
                 ),
                 onPressed: () {
                   Get.back();
@@ -37,14 +44,14 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               sliver: SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                       width: screenWidth * 0.6, // 60% of screen width
-                      height: screenHeight * 0.3, // 30% of screen height
+                      height: screenHeight * 0.25, // 30% of screen height
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         image: DecorationImage(
@@ -54,19 +61,42 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: screenHeight * 0.01),
                     Text(
                       "${worker.username}",
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 26,
+                        letterSpacing: 1,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RatingBar.builder(
+                          itemSize: 30,
+                          initialRating: worker.ratings! .toDouble() ,
+                          minRating: 0.0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          ignoreGestures: true,
+                          itemCount: 5,
+                          itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ), onRatingUpdate: (double value) {  },
+                        ),
+                        Text("(${worker.ratings!})",style: const TextStyle(
+                          fontSize: 18
+                        ),),
+                      ],
+                    ),
+                     SizedBox(height: screenHeight * 0.02),
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.grey[100],
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
@@ -82,84 +112,58 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Area:  ',
-                                        style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      Text(
-                                        '${worker.area}',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                   SizedBox(width: screenHeight*.01 ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Address:  ',
-                                        style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 16,
-                                        ),
-                                      ),Text(
-                                        '${worker.address}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              const Text(
+                                'Area:  ',
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 16,
+                                ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Gender:  ',
-                                        style:
-                                        TextStyle(color: Colors.black54, fontSize: 16),
-                                      ),
-                                      Text(
-                                        '${worker.gender}',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                   SizedBox(width: screenHeight*.01),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Rating:  ',
-                                        style: TextStyle(color:Colors.black54,fontSize: 16),
-                                      ),Text(
-                                        '${worker.ratings} Stars',
-                                        style: const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              Text(
+                                '${worker.area}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
+                           SizedBox(width: screenHeight*.01 ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Address:  ',
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 16,
+                                ),
+                              ),Text(
+                                '${worker.address}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Gender:  ',
+                                style:
+                                TextStyle(color: Colors.black54, fontSize: 16),
+                              ),
+                              Text(
+                                '${worker.gender}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                           SizedBox(width: screenHeight*.01),
                           const SizedBox(height: 10),
                           const Text(
                             'Profile Description  ',
@@ -172,7 +176,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                           ),
                           const SizedBox(height: 10),
                           const Text(
-                            'Description',
+                            'Working Area',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -182,7 +186,26 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                             children:
                                 List.generate(worker.services!.length, (index) {
                               var services = worker.services![index];
-                              return Text('${services.service!.name}, ',
+                              return Chip(
+                                  elevation: 5,
+                                  label: Row(
+                                    children: [
+                                      Text(
+                                        '${services.service!.name}',
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.white,
+                                            letterSpacing: 1,
+                                            fontWeight: FontWeight.w900),
+                                      ),
+                                    ],
+                                  ),
+                                  backgroundColor: Colors.blueGrey[500]);
+
+
+
+
+                                Text('${services.service!.name}, ',
                                   style: const TextStyle(fontSize: 16));
                             }),
                           ),
@@ -206,6 +229,20 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                         ],
                       ),
                     ),
+                    SizedBox(height: screenHeight * 0.02),
+                     Divider(thickness: 1,color: Colors.black26,),
+                     const Center(
+                       child: Text(
+                         "Reviews",
+                         style: TextStyle(
+                           color: Colors.grey,
+                           fontSize: 20,
+                           letterSpacing: 1,
+                           fontWeight: FontWeight.bold,
+                         ),
+                       ),
+                     ),
+                    SizedBox(height: screenHeight * 0.01),
                     worker.services!.isEmpty
                         ? const Text("There is no review")
                         : Column(
@@ -218,7 +255,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                               return WorkerReviewCard(review: review);
                             },
                           )),
-                    const SizedBox(height: 20),
+                     SizedBox(height: screenHeight * .1),
                   ],
                 ),
               ),
@@ -226,14 +263,14 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
           ]),
           Positioned(
             bottom: 5,
-            right: 5,
-            left: 5,
+            left: 40,
+            right: 40,
             child: Card(
               elevation: 9,
               // color: Colors.green.withOpacity(.85),
               child: SizedBox(
-                height: 50,
-                width: MediaQuery.of(context).size.width * .9,
+                height: screenHeight * .05,
+                width: screenWidth * .6,
                 child: ElevatedButton.icon(
                   icon: const Icon(
                     Icons.check_circle_outline,

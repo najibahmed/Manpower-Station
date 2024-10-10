@@ -153,7 +153,7 @@ class ReviewCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              Constants.formatDate.format(DateTime.parse(review.date!)),
+              Constants.formatDateTime.format(DateTime.parse(review.date!)),
               style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 8),

@@ -27,6 +27,12 @@ class WorkerListScreen extends BaseView<WorkerController> {
         slivers: [
           SliverAppBar(
             pinned: true,
+            centerTitle: true,
+            title: Image.asset(
+              'assets/images/manpower_name_logo.png',
+              fit: BoxFit.cover,
+              color: Colors.white,
+            ),
             leading: IconButton(
                 onPressed: () {
                   Get.back();
@@ -48,7 +54,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                         vertical: 10.0, horizontal: 8),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      /// Search Bar
+                      /// Worker Search Bar
                       child: TextField(
                         controller: controller.workerSearchController,
                         keyboardType: TextInputType.text,
@@ -56,6 +62,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                         style: const TextStyle(fontWeight: FontWeight.normal),
                         decoration:  InputDecoration(
                           fillColor: Colors.grey[300],
+                          hintText: 'Search Worker',
                           filled: true,
                           isDense: true,
                           prefixIcon: const Icon(Icons.search_outlined),
@@ -280,19 +287,27 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                   ),),
                                 ],
                               ),
-                              RatingBar.builder(
-                                itemSize: 22,
-                                initialRating: worker.ratings! .toDouble() ,
-                                minRating: 0.0,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                ignoreGestures: true,
-                                itemCount: 5,
-                                itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-                                itemBuilder: (context, _) => const Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ), onRatingUpdate: (double value) {  },
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  RatingBar.builder(
+                                    itemSize: 22,
+                                    initialRating: worker.ratings! .toDouble() ,
+                                    minRating: 0.0,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    ignoreGestures: true,
+                                    itemCount: 5,
+                                    itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                                    itemBuilder: (context, _) => const Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ), onRatingUpdate: (double value) {  },
+                                  ),
+                                  Text("(${worker.ratings!})",style: const TextStyle(
+                                      fontSize: 14
+                                  ),),
+                                ],
                               ),
                               SizedBox(
                                 height: size.height * 0.02,

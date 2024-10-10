@@ -38,17 +38,23 @@ class UserProfileScreen extends BaseView<UserController> {
             color: LightThemeColors.primaryColor, fontWeight: FontWeight.bold),
       ),
       actions: [
-        IconButton(
+        controller.userData==null ? IconButton(
             onPressed: () {
               Get.toNamed(AppPages.UpdateProfile);
             },
             icon: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              padding: EdgeInsets.only(right: 20.0),
               child: Icon(
                 Icons.edit,
                 color: Colors.green,
               ),
-            ))
+            )): const Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: Icon(
+                        Icons.edit,
+                        color: Colors.green,
+                      ),
+            ),
       ],
     );
   }
@@ -78,8 +84,8 @@ class UserProfileScreen extends BaseView<UserController> {
                           decoration: BoxDecoration(
                             color: Colors.grey.withOpacity(.30),
                           ),
-                          child: controller.userData.value.avatar != null
-                              ? isSvgOrJpg("${controller.userData.value.avatar}", context)
+                          child: controller.userData?.value.avatar != null
+                              ? isSvgOrJpg("${controller.userData?.value.avatar}", context)
                               : const Icon(
                                   Icons.person,
                                   color: LightThemeColors.primaryColor,
@@ -93,27 +99,27 @@ class UserProfileScreen extends BaseView<UserController> {
                     height: screenHeight * 0.03,
                   ),
                   _buildUserFieldCard('Name', Icons.person_outline_sharp,
-                      "${controller.userData.value.username}"),
+                      "${controller.userData?.value.username}"),
                   SizedBox(
                     height: screenHeight * 0.002,
                   ),
                   _buildUserFieldCard(
                       'Account',
                       Icons.phone_android_outlined,
-                      controller.userData.value.phoneOrEmail ??
+                      controller.userData?.value.phoneOrEmail ??
                           "Login Email or phone number here."),
                   SizedBox(
                     height: screenHeight * 0.002,
                   ),
                   _buildUserFieldCard('Description', Icons.info_outline,
-                      "${controller.userData.value.profileDescription}"),
+                      "${controller.userData?.value.profileDescription}"),
                   SizedBox(
                     height: screenHeight * 0.005,
                   ),
                   _buildUserFieldCard('Address', Icons.home_outlined,
-                      "${controller.userData.value.address}"),
+                      "${controller.userData?.value.address}"),
                   _buildUserFieldCard('Area', Icons.signpost_outlined,
-                      "${controller.userData.value.area}"),
+                      "${controller.userData?.value.area}"),
                   SizedBox(
                     height: screenHeight * 0.005,
                   ),
@@ -200,3 +206,4 @@ class UserProfileScreen extends BaseView<UserController> {
     );
   }
 }
+

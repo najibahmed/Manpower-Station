@@ -102,6 +102,7 @@ class HomeView extends BaseView<HomeController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    /// Header of the screen with welcome message
                     Wrap(
                       children: [
                         SizedBox(
@@ -148,14 +149,15 @@ class HomeView extends BaseView<HomeController> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                     SizedBox(height: 15.h),
+                    /// Application Banner
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: controller.allServiceData.isEmpty
                           ? _buildBannerShimmer()
                           : CarouselSlider(
                               options: CarouselOptions(
-                                height: 180.0,
+                                height: size.height * 0.2,
                                 autoPlay: true,
                                 // enlargeCenterPage: true,
                                 aspectRatio: 16 / 9,
@@ -240,13 +242,14 @@ class HomeView extends BaseView<HomeController> {
                     //               });
                     //           }),
                     // ),
-                    SizedBox(height: 10.h),
+                    // SizedBox(height: 10.h),
+                    /// Category text message
                     Text(
                       '${Strings.askTypeOfService.tr}?',
                       style: TextStyle(
                           fontSize: MyFonts.bodyLargeSize,
                           color: Colors.black.withOpacity(.65),
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w700),
                     ),
                     SizedBox(height: 5.h),
                   ],
@@ -270,6 +273,7 @@ class HomeView extends BaseView<HomeController> {
                       if (controller.allCategoryData.isEmpty) {
                         return buildServiceCardShimmer();
                       } else {
+                        var image=categoryImage[index];
                         CategoryModel category =
                             controller.allCategoryData[index];
                         var id = category.id.toString();
@@ -283,6 +287,7 @@ class HomeView extends BaseView<HomeController> {
                                   arguments: serviceList);
                             },
                             child: Card(
+                              color: Colors.grey[50],
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                               ),
@@ -293,15 +298,14 @@ class HomeView extends BaseView<HomeController> {
                                     borderRadius: const BorderRadius.vertical(
                                         top: Radius.circular(15)),
                                     child: Image.asset(
-                                      'assets/images/maid_icon.png',
-                                      height: 120,
+                                      image,
+                                      height: size.height * 0.14,
                                       width: double.infinity,
                                       fit: BoxFit.cover,
-                                      color: Colors.green,
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(6.0),
                                     child: Text(
                                       category.categoryName!,
                                       overflow: TextOverflow.ellipsis,
@@ -313,6 +317,7 @@ class HomeView extends BaseView<HomeController> {
                                     ),
                                   ),
                                   const Spacer(),
+                                  // Divider(color: Colors.black26,),
                                   Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8.0),
@@ -322,8 +327,8 @@ class HomeView extends BaseView<HomeController> {
                                         children: [
                                           SizedBox(
                                             height: size.height * 0.035,
-                                            width: size.width * 0.4,
-                                            child: ElevatedButton(
+                                            width: size.width * 0.25,
+                                            child: OutlinedButton(
                                                 onPressed: () {
                                                   controller
                                                       .getOneCategoryServices(
@@ -335,16 +340,16 @@ class HomeView extends BaseView<HomeController> {
                                                           .SingleCateServicesScreen,
                                                       arguments: serviceList);
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      LightThemeColors
-                                                          .primaryColor,
+                                                style: OutlinedButton.styleFrom(
+                                                  // backgroundColor:
+                                                  //     LightThemeColors
+                                                  //         .primaryColor,
                                                 ),
                                                 child: const Text(
                                                   'View All',
                                                   style: TextStyle(
                                                       fontSize: 12,
-                                                      color: Colors.white),
+                                                      color: Colors.green),
                                                 )),
                                           ),
                                         ],
@@ -361,6 +366,7 @@ class HomeView extends BaseView<HomeController> {
         ),
       ),
     );
+
   }
 
   Future<void> _handleRefresh() async {
@@ -378,14 +384,4 @@ class HomeView extends BaseView<HomeController> {
         ));
   }
 
-  Widget _buildCategoryShimmer() {
-    return Card(
-        elevation: 5,
-        child: Container(
-          child: const ShimmerWidget.rectangular(
-            height: 100,
-            width: 110,
-          ),
-        ));
-  }
 }

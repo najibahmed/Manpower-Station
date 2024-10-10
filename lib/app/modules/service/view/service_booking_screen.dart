@@ -66,13 +66,6 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         ),
                       ),
                       SizedBox(height: screenHeight * .02),
-                      Text(
-                        'Select Your Time',
-                        style: TextStyle(
-                            fontSize: MyFonts.bodyLargeSize,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -80,28 +73,41 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           children: [
                             SizedBox(
                                 width: screenWidth * .4,
-                                child: DropdownMenu(
-                                  inputDecorationTheme:
-                                      const InputDecorationTheme(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.green,
-                                      ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Duration',
+                                      style: TextStyle(
+                                          fontSize: MyFonts.bodyLargeSize,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey),
                                     ),
-                                  ),
-                                  textStyle: const TextStyle(
-                                      color: LightThemeColors.primaryColor),
-                                  onSelected: (value) {
-                                    controller.timeLimit.value = value!;
-                                  },
-                                  initialSelection: controller.timeLimit.value,
-                                  dropdownMenuEntries:
-                                      controller.time.map((time) {
-                                    return DropdownMenuEntry<int>(
-                                      value: time,
-                                      label: '$time',
-                                    );
-                                  }).toList(),
+                                    SizedBox(height: screenHeight * .01),
+                                    DropdownMenu(
+                                      inputDecorationTheme:
+                                          const InputDecorationTheme(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                      ),
+                                      textStyle: const TextStyle(
+                                          color: LightThemeColors.primaryColor),
+                                      onSelected: (value) {
+                                        controller.timeLimit.value = value!;
+                                      },
+                                      initialSelection: controller.timeLimit.value,
+                                      dropdownMenuEntries:
+                                          controller.time.map((time) {
+                                        return DropdownMenuEntry<int>(
+                                          value: time,
+                                          label: '$time',
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ],
                                 )
                                 // DropdownButtonFormField<int>(
                                 //   isExpanded: true,
@@ -137,33 +143,46 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                             // Text('Select Your Time Key',style: TextStyle(fontSize: MyFonts.bodyLargeSize,fontWeight: FontWeight.bold),),
                             SizedBox(
                                 width: screenWidth * .4,
-                                child: DropdownMenu<String>(
-                                  inputDecorationTheme:
-                                      const InputDecorationTheme(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.green,
-                                      ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Time',
+                                      style: TextStyle(
+                                          fontSize: MyFonts.bodyLargeSize,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey),
                                     ),
-                                  ),
-                                  textStyle: const TextStyle(
-                                      color: LightThemeColors.primaryColor),
-                                  onSelected: (value) {
-                                    controller.selectedTimeKey.value = value!;
-                                  },
-                                  initialSelection:
-                                      controller.selectedTimeKey.value,
-                                  dropdownMenuEntries: [
-                                    'Hours',
-                                    'Days',
-                                    'Weeks',
-                                    'Months'
-                                  ].map((String key) {
-                                    return DropdownMenuEntry<String>(
-                                      value: key,
-                                      label: key,
-                                    );
-                                  }).toList(),
+                                    SizedBox(height: screenHeight * .01),
+                                    DropdownMenu<String>(
+                                      inputDecorationTheme:
+                                          const InputDecorationTheme(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                      ),
+                                      textStyle: const TextStyle(
+                                          color: LightThemeColors.primaryColor),
+                                      onSelected: (value) {
+                                        controller.selectedTimeKey.value = value!;
+                                      },
+                                      initialSelection:
+                                          controller.selectedTimeKey.value,
+                                      dropdownMenuEntries: [
+                                        'Hours',
+                                        'Days',
+                                        'Weeks',
+                                        'Months'
+                                      ].map((String key) {
+                                        return DropdownMenuEntry<String>(
+                                          value: key,
+                                          label: key,
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ],
                                 )
                                 // DropdownButtonFormField<String>(
                                 //   elevation: 5,
@@ -234,7 +253,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    Constants.formatDate.format(
+                                    Constants.formatDateTime.format(
                                         controller.selectedDateTime.value!),
                                     style: TextStyle(
                                         fontSize: MyFonts.bodyLargeSize,
@@ -360,20 +379,6 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           ),
                         ),
                       ),
-
-                      // Center(
-                      //     child: CustomButton(
-                      //         title: "Choose Worker",
-                      //         height: 40,
-                      //         width: 200,
-                      //         onTap: () {
-                      //           controller.showLoading();
-                      //           controller.selectedService =
-                      //               controller.serviceModel;
-                      //           controller.addToCartList();
-                      //           controller.hideLoading();
-                      //           Get.toNamed(AppPages.WorkerListView);
-                      //         }))
                     ],
                   ),
                 ),
@@ -396,7 +401,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                   children: [
                     RichText(
                       text: TextSpan(
-                          text: 'SUB TOTAL:  ',
+                          text: 'SUB TOTAL:    ',
                           style: TextStyle(
                               fontSize: MyFonts.bodyLargeSize,
                               fontWeight: FontWeight.bold,
@@ -404,7 +409,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           children: [
                             TextSpan(
                               text:
-                                  '${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}${Constants.banglaCurrency}',
+                                  '${Constants.banglaCurrency} ${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}',
                               style: TextStyle(
                                   fontSize: MyFonts.bodyLargeSize,
                                   fontWeight: FontWeight.bold,

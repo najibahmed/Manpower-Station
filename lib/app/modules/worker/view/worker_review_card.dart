@@ -13,7 +13,8 @@ class WorkerReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(WorkerController());
     return Card(
-      elevation: 2,
+      color: Colors.green[50],
+      elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -52,7 +53,7 @@ class WorkerReviewCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            Text(Constants.formatDate.format(DateTime.parse( review.date!)),
+            Text(Constants.formatDateTime.format(DateTime.parse( review.date!)),
               style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 8),

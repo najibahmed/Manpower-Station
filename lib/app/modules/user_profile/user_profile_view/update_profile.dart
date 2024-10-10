@@ -95,8 +95,8 @@ class UpdateProfileScreen extends BaseView<UserController> {
                                 controller.profilePic.value!,
                                 fit: BoxFit.cover,
                               ):
-                              controller.userData.value.avatar!=null ?
-                              isSvgOrJpg("${controller.userData.value.avatar}", context)
+                              controller.userData?.value.avatar!=null ?
+                              isSvgOrJpg("${controller.userData?.value.avatar}", context)
                                   : const Icon(
                                       Icons.add_a_photo,
                                       color: LightThemeColors.primaryColor,
