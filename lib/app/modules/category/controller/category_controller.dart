@@ -7,6 +7,7 @@ class CategoryController extends BaseController {
   RxBool isLoading=true.obs;
   // RxList oneCategoryServicesData = <dynamic>[].obs;
    late RxList<dynamic>serviceList;
+   var categoryTitle=Get.arguments[1];
 
 
   // Future<void> getAllServiceCategories() async {
@@ -62,8 +63,8 @@ class CategoryController extends BaseController {
   @override
   void onInit() async{
     Future.delayed(const Duration(seconds:2),(){
+      serviceList= Get.arguments[0];
       isLoading.value=false;
-      serviceList= Get.arguments;
     });
 
     super.onInit();

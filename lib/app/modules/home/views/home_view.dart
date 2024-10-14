@@ -277,6 +277,7 @@ class HomeView extends BaseView<HomeController> {
                         CategoryModel category =
                             controller.allCategoryData[index];
                         var id = category.id.toString();
+                              String catTitle=category.categoryName!;
                         return InkWell(
                             onTap: () {
                               controller.oneCategoryServicesData.clear();
@@ -284,7 +285,7 @@ class HomeView extends BaseView<HomeController> {
                               var serviceList =
                                   controller.oneCategoryServicesData;
                               Get.toNamed(AppPages.SingleCateServicesScreen,
-                                  arguments: serviceList);
+                                  arguments: [serviceList,catTitle]);
                             },
                             child: Card(
                               color: Colors.grey[50],
@@ -329,8 +330,8 @@ class HomeView extends BaseView<HomeController> {
                                             height: size.height * 0.035,
                                             width: size.width * 0.25,
                                             child: OutlinedButton(
-                                                onPressed: () {
-                                                  controller
+                                                onPressed: () async{
+                                                  await controller
                                                       .getOneCategoryServices(
                                                           id);
                                                   var serviceList = controller
@@ -338,7 +339,7 @@ class HomeView extends BaseView<HomeController> {
                                                   Get.toNamed(
                                                       AppPages
                                                           .SingleCateServicesScreen,
-                                                      arguments: serviceList);
+                                                      arguments: [serviceList,catTitle]);
                                                 },
                                                 style: OutlinedButton.styleFrom(
                                                   // backgroundColor:

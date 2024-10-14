@@ -15,9 +15,12 @@ getParsedDate(String dt, {String pattern = 'yyyy-MM-dd – kk:mm'}) =>
 String get generateOrderId =>
     'PB_${getFormattedDate(DateTime.now(), pattern: 'yyyyMMdd_HH:mm:ss')}';
 
-String calculatePriceAfterDiscount(num price, num discount) {
-  final discountAmount = (price * discount) / 100;
-  return (price - discountAmount).toStringAsFixed(0);
+num getDiscountAmount(discount,num price) {
+  if(discount.discountType=="Percentage Discount"){
+    return price-((price * discount.discount!) / 100).round();
+  }else{
+    return price-discount.discount!;
+  }
 }
 
 Widget isSvgOrJpg(String imageUrl, BuildContext context) {

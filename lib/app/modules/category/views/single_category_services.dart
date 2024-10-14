@@ -8,32 +8,39 @@ import 'package:manpower_station/utils/helper_function.dart';
 
 import '../../service/view/service_card.dart';
 
-class SingleCategoryServices extends BaseView<CategoryController>{
+class SingleCategoryServices extends BaseView<CategoryController> {
   const SingleCategoryServices({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return null;
   }
+
   @override
   Widget body(BuildContext context) {
     // final serviceList= Get.arguments;
-    ServiceModel serviceName = controller.serviceList[0];
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          floating: true,
+            floating: true,
             centerTitle: true,
             leading: IconButton(
-                onPressed: (){
+                onPressed: () {
                   Get.back();
                 },
-                icon: const Icon(Icons.arrow_back,)
+                icon: const Icon(
+                  Icons.arrow_back,
+                )),
+            title:  Text(controller.categoryTitle,
+              // '${controller.serviceList.first.serviceCategoryId.categoryName}',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1,
+              ),
             ),
-            title: const Text('')
-            ),
+        ),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -45,7 +52,7 @@ class SingleCategoryServices extends BaseView<CategoryController>{
                 childCount: controller.isLoading.value
                     ? 6
                     : controller.serviceList.length,
-                    (context, index) {
+                (context, index) {
                   if (controller.isLoading.value) {
                     return buildServiceCardShimmer();
                   } else {
@@ -68,6 +75,4 @@ class SingleCategoryServices extends BaseView<CategoryController>{
       ],
     );
   }
-
 }
-
