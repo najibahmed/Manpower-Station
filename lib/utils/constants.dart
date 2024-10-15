@@ -19,11 +19,11 @@ class Constants {
   static  DateFormat formatTime = DateFormat('hh:mm a');
 }
 List categoryImage=[
-  'assets/category/category_cleaning.jpg',
   'assets/category/category_electronics.jpg',
-  'assets/category/washing.jpg',
-  'assets/category/shifting.jpg',
   'assets/category/car_care.jpg',
+  'assets/category/shifting.jpg',
   'assets/category/painting.jpg',
+  'assets/category/washing.jpg',
+  'assets/category/category_cleaning.jpg',
 
 ];

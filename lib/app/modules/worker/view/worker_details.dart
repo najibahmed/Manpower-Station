@@ -200,9 +200,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                                       ),
                                     ],
                                   ),
-                                  backgroundColor: Colors.blueGrey[500]);
-
-
+                                  backgroundColor: Colors.greenAccent[500]);
 
 
                                 Text('${services.service!.name}, ',
@@ -276,7 +274,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                     Icons.check_circle_outline,
                     color: Colors.white,
                   ),
-                  label: const Text('Proceed',
+                  label: const Text('Reserve Worker',
                       style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     if (controller.selectedWorkerList.isNotEmpty) {

@@ -304,7 +304,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                       color: Colors.amber,
                                     ), onRatingUpdate: (double value) {  },
                                   ),
-                                  Text("(${worker.ratings!})",style: const TextStyle(
+                                  Text(" ${worker.ratings!}⭐",style: const TextStyle(
                                       fontSize: 14
                                   ),),
                                 ],
@@ -334,7 +334,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                           LightThemeColors.primaryColor,
                                         ),
                                         child: const Text(
-                                          'Proceed',
+                                          'Select Worker',
                                           style: TextStyle(
                                               fontSize: 12, color: Colors.white),
                                         )),

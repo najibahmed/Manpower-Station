@@ -30,9 +30,9 @@ import 'package:manpower_station/app/modules/worker/view/worker_list_screen.dart
 import 'package:manpower_station/redirect_screen.dart';
 import '../modules/authentication/Auth Bindings/authentication_binding.dart';
 import '../modules/authentication/views/registration/registration_view.dart';
+import '../modules/bookings/view/booking_history_details.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-
 part 'app_routes.dart';
 
 class AppPages {
@@ -58,6 +58,7 @@ class AppPages {
   static const SupportScreen = Routes.supportScreen;
   static const UpdateEmailPhone = Routes.updateEmailPhone;
   static const UpdateOtp = Routes.updateOtp;
+  static const OrderHistoryDetails = Routes.bookingHistoryDetails;
 
   static final routes = [
     GetPage(
@@ -87,7 +88,7 @@ class AppPages {
       binding: UserBinding(),
       transition: Transition.native
     ),GetPage(
-      name: _Paths.OrderHistory,
+      name: _Paths.BookingHistory,
       page: () => const BookingHistoryView(),
         binding: BookingsBinding(),
       transition: Transition.rightToLeft
@@ -111,6 +112,10 @@ class AppPages {
       page: () =>   ServiceBookingScreen(),
         binding: ServiceBinding(),
       transition: Transition.rightToLeft
+    ),GetPage(
+      name: _Paths.BookingHistoryDetails,
+      page: () =>   const BookingHistoryDetails(),
+        binding: BookingsBinding(),
     ),GetPage(
       name: _Paths.ServiceDetailsScreen,
       page: () => const ServiceDetailsScreen(),

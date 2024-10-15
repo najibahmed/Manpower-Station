@@ -11,7 +11,7 @@ abstract class Routes {
   static const otpScreen = _Paths.OtpScreen;
   static const verificationDone = _Paths.VerificationDone;
   static const userProfile = _Paths.UserProfile;
-  static const orderHistory = _Paths.OrderHistory;
+  static const orderHistory = _Paths.BookingHistory;
   static const menusPage = _Paths.MenusPage;
   static const faqScreen = _Paths.FaqScreen;
   static const serviceBooking = _Paths.ServiceBooking;
@@ -25,6 +25,7 @@ abstract class Routes {
   static const supportScreen = _Paths.SupportView;
   static const updateEmailPhone = _Paths.UpdateEmailPhone;
   static const updateOtp = _Paths.UpdateOtp;
+  static const bookingHistoryDetails = _Paths.BookingHistoryDetails;
 
 }
 
@@ -37,7 +38,7 @@ abstract class _Paths {
   static const VerificationDone = '/registration_done';
   static const UserProfile = '/user_profile';
   static const MenusPage = '/menus_page';
-  static const OrderHistory = '/order_history';
+  static const BookingHistory = '/order_history';
   static const FaqScreen = '/faq';
   static const ServiceBooking = '/service_booking';
   static const ServiceDetailsScreen = '/service_details';
@@ -50,5 +51,6 @@ abstract class _Paths {
   static const SupportView = '/support_view';
   static const UpdateEmailPhone = '/updateEmailPhone';
   static const UpdateOtp = '/updateOtp';
+  static const BookingHistoryDetails = '/booking_history_details';
 
 }

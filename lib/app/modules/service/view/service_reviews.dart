@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
+import 'package:manpower_station/app/components/dash_divider.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/utils/constants.dart';
@@ -25,44 +26,46 @@ class ReviewsScreen extends StatelessWidget {
               height: 8,
             ),
             _buildRatingBars(),
-            TextFormField(
-              controller: controller.reviewController,
-              decoration: const InputDecoration(
-                labelText: 'Give a review',
-                labelStyle: TextStyle(color: Colors.grey),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.green, width: 2),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 1),
-                ),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black12)),
-              ),
-              validator: (value) {
-                if (value != null) {
-                  CustomSnackBar.showCustomErrorToast(
-                      message: 'Please write review');
-                }
-                return null;
-              },
-            ),
+            // TextFormField(
+            //   controller: controller.reviewController,
+            //   decoration: const InputDecoration(
+            //     labelText: 'Give a review',
+            //     labelStyle: TextStyle(color: Colors.grey),
+            //     focusedBorder: OutlineInputBorder(
+            //       borderSide: BorderSide(color: Colors.green, width: 2),
+            //     ),
+            //     enabledBorder: OutlineInputBorder(
+            //       borderSide: BorderSide(color: Colors.grey, width: 1),
+            //     ),
+            //     border: OutlineInputBorder(
+            //         borderSide: BorderSide(color: Colors.black12)),
+            //   ),
+            //   validator: (value) {
+            //     if (value != null) {
+            //       CustomSnackBar.showCustomErrorToast(
+            //           message: 'Please write review');
+            //     }
+            //     return null;
+            //   },
+            // ),
+            // const SizedBox(height: 8),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     // Add write review functionality
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Colors.green,
+            //   ),
+            //   child: const Text(
+            //     'Submit',
+            //     style: TextStyle(color: Colors.white),
+            //   ),
+            // ),
             const SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () {
-                // Add write review functionality
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-              ),
-              child: const Text(
-                'Submit',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            const Divider(color: Colors.black26,),
             const SizedBox(height: 8),
             reviews.isEmpty
-                ? const Text("There is no review")
+                ? const Center(child: Text("There is no review",style: TextStyle(fontSize: 16),))
                 : Column(
                     children: List.generate(
                     reviews.length,

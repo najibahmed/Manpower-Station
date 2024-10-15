@@ -101,6 +101,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                     allowHalfRating: true,
                     ignoreGestures: true,
                     itemCount: 5,
+                    itemSize: 22,
                     itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
                     itemBuilder: (context, _) => const Icon(
                       Icons.star,
@@ -143,14 +144,14 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.3,
-                height: MediaQuery.of(context).size.width * 0.09,
+                width: MediaQuery.of(context).size.width * 0.4,
+                height: MediaQuery.of(context).size.height * 0.04,
                 child: ElevatedButton(
                   onPressed: () {
                     Get.toNamed(AppPages.ServiceBooking, arguments: service);
                   },
                   child: Text(
-                    'Book now',
+                    'Reserve Service',
                     style: TextStyle(
                         color: Colors.white, fontSize: MyFonts.buttonTextSize),
                   ),
@@ -178,7 +179,10 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
 
   Widget _buildFAQTab() {
     return const Center(
-      child: Text("FAQs will be displayed here"),
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Text("FAQs will be displayed here"),
+      ),
     );
   }
 }

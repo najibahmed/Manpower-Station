@@ -330,8 +330,8 @@ class HomeView extends BaseView<HomeController> {
                                             height: size.height * 0.035,
                                             width: size.width * 0.25,
                                             child: OutlinedButton(
-                                                onPressed: () async{
-                                                  await controller
+                                                onPressed: () {
+                                                   controller
                                                       .getOneCategoryServices(
                                                           id);
                                                   var serviceList = controller
@@ -378,11 +378,9 @@ class HomeView extends BaseView<HomeController> {
   }
 
   Widget _buildBannerShimmer() {
-    return Card(
+    return const Card(
         elevation: 5,
-        child: Container(
-          child: const ShimmerWidget.rectangular(height: 180),
-        ));
+        child: ShimmerWidget.rectangular(height: 180));
   }
 
 }

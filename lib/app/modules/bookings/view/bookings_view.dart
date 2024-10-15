@@ -6,6 +6,9 @@ import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
+import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/app/services/api_service.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
@@ -25,10 +28,15 @@ class BookingHistoryView extends BaseView<BookingsController> {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
+            centerTitle: true,
+            title: Image.asset(
+              'assets/images/manpower_name_logo.png',
+              fit: BoxFit.cover,
+            ),
             floating: true,
             backgroundColor: Colors.white,
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(10),
+              preferredSize: const Size.fromHeight(20),
               child: SizedBox(
                 height: 40,
                 child: TabBar(
@@ -85,7 +93,7 @@ Widget _getTabAtIndex(
 
 class ActiveOrder extends StatelessWidget {
   final BookingsController controller;
-  ActiveOrder({
+  const ActiveOrder({
     super.key,
     required this.controller,
   });
@@ -96,7 +104,7 @@ class ActiveOrder extends StatelessWidget {
 
     return SingleChildScrollView(
         child: Padding(
-      padding: const EdgeInsets.only(top: 12.0, left: 22, right: 22),
+      padding: const EdgeInsets.only(top: 12.0, left: 16, right: 16),
       child: Obx(
         () => Column(
             children: List.generate(
@@ -118,21 +126,19 @@ class ActiveOrder extends StatelessWidget {
   Container buildContainer(BookingsModel booking, BuildContext context) {
     // Get the screen size for responsive design
     final size = MediaQuery.of(context).size;
-    final double cardWidth = size.width * 0.9; // 90% of screen width
+    final double cardWidth = size.width * 1; // 100% of screen width
     final double cardPadding = size.width * 0.05;
     // 5% padding
     return Container(
       width: cardWidth,
       padding: EdgeInsets.all(cardPadding),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.black26
-        ),
+        border: Border.all(color: Colors.black12),
         color: Colors.grey[100], // Background color of the card
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.green.withOpacity(0.2),
+            color: Colors.green.withOpacity(0.1),
             spreadRadius: 5,
             blurRadius: 6,
             offset: const Offset(0, 3), // changes position of shadow
@@ -145,35 +151,42 @@ class ActiveOrder extends StatelessWidget {
         children: [
           ///Booking info Button & Status
           _buildButtonRow(context, booking),
+
           /// Service Title
-          Text(
-            booking.services!.first.service!.name!,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2,
-              color: Colors.black,
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+                color: LightThemeColors.primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10))),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                booking.services!.first.service!.name!,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.start,
+              ),
             ),
-            textAlign: TextAlign.start,
           ),
           SizedBox(height: size.height * 0.01),
+
           /// Worker Name
-          // Text(
-          //   "${worker.username}",
-          //   style: const TextStyle(
-          //     fontSize: 16,
-          //     fontWeight: FontWeight.bold,
-          //     letterSpacing: 2,
-          //     color: Colors.black,
-          //   ),
-          //   textAlign: TextAlign.start,
-          // ),
           SizedBox(height: size.height * 0.01),
+
           /// Service Details
           _buildServiceDetails(booking),
           SizedBox(height: size.height * 0.02),
+
           /// Bottom Action Buttons (Cancel Booking & Payment)
-           booking.isPaymentStatus == 'Completed' ? const SizedBox():_buildActionButtons(context),
+          booking.isPaymentStatus == 'Completed'
+              ? const SizedBox()
+              : _buildActionButtons(context),
         ],
       ),
     );
@@ -186,11 +199,25 @@ class ActiveOrder extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CustomButton(
-            title: 'Booking info',
-            height: screenWidth * 0.1,
-            width: screenWidth * 0.3,
-            onTap: () {}),
+        SizedBox(
+          height: screenHeight * 0.04,
+          width: screenWidth * 0.35,
+          child: OutlinedButton(
+            onPressed: () {
+              controller.getWorkerInformation("${booking.workers!.first.user}");
+              Get.toNamed(AppPages.OrderHistoryDetails,
+                  arguments: [booking, booking.isPaymentStatus]);
+            },
+            style: OutlinedButton.styleFrom(
+              side: const BorderSide(width: 1.0, color: Colors.green),
+            ),
+            child: const Text(
+              "Booking Details",
+              style:
+                  TextStyle(fontSize: 14, color: LightThemeColors.primaryColor),
+            ),
+          ),
+        ),
         Row(
           children: [
             const Text('Status:',
@@ -203,7 +230,7 @@ class ActiveOrder extends StatelessWidget {
                     Text(
                       '${booking.isPaymentStatus}',
                       style: const TextStyle(
-                        fontSize: 14,
+                          fontSize: 14,
                           color: Colors.white,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w600),
@@ -219,12 +246,10 @@ class ActiveOrder extends StatelessWidget {
         )
       ],
     );
-
   }
 
   /// Service Details Section
   Widget _buildServiceDetails(BookingsModel booking) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -293,6 +318,7 @@ class ActiveOrder extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
+
           /// Payment button
           SizedBox(
             height: 35,
@@ -376,5 +402,3 @@ class OrderHistory extends StatelessWidget {
     );
   }
 }
-
-

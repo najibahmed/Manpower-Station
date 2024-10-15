@@ -12,11 +12,14 @@ class BookingsController extends BaseController with GetSingleTickerProviderStat
    RxInt tabIndex=0.obs;
    RxList bookingsList= <dynamic>[].obs;
    RxDouble userRating=0.0.obs;
-   // late RxList workersData=<WorkerModel>[].obs;
-   // void getWorkerInformation(String id)async{
-   //   var worker= await ApiServices.getSingleWorker(id);
-   //   workersData.assign(worker);
-   //    }
+   TextEditingController reviewController=TextEditingController();
+    Rx<WorkerModel> workersData=WorkerModel().obs;
+    RxBool isLoading=true.obs;
+
+   void getWorkerInformation(String id)async{
+     var worker= await ApiServices.getSingleWorker(id);
+     workersData.value=worker;
+      }
 
 
    void changeTabIndex(int index) {
@@ -60,6 +63,7 @@ class BookingsController extends BaseController with GetSingleTickerProviderStat
   @override
   void onClose() {
     tabController.dispose();
+    reviewController.dispose();
     super.onClose();
   }
 

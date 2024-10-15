@@ -246,14 +246,16 @@ Widget customServiceTile(
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 item.serviceName,
                 style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
               ),
+              // const Divider(color: Colors.black26,),
               const MySeparator(),
-              // SizedBox(height: screenHeight * 0.01 ),
+              SizedBox(height: screenHeight * 0.01 ),
               RichText(
                 text: TextSpan(
                     text: 'Duration:    ',
