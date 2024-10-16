@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -177,10 +178,20 @@ class HomeView extends BaseView<HomeController> {
                                       width: MediaQuery.of(context).size.width,
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 5.0),
-                                      child: Image.network(
-                                        '${Constants.bannerImgUrl}$banner',
+                                      child:  CachedNetworkImage(
                                         fit: BoxFit.fitWidth,
+                                      imageUrl:  '${Constants.bannerImgUrl}$banner',
+                                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                                      progressIndicatorBuilder: (context, url, progress) => Center(
+                                        child: CircularProgressIndicator(
+                                          value: progress.progress,
+                                        ),
                                       ),
+                                    ),
+                                    //   Image.network(
+                                    //     '${Constants.bannerImgUrl}$banner',
+                                    //     fit: BoxFit.fitWidth,
+                                    //   ),
                                     );
                                   },
                                 );

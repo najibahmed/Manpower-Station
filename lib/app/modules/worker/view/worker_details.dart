@@ -194,13 +194,13 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                                         '${services.service!.name}',
                                         style: const TextStyle(
                                             fontSize: 14,
-                                            color: Colors.white,
+                                            color: Colors.black87,
                                             letterSpacing: 1,
                                             fontWeight: FontWeight.w900),
                                       ),
                                     ],
                                   ),
-                                  backgroundColor: Colors.greenAccent[500]);
+                                  backgroundColor: Colors.green[100]);
 
 
                                 Text('${services.service!.name}, ',
@@ -233,7 +233,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                        child: Text(
                          "Reviews",
                          style: TextStyle(
-                           color: Colors.grey,
+                           color: Colors.black87,
                            fontSize: 20,
                            letterSpacing: 1,
                            fontWeight: FontWeight.bold,

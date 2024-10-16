@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -30,12 +31,28 @@ class ServiceCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                child: Image.network(
-                  '${Constants.serviceImgUrl}$image',
-                  height: 120,
+                child:CachedNetworkImage(
+                  height: size.height*.13,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  imageUrl:
+                  '${Constants.serviceImgUrl}$image',
+                  errorWidget: (context, url, error) =>
+                  const Icon(Icons.error),
+                  progressIndicatorBuilder:
+                      (context, url, progress) => Center(
+                    child: CircularProgressIndicator(
+                      value: progress.progress,
+                    ),
+                  ),
                 ),
+
+                // Image.network(
+                //   '${Constants.serviceImgUrl}$image',
+                //   height: 120,
+                //   width: double.infinity,
+                //   fit: BoxFit.cover,
+                // ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -64,7 +81,7 @@ class ServiceCard extends StatelessWidget {
                         children: [
                           Text(
                             "${Constants.banglaCurrency}"
-                                "${getDiscountAmount(service.serviceDiscount,service.servicePrice!)} ",
+                                 "${getDiscountAmount(service.serviceDiscount,service.servicePrice!)} ",
                             style: const TextStyle(
                                 fontSize: 18,
                                 color: LightThemeColors.primaryColor,
@@ -74,17 +91,10 @@ class ServiceCard extends StatelessWidget {
                             "${service.servicePrice} ",
                             style: const TextStyle(
                                 decoration: TextDecoration.lineThrough,
-                                fontSize: 14,
+                                fontSize: 16,
                                 color: Colors.black45,
                                 fontWeight: FontWeight.bold),
                           ),
-                          // const Text(
-                          //   "(starting with)",
-                          //   style: TextStyle(
-                          //       fontSize: 11,
-                          //       color: Colors.black45,
-                          //       fontWeight: FontWeight.bold),
-                          // ),
                         ],
                       ),
                     ),

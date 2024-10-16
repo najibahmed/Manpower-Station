@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/dash_divider.dart';
@@ -173,10 +174,23 @@ Widget customWorkerTile(
           child: SizedBox(
             height: screenHeight * 0.1,
             width: screenWidth * 0.34,
-            child: Image.network(
-              '${Constants.avatarImgUrl}${worker.avatar}',
+            child: CachedNetworkImage(
               fit: BoxFit.cover,
+              imageUrl:
+              '${Constants.avatarImgUrl}${worker.avatar}',
+              errorWidget: (context, url, error) =>
+                  const Icon(Icons.error),
+              progressIndicatorBuilder:
+                  (context, url, progress) => Center(
+                child: CircularProgressIndicator(
+                  value: progress.progress,
+                ),
+              ),
             ),
+            // Image.network(
+            //   '${Constants.avatarImgUrl}${worker.avatar}',
+            //   fit: BoxFit.cover,
+            // ),
           ),
         ),
         Expanded(
@@ -193,6 +207,11 @@ Widget customWorkerTile(
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               SizedBox(height: screenHeight * 0.01),
+              Text(
+                "Gender:  ${worker.gender!}",
+                style:
+                const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+              ),
               Text(
                 "Area:  ${worker.area!}",
                 style:

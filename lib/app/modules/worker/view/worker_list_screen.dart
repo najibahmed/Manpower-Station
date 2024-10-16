@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -19,9 +20,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
 
   @override
   Widget body(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: CustomScrollView(
         slivers: [
@@ -41,52 +40,54 @@ class WorkerListScreen extends BaseView<WorkerController> {
                   Icons.arrow_back,
                   color: Colors.white,
                 )),
-            bottom: PreferredSize(preferredSize: const Size.fromHeight(60),
+            bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(60),
                 child: Container(
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10))
-                  ),
+                          topRight: Radius.circular(10))),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 8),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
+
                       /// Worker Search Bar
                       child: TextField(
                         controller: controller.workerSearchController,
                         keyboardType: TextInputType.text,
                         cursorColor: Colors.green,
                         style: const TextStyle(fontWeight: FontWeight.normal),
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           fillColor: Colors.grey[300],
                           hintText: 'Search Worker',
                           filled: true,
                           isDense: true,
                           prefixIcon: const Icon(Icons.search_outlined),
                           focusedBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                               borderSide:
-                              BorderSide(color: Colors.white, width: 1.0)),
+                                  BorderSide(color: Colors.white, width: 1.0)),
                           enabledBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(color: Colors.white, width: 1.0),
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 1.0),
                           ),
                         ),
                         onChanged: (query) {
                           controller.deBouncer.call(() {
-                            // if (controller.workerSearchController.text.isNotEmpty) {
-                              controller.isLoading.value = true;
-                              controller.findWorkers();
-                              Future.delayed(
-                                  const Duration(
-                                    seconds: 1,
-                                  ), () {
-                                controller.isLoading.value = false;
-                              });
-                            // }
+
+                            controller.isLoading.value = true;
+                            controller.findWorkers();
+                            Future.delayed(
+                                const Duration(
+                                  seconds: 1,
+                                ), () {
+                              controller.isLoading.value = false;
+                            });
                           });
                         },
                       ),
@@ -94,8 +95,6 @@ class WorkerListScreen extends BaseView<WorkerController> {
                   ),
                 )),
           ),
-
-
 
           /// Worker list Widget
           // controller.findByWorker.isEmpty? SliverPadding(
@@ -225,24 +224,24 @@ class WorkerListScreen extends BaseView<WorkerController> {
             padding: const EdgeInsets.all(10),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 0.75 // Adjust the aspect ratio based on your design
-              ),
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio:
+                      0.75 // Adjust the aspect ratio based on your design
+                  ),
               delegate: SliverChildBuilderDelegate(
                 childCount: controller.isLoading.value
                     ? 4
                     : controller.findByWorker.length,
-                    (context, index) {
+                (context, index) {
                   if (controller.isLoading.value) {
                     return _buildServiceCardShimmer();
                   } else {
-                    WorkerModel
-                    worker = controller.findByWorker[index];
+                    WorkerModel worker = controller.findByWorker[index];
                     return InkWell(
-                      onTap: (){
-                        Get.toNamed(AppPages.WorkerDetails,arguments: worker);
+                      onTap: () {
+                        Get.toNamed(AppPages.WorkerDetails, arguments: worker);
                       },
                       child: Card(
                         elevation: 4,
@@ -256,12 +255,20 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8.0, vertical: 4),
                                 child: Center(
-                                  child: Image.network(
-                                    '${Constants.avatarImgUrl}${worker
-                                        .avatar}',
+                                  child: CachedNetworkImage(
                                     height: size.height * 0.1,
                                     width: size.width * 0.1,
                                     fit: BoxFit.cover,
+                                    imageUrl:
+                                        '${Constants.avatarImgUrl}${worker.avatar}',
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                    progressIndicatorBuilder:
+                                        (context, url, progress) => Center(
+                                      child: CircularProgressIndicator(
+                                        value: progress.progress,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -269,22 +276,27 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                 child: Text(
                                   worker.username!,
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 14),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
                                 ),
                               ),
                               SizedBox(
                                 height: size.height * 0.01,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  const Text('Gender:',style: TextStyle(
-                                    color: Colors.grey
-                                  ),),
-                                  Text('${worker.gender}',style: const TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold
-                                  ),),
+                                  const Text(
+                                    'Gender:',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  Text(
+                                    '${worker.gender}',
+                                    style: const TextStyle(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ],
                               ),
                               Row(
@@ -292,21 +304,24 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                 children: [
                                   RatingBar.builder(
                                     itemSize: 22,
-                                    initialRating: worker.ratings! .toDouble() ,
+                                    initialRating: worker.ratings!.toDouble(),
                                     minRating: 0.0,
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,
                                     ignoreGestures: true,
                                     itemCount: 5,
-                                    itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                                    itemPadding: const EdgeInsets.symmetric(
+                                        horizontal: 0.0),
                                     itemBuilder: (context, _) => const Icon(
                                       Icons.star,
                                       color: Colors.amber,
-                                    ), onRatingUpdate: (double value) {  },
+                                    ),
+                                    onRatingUpdate: (double value) {},
                                   ),
-                                  Text(" ${worker.ratings!}⭐",style: const TextStyle(
-                                      fontSize: 14
-                                  ),),
+                                  Text(
+                                    " ${worker.ratings!}⭐",
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
                                 ],
                               ),
                               SizedBox(
@@ -320,23 +335,28 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                     width: size.width * 0.23,
                                     child: ElevatedButton(
                                         onPressed: () {
-                                          if(controller.selectedWorkerList.isNotEmpty){
-                                            controller.selectedWorkerList.clear();
+                                          if (controller
+                                              .selectedWorkerList.isNotEmpty) {
+                                            controller.selectedWorkerList
+                                                .clear();
                                           }
-                                          if (controller.selectedWorkerList.length < 1) {
-                                            Get.toNamed(AppPages.CheckoutScreen);
+                                          if (controller
+                                                  .selectedWorkerList.length <
+                                              1) {
+                                            Get.toNamed(
+                                                AppPages.CheckoutScreen);
                                             controller.addWorker(worker);
                                           }
-
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:
-                                          LightThemeColors.primaryColor,
+                                              LightThemeColors.primaryColor,
                                         ),
                                         child: const Text(
                                           'Select Worker',
                                           style: TextStyle(
-                                              fontSize: 12, color: Colors.white),
+                                              fontSize: 12,
+                                              color: Colors.white),
                                         )),
                                   )
                                 ],
@@ -355,7 +375,6 @@ class WorkerListScreen extends BaseView<WorkerController> {
       ),
     );
   }
-
 
   Widget _buildServiceCardShimmer() {
     return Card(

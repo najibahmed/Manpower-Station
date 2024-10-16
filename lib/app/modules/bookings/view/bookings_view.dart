@@ -23,7 +23,6 @@ class BookingHistoryView extends BaseView<BookingsController> {
 
   @override
   Widget body(BuildContext context) {
-    // TODO: implement body
     return SafeArea(
       child: CustomScrollView(
         slivers: [
@@ -174,6 +173,7 @@ class ActiveOrder extends StatelessWidget {
               ),
             ),
           ),
+
           SizedBox(height: size.height * 0.01),
 
           /// Worker Name
@@ -184,9 +184,10 @@ class ActiveOrder extends StatelessWidget {
           SizedBox(height: size.height * 0.02),
 
           /// Bottom Action Buttons (Cancel Booking & Payment)
-          booking.isPaymentStatus == 'Completed'
-              ? const SizedBox()
-              : _buildActionButtons(context),
+          // booking.isPaymentStatus == 'Completed'
+          //     ? const SizedBox()
+          //     :
+          _buildActionButtons(context),
         ],
       ),
     );
@@ -204,7 +205,9 @@ class ActiveOrder extends StatelessWidget {
           width: screenWidth * 0.35,
           child: OutlinedButton(
             onPressed: () {
+              controller.isLoading.value=true;
               controller.getWorkerInformation("${booking.workers!.first.user}");
+              Future.delayed(const Duration(seconds: 2),(){controller.isLoading.value=false;});
               Get.toNamed(AppPages.OrderHistoryDetails,
                   arguments: [booking, booking.isPaymentStatus]);
             },

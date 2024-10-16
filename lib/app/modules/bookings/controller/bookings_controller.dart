@@ -13,12 +13,13 @@ class BookingsController extends BaseController with GetSingleTickerProviderStat
    RxList bookingsList= <dynamic>[].obs;
    RxDouble userRating=0.0.obs;
    TextEditingController reviewController=TextEditingController();
-    Rx<WorkerModel> workersData=WorkerModel().obs;
+    Rx<WorkerModel?> workersData=WorkerModel().obs;
     RxBool isLoading=true.obs;
 
    void getWorkerInformation(String id)async{
      var worker= await ApiServices.getSingleWorker(id);
      workersData.value=worker;
+
       }
 
 

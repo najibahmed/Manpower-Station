@@ -116,7 +116,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                       "${service.servicePrice} ",
                       style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
-                          fontSize: 16,
+                          fontSize: 18,
                           color: Colors.black45,
                           fontWeight: FontWeight.bold),
                     ),
@@ -128,9 +128,9 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                           fontWeight: FontWeight.bold),
                     ),
                     const Text(
-                      "(starting with)",
+                      " (starting with)",
                       style: TextStyle(
-                          fontSize: 11,
+                          fontSize: 12,
                           color: Colors.black45,
                           fontWeight: FontWeight.bold),
                     ),
@@ -208,30 +208,32 @@ class ServiceDescription extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
+              textAlign: TextAlign.justify,
+              style: const TextStyle(fontSize: 14,fontWeight: FontWeight.normal),
               service.description!,
             ),
             const SizedBox(height: 16),
-            const Text(
-              "Include Service",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              "Elevate your casual style with our premium men's t-shirt. Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to your wardrobe.",
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              "Exclude Service",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              textAlign: TextAlign.justify,
-              "This service does not include any repair or maintenance work."
-              "Elevate your casual style with our premium men's t-shirt.Elevate your casual style with our premium men's t-shirt. Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to your wardrobe."
-              "Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to "
-              "your wardrobe.",
-            ),
+            // const Text(
+            //   "Include Service",
+            //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // ),
+            // const SizedBox(height: 8),
+            // const Text(
+            //   "Elevate your casual style with our premium men's t-shirt. Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to your wardrobe.",
+            // ),
+            // const SizedBox(height: 16),
+            // const Text(
+            //   "Exclude Service",
+            //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // ),
+            // const SizedBox(height: 8),
+            // const Text(
+            //   textAlign: TextAlign.justify,
+            //   "This service does not include any repair or maintenance work."
+            //   "Elevate your casual style with our premium men's t-shirt.Elevate your casual style with our premium men's t-shirt. Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to your wardrobe."
+            //   "Crafted for comfort and designed with a modern fit, this versatile shirt is an essential addition to "
+            //   "your wardrobe.",
+            // ),
           ],
         ),
       ),

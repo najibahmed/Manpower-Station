@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/custom_snackbar.dart';
-import 'package:manpower_station/app/components/dash_divider.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/utils/constants.dart';
@@ -64,6 +62,11 @@ class ReviewsScreen extends StatelessWidget {
             const SizedBox(height: 8),
             const Divider(color: Colors.black26,),
             const SizedBox(height: 8),
+            const Text(
+              "Reviews",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
             reviews.isEmpty
                 ? const Center(child: Text("There is no review",style: TextStyle(fontSize: 16),))
                 : Column(
@@ -120,6 +123,7 @@ class ReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(ServiceController());
     return Card(
+      color: Colors.grey[100],
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
