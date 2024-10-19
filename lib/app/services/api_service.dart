@@ -21,4 +21,23 @@ class ApiServices{
     }
     return workerModel;
   }
+static Future<void> userReview(bookingId,mapData) async {
+
+    try {
+      var url='/api/reviews/create/review/$bookingId';
+      await BaseClient.safeApiCall(url, RequestType.put,
+          data: mapData,
+          onSuccess: (response) {
+        if (response.statusCode == 200) {
+          var jsonData = response.data['worker'];
+          print("successful");
+
+        } else {
+          print('Failed to give review: ${response.statusMessage}');
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 }

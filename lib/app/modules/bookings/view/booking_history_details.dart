@@ -184,7 +184,10 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                                 height: screenHeight * 0.04,
                                 width: screenWidth * 0.25,
                                 child: ElevatedButton(
-                                  onPressed: () {
+                                  onPressed: () async{
+                                    var res=await controller.giveUserReview(booking.services!.first.service!.id,booking.id);
+                                    res ? CustomSnackBar.showCustomSnackBar(title: "Successful", message: "Review Created")
+                                        : CustomSnackBar.showCustomErrorSnackBar(title: "Failed", message: "Review Couldn't Created");
                                     // Add write review functionality
                                   },
                                   child: const Padding(

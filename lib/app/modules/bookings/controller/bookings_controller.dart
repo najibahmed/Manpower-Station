@@ -16,12 +16,29 @@ class BookingsController extends BaseController with GetSingleTickerProviderStat
     Rx<WorkerModel?> workersData=WorkerModel().obs;
     RxBool isLoading=true.obs;
 
+
    void getWorkerInformation(String id)async{
      var worker= await ApiServices.getSingleWorker(id);
      workersData.value=worker;
-
       }
 
+
+  Future<bool> giveUserReview(serviceId, String? bookingId)async{
+  try{
+  Map<String,dynamic> reviewMap={
+   'comment':reviewController.text.trim(),
+   'rating':userRating,
+   'serviceId':[serviceId],
+   'workerId':[workersData.value!.user!.id],
+   };
+    await ApiServices.userReview(bookingId, reviewMap);
+    return true;
+  }catch (e){
+    print('Failed to load Workers: ${e}');
+    return false;
+  }
+  return false;
+  }
 
    void changeTabIndex(int index) {
      tabIndex.value = index;
