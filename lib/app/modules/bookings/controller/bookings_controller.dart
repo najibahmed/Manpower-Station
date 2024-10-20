@@ -11,11 +11,12 @@ class BookingsController extends BaseController with GetSingleTickerProviderStat
    late TabController tabController;
    RxInt tabIndex=0.obs;
    RxList bookingsList= <dynamic>[].obs;
-   RxDouble userRating=0.0.obs;
+   RxDouble userRating=1.0.obs;
    TextEditingController reviewController=TextEditingController();
     Rx<WorkerModel?> workersData=WorkerModel().obs;
     RxBool isLoading=true.obs;
-
+   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+   FocusNode focusNode=FocusNode();
 
    void getWorkerInformation(String id)async{
      var worker= await ApiServices.getSingleWorker(id);
@@ -23,21 +24,17 @@ class BookingsController extends BaseController with GetSingleTickerProviderStat
       }
 
 
-  Future<bool> giveUserReview(serviceId, String? bookingId)async{
-  try{
-  Map<String,dynamic> reviewMap={
-   'comment':reviewController.text.trim(),
-   'rating':userRating,
-   'serviceId':[serviceId],
-   'workerId':[workersData.value!.user!.id],
-   };
-    await ApiServices.userReview(bookingId, reviewMap);
-    return true;
-  }catch (e){
-    print('Failed to load Workers: ${e}');
-    return false;
-  }
-  return false;
+  Future<void> giveUserReview(serviceId, String? bookingId)async{
+
+  Map<String,dynamic> requestData = {
+    "comment":"${reviewController.text.trim()}",
+    "rating":"${userRating}",
+    "serviceId":["$serviceId"],
+    "workerId":["${workersData.value!.user!.id}"],
+  };
+  print(requestData);
+    await ApiServices.userReview(bookingId, requestData);
+
   }
 
    void changeTabIndex(int index) {

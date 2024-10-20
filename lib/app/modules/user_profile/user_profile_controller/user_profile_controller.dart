@@ -110,12 +110,15 @@ class UserController extends BaseController {
       await BaseClient.safeApiCall(
         "/api/users/update/user/phone_or_email",
         RequestType.put,
+        headers: {
+          'Authorization': Constants.accessToken
+        },
         data: requestData,
         onSuccess: (response){
-          if(response.statusCode==200){
+          if(response.statusCode==201){
             print('${response.data['message']}');
             if(response.data['success'] == true){
-              Get.toNamed(AppPages.UpdateOtp);
+              Get.offNamed(AppPages.UpdateOtp);
             }else{
               Get.snackbar('Error','Having problem to send otp');
             }
@@ -214,7 +217,7 @@ class UserController extends BaseController {
             MySharedPref.setRefreshToken(refToken);
             // Success handling (for example, navigate to another screen)
             Get.snackbar('Successfully Changed', '${otpData.message}');
-            Get.offNamed(AppPages.UserProfile);
+            // Get.offNamedUntil(AppPages.UserProfile,(route) =>  route.settings.name ==AppPages.MenusPage);
           }else{
             // Handle error
             errorMessage.value = 'Error: ${response.data['message']}';

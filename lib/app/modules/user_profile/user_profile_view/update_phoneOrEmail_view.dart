@@ -151,7 +151,7 @@ class UpdatePhoneEmail extends BaseView<UserController> {
                 width: 298,
                 onTap: () {
                   _sendOtp();
-                  Get.toNamed(AppPages.UpdateOtp);
+                  // Get.toNamed(AppPages.UpdateOtp);
                 },
               )),
               SizedBox(
@@ -166,14 +166,13 @@ class UpdatePhoneEmail extends BaseView<UserController> {
 
   void _sendOtp() async {
     if (_formKey.currentState!.validate()) {
-      controller.showLoading();
+
       try {
         showLoadingOverLay(asyncFunction: controller.updatePhoneOrEmail(),msg:'Loading' );
         // await controller.updatePhoneOrEmail();
 
-        controller.hideLoading();
       } catch (error) {
-        controller.hideLoading();
+
         print(error);
       }
     }

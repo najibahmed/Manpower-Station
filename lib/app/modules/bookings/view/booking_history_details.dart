@@ -21,7 +21,6 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     return null;
   }
-
   @override
   Widget body(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -150,33 +149,37 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                               ],
                             ),
                             SizedBox(height: screenHeight * 0.02),
-                            TextFormField(
-                              maxLines: 2,
-                              controller: controller.reviewController,
-                              decoration: const InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                labelText: 'Give a review',
-                                labelStyle: TextStyle(color: Colors.grey),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.green, width: 2),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.grey, width: 1),
-                                ),
-                                border: OutlineInputBorder(
+                            Form(
+                              key: controller.formKey,
+                              child: TextFormField(
+                                focusNode: controller.focusNode,
+                                maxLines: 2,
+                                controller: controller.reviewController,
+                                decoration: const InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  labelText: 'Give a review',
+                                  labelStyle: TextStyle(color: Colors.grey),
+                                  focusedBorder: OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black12)),
+                                        BorderSide(color: Colors.green, width: 2),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey, width: 1),
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black12)),
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    CustomSnackBar.showCustomErrorToast(
+                                        message: 'Please write review',duration: Duration(seconds: 1));
+                                  }
+                                  return null;
+                                },
                               ),
-                              validator: (value) {
-                                if (value != null) {
-                                  CustomSnackBar.showCustomErrorToast(
-                                      message: 'Please write review');
-                                }
-                                return null;
-                              },
                             ),
                             SizedBox(height: screenHeight * 0.02),
                             Center(
@@ -184,12 +187,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                                 height: screenHeight * 0.04,
                                 width: screenWidth * 0.25,
                                 child: ElevatedButton(
-                                  onPressed: () async{
-                                    var res=await controller.giveUserReview(booking.services!.first.service!.id,booking.id);
-                                    res ? CustomSnackBar.showCustomSnackBar(title: "Successful", message: "Review Created")
-                                        : CustomSnackBar.showCustomErrorSnackBar(title: "Failed", message: "Review Couldn't Created");
-                                    // Add write review functionality
-                                  },
+                                  onPressed:() {giveReview(booking);},
                                   child: const Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 8.0),
@@ -213,6 +211,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
               ),
       ),
     ]);
+
   }
 
   Widget _buildCardShimmer(double screenHeight, double screenWidth) {
@@ -482,7 +481,25 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
       ],
     );
   }
-
+  void giveReview(booking)async{
+    if(controller.formKey.currentState!.validate()){
+      if(controller.reviewController.text.trim().isNotEmpty){
+        try {
+          controller.focusNode.unfocus();
+          await controller.giveUserReview(
+              booking.services!.first.service!
+                  .id,
+              booking.id);
+          CustomSnackBar.showCustomSnackBar(
+              title: "Successful",
+              message: "Review Created");
+          controller.reviewController.clear();
+        } catch (e) {
+          print("Verify otp error: $e");
+        }
+      }
+    }
+  }
   Card _messageCard(
       double screenWidth, double screenHeight, BookingsModel booking) {
     return Card(

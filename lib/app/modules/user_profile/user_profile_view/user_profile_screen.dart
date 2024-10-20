@@ -38,7 +38,7 @@ class UserProfileScreen extends BaseView<UserController> {
             color: LightThemeColors.primaryColor, fontWeight: FontWeight.bold),
       ),
       actions: [
-        controller.userData==null ? IconButton(
+        controller.userData!=null ? IconButton(
             onPressed: () {
               Get.toNamed(AppPages.UpdateProfile);
             },

@@ -279,6 +279,7 @@ class BaseClient {
         message: error.message ?? 'Un Expected Api Error!',
         response: error.response,
         statusCode: error.response?.statusCode);
+
     if (onError != null) {
       return onError(exception);
     } else {

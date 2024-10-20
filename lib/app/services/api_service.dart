@@ -1,5 +1,6 @@
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
+import 'package:manpower_station/utils/constants.dart';
 
 class ApiServices{
 
@@ -21,23 +22,32 @@ class ApiServices{
     }
     return workerModel;
   }
-static Future<void> userReview(bookingId,mapData) async {
-
+static Future<void> userReview(bookingId, Map<String, dynamic> reviewData ) async {
     try {
       var url='/api/reviews/create/review/$bookingId';
-      await BaseClient.safeApiCall(url, RequestType.put,
-          data: mapData,
+      await BaseClient.safeApiCall(
+          url, RequestType.put,
+          headers: {
+        'Authorization': Constants.accessToken
+          },
+          // data: {
+          //   "comment": "${data['comment']}",
+          //   "rating":data['rating'],
+          //   "serviceId": data['serviceId'],
+          //   "workerId": data['workerId'],
+          // },
+          data:reviewData,
           onSuccess: (response) {
         if (response.statusCode == 200) {
-          var jsonData = response.data['worker'];
-          print("successful");
+          // var jsonData = response.data['worker'];
+          print("${response.data}");
 
         } else {
           print('Failed to give review: ${response.statusMessage}');
         }
       });
     } catch (e) {
-      print(e);
+      print('Failed to give review: $e');
     }
   }
 }

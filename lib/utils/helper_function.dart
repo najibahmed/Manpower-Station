@@ -33,7 +33,7 @@ Widget isSvgOrJpg(String imageUrl, BuildContext context) {
       fit: BoxFit.cover,
       placeholderBuilder: (BuildContext context) => Container(
           padding: const EdgeInsets.all(30.0),
-          child: const CircularProgressIndicator()),
+          child: const Center(child: CircularProgressIndicator())),
     ); // It's an SVG file
   }
 
