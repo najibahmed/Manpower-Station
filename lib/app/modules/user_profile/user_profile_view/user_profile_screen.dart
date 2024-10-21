@@ -98,6 +98,23 @@ class UserProfileScreen extends BaseView<UserController> {
                   SizedBox(
                     height: screenHeight * 0.03,
                   ),
+                  ListTile(
+                      tileColor: Colors.green[100],
+                      onTap: () {
+                        Get.toNamed(AppPages.UpdateEmailPhone);
+                      },
+                      leading: const Icon(Icons.perm_device_information),
+                      title: const Text(
+                        "Change Email or Phone Number Here!",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      trailing: const Icon(
+                        Icons.compare_arrows,
+                        color: Colors.black,
+                      )),
+                  SizedBox(
+                    height: screenHeight * 0.01,
+                  ),
                   _buildUserFieldCard('Name', Icons.person_outline_sharp,
                       "${controller.userData?.value.username}"),
                   SizedBox(
@@ -122,22 +139,6 @@ class UserProfileScreen extends BaseView<UserController> {
                       "${controller.userData?.value.area}"),
                   SizedBox(
                     height: screenHeight * 0.005,
-                  ),
-                  ListTile(
-                      onTap: () {
-                        Get.toNamed(AppPages.UpdateEmailPhone);
-                      },
-                      leading: const Icon(Icons.perm_device_information),
-                      title: const Text(
-                        "Change Email or Phone Number Here!",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      trailing: const Icon(
-                        Icons.compare_arrows,
-                        color: Colors.black,
-                      )),
-                  const SizedBox(
-                    height: 15,
                   ),
                   // CustomListTileEditButton(
                   //     context:context,

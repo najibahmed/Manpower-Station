@@ -11,7 +11,7 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
 
 class WorkerListScreen extends BaseView<WorkerController> {
-  WorkerListScreen({super.key});
+  const WorkerListScreen({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
@@ -79,7 +79,6 @@ class WorkerListScreen extends BaseView<WorkerController> {
                         ),
                         onChanged: (query) {
                           controller.deBouncer.call(() {
-
                             controller.isLoading.value = true;
                             controller.findWorkers();
                             Future.delayed(

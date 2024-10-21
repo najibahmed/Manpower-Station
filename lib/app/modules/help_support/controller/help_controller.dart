@@ -44,15 +44,7 @@ class HelpController extends BaseController {
     faqItems[index].isExpanded = !faqItems[index].isExpanded;
     faqItems.refresh();
   }
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }
 
 class FAQItem {

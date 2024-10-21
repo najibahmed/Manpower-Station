@@ -12,6 +12,8 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 import 'package:manpower_station/utils/constants.dart';
 
+import '../../../components/custom_snackbar.dart';
+
 class UserController extends BaseController {
   final profilePic = Rx<File?>(null);
   RxString errorMessage=''.obs;
@@ -24,7 +26,6 @@ class UserController extends BaseController {
    late TextEditingController updateDescriptionController;
   late TextEditingController updateAddressController;
   late TextEditingController updateAreaController;
-  // TextEditingController updatePostCodeController=TextEditingController();
 
 
 
@@ -65,12 +66,12 @@ class UserController extends BaseController {
     if (image != null) {
       // Handle the picked image file (e.g. display it in an Image widget)
       profilePic.value = File(image.path);
-      print('Image selected: ${image.path}');
       // Do something with the image file, like uploading or displaying it
     }else{
       profilePic.value = File('');
     }
   }
+
   /// Get user information
   Future<void> getUserInformation() async {
     try {
@@ -84,9 +85,9 @@ class UserController extends BaseController {
           if (response.statusCode == 201) {
             final responseData=response.data['client'];
             userData?.value= UserModel.fromJson(responseData);
-            // Get.snackbar('Success', '${response.data['message']}');
+            Get.snackbar('Success', '${response.data['message']}');
           } else {
-            Get.snackbar('Error', 'Having problem to get user data!');
+            Get.snackbar('Error', 'Having problem to get user data!',);
           }
         },
       );
@@ -96,7 +97,7 @@ class UserController extends BaseController {
       updateAddressController=TextEditingController(text: userData?.value.address??"null");
       updateAreaController=TextEditingController(text: userData?.value.area??"null");
     } catch (e) {
-      Get.snackbar('Error :', e.toString());
+      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get user :',message: '$e');
     }
   }
 
@@ -116,17 +117,16 @@ class UserController extends BaseController {
         data: requestData,
         onSuccess: (response){
           if(response.statusCode==201){
-            print('${response.data['message']}');
             if(response.data['success'] == true){
               Get.offNamed(AppPages.UpdateOtp);
             }else{
-              Get.snackbar('Error','Having problem to send otp');
+              CustomSnackBar.showCustomErrorSnackBar(title:'Error',message: 'Having problem to send otp');
             }
           }
         },
       );
     } catch (e) {
-      Get.snackbar('Error :',e.toString());
+      CustomSnackBar.showCustomErrorSnackBar(title:'Error try update email :',message: '$e');
     }
   }
 
@@ -139,13 +139,6 @@ class UserController extends BaseController {
       'address' : updateAddressController.text.trim(),
       'area' : updateAreaController.text.trim(),
     });
-    // Map<String, dynamic> requestData = {
-    //   'avatar' :  null,
-    //   'username' : updateNameController.text.trim(),
-    //   'profile_description' : updateDescriptionController.text.trim(),
-    //   'address' : updateAddressController.text.trim(),
-    //   'area' : updateAreaController.text.trim(),
-    // };
 
     try {
       if(profilePic.value!=null){
@@ -171,20 +164,26 @@ class UserController extends BaseController {
       await BaseClient.safeApiCall(
         url,
         RequestType.put,
+        headers: {
+          'Authorization': Constants.accessToken
+        },
         data: formData  ,
         onSuccess: (response) {
           if (response.statusCode == 200){
             getUserInformation();
             profilePic.value=null;
             Get.back();
-            Get.snackbar('Success', '${response.data['message']}');
+            CustomSnackBar.showCustomSnackBar(title:'Success',message: '${response.data['message']}',
+                duration: const Duration(seconds: 1));
           } else {
-            Get.snackbar('Error', 'Having problem to update user data!');
+            CustomSnackBar.showCustomErrorSnackBar(title:'Error',message: 'Having problem to update user data!',
+                duration: const Duration(seconds: 1));
           }
         },
       );
     } catch (e) {
-      Get.snackbar('Error :', e.toString());
+      CustomSnackBar.showCustomErrorSnackBar(title:'Error try update user :',message: '$e',
+          duration: const Duration(seconds: 1));
     }
   }
 
@@ -209,26 +208,29 @@ class UserController extends BaseController {
             Map<String,dynamic> responseData = response.data;
             OtpModel otpData= OtpModel.fromJson(responseData);
 
-            print("------->$otpData");
-
             String accToken=otpData.token!.accesstoken!;
             String refToken=otpData.token!.refreshtoken!;
             MySharedPref.setAccessToken(accToken);
             MySharedPref.setRefreshToken(refToken);
+
             // Success handling (for example, navigate to another screen)
-            Get.snackbar('Successfully Changed', '${otpData.message}');
+            CustomSnackBar.showCustomErrorSnackBar(title:'Successfully Changed',message: '${otpData.message}',
+                duration: const Duration(seconds: 1));
+            Get.offNamed(AppPages.UserProfile,);
             // Get.offNamedUntil(AppPages.UserProfile,(route) =>  route.settings.name ==AppPages.MenusPage);
           }else{
             // Handle error
             errorMessage.value = 'Error: ${response.data['message']}';
-            Get.snackbar('Error', errorMessage.value);
+            CustomSnackBar.showCustomErrorSnackBar(title:'Error update email',message: errorMessage.value,
+                duration: const Duration(seconds: 1));
           }
         },
       );
     } catch (e) {
       // Handle other types of errors
       errorMessage.value = 'Something went wrong: $e';
-      Get.snackbar('Error', errorMessage.value);
+      CustomSnackBar.showCustomErrorSnackBar(title:'Error try otp :',message: errorMessage.value,
+          duration: const Duration(seconds: 1));
     } finally {
     }
   }

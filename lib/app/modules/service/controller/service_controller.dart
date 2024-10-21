@@ -27,7 +27,7 @@ class ServiceController extends BaseController
 
   // Get price
   getServicePrice(time, timeKey, price) {
-    var servicePrice;
+    dynamic servicePrice;
     if (timeKey == 'Hours') {
        servicePrice = (price ~/ 3) * time;
 
@@ -58,57 +58,32 @@ class ServiceController extends BaseController
 //   }
 
   /// Get Service Data
-  Future<void> getServiceData() async {
-    try {
-      // Map<String, dynamic> requestData = {
-      //   'phone_or_email': phoneNumberEmailController.text.trim(),
-      // };
-      var url = "/api/services/get/all";
-      await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
-        // if (kDebugMode) {
-        //   print(response.data);
-        // }
-        if (response.statusCode == 200) {
-          var jsonData =
-              response.data['services']; // Assuming the response is a list
-          var serviceList =
-              jsonData.map((e) => ServiceModel.fromJson(e)).toList();
-          serviceData.assignAll(serviceList); // Update the RxList with new data
-        } else {
-          print('Failed to load services: ${response.statusMessage}');
-        }
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Future<void> getServiceData() async {
+  //   try {
+  //     // Map<String, dynamic> requestData = {
+  //     //   'phone_or_email': phoneNumberEmailController.text.trim(),
+  //     // };
+  //     var url = "/api/services/get/all";
+  //     await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
+  //       // if (kDebugMode) {
+  //       //   print(response.data);
+  //       // }
+  //       if (response.statusCode == 200) {
+  //         var jsonData =
+  //             response.data['services']; // Assuming the response is a list
+  //         var serviceList =
+  //             jsonData.map((e) => ServiceModel.fromJson(e)).toList();
+  //         serviceData.assignAll(serviceList); // Update the RxList with new data
+  //       } else {
+  //         print('Failed to load services: ${response.statusMessage}');
+  //       }
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
-  /// Create Review
-  Future<void> createReview() async {
-    try {
-      Map<String, dynamic> requestData = {
-        'comment': reviewController.text.trim(),
-        'serviceId': reviewController.text.trim(),
-      };
-      var url = "/api/reviews/create/review/:bookingId";
-      await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
-        // if (kDebugMode) {
-        //   print(response.data);
-        // }
-        if (response.statusCode == 200) {
-          // var jsonData =
-          //     response.data['services']; // Assuming the response is a list
-          // var serviceList =
-          //     jsonData.map((e) => ServiceModel.fromJson(e)).toList();
-          // serviceData.assignAll(serviceList); // Update the RxList with new data
-        } else {
-          print('Failed to load services: ${response.statusMessage}');
-        }
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
+
 
 /// on tap to select worker service is added to cart
   void addToCartList() {
@@ -121,7 +96,6 @@ class ServiceController extends BaseController
         servicePrice: cartSubtotal.value,
         serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey.value}");
     cartItems.add(cartModel);
-    print("----cart first item---->${cartItems.first.toMap()}");
   }
 
   @override

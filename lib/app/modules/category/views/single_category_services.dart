@@ -18,61 +18,89 @@ class SingleCategoryServices extends BaseView<CategoryController> {
 
   @override
   Widget body(BuildContext context) {
-    // final serviceList= Get.arguments;
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-            floating: true,
-            centerTitle: true,
-            leading: IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                )),
-            title:  Text(controller.categoryTitle,
-              // '${controller.serviceList.first.serviceCategoryId.categoryName}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1,
+    return FutureBuilder<List<dynamic>>(
+      future: controller.getOneCategoryServices(
+          controller.catId), // Call the async function here
+      builder: (context, snapshot) {
+        // Check the state of the Future
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // While the data is being fetched, show a loading spinner
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 50.0,horizontal: 12),
+            child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 0.75,
+                    ),
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return buildServiceCardShimmer();
+                    },),
+          );
+        } else if (snapshot.hasError) {
+          // If there's an error, display it
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (snapshot.hasData) {
+          // If data is available, build the list view
+          List<dynamic>? data = snapshot.data;
+          return CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                floating: true,
+                centerTitle: true,
+                leading: IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                    )),
+                title: Text(
+                  controller.categoryTitle,
+                  // '${controller.serviceList.first.serviceCategoryId.categoryName}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
+                ),
               ),
-            ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 0.75,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                childCount: controller.isLoading.value
-                    ? 6
-                    : controller.serviceList.length,
-                (context, index) {
-                  if (controller.isLoading.value) {
-                    return buildServiceCardShimmer();
-                  } else {
-                    ServiceModel service = controller.serviceList[index];
-                    return InkWell(
-                      onTap: () {
-                        Get.toNamed(AppPages.ServiceDetails,
-                            arguments: service);
+              SliverPadding(
+                padding: const EdgeInsets.all(8.0),
+                sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 0.75,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      childCount: data!.length,
+                      (context, index) {
+                        ServiceModel service = data[index];
+                        return InkWell(
+                          onTap: () {
+                            Get.toNamed(AppPages.ServiceDetails,
+                                arguments: service);
+                          },
+                          child: ServiceCard(
+                            title: service.name!,
+                            image: service.image!,
+                            service: service,
+                          ),
+                        );
                       },
-                      child: ServiceCard(
-                        title: service.name!,
-                        image: service.image!,
-                        service: service,
-                      ),
-                    );
-                  }
-                },
-              )),
-        ),
-      ],
+                    )),
+              ),
+            ],
+          );
+        } else {
+          // If there's no data, display a message
+          return const Center(child: Text('No data available'));
+        }
+      },
     );
   }
 }

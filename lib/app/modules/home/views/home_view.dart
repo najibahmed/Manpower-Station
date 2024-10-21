@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/models/category_model.dart';
+import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
@@ -15,6 +16,7 @@ import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 import '../../../../config/translations/localization_service.dart';
 import '../../../core/base/base_view.dart';
+import '../../service/view/service_card.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends BaseView<HomeController> {
@@ -64,10 +66,13 @@ class HomeView extends BaseView<HomeController> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                          onPressed: ()async {
-                            print('access token----${MySharedPref.getAccessToken()}');
-                            print("refresh token---${await MySharedPref.getRefreshToken()}");
-                            print("userId----${await MySharedPref.getUserId()}");
+                          onPressed: () async {
+                            print(
+                                'access token----${MySharedPref.getAccessToken()}');
+                            print(
+                                "refresh token---${await MySharedPref.getRefreshToken()}");
+                            print(
+                                "userId----${await MySharedPref.getUserId()}");
                           },
                           icon: const Icon(
                             Icons.notifications_active_outlined,
@@ -107,8 +112,8 @@ class HomeView extends BaseView<HomeController> {
                     Wrap(
                       children: [
                         SizedBox(
-                          height: 55,
-                          width: 55,
+                          height: 55.h,
+                          width: 50.w,
                           child: CircleAvatar(
                             backgroundColor: Colors.grey.withOpacity(.30),
                             radius: 100,
@@ -131,7 +136,7 @@ class HomeView extends BaseView<HomeController> {
                                   fontSize: MyFonts.bodyMediumSize,
                                   fontWeight: FontWeight.bold),
                             ),
-                            const SizedBox(height: 2),
+                            SizedBox(height: 2.h),
                             Text(
                               Strings.help.tr,
                               style: TextStyle(
@@ -150,7 +155,8 @@ class HomeView extends BaseView<HomeController> {
                         ),
                       ],
                     ),
-                     SizedBox(height: 15.h),
+                    SizedBox(height: 15.h),
+
                     /// Application Banner
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
@@ -178,20 +184,19 @@ class HomeView extends BaseView<HomeController> {
                                       width: MediaQuery.of(context).size.width,
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 5.0),
-                                      child:  CachedNetworkImage(
+                                      child: CachedNetworkImage(
                                         fit: BoxFit.fitWidth,
-                                      imageUrl:  '${Constants.bannerImgUrl}$banner',
-                                      errorWidget: (context, url, error) => const Icon(Icons.error),
-                                      progressIndicatorBuilder: (context, url, progress) => Center(
-                                        child: CircularProgressIndicator(
-                                          value: progress.progress,
+                                        imageUrl:
+                                            '${Constants.bannerImgUrl}$banner',
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                        progressIndicatorBuilder:
+                                            (context, url, progress) => Center(
+                                          child: CircularProgressIndicator(
+                                            value: progress.progress,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    //   Image.network(
-                                    //     '${Constants.bannerImgUrl}$banner',
-                                    //     fit: BoxFit.fitWidth,
-                                    //   ),
                                     );
                                   },
                                 );
@@ -199,61 +204,93 @@ class HomeView extends BaseView<HomeController> {
                             ),
                     ),
                     SizedBox(height: 15.h),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text(
-                    //       'Service Categories',
-                    //       style: TextStyle(
-                    //           fontSize: MyFonts.bodyLargeSize,
-                    //           color: Colors.black.withOpacity(.65),
-                    //           fontWeight: FontWeight.w500),
-                    //     ),
-                    //     Padding(
-                    //       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    //       child: TextButton(
-                    //           onPressed: () {},
-                    //           child: Text(
-                    //             'see all',
-                    //             style: TextStyle(
-                    //                 fontSize: MyFonts.bodyLargeSize,
-                    //                 color: Colors.black.withOpacity(.65),
-                    //                 fontWeight: FontWeight.normal),
-                    //           )),
-                    //     ),
-                    //   ],
-                    // ),
-                    // SizedBox(height: 5.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Popular Services',
+                          style: TextStyle(
+                              fontSize: MyFonts.bodyLargeSize,
+                              color: Colors.black.withOpacity(.65),
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'see all',
+                                style: TextStyle(
+                                    fontSize: MyFonts.bodyLargeSize,
+                                    color: Colors.black.withOpacity(.65),
+                                    fontWeight: FontWeight.normal),
+                              )),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5.h),
+
                     // SizedBox(
-                    //   height: 100,
-                    //   child: controller.allCategoryData.isEmpty
-                    //       ? ListView.builder(
-                    //           scrollDirection: Axis.horizontal,
-                    //           itemCount: 5,
-                    //           itemBuilder: (BuildContext context, int index) {
-                    //             return _buildCategoryShimmer();
-                    //           },
-                    //         )
-                    //       : ListView.builder(
-                    //           scrollDirection: Axis.horizontal,
-                    //           itemCount:  controller.allCategoryData.length,
-                    //           itemBuilder: (BuildContext context, int index) {
-                    //             CategoryModel category =
-                    //                 controller.allCategoryData[index];
-                    //             var id =category.id.toString();
-                    //             return
-                    //               ServiceOption(
-                    //               label: category.categoryName!,
-                    //               image: 'assets/images/maid_icon.png',
-                    //               onTap: () {
-                    //                  controller.getOneCategoryServices(id);
-                    //                   var serviceList=controller.oneCategoryServicesData.value;
-                    //                   Get.toNamed(AppPages.SingleCateServicesScreen,arguments: serviceList);
+                    //   // height: 100,
+                    //   child: FutureBuilder(
+                    //     future: controller.getAllServiceData(),
+                    //     builder: (context, snapshot) {
+                    //       if (snapshot.hasData) {
+                    //         var data=
+                    //         return ListView.builder(
+                    //                   scrollDirection: Axis.horizontal,
+                    //                   itemCount:  snapshot.dat,
+                    //                   itemBuilder: (BuildContext context, int index) {
+                    //                       ServiceModel service = controller.serviceList[index];
+                    //                       return InkWell(
+                    //                         onTap: () {
+                    //                           Get.toNamed(AppPages.ServiceDetails,
+                    //                               arguments: service);
+                    //                         },
+                    //                         child: ServiceCard(
+                    //                           title: service.name!,
+                    //                           image: service.image!,
+                    //                           service: service,
+                    //                         ),
+                    //                       );
+                    //                     }
+                    //                   );
+                    //       } else if (snapshot.hasError) {
+                    //         return Text('Error: ${snapshot.error}');
+                    //       }
+                    //       return buildServiceCardShimmer();
+                    //     },
+                    //   ),
                     //
-                    //               });
-                    //           }),
+                    //   // controller.allCategoryData.isEmpty
+                    //   //     ? ListView.builder(
+                    //   //         scrollDirection: Axis.horizontal,
+                    //   //         itemCount: 5,
+                    //   //         itemBuilder: (BuildContext context, int index) {
+                    //   //           return _buildCategoryShimmer();
+                    //   //         },
+                    //   //       )
+                    //   //     : ListView.builder(
+                    //   //         scrollDirection: Axis.horizontal,
+                    //   //         itemCount:  controller.allCategoryData.length,
+                    //   //         itemBuilder: (BuildContext context, int index) {
+                    //   //           CategoryModel category =
+                    //   //               controller.allCategoryData[index];
+                    //   //           var id =category.id.toString();
+                    //   //           return
+                    //   //             ServiceOption(
+                    //   //             label: category.categoryName!,
+                    //   //             image: 'assets/images/maid_icon.png',
+                    //   //             onTap: () {
+                    //   //                controller.getOneCategoryServices(id);
+                    //   //                 var serviceList=controller.oneCategoryServicesData.value;
+                    //   //                 Get.toNamed(AppPages.SingleCateServicesScreen,arguments: serviceList);
+                    //   //
+                    //   //             });
+                    //   //         }),
                     // ),
                     // SizedBox(height: 10.h),
+
                     /// Category text message
                     Text(
                       '${Strings.askTypeOfService.tr}?',
@@ -267,6 +304,8 @@ class HomeView extends BaseView<HomeController> {
                 ),
               ),
             ),
+
+            ///Category list card
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               sliver: SliverGrid(
@@ -284,19 +323,17 @@ class HomeView extends BaseView<HomeController> {
                       if (controller.allCategoryData.isEmpty) {
                         return buildServiceCardShimmer();
                       } else {
-                        var image=categoryImage[index];
+                        var image = categoryImage[index];
                         CategoryModel category =
                             controller.allCategoryData[index];
                         var id = category.id.toString();
-                              String catTitle=category.categoryName!;
+                        String catTitle = category.categoryName!;
                         return InkWell(
                             onTap: () {
                               controller.oneCategoryServicesData.clear();
                               controller.getOneCategoryServices(id);
-                              var serviceList =
-                                  controller.oneCategoryServicesData;
                               Get.toNamed(AppPages.SingleCateServicesScreen,
-                                  arguments: [serviceList,catTitle]);
+                                  arguments: [catTitle, id]);
                             },
                             child: Card(
                               color: Colors.grey[50],
@@ -342,21 +379,14 @@ class HomeView extends BaseView<HomeController> {
                                             width: size.width * 0.25,
                                             child: OutlinedButton(
                                                 onPressed: () {
-                                                   controller
-                                                      .getOneCategoryServices(
-                                                          id);
-                                                  var serviceList = controller
-                                                      .oneCategoryServicesData;
-                                                  Get.toNamed(
-                                                      AppPages
-                                                          .SingleCateServicesScreen,
-                                                      arguments: [serviceList,catTitle]);
+                                                  controller.getOneCategoryServices(id);
+                                                  Get.toNamed(AppPages.SingleCateServicesScreen, arguments: [catTitle, id]);
                                                 },
                                                 style: OutlinedButton.styleFrom(
-                                                  // backgroundColor:
-                                                  //     LightThemeColors
-                                                  //         .primaryColor,
-                                                ),
+                                                    // backgroundColor:
+                                                    //     LightThemeColors
+                                                    //         .primaryColor,
+                                                    ),
                                                 child: const Text(
                                                   'View All',
                                                   style: TextStyle(
@@ -366,7 +396,7 @@ class HomeView extends BaseView<HomeController> {
                                           ),
                                         ],
                                       )),
-                                  const SizedBox(height: 10),
+                                  SizedBox(height: size.height * 0.01),
                                 ],
                               ),
                             ));
@@ -378,7 +408,6 @@ class HomeView extends BaseView<HomeController> {
         ),
       ),
     );
-
   }
 
   Future<void> _handleRefresh() async {
@@ -390,8 +419,6 @@ class HomeView extends BaseView<HomeController> {
 
   Widget _buildBannerShimmer() {
     return const Card(
-        elevation: 5,
-        child: ShimmerWidget.rectangular(height: 180));
+        elevation: 5, child: ShimmerWidget.rectangular(height: 180));
   }
-
 }

@@ -10,6 +10,7 @@ import 'package:manpower_station/app/modules/service/controller/service_controll
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 import 'package:uuid/uuid.dart';
+import '../../../components/custom_snackbar.dart';
 import '../views/checkout_screen.dart';
 
 class CheckoutController extends BaseController {
@@ -83,7 +84,7 @@ class CheckoutController extends BaseController {
               if (response.statusCode == 201) {
 
               } else {
-                print('Failed to Book Service: ${response.statusMessage}');
+                CustomSnackBar.showCustomErrorSnackBar(title:'Failed to Book Service:',message: '${response.statusMessage}');
               }
             }
         );

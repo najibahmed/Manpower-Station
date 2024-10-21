@@ -2,6 +2,8 @@ import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 import 'package:manpower_station/utils/constants.dart';
 
+import '../components/custom_snackbar.dart';
+
 class ApiServices{
 
 
@@ -39,9 +41,12 @@ static Future<void> userReview(bookingId, Map<String, dynamic> reviewData ) asyn
           data:reviewData,
           onSuccess: (response) {
         if (response.statusCode == 200) {
-          // var jsonData = response.data['worker'];
-          print("${response.data}");
-
+          var flag = response.data["flag"];
+          if(flag){
+            CustomSnackBar.showCustomSnackBar(
+                title: "Successful",
+                message: "${response.data["message"]}");
+          }
         } else {
           print('Failed to give review: ${response.statusMessage}');
         }

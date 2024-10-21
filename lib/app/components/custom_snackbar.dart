@@ -21,7 +21,7 @@ class CustomSnackBar {
     Get.snackbar(
       title,
       message,
-      duration: duration ?? const Duration(seconds: 3),
+      duration: duration ?? const Duration(seconds: 2),
       margin: const EdgeInsets.only(top: 10,left: 10,right: 10),
       colorText: Colors.white,
       backgroundColor: color ?? Colors.redAccent,

@@ -12,10 +12,10 @@ import 'package:manpower_station/app/services/api_client.dart';
 import '../../../core/base/base_controller.dart';
 
 class AuthenticationController extends BaseController {
-  TextEditingController phoneNumberEmailController = TextEditingController();
-  TextEditingController otpController = TextEditingController();
+  late TextEditingController phoneNumberEmailController;
+  late TextEditingController otpController;
   final RxString errorMessage = ''.obs;
-  RxBool isLoading=false.obs;
+
 
 
 /// Login with email or phone Number
@@ -38,13 +38,13 @@ class AuthenticationController extends BaseController {
             if(response.data['success'] == true){
               Get.toNamed(AppPages.OtpScreen);
             }else{
-              Get.snackbar('Error','Having problem to send otp');
+              CustomSnackBar.showCustomErrorSnackBar(title: 'Error',message: 'Having problem to send otp');
             }
           }
         },
       );
     } catch (e) {
-      Get.snackbar('Error :',e.toString());
+      Get.snackbar('Error login :',e.toString());
     }
   }
   /// Login with Gmail
@@ -71,7 +71,7 @@ class AuthenticationController extends BaseController {
         },
       );
     } catch (e) {
-      Get.snackbar('Error :',e.toString());
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Error Login Gmail:',message: e.toString());
     }
   }
 
@@ -95,8 +95,6 @@ class AuthenticationController extends BaseController {
             Map<String,dynamic> responseData = response.data;
             OtpModel otpData= OtpModel.fromJson(responseData);
 
-            print("------->$otpData");
-
              String accToken=otpData.token!.accesstoken!;
              String refToken=otpData.token!.refreshtoken!;
              String userId=otpData.user!.id!;
@@ -104,35 +102,29 @@ class AuthenticationController extends BaseController {
             MySharedPref.setRefreshToken(refToken);
             MySharedPref.setUserId(userId as int);
             MySharedPref.setLoginStatus(true);
+
             // Success handling (for example, navigate to another screen)
             Get.snackbar('Success', '${otpData.message}');
             Get.offAllNamed(AppPages.DashboardView);
           }else{
             // Handle error
             errorMessage.value = 'Error: ${response.data['message']}';
-            Get.snackbar('Error', errorMessage.value);
-          }
-          if (kDebugMode) {
-            print(response.statusCode);
+            Get.snackbar('Error otp response', errorMessage.value);
           }
         },
       );
     } catch (e) {
       // Handle other types of errors
       errorMessage.value = 'Something went wrong: $e';
-      Get.snackbar('Error', errorMessage.value);
-    } finally {
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Error otp try',message: errorMessage.value);
     }
   }
 
   @override
   void onInit() {
+    phoneNumberEmailController=TextEditingController();
+    otpController=TextEditingController();
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override

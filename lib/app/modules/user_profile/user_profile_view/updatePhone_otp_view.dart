@@ -11,6 +11,7 @@ import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import '../../../../../config/theme/light_theme_colors.dart';
 import '../../../../../config/theme/my_fonts.dart';
 import '../../../../../config/translations/strings_enum.dart';
+import '../../../components/custom_snackbar.dart';
 
 class UpdatePhoneOtpView extends BaseView<UserController> {
    UpdatePhoneOtpView({super.key});
@@ -149,7 +150,9 @@ class UpdatePhoneOtpView extends BaseView<UserController> {
       try {
         controller.updateOtpVerification();
       } catch (e) {
-        print("Verify otp error: $e");
+        CustomSnackBar.showCustomErrorToast(
+            message: 'Verify otp error: $e',
+            duration: const Duration(seconds: 1));
       }
     }
   }

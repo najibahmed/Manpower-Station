@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,6 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
   Widget body(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    WorkerModel worker = Get.arguments;
     return SafeArea(
       child: Stack(
         children: [
@@ -49,21 +49,29 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      width: screenWidth * 0.6, // 60% of screen width
-                      height: screenHeight * 0.25, // 30% of screen height
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              '${Constants.avatarImgUrl}${worker.avatar}'),
+                    ClipRRect(
+                      borderRadius:BorderRadius.circular(15),
+                      child: SizedBox(
+                        width: screenWidth * 0.6, // 60% of screen width
+                        height: screenHeight * 0.25, // 30% of screen height
+                        child: CachedNetworkImage(
                           fit: BoxFit.cover,
+                          imageUrl:
+                          '${Constants.avatarImgUrl}${controller.worker.avatar}',
+                          errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                          progressIndicatorBuilder:
+                              (context, url, progress) => Center(
+                            child: CircularProgressIndicator(
+                              value: progress.progress,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.01),
                     Text(
-                      "${worker.username}",
+                      "${controller.worker.username}",
                       style: const TextStyle(
                         fontSize: 26,
                         letterSpacing: 1,
@@ -75,7 +83,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                       children: [
                         RatingBar.builder(
                           itemSize: 30,
-                          initialRating: worker.ratings! .toDouble() ,
+                          initialRating: controller.worker.ratings! .toDouble() ,
                           minRating: 0.0,
                           direction: Axis.horizontal,
                           allowHalfRating: true,
@@ -87,7 +95,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                             color: Colors.amber,
                           ), onRatingUpdate: (double value) {  },
                         ),
-                        Text("(${worker.ratings!})",style: const TextStyle(
+                        Text("(${controller.worker.ratings!})",style: const TextStyle(
                           fontSize: 18
                         ),),
                       ],
@@ -121,7 +129,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                                 ),
                               ),
                               Text(
-                                '${worker.area}',
+                                '${controller.worker.area}',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -139,7 +147,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                                   fontSize: 16,
                                 ),
                               ),Text(
-                                '${worker.address}',
+                                '${controller.worker.address}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -155,7 +163,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                                 TextStyle(color: Colors.black54, fontSize: 16),
                               ),
                               Text(
-                                '${worker.gender}',
+                                '${controller.worker.gender}',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -171,7 +179,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                           ),
                           Text(
                             textAlign: TextAlign.justify,
-                            '${worker.profileDescription}',
+                            '${controller.worker.profileDescription}',
                             style: const TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 10),
@@ -184,8 +192,8 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                           ),
                           Wrap(
                             children:
-                                List.generate(worker.services!.length, (index) {
-                              var services = worker.services![index];
+                                List.generate(controller.worker.services!.length, (index) {
+                              var services = controller.worker.services![index];
                               return Chip(
                                   elevation: 5,
                                   label: Row(
@@ -228,7 +236,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.02),
-                     Divider(thickness: 1,color: Colors.black26,),
+                     const Divider(thickness: 1,color: Colors.black26,),
                      const Center(
                        child: Text(
                          "Reviews",
@@ -241,13 +249,13 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                        ),
                      ),
                     SizedBox(height: screenHeight * 0.01),
-                    worker.services!.isEmpty
+                    controller.worker.services!.isEmpty
                         ? const Text("There is no review")
                         : Column(
                             children: List.generate(
-                            worker.services!.first.service!.reviews!.length,
+                              controller.worker.services!.first.service!.reviews!.length,
                             (index) {
-                              var review = worker
+                              var review = controller.worker
                                   .services!.first.service!.reviews![index];
 
                               return WorkerReviewCard(review: review);
@@ -282,7 +290,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                     }
                     if (controller.selectedWorkerList.isEmpty) {
                       Get.toNamed(AppPages.CheckoutScreen);
-                      controller.addWorker(worker);
+                      controller.addWorker(controller.worker);
                     }
                   },
                   style: ElevatedButton.styleFrom(

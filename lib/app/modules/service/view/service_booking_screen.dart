@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
@@ -58,11 +59,20 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
-                        child: Image.network(
-                          '${Constants.serviceImgUrl}${controller.serviceModel.image}', // Placeholder for the image
+                        child: CachedNetworkImage(
                           height: screenHeight * .22,
                           width: double.infinity,
                           fit: BoxFit.fill,
+                          imageUrl:
+                          '${Constants.serviceImgUrl}${controller.serviceModel.image}',
+                          errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                          progressIndicatorBuilder:
+                              (context, url, progress) => Center(
+                            child: CircularProgressIndicator(
+                              value: progress.progress,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(height: screenHeight * .02),
@@ -352,7 +362,9 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           children: [
                             TextSpan(
                               text:
-                                  '${Constants.banglaCurrency} ${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}.00',
+                                  '${Constants.banglaCurrency} ${controller
+                                      .getServicePrice(controller.timeLimit.value, controller
+                                      .selectedTimeKey, controller.serviceModel.servicePrice)}.00',
                               style: TextStyle(
                                   fontSize: MyFonts.bodyLargeSize,
                                   fontWeight: FontWeight.bold,

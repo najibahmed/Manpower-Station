@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/dash_divider.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
@@ -45,7 +46,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildHeaderSection('Service Info'),
-            /// ProductInfo,
+            /// Service Info,
             customServiceTile(
                 controller.cartItem.first, screenHeight, screenWidth),
             SizedBox(height: screenHeight * 0.015),
@@ -107,7 +108,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
                     '${Constants.banglaCurrency} ${controller.serviceController.cartSubtotal}.00'),
               ],
             ),
-            const SizedBox(height: 10),
+             SizedBox(height: 10.h),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -115,7 +116,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
                 Text('${Constants.banglaCurrency} +6.70'),
               ],
             ),
-            const SizedBox(height: 10),
+             SizedBox(height: 10.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -172,7 +173,7 @@ Widget customWorkerTile(
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
           child: SizedBox(
-            height: screenHeight * 0.1,
+            height: screenHeight * 0.12,
             width: screenWidth * 0.34,
             child: CachedNetworkImage(
               fit: BoxFit.cover,
@@ -197,6 +198,7 @@ Widget customWorkerTile(
             child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 8.0,
+            vertical: 8
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,9 +254,18 @@ Widget customServiceTile(
           child: SizedBox(
             height: screenHeight * 0.15,
             width: screenWidth * 0.34,
-            child: Image.network(
-              '${Constants.serviceImgUrl}${item.serviceImageUrl}',
+            child: CachedNetworkImage(
               fit: BoxFit.cover,
+              imageUrl:
+              '${Constants.serviceImgUrl}${item.serviceImageUrl}',
+              errorWidget: (context, url, error) =>
+              const Icon(Icons.error),
+              progressIndicatorBuilder:
+                  (context, url, progress) => Center(
+                child: CircularProgressIndicator(
+                  value: progress.progress,
+                ),
+              ),
             ),
           ),
         ),

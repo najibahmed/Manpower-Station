@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
@@ -32,7 +33,6 @@ class BookingsController extends BaseController with GetSingleTickerProviderStat
     "serviceId":["$serviceId"],
     "workerId":["${workersData.value!.user!.id}"],
   };
-  print(requestData);
     await ApiServices.userReview(bookingId, requestData);
 
   }
@@ -40,6 +40,7 @@ class BookingsController extends BaseController with GetSingleTickerProviderStat
    void changeTabIndex(int index) {
      tabIndex.value = index;
    }
+   /// get all bookings for particular userId
    Future<void> getAllBookingsByUid() async {
      var userID=Constants.userId;
      try {
@@ -57,12 +58,12 @@ class BookingsController extends BaseController with GetSingleTickerProviderStat
                    .toList();
                bookingsList.assignAll(bookings);// Update the RxList with new data
              } else {
-               print('Failed to load Workers: ${response.statusMessage}');
+               CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load Workers:',message:'${response.statusMessage}');
              }
            }
        );
      } catch (e) {
-       print(e);
+       CustomSnackBar.showCustomErrorSnackBar(title: 'Error login :',message: e.toString());
      }
    }
 

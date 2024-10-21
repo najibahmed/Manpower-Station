@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -73,11 +74,20 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
             borderRadius: BorderRadius.circular(8.0),
             child: Hero(
               tag: "imgHero",
-              child: Image.network(
-                '${Constants.serviceImgUrl}${service.image}', // Replace with actual image URL or asset path
+              child:CachedNetworkImage(
+                fit: BoxFit.cover,
                 height: 200,
                 width: double.infinity,
-                fit: BoxFit.cover,
+                imageUrl:
+                '${Constants.serviceImgUrl}${service.image}',
+                errorWidget: (context, url, error) =>
+                const Icon(Icons.error),
+                progressIndicatorBuilder:
+                    (context, url, progress) => Center(
+                  child: CircularProgressIndicator(
+                    value: progress.progress,
+                  ),
+                ),
               ),
             ),
           ),

@@ -11,6 +11,8 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 
+import '../../../components/custom_snackbar.dart';
+
 class UpdatePhoneEmail extends BaseView<UserController> {
   UpdatePhoneEmail({super.key});
 
@@ -169,11 +171,10 @@ class UpdatePhoneEmail extends BaseView<UserController> {
 
       try {
         showLoadingOverLay(asyncFunction: controller.updatePhoneOrEmail(),msg:'Loading' );
-        // await controller.updatePhoneOrEmail();
-
       } catch (error) {
-
-        print(error);
+        CustomSnackBar.showCustomErrorToast(
+            message: 'Verify try update email: $error',
+            duration: const Duration(seconds: 1));
       }
     }
   }

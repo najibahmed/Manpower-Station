@@ -12,6 +12,7 @@ import 'package:manpower_station/app/modules/bookings/controller/bookings_contro
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
 
+import '../../../components/custom_loading_overlay.dart';
 import '../../../models/worker_model.dart';
 
 class BookingHistoryDetails extends BaseView<BookingsController> {
@@ -21,6 +22,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     return null;
   }
+
   @override
   Widget body(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -161,12 +163,12 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                                   labelText: 'Give a review',
                                   labelStyle: TextStyle(color: Colors.grey),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.green, width: 2),
+                                    borderSide: BorderSide(
+                                        color: Colors.green, width: 2),
                                   ),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.grey, width: 1),
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 1),
                                   ),
                                   border: OutlineInputBorder(
                                       borderSide:
@@ -175,7 +177,8 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                                 validator: (String? value) {
                                   if (value == null || value.isEmpty) {
                                     CustomSnackBar.showCustomErrorToast(
-                                        message: 'Please write review',duration: Duration(seconds: 1));
+                                        message: 'Please write review',
+                                        duration: const Duration(seconds: 1));
                                   }
                                   return null;
                                 },
@@ -187,7 +190,9 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                                 height: screenHeight * 0.04,
                                 width: screenWidth * 0.25,
                                 child: ElevatedButton(
-                                  onPressed:() {giveReview(booking);},
+                                  onPressed: () {
+                                    giveReview(booking);
+                                  },
                                   child: const Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 8.0),
@@ -211,7 +216,6 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
               ),
       ),
     ]);
-
   }
 
   Widget _buildCardShimmer(double screenHeight, double screenWidth) {
@@ -481,25 +485,26 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
       ],
     );
   }
-  void giveReview(booking)async{
-    if(controller.formKey.currentState!.validate()){
-      if(controller.reviewController.text.trim().isNotEmpty){
+
+  void giveReview(booking) {
+    if (controller.formKey.currentState!.validate()) {
+      if (controller.reviewController.text.trim().isNotEmpty) {
         try {
-          controller.focusNode.unfocus();
-          await controller.giveUserReview(
-              booking.services!.first.service!
-                  .id,
-              booking.id);
-          CustomSnackBar.showCustomSnackBar(
-              title: "Successful",
-              message: "Review Created");
           controller.reviewController.clear();
+          controller.focusNode.unfocus();
+          showLoadingOverLay(
+              asyncFunction: controller.giveUserReview(
+                  booking.services!.first.service!.id, booking.id),
+              msg: 'Loading');
         } catch (e) {
-          print("Verify otp error: $e");
+          CustomSnackBar.showCustomErrorToast(
+              message: 'Giving review error: $e',
+              duration: const Duration(seconds: 1));
         }
       }
     }
   }
+
   Card _messageCard(
       double screenWidth, double screenHeight, BookingsModel booking) {
     return Card(

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
@@ -133,7 +134,7 @@ class ServiceCard extends StatelessWidget {
                       // ),
                     ],
                   )),
-              const SizedBox(height: 10),
+               SizedBox(height: 10.h),
             ],
           ),
           service.serviceDiscount!.discount.toString()!='0'?
