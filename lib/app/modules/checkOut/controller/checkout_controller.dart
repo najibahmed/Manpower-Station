@@ -9,7 +9,9 @@ import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/services/api_client.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
+import '../../../../utils/constants.dart';
 import '../../../components/custom_snackbar.dart';
 import '../views/checkout_screen.dart';
 
@@ -77,12 +79,21 @@ class CheckoutController extends BaseController {
             url,
             RequestType.post,
             data: requestData,
-            onSuccess: (response) {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization':  Constants.accessToken         //MySharedPref.getAccessToken()
+            },
+            onSuccess: (response) async {
               if (kDebugMode) {
                 print(response.data);
               }
               if (response.statusCode == 201) {
-
+                  final String url=response.data['url'];
+                  if (!await launchUrl(Uri.parse(url))) {
+                    CustomSnackBar.showCustomErrorSnackBar(title:'Failed Payment',message: 'Could not launch $url');
+              // throw Exception('Could not launch $_url');
+              }
               } else {
                 CustomSnackBar.showCustomErrorSnackBar(title:'Failed to Book Service:',message: '${response.statusMessage}');
               }

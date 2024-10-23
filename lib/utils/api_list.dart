@@ -16,5 +16,6 @@ class ApiList {
   static String updateUserEmail = "/api/users/update/user/phone_or_email"; //put method,
   static String updateUserProfileField = "/api/clients/update/client/profile/:userId"; //put method, userId required
   static String updateOtpVerification = "/api/users/update/user/phone_email/verified"; //put method
+  static String refreshToken = "/api/users/refresh/token"; //post method,'Authorization': refreshToken in header
 
 }

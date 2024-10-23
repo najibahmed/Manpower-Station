@@ -27,7 +27,7 @@ class BaseClient {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization':MySharedPref.getAccessToken()
+      'Authorization':  Constants.accessToken         //MySharedPref.getAccessToken()
     },
     connectTimeout: const Duration(seconds: 15),
     // sendTimeout: const Duration(seconds: 30),
@@ -320,7 +320,6 @@ Future<Map<String, String>> _refreshToken() async {
   final response = await dio.post(
     '/api/users/refresh/token',
   );
-
   if (response.statusCode == 200) {
     return {
       'access_token': response.data['access_token'],

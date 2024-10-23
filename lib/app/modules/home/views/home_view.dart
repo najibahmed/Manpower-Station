@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/models/category_model.dart';
+import 'package:manpower_station/app/modules/payment/view/amar_pay_payment.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
@@ -67,6 +68,7 @@ class HomeView extends BaseView<HomeController> {
                     children: [
                       IconButton(
                           onPressed: () async {
+                            Get.to(const MyPay());
                             print(
                                 'access token----${MySharedPref.getAccessToken()}');
                             print(
