@@ -329,35 +329,53 @@ class WorkerListScreen extends BaseView<WorkerController> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SizedBox(
-                                    height: size.height * 0.035,
-                                    width: size.width * 0.23,
-                                    child: ElevatedButton(
-                                        onPressed: () {
-                                          if (controller
-                                              .selectedWorkerList.isNotEmpty) {
-                                            controller.selectedWorkerList
-                                                .clear();
-                                          }
-                                          if (controller
-                                                  .selectedWorkerList.length <
-                                              1) {
-                                            Get.toNamed(
-                                                AppPages.CheckoutScreen);
-                                            controller.addWorker(worker);
-                                          }
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              LightThemeColors.primaryColor,
-                                        ),
-                                        child: const Text(
-                                          'Select Worker',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.white),
-                                        )),
-                                  )
+                                  GetX<WorkerController>(
+                                      builder: (wController) {
+                                    final isSelected = controller
+                                        .isWorkerSelected(worker.user!.id!);
+                                    return SizedBox(
+                                      height: size.height * 0.035,
+                                      width: size.width * 0.29,
+                                      child: OutlinedButton.icon(
+                                          onPressed: () {
+                                            if (!isSelected) {
+                                              if (controller.selectedWorkerList
+                                                  .isNotEmpty) {
+                                                controller.selectedWorkerList
+                                                    .clear();
+                                              }
+                                              if (controller.selectedWorkerList
+                                                      .length <
+                                                  1) {
+                                                Get.toNamed(
+                                                    AppPages.CheckoutScreen);
+                                                controller.addWorker(worker);
+                                              }
+                                            } else {
+                                              controller.removeWorker(
+                                                  worker.user!.id);
+                                            }
+                                          },
+                                          style: OutlinedButton.styleFrom(
+                                            side: const BorderSide(),
+                                            backgroundColor: isSelected
+                                                ? Colors.red[100]
+                                                : Colors.white,
+                                          ),
+                                          icon: Icon(
+                                            isSelected
+                                                ? Icons.remove_circle_outline
+                                                : Icons.add,
+                                            color: Colors.black,
+                                          ),
+                                          label: Text(
+                                            isSelected ? "Remove" : 'Select ',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black),
+                                          )),
+                                    );
+                                  })
                                 ],
                               )
                             ],

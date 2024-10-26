@@ -158,7 +158,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                 height: MediaQuery.of(context).size.height * 0.04,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(AppPages.ServiceBooking, arguments: service);
+                    Get.offNamed(AppPages.ServiceBooking, arguments: service);
                   },
                   child: Text(
                     'Reserve Service',

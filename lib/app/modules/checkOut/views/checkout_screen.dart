@@ -68,8 +68,8 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             SizedBox(height: screenHeight * 0.01),
 
             /// PaymentMethod(),
-            buildPaymentMethodSection(controller: controller),
-            SizedBox(height: screenHeight * 0.1),
+            // buildPaymentMethodSection(controller: controller),
+            SizedBox(height: screenHeight * 0.05),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

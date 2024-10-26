@@ -13,7 +13,24 @@ class SingleCategoryServices extends BaseView<CategoryController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return null;
+    return AppBar(
+      centerTitle: true,
+      leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+          )),
+      title: Text(
+        controller.categoryTitle,
+        // '${controller.serviceList.first.serviceCategoryId.categoryName}',
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          letterSpacing: 1,
+        ),
+      ),
+    );
   }
 
   @override
@@ -47,25 +64,25 @@ class SingleCategoryServices extends BaseView<CategoryController> {
           List<dynamic>? data = snapshot.data;
           return CustomScrollView(
             slivers: [
-              SliverAppBar(
-                floating: true,
-                centerTitle: true,
-                leading: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                    )),
-                title: Text(
-                  controller.categoryTitle,
-                  // '${controller.serviceList.first.serviceCategoryId.categoryName}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1,
-                  ),
-                ),
-              ),
+              // SliverAppBar(
+              //   floating: true,
+              //   centerTitle: true,
+              //   leading: IconButton(
+              //       onPressed: () {
+              //         Get.back();
+              //       },
+              //       icon: const Icon(
+              //         Icons.arrow_back,
+              //       )),
+              //   title: Text(
+              //     controller.categoryTitle,
+              //     // '${controller.serviceList.first.serviceCategoryId.categoryName}',
+              //     style: const TextStyle(
+              //       fontWeight: FontWeight.bold,
+              //       letterSpacing: 1,
+              //     ),
+              //   ),
+              // ),
               SliverPadding(
                 padding: const EdgeInsets.all(8.0),
                 sliver: SliverGrid(

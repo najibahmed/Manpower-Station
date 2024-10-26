@@ -38,16 +38,19 @@ class _MyPayState extends State<MyPay> {
               },
               // This will return the payment event with a message
               status: (EventState event, String message) {
+
+                print('---->this is the payment event message $message');
                 if (event == EventState.error) {
                   setState(() {
                     isLoading = false;
                   });
                 }
               },
+
               // When you use your own url, you must have the keywords:cancel,confirm,fail otherwise the callback function will not work properly
               cancelUrl: "example.com/payment/cancel",
               successUrl: "example.com/payment/confirm",
-              failUrl: "example.com/payment/fail",
+              failUrl: "manpower/najib/fail",
               customerEmail: "masumbillahsanjid@gmail.com",
               customerMobile: "01834760591",
               customerName: "Najib Ahmed",

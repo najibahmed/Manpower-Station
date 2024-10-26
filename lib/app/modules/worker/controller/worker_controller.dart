@@ -8,14 +8,13 @@ import 'package:manpower_station/app/services/api_client.dart';
 import '../../../components/custom_snackbar.dart';
 
 class WorkerController extends BaseController {
-  var allWorkerList = <dynamic>[].obs;
+  // var allWorkerList = <dynamic>[].obs;
   RxDouble userRating = 0.0.obs;
   RxList<WorkerModel> selectedWorkerList = <WorkerModel>[].obs;
   Debouncer deBouncer = Debouncer(delay: const Duration(milliseconds: 500));
   TextEditingController workerSearchController = TextEditingController();
   RxBool isLoading = true.obs;
   final findByWorker = <dynamic>[].obs;
-  late WorkerModel worker=Get.arguments;
 
   void addWorker(WorkerModel worker) {
     return selectedWorkerList.add(worker);
@@ -23,10 +22,21 @@ class WorkerController extends BaseController {
 
   void removeWorker(workerId) {
     var temp =
-        selectedWorkerList.where((worker) => worker.id != workerId).toList();
+        selectedWorkerList.where((worker) => worker.user!.id != workerId).toList();
     selectedWorkerList.value = temp;
   }
 
+
+  bool isWorkerSelected(String uId) {
+    bool tag = false;
+    for (final worker in selectedWorkerList) {
+      if (worker.user?.id == uId) {
+        tag = true;
+        break;
+      }
+    }
+    return tag;
+  }
   // Future<void> getAllWorkerData() async {
   //   try {
   //     var url= "/api/workers/get/all";

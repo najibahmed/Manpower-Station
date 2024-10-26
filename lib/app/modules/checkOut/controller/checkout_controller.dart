@@ -16,11 +16,11 @@ import '../../../components/custom_snackbar.dart';
 import '../views/checkout_screen.dart';
 
 class CheckoutController extends BaseController {
-  final serviceController = Get.put(ServiceController());
+  final serviceController = Get.find<ServiceController>();
   RxString paymentMethodGroupValue = PaymentMethod.cod.obs;
   final formKey = GlobalKey<FormState>();
-  final List<WorkerModel> worker=Get.put(WorkerController()).selectedWorkerList;
-  final List<CartModel> cartItem=Get.put(ServiceController()).cartItems;
+  final List<WorkerModel> worker=Get.find<WorkerController>().selectedWorkerList;
+  final List<CartModel> cartItem=Get.find<ServiceController>().cartItems;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();

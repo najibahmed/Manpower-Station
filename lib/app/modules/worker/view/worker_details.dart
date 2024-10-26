@@ -21,6 +21,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
   Widget body(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    WorkerModel worker=Get.arguments;
     return SafeArea(
       child: Stack(
         children: [
@@ -57,7 +58,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl:
-                          '${Constants.avatarImgUrl}${controller.worker.avatar}',
+                          '${Constants.avatarImgUrl}${worker.avatar}',
                           errorWidget: (context, url, error) =>
                           const Icon(Icons.error),
                           progressIndicatorBuilder:
@@ -71,7 +72,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                     ),
                     SizedBox(height: screenHeight * 0.01),
                     Text(
-                      "${controller.worker.username}",
+                      "${worker.username}",
                       style: const TextStyle(
                         fontSize: 26,
                         letterSpacing: 1,
@@ -83,7 +84,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                       children: [
                         RatingBar.builder(
                           itemSize: 30,
-                          initialRating: controller.worker.ratings! .toDouble() ,
+                          initialRating: worker.ratings! .toDouble() ,
                           minRating: 0.0,
                           direction: Axis.horizontal,
                           allowHalfRating: true,
@@ -95,7 +96,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                             color: Colors.amber,
                           ), onRatingUpdate: (double value) {  },
                         ),
-                        Text("(${controller.worker.ratings!})",style: const TextStyle(
+                        Text("(${worker.ratings!})",style: const TextStyle(
                           fontSize: 18
                         ),),
                       ],
@@ -129,7 +130,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                                 ),
                               ),
                               Text(
-                                '${controller.worker.area}',
+                                '${worker.area}',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -147,7 +148,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                                   fontSize: 16,
                                 ),
                               ),Text(
-                                '${controller.worker.address}',
+                                '${worker.address}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -163,7 +164,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                                 TextStyle(color: Colors.black54, fontSize: 16),
                               ),
                               Text(
-                                '${controller.worker.gender}',
+                                '${worker.gender}',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -179,7 +180,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                           ),
                           Text(
                             textAlign: TextAlign.justify,
-                            '${controller.worker.profileDescription}',
+                            '${worker.profileDescription}',
                             style: const TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 10),
@@ -192,8 +193,8 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                           ),
                           Wrap(
                             children:
-                                List.generate(controller.worker.services!.length, (index) {
-                              var services = controller.worker.services![index];
+                                List.generate(worker.services!.length, (index) {
+                              var services = worker.services![index];
                               return Chip(
                                   elevation: 5,
                                   label: Row(
@@ -249,13 +250,13 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                        ),
                      ),
                     SizedBox(height: screenHeight * 0.01),
-                    controller.worker.services!.isEmpty
+                    worker.services!.isEmpty
                         ? const Text("There is no review")
                         : Column(
                             children: List.generate(
-                              controller.worker.services!.first.service!.reviews!.length,
+                              worker.services!.first.service!.reviews!.length,
                             (index) {
-                              var review = controller.worker
+                              var review = worker
                                   .services!.first.service!.reviews![index];
 
                               return WorkerReviewCard(review: review);
@@ -289,8 +290,8 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                       controller.selectedWorkerList.clear();
                     }
                     if (controller.selectedWorkerList.isEmpty) {
-                      Get.toNamed(AppPages.CheckoutScreen);
-                      controller.addWorker(controller.worker);
+                      Get.offNamed(AppPages.CheckoutScreen);
+                      controller.addWorker(worker);
                     }
                   },
                   style: ElevatedButton.styleFrom(

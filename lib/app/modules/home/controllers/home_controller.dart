@@ -12,7 +12,7 @@ class HomeController extends BaseController {
   var allCategoryData = <dynamic>[].obs;
 
 /// Get all service
-  Future<void> getAllServiceData() async {
+  Future<List> getAllServiceData() async {
     try {
       // Map<String, dynamic> requestData = {
       //   'phone_or_email': phoneNumberEmailController.text.trim(),
@@ -30,6 +30,7 @@ class HomeController extends BaseController {
               var serviceList = jsonData.map((e) => ServiceModel.fromJson(e))
                   .toList();
               allServiceData.assignAll(serviceList);// Update the RxList with new data
+              return allServiceData;
             } else {
               CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services:',message: '${response.statusMessage}');
             }
@@ -38,6 +39,7 @@ class HomeController extends BaseController {
     } catch (e) {
       CustomSnackBar.showCustomErrorSnackBar(title:'Error try get service:',message: '$e');
     }
+    return allServiceData;
   }
 
   /// Get all service categories
