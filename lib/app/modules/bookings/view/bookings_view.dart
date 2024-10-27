@@ -8,6 +8,7 @@ import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/app/services/api_service.dart';
+import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
@@ -27,25 +28,20 @@ class BookingHistoryView extends BaseView<BookingsController> {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            centerTitle: true,
-            title: Image.asset(
-              'assets/images/manpower_name_logo.png',
-              fit: BoxFit.cover,
-            ),
             floating: true,
-            backgroundColor: Colors.white,
+            // backgroundColor: Colors.white,
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(20),
+              preferredSize: const Size.fromHeight(0),
               child: SizedBox(
-                height: 40,
+                // height: 40,
                 child: TabBar(
                   onTap: (index) {
                     controller.changeTabIndex(index);
                   },
                   indicatorWeight: 6,
                   dividerColor: Colors.grey,
-                  indicatorColor: Colors.green,
-                  labelStyle: const TextStyle(color: Colors.green),
+                  indicatorColor: Colors.orangeAccent,
+                  labelStyle:  TextStyle(color: Colors.white),//TextStyle(color: Colors.green),
                   controller: controller.tabController,
                   tabs: const [
                     Tab(text: 'Active Order'),
@@ -133,7 +129,7 @@ class ActiveOrder extends StatelessWidget {
       padding: EdgeInsets.all(cardPadding),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black12),
-        color: Colors.grey[100], // Background color of the card
+        // color: LightThemeColors.cardColor, // Background color of the card
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(

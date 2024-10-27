@@ -61,10 +61,8 @@ class MyTheme {
         listTileTheme: MyStyles.getListTileThemeData(isLightTheme: isLight),
 
         // custom themes
-        extensions: [
-          MyStyles.getHeaderContainerTheme(isLightTheme: isLight),
-          MyStyles.getEmployeeListItemTheme(isLightTheme: isLight),
-        ]
+        // extensions: [
+        // ]
     );
   }
 
@@ -83,4 +81,5 @@ class MyTheme {
 
   /// check if the theme is light or dark
   bool get getThemeIsLight => MySharedPref.getThemeIsLight();
+
 }

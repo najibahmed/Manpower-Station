@@ -22,15 +22,6 @@ class SearchScreen extends BaseView<SearchViewController> {
     return SafeArea(
       child: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            centerTitle: true,
-            backgroundColor: LightThemeColors.primaryColor,
-            title: Image.asset(
-              'assets/images/manpower_name_logo.png',
-              fit: BoxFit.cover,
-              color: Colors.white,
-            ),
-          ),
           SliverToBoxAdapter(
             child: Container(
               height: MediaQuery.of(context).size.height * 0.075,

@@ -23,14 +23,7 @@ class MenuView extends BaseView<HomeController>{
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
-   return AppBar(
-     centerTitle: true,
-     title: Image.asset(
-       'assets/images/manpower_name_logo.png',
-       fit: BoxFit.cover,
-       color: Colors.white,
-     ),
-   );
+   return null;
   }
 
   @override

@@ -68,12 +68,9 @@ class ServiceCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
+                     Text(
                       "(starting with)",
-                      style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.black45,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -90,11 +87,7 @@ class ServiceCard extends StatelessWidget {
                           ),
                           service.serviceDiscount?.discount==0 ?  const SizedBox():Text(
                             "${service.servicePrice} ",
-                            style: const TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                fontSize: 16,
-                                color: Colors.black45,
-                                fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.displaySmall?.copyWith(decoration: TextDecoration.lineThrough),
                           ),
                         ],
                       ),

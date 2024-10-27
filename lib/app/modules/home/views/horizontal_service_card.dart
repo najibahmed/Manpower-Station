@@ -35,7 +35,7 @@ class HorizontalServiceCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                   child:CachedNetworkImage(
-                    height: size.height*.13,
+                    // height: size.height*.13,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     imageUrl:
@@ -59,7 +59,7 @@ class HorizontalServiceCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Column(
                   children: [
                     Text(
@@ -71,12 +71,9 @@ class HorizontalServiceCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
+                     Text(
                       "(starting with)",
-                      style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.black45,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -93,11 +90,7 @@ class HorizontalServiceCard extends StatelessWidget {
                           ),
                           service.serviceDiscount?.discount==0 ?  const SizedBox():Text(
                             "${service.servicePrice} ",
-                            style: const TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                fontSize: 16,
-                                color: Colors.black45,
-                                fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.displaySmall?.copyWith(decoration: TextDecoration.lineThrough),
                           ),
                         ],
                       ),

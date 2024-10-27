@@ -30,7 +30,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             Icons.arrow_back,
             color: Colors.white,
           )),
-      backgroundColor: LightThemeColors.primaryColor,
+      // backgroundColor: LightThemeColors.primaryColor,
     );
   }
 

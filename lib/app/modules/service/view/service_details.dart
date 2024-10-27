@@ -105,10 +105,8 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                 const SizedBox(height: 8),
                  SizedBox(
                   child:RatingBar.builder(
-                    initialRating: service.ratings! .toDouble() ,
-                    minRating: 0.0,
+                    initialRating: service.ratings!.toDouble(),
                     direction: Axis.horizontal,
-                    allowHalfRating: true,
                     ignoreGestures: true,
                     itemCount: 5,
                     itemSize: 22,
@@ -127,8 +125,8 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                       style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
                           fontSize: 18,
-                          color: Colors.black45,
-                          fontWeight: FontWeight.bold),
+                          color: LightThemeColors.bodyTextColor,
+                          fontWeight: FontWeight.normal),
                     ),
                     Text(
                       "${Constants.banglaCurrency}${getDiscountAmount(service.serviceDiscount,service.servicePrice!)}",
@@ -137,12 +135,9 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                           color: LightThemeColors.primaryColor,
                           fontWeight: FontWeight.bold),
                     ),
-                    const Text(
+                     Text(
                       " (starting with)",
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black45,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ],
                 ),

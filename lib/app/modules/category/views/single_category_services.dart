@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/lottie_loading.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/category/controller/category_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
@@ -42,20 +43,21 @@ class SingleCategoryServices extends BaseView<CategoryController> {
         // Check the state of the Future
         if (snapshot.connectionState == ConnectionState.waiting) {
           // While the data is being fetched, show a loading spinner
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 50.0,horizontal: 12),
-            child: GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 0.75,
-                    ),
-                    itemCount: 4,
-                    itemBuilder: (context, index) {
-                      return buildServiceCardShimmer();
-                    },),
-          );
+          return LottieLoading();
+          //   Padding(
+          //   padding: const EdgeInsets.symmetric(vertical: 50.0,horizontal: 12),
+          //   child: GridView.builder(
+          //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //             crossAxisCount: 2,
+          //             crossAxisSpacing: 10,
+          //             mainAxisSpacing: 10,
+          //             childAspectRatio: 0.75,
+          //           ),
+          //           itemCount: 4,
+          //           itemBuilder: (context, index) {
+          //             return buildServiceCardShimmer();
+          //           },),
+          // );
         } else if (snapshot.hasError) {
           // If there's an error, display it
           return Center(child: Text('Error: ${snapshot.error}'));

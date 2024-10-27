@@ -17,7 +17,22 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return null;
+    return AppBar( leading: IconButton(
+        onPressed: () {
+          Get.back();
+        },
+        icon: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        )),
+      title: Text(
+        '${controller.serviceModel.name}',
+        overflow: TextOverflow.clip,
+        style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white),
+      ),);
   }
 
   @override
@@ -29,25 +44,25 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
         children: [
           CustomScrollView(
             slivers: [
-              SliverAppBar(
-                pinned: true,
-                leading: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    )),
-                title: Text(
-                  '${controller.serviceModel.name}',
-                  overflow: TextOverflow.clip,
-                  style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ),
+              // SliverAppBar(
+              //   pinned: true,
+              //   leading: IconButton(
+              //       onPressed: () {
+              //         Get.back();
+              //       },
+              //       icon: const Icon(
+              //         Icons.arrow_back,
+              //         color: Colors.white,
+              //       )),
+              //   title: Text(
+              //     '${controller.serviceModel.name}',
+              //     overflow: TextOverflow.clip,
+              //     style: const TextStyle(
+              //         fontSize: 20,
+              //         fontWeight: FontWeight.bold,
+              //         color: Colors.white),
+              //   ),
+              // ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding:
@@ -179,7 +194,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       Text(
                         'Choose a start time to begin with.',
                         style: TextStyle(
-                            color: Colors.black54,
+                            // color: LightThemeColors.bodyTextColor,
                             fontSize: MyFonts.bodyLargeSize,
                             fontWeight: FontWeight.bold),
                       ),
@@ -283,7 +298,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       Text(
                         'Move on to the Worker selection process.',
                         style: TextStyle(
-                            color: Colors.black54,
+                            // color: LightThemeColors.bodyTextColor,
                             fontSize: MyFonts.bodyLargeSize,
                             fontWeight: FontWeight.bold),
                       ),

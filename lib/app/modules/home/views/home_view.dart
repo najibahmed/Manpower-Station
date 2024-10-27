@@ -16,6 +16,8 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
+import '../../../../config/theme/dark_theme_colors.dart';
+import '../../../../config/theme/my_theme.dart';
 import '../../../../config/translations/localization_service.dart';
 import '../../../core/base/base_view.dart';
 import '../../service/view/service_card.dart';
@@ -38,72 +40,6 @@ class HomeView extends BaseView<HomeController> {
         onRefresh: _handleRefresh,
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
-                backgroundColor: Colors.white,
-                centerTitle: true,
-                leading: InkWell(
-                  onTap: () => LocalizationService.updateLanguage(
-                    LocalizationService.getCurrentLocal().languageCode == 'bn'
-                        ? 'en'
-                        : 'bn',
-                  ),
-                  child: SizedBox(
-                    height: 30.h,
-                    width: 30.h,
-                    child: SvgPicture.asset(
-                      'assets/vectors/language.svg',
-                      color: LightThemeColors.primaryColor,
-                      fit: BoxFit.none,
-                      height: 10,
-                      width: 10,
-                    ),
-                  ),
-                ),
-                title: Image.asset(
-                  'assets/images/manpower_name_logo.png',
-                  fit: BoxFit.cover,
-                ),
-                actions: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                          onPressed: () async {
-                            Get.to(const MyPay());
-                            print(
-                                'access token----${MySharedPref.getAccessToken()}');
-                            print(
-                                "refresh token---${await MySharedPref.getRefreshToken()}");
-                            print(
-                                "userId----${await MySharedPref.getUserId()}");
-                          },
-                          icon: const Icon(
-                            Icons.notifications_active_outlined,
-                            color: LightThemeColors.primaryColor,
-                          )),
-                      // InkWell(
-                      //   onTap: () => MyTheme.changeTheme(),
-                      //   child: SizedBox(
-                      //     height: 39.h,
-                      //     width: 39.h,
-                      //     // decoration:
-                      //     // theme.extension<HeaderContainerThemeData>()?.decoration,
-                      //     child: SvgPicture.asset(
-                      //       Get.isDarkMode
-                      //           ? 'assets/vectors/sun.svg'
-                      //           : 'assets/vectors/moon.svg',
-                      //       fit: BoxFit.none,
-                      //       color: Get.isDarkMode
-                      //           ? LightThemeColors.backgroundColor
-                      //           : DarkThemeColors.backgroundColor,
-                      //       height: 10,
-                      //       width: 10,
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ]),
             SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,53 +91,56 @@ class HomeView extends BaseView<HomeController> {
                   //     ),
                   //   ],
                   // ),
-                  // SizedBox(height: 15.h),
-
+                  // SizedBox(height: 10.h),
+                   SizedBox(height: 8.h,),
                   /// Application Banner
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: controller.allServiceData.isEmpty
-                        ? _buildBannerShimmer()
-                        : CarouselSlider(
-                            options: CarouselOptions(
-                              height: size.height * 0.18,
-                              autoPlay: true,
-                              // enlargeCenterPage: true,
-                              aspectRatio: 16 / 9,
-                              autoPlayInterval: const Duration(seconds: 3),
-                              autoPlayAnimationDuration:
-                                  const Duration(milliseconds: 800),
-                              autoPlayCurve: Curves.fastOutSlowIn,
-                              pauseAutoPlayOnTouch: true,
-                              viewportFraction: 1.0,
-                            ),
-                            items: controller.activeBanners.value.images
-                                ?.map((url) {
-                              var banner = url.image;
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    child: CachedNetworkImage(
-                                      fit: BoxFit.fitWidth,
-                                      imageUrl:
-                                          '${Constants.bannerImgUrl}$banner',
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                      progressIndicatorBuilder:
-                                          (context, url, progress) => Center(
-                                        child: CircularProgressIndicator(
-                                          value: progress.progress,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: controller.allServiceData.isEmpty
+                          ? _buildBannerShimmer()
+                          : CarouselSlider(
+                              options: CarouselOptions(
+                                height: size.height * 0.19,
+                                autoPlay: true,
+                                // enlargeCenterPage: true,
+                                aspectRatio: 16 / 9,
+                                autoPlayInterval: const Duration(seconds: 3),
+                                autoPlayAnimationDuration:
+                                    const Duration(milliseconds: 1000),
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                pauseAutoPlayOnTouch: true,
+                                viewportFraction: 1.0,
+                              ),
+                              items: controller.activeBanners.value.images
+                                  ?.map((url) {
+                                var banner = url.image;
+                                return Builder(
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 5.0),
+                                      child: CachedNetworkImage(
+                                        fit: BoxFit.fill,
+                                        imageUrl:
+                                            '${Constants.bannerImgUrl}$banner',
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                        progressIndicatorBuilder:
+                                            (context, url, progress) => Center(
+                                          child: CircularProgressIndicator(
+                                            value: progress.progress,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              );
-                            }).toList(),
-                          ),
+                                    );
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                    ),
                   ),
                   Padding(
                     padding:const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
@@ -210,10 +149,7 @@ class HomeView extends BaseView<HomeController> {
                       children: [
                         Text(
                           'Popular Services',
-                          style: TextStyle(
-                              fontSize: MyFonts.displayLargeSize,
-                              color: Colors.black.withOpacity(.65),
-                              fontWeight: FontWeight.w700),
+                          style: Theme.of(context).textTheme.displayLarge,
                         ),
                         // Padding(
                         //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -236,13 +172,12 @@ class HomeView extends BaseView<HomeController> {
                         ? _buildBannerShimmer()
                         : CarouselSlider(
                             options: CarouselOptions(
-                              height: size.height * 0.25,
+                              height: size.height * 0.2,
                               autoPlay: true,
-                              // enlargeCenterPage: true,
                               aspectRatio: 16 / 9,
                               autoPlayInterval: const Duration(seconds: 3),
                               autoPlayAnimationDuration:
-                                  const Duration(milliseconds: 500),
+                                  const Duration(milliseconds: 300),
                               enlargeCenterPage: true,
                               autoPlayCurve: Curves.fastOutSlowIn,
                               pauseAutoPlayOnTouch: true,
@@ -268,10 +203,7 @@ class HomeView extends BaseView<HomeController> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
                     child: Text(
                       '${Strings.askTypeOfService.tr}?',
-                      style: TextStyle(
-                          fontSize: MyFonts.displayLargeSize,
-                          color: Colors.black.withOpacity(.65),
-                          fontWeight: FontWeight.w700),
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
                   SizedBox(height: 5.h),
@@ -310,7 +242,6 @@ class HomeView extends BaseView<HomeController> {
                                   arguments: [catTitle, id]);
                             },
                             child: Card(
-                              color: Colors.grey[50],
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                               ),

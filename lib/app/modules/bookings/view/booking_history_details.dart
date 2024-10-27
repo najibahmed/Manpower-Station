@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/preferred_size.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
+import 'package:manpower_station/app/components/lottie_loading.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
@@ -29,193 +30,195 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
     var screenHeight = MediaQuery.of(context).size.height;
     BookingsModel booking = Get.arguments[0];
     String title = Get.arguments[1];
-    return CustomScrollView(slivers: [
-      /// AppBar
-      SliverAppBar(
-        // leading: IconButton(
-        //     onPressed: () {
-        //       Get.back();
-        //       controller.isLoading.value=true;
-        //     },
-        //     icon: const Icon(
-        //       Icons.arrow_back,
-        //       color: Colors.white,
-        //     )),
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.check_circle,
-              color: Colors.white,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(title),
-          ],
+    return SafeArea(
+      child: CustomScrollView(slivers: [
+        /// AppBar
+        SliverAppBar(
+          // leading: IconButton(
+          //     onPressed: () {
+          //       Get.back();
+          //       controller.isLoading.value=true;
+          //     },
+          //     icon: const Icon(
+          //       Icons.arrow_back,
+          //       color: Colors.white,
+          //     )),
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.check_circle,
+                color: Colors.white,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(title),
+            ],
+          ),
+          backgroundColor: LightThemeColors.primaryColor,
         ),
-        backgroundColor: LightThemeColors.primaryColor,
-      ),
-      SliverToBoxAdapter(
-        child: controller.isLoading.value
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _buildCardShimmer(screenHeight, screenWidth),
-                ],
-              )
-            : Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.05,
-                    vertical: screenHeight * 0.02),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        SliverToBoxAdapter(
+          child: controller.isLoading.value
+              ?  Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ///Payment Summary
-                    _paymentSummary(screenWidth, screenHeight, booking),
-                    SizedBox(height: screenHeight * 0.02),
+                    _buildCardShimmer(screenHeight, screenWidth),
+                  ],
+                )
+              : Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.05,
+                      vertical: screenHeight * 0.02),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ///Payment Summary
+                      _paymentSummary(screenWidth, screenHeight, booking),
+                      SizedBox(height: screenHeight * 0.02),
 
-                    ///Action Buttons
-                    _buildActionButtons(context),
-                    SizedBox(height: screenHeight * 0.02),
-                    Container(
-                      height: screenHeight * .01,
-                      color: Colors.grey[100],
-                    ),
-                    SizedBox(height: screenHeight * 0.02),
+                      ///Action Buttons
+                      _buildActionButtons(context),
+                      SizedBox(height: screenHeight * 0.02),
+                      Container(
+                        height: screenHeight * .01,
+                        color: Colors.grey[100],
+                      ),
+                      SizedBox(height: screenHeight * 0.02),
 
-                    /// Message and booking information
-                    _messageCard(screenWidth, screenHeight, booking),
-                    SizedBox(height: screenHeight * 0.03),
+                      /// Message and booking information
+                      _messageCard(screenWidth, screenHeight, booking),
+                      SizedBox(height: screenHeight * 0.03),
 
-                    ///Service Card
-                    _serviceDetails(screenWidth, screenHeight, booking),
-                    SizedBox(height: screenHeight * 0.01),
-                    Container(
-                      height: screenHeight * .01,
-                      color: Colors.grey[100],
-                    ),
+                      ///Service Card
+                      _serviceDetails(screenWidth, screenHeight, booking),
+                      SizedBox(height: screenHeight * 0.01),
+                      Container(
+                        height: screenHeight * .01,
+                        color: Colors.grey[100],
+                      ),
 
-                    ///Worker Card
-                    _workerDetailsCard(screenHeight, screenWidth),
-                    SizedBox(height: screenHeight * 0.01),
-                    Container(
-                      height: screenHeight * .01,
-                      color: Colors.grey[100],
-                    ),
-                    SizedBox(height: screenHeight * 0.02),
+                      ///Worker Card
+                      _workerDetailsCard(screenHeight, screenWidth),
+                      SizedBox(height: screenHeight * 0.01),
+                      Container(
+                        height: screenHeight * .01,
+                        color: Colors.grey[100],
+                      ),
+                      SizedBox(height: screenHeight * 0.02),
 
-                    ///Service & Worker Review
-                    Card(
-                      elevation: 2,
-                      color: Colors.grey[100],
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Review Service',
-                              style: TextStyle(
-                                  fontSize: screenWidth * 0.05,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(height: screenHeight * 0.01),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                RatingBar.builder(
-                                  initialRating: 1,
-                                  minRating: 0.0,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemSize: 36,
-                                  itemPadding: const EdgeInsets.symmetric(
-                                      horizontal: 0.0),
-                                  itemBuilder: (context, _) => const Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  onRatingUpdate: (double value) {
-                                    controller.userRating.value = value;
-                                  },
-                                ),
-                                Text(
-                                  "${controller.userRating.value} ⭐",
-                                  style: TextStyle(
-                                      fontSize: screenWidth * 0.05,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: screenHeight * 0.02),
-                            Form(
-                              key: controller.formKey,
-                              child: TextFormField(
-                                focusNode: controller.focusNode,
-                                maxLines: 2,
-                                controller: controller.reviewController,
-                                decoration: const InputDecoration(
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  labelText: 'Give a review',
-                                  labelStyle: TextStyle(color: Colors.grey),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.green, width: 2),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.grey, width: 1),
-                                  ),
-                                  border: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.black12)),
-                                ),
-                                validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
-                                    CustomSnackBar.showCustomErrorToast(
-                                        message: 'Please write review',
-                                        duration: const Duration(seconds: 1));
-                                  }
-                                  return null;
-                                },
+                      ///Service & Worker Review
+                      Card(
+                        elevation: 2,
+                        // color: Colors.grey[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Review Service',
+                                style: TextStyle(
+                                    fontSize: screenWidth * 0.05,
+                                    fontWeight: FontWeight.bold),
                               ),
-                            ),
-                            SizedBox(height: screenHeight * 0.02),
-                            Center(
-                              child: SizedBox(
-                                height: screenHeight * 0.04,
-                                width: screenWidth * 0.25,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    giveReview(booking);
+                              SizedBox(height: screenHeight * 0.01),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  RatingBar.builder(
+                                    initialRating: 1,
+                                    minRating: 0.0,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemSize: 36,
+                                    itemPadding: const EdgeInsets.symmetric(
+                                        horizontal: 0.0),
+                                    itemBuilder: (context, _) => const Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (double value) {
+                                      controller.userRating.value = value;
+                                    },
+                                  ),
+                                  Text(
+                                    "${controller.userRating.value} ⭐",
+                                    style: TextStyle(
+                                        fontSize: screenWidth * 0.05,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: screenHeight * 0.02),
+                              Form(
+                                key: controller.formKey,
+                                child: TextFormField(
+                                  focusNode: controller.focusNode,
+                                  maxLines: 2,
+                                  controller: controller.reviewController,
+                                  decoration: const InputDecoration(
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    labelText: 'Give a review',
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.green, width: 2),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.grey, width: 1),
+                                    ),
+                                    border: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black12)),
+                                  ),
+                                  validator: (String? value) {
+                                    if (value == null || value.isEmpty) {
+                                      CustomSnackBar.showCustomErrorToast(
+                                          message: 'Please write review',
+                                          duration: const Duration(seconds: 1));
+                                    }
+                                    return null;
                                   },
-                                  child: const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text(
-                                      'Submit',
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
+                                ),
+                              ),
+                              SizedBox(height: screenHeight * 0.02),
+                              Center(
+                                child: SizedBox(
+                                  height: screenHeight * 0.04,
+                                  width: screenWidth * 0.25,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      giveReview(booking);
+                                    },
+                                    child: const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: Text(
+                                        'Submit',
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(height: screenHeight * 0.01),
-                          ],
+                              SizedBox(height: screenHeight * 0.01),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: screenHeight * 0.05),
-                  ],
+                      SizedBox(height: screenHeight * 0.05),
+                    ],
+                  ),
                 ),
-              ),
-      ),
-    ]);
+        ),
+      ]),
+    );
   }
 
   Widget _buildCardShimmer(double screenHeight, double screenWidth) {
@@ -490,12 +493,12 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
     if (controller.formKey.currentState!.validate()) {
       if (controller.reviewController.text.trim().isNotEmpty) {
         try {
-          controller.reviewController.clear();
           controller.focusNode.unfocus();
           showLoadingOverLay(
               asyncFunction: controller.giveUserReview(
                   booking.services!.first.service!.id, booking.id),
               msg: 'Loading');
+          controller.reviewController.clear();
         } catch (e) {
           CustomSnackBar.showCustomErrorToast(
               message: 'Giving review error: $e',
@@ -508,7 +511,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
   Card _messageCard(
       double screenWidth, double screenHeight, BookingsModel booking) {
     return Card(
-      color: Colors.grey[100],
+      // color: Colors.grey[100],
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: Padding(

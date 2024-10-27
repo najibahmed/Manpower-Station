@@ -35,7 +35,7 @@ class MyFonts
   // display font size
   static double get displayLargeSize => 20.sp;
   static double get displayMediumSize => 17.sp;
-  static double get displaySmallSize => 14.sp;
+  static double get displaySmallSize => 12.sp;
 
   //button font size
   static double get buttonTextSize => 16.sp;

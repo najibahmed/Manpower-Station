@@ -15,7 +15,75 @@ class WorkerListScreen extends BaseView<WorkerController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return null;
+    return AppBar(
+      centerTitle: true,
+      title: Image.asset(
+        'assets/images/manpower_name_logo.png',
+        fit: BoxFit.cover,
+        color: Colors.white,
+      ),
+      leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          )),
+      bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: Container(
+            decoration: const BoxDecoration(
+                color: LightThemeColors.primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10))),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  vertical: 10.0, horizontal: 8),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+
+                /// Worker Search Bar
+                child: TextField(
+                  controller: controller.workerSearchController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.green,
+                  style: const TextStyle(fontWeight: FontWeight.normal),
+                  decoration: InputDecoration(
+                    // fillColor: Colors.grey[300],
+                    hintText: 'Search Worker',
+                    filled: true,
+                    isDense: true,
+                    prefixIcon: const Icon(Icons.search_outlined),
+                    focusedBorder: const OutlineInputBorder(
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(10)),
+                        borderSide:
+                        BorderSide(color: Colors.white, width: 1.0)),
+                    enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide:
+                      BorderSide(color: Colors.white, width: 1.0),
+                    ),
+                  ),
+                  onChanged: (query) {
+                    controller.deBouncer.call(() {
+                      controller.isLoading.value = true;
+                      controller.findWorkers();
+                      Future.delayed(
+                          const Duration(
+                            seconds: 1,
+                          ), () {
+                        controller.isLoading.value = false;
+                      });
+                    });
+                  },
+                ),
+              ),
+            ),
+          )),
+    );
   }
 
   @override
@@ -24,76 +92,76 @@ class WorkerListScreen extends BaseView<WorkerController> {
     return SafeArea(
       child: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            pinned: true,
-            centerTitle: true,
-            title: Image.asset(
-              'assets/images/manpower_name_logo.png',
-              fit: BoxFit.cover,
-              color: Colors.white,
-            ),
-            leading: IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                )),
-            bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(60),
-                child: Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10))),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 8),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-
-                      /// Worker Search Bar
-                      child: TextField(
-                        controller: controller.workerSearchController,
-                        keyboardType: TextInputType.text,
-                        cursorColor: Colors.green,
-                        style: const TextStyle(fontWeight: FontWeight.normal),
-                        decoration: InputDecoration(
-                          fillColor: Colors.grey[300],
-                          hintText: 'Search Worker',
-                          filled: true,
-                          isDense: true,
-                          prefixIcon: const Icon(Icons.search_outlined),
-                          focusedBorder: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 1.0)),
-                          enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1.0),
-                          ),
-                        ),
-                        onChanged: (query) {
-                          controller.deBouncer.call(() {
-                            controller.isLoading.value = true;
-                            controller.findWorkers();
-                            Future.delayed(
-                                const Duration(
-                                  seconds: 1,
-                                ), () {
-                              controller.isLoading.value = false;
-                            });
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                )),
-          ),
+          // SliverAppBar(
+          //   pinned: true,
+          //   centerTitle: true,
+          //   title: Image.asset(
+          //     'assets/images/manpower_name_logo.png',
+          //     fit: BoxFit.cover,
+          //     color: Colors.white,
+          //   ),
+          //   leading: IconButton(
+          //       onPressed: () {
+          //         Get.back();
+          //       },
+          //       icon: const Icon(
+          //         Icons.arrow_back,
+          //         color: Colors.white,
+          //       )),
+          //   bottom: PreferredSize(
+          //       preferredSize: const Size.fromHeight(60),
+          //       child: Container(
+          //         decoration: const BoxDecoration(
+          //             color: LightThemeColors.primaryColor,
+          //             borderRadius: BorderRadius.only(
+          //                 topLeft: Radius.circular(10),
+          //                 topRight: Radius.circular(10))),
+          //         child: Padding(
+          //           padding: const EdgeInsets.symmetric(
+          //               vertical: 10.0, horizontal: 8),
+          //           child: ClipRRect(
+          //             borderRadius: BorderRadius.circular(20),
+          //
+          //             /// Worker Search Bar
+          //             child: TextField(
+          //               controller: controller.workerSearchController,
+          //               keyboardType: TextInputType.text,
+          //               cursorColor: Colors.green,
+          //               style: const TextStyle(fontWeight: FontWeight.normal),
+          //               decoration: InputDecoration(
+          //                 // fillColor: Colors.grey[300],
+          //                 hintText: 'Search Worker',
+          //                 filled: true,
+          //                 isDense: true,
+          //                 prefixIcon: const Icon(Icons.search_outlined),
+          //                 focusedBorder: const OutlineInputBorder(
+          //                     borderRadius:
+          //                         BorderRadius.all(Radius.circular(10)),
+          //                     borderSide:
+          //                         BorderSide(color: Colors.white, width: 1.0)),
+          //                 enabledBorder: const OutlineInputBorder(
+          //                   borderRadius: BorderRadius.all(Radius.circular(10)),
+          //                   borderSide:
+          //                       BorderSide(color: Colors.white, width: 1.0),
+          //                 ),
+          //               ),
+          //               onChanged: (query) {
+          //                 controller.deBouncer.call(() {
+          //                   controller.isLoading.value = true;
+          //                   controller.findWorkers();
+          //                   Future.delayed(
+          //                       const Duration(
+          //                         seconds: 1,
+          //                       ), () {
+          //                     controller.isLoading.value = false;
+          //                   });
+          //                 });
+          //               },
+          //             ),
+          //           ),
+          //         ),
+          //       )),
+          // ),
 
           /// Worker list Widget
           // controller.findByWorker.isEmpty? SliverPadding(
