@@ -12,27 +12,29 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
+import '../../../../config/theme/dark_theme_colors.dart';
+
 class ServiceBookingScreen extends BaseView<ServiceController> {
   const ServiceBookingScreen({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar( leading: IconButton(
-        onPressed: () {
-          Get.back();
-        },
-        icon: const Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        )),
+    return AppBar(
+      leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          )),
       title: Text(
         '${controller.serviceModel.name}',
         overflow: TextOverflow.clip,
         style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white),
-      ),);
+            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
+    );
   }
 
   @override
@@ -79,11 +81,11 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           width: double.infinity,
                           fit: BoxFit.fill,
                           imageUrl:
-                          '${Constants.serviceImgUrl}${controller.serviceModel.image}',
+                              '${Constants.serviceImgUrl}${controller.serviceModel.image}',
                           errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                          progressIndicatorBuilder:
-                              (context, url, progress) => Center(
+                              const Icon(Icons.error),
+                          progressIndicatorBuilder: (context, url, progress) =>
+                              Center(
                             child: CircularProgressIndicator(
                               value: progress.progress,
                             ),
@@ -200,7 +202,11 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       ),
                       SizedBox(height: screenHeight * .01),
                       Card(
-                        color: Colors.grey[100],
+                        color: controller.isDarkMode.value
+                            ? DarkThemeColors.cardColor
+                            : LightThemeColors
+                                .cardColor, // Background color of the card
+                        // Colors.grey[100],
                         elevation: 3,
                         child: SizedBox(
                           height: screenHeight * 0.08,
@@ -214,18 +220,16 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                 children: [
                                   Text(
                                     'Date-Time:',
-                                    style: TextStyle(
-                                        color: Colors.black45,
-                                        fontSize: MyFonts.bodyLargeSize,
-                                        fontWeight: FontWeight.bold),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium,
                                   ),
                                   Text(
                                     Constants.formatDateTime.format(
                                         controller.selectedDateTime.value!),
-                                    style: TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: MyFonts.bodyLargeSize,
-                                        fontWeight: FontWeight.bold),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium,
                                   ),
                                 ],
                               ),
@@ -236,9 +240,9 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       SizedBox(height: screenHeight * .01),
                       Center(
                           child: SizedBox(
-                        height: screenHeight * .06,
-                        width: 200,
-                        child: ElevatedButton.icon(
+                              height: screenHeight * .06,
+                               width: 200,
+                          child: ElevatedButton.icon(
                             onPressed: () async {
                               bool themeIsLight =
                                   MySharedPref.getThemeIsLight();
@@ -253,13 +257,14 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                   ],
                                 ),
                                 theme: ThemeData(
-                                    colorScheme: ColorScheme.light(
+                                    colorScheme:ColorScheme.light(
                                   primary: LightThemeColors
                                       .primaryColor, // header color
                                   onPrimary: Colors.white, // text color
-                                  surface:
-                                      Colors.grey[50]!, // background color
-                                )),
+                                  surface: Colors.grey[50]!, // background color
+                                ),
+
+                                ),
                                 context: context,
                                 initialDate: DateTime.now(),
                                 firstDate: DateTime.now(),
@@ -358,7 +363,10 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
             right: 5,
             left: 5,
             child: Card(
-              color: Colors.grey[100],
+              color: controller.isDarkMode.value
+                  ? DarkThemeColors.cardColor
+                  : LightThemeColors
+                  .cardColor,
               elevation: 5,
               // color: Colors.green.withOpacity(.85),
               child: SizedBox(
@@ -370,20 +378,16 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     RichText(
                       text: TextSpan(
                           text: 'SUB TOTAL:    ',
-                          style: TextStyle(
-                              fontSize: MyFonts.bodyLargeSize,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium,
                           children: [
                             TextSpan(
                               text:
-                                  '${Constants.banglaCurrency} ${controller
-                                      .getServicePrice(controller.timeLimit.value, controller
-                                      .selectedTimeKey, controller.serviceModel.servicePrice)}.00',
-                              style: TextStyle(
-                                  fontSize: MyFonts.bodyLargeSize,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                                  '${Constants.banglaCurrency} ${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}.00',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium,
                             ),
                           ]),
                     ),

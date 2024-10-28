@@ -7,6 +7,7 @@ abstract class BaseController extends GetxController {
   final isAuthenticated = false.obs;
   final isTopBgRequired = false.obs;
   final resizeToAvoidBottomInset = true.obs;
+  final RxBool isDarkMode=Get.isDarkMode.obs;
 
   //final logger = Logger();
 

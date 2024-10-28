@@ -106,9 +106,9 @@ class HomeView extends BaseView<HomeController> {
                                 autoPlay: true,
                                 // enlargeCenterPage: true,
                                 aspectRatio: 16 / 9,
-                                autoPlayInterval: const Duration(seconds: 3),
+                                autoPlayInterval: const Duration(seconds: 6),
                                 autoPlayAnimationDuration:
-                                    const Duration(milliseconds: 1000),
+                                    const Duration(milliseconds: 300),
                                 autoPlayCurve: Curves.fastOutSlowIn,
                                 pauseAutoPlayOnTouch: true,
                                 viewportFraction: 1.0,
@@ -123,7 +123,7 @@ class HomeView extends BaseView<HomeController> {
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 5.0),
                                       child: CachedNetworkImage(
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.fitWidth,
                                         imageUrl:
                                             '${Constants.bannerImgUrl}$banner',
                                         errorWidget: (context, url, error) =>
@@ -175,9 +175,9 @@ class HomeView extends BaseView<HomeController> {
                               height: size.height * 0.2,
                               autoPlay: true,
                               aspectRatio: 16 / 9,
-                              autoPlayInterval: const Duration(seconds: 3),
+                              autoPlayInterval: const Duration(seconds: 2),
                               autoPlayAnimationDuration:
-                                  const Duration(milliseconds: 300),
+                                  const Duration(seconds: 2),
                               enlargeCenterPage: true,
                               autoPlayCurve: Curves.fastOutSlowIn,
                               pauseAutoPlayOnTouch: true,

@@ -6,8 +6,6 @@ class DashBoardController extends BaseController{
   void onItemTapped(int index) {
     selectedIndex.value = index;
   }
-  RxBool isDark=false.obs;
-
   @override
   void onInit() {
     selectedIndex.value=0;

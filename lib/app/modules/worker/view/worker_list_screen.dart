@@ -10,6 +10,8 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
 
+import '../../../../config/theme/dark_theme_colors.dart';
+
 class WorkerListScreen extends BaseView<WorkerController> {
   const WorkerListScreen({super.key});
 
@@ -20,7 +22,9 @@ class WorkerListScreen extends BaseView<WorkerController> {
       title: Image.asset(
         'assets/images/manpower_name_logo.png',
         fit: BoxFit.cover,
-        color: Colors.white,
+        color: controller.isDarkMode.value
+            ? DarkThemeColors.primaryColor
+            :  Colors.white,
       ),
       leading: IconButton(
           onPressed: () {
@@ -41,45 +45,37 @@ class WorkerListScreen extends BaseView<WorkerController> {
             child: Padding(
               padding: const EdgeInsets.symmetric(
                   vertical: 10.0, horizontal: 8),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-
-                /// Worker Search Bar
-                child: TextField(
-                  controller: controller.workerSearchController,
-                  keyboardType: TextInputType.text,
-                  cursorColor: Colors.green,
-                  style: const TextStyle(fontWeight: FontWeight.normal),
-                  decoration: InputDecoration(
-                    // fillColor: Colors.grey[300],
-                    hintText: 'Search Worker',
-                    filled: true,
-                    isDense: true,
-                    prefixIcon: const Icon(Icons.search_outlined),
-                    focusedBorder: const OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10)),
-                        borderSide:
-                        BorderSide(color: Colors.white, width: 1.0)),
-                    enabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide:
-                      BorderSide(color: Colors.white, width: 1.0),
-                    ),
+              child: TextField(
+                controller: controller.workerSearchController,
+                keyboardType: TextInputType.text,
+                cursorColor: Colors.green,
+                style: const TextStyle(fontWeight: FontWeight.normal),
+                decoration: const InputDecoration(
+                  // fillColor: Colors.grey[300],
+                  hintText: 'Search Worker',
+                  filled: true,
+                  isDense: true,
+                  prefixIcon: Icon(Icons.search_outlined),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(20)),
                   ),
-                  onChanged: (query) {
-                    controller.deBouncer.call(() {
-                      controller.isLoading.value = true;
-                      controller.findWorkers();
-                      Future.delayed(
-                          const Duration(
-                            seconds: 1,
-                          ), () {
-                        controller.isLoading.value = false;
-                      });
-                    });
-                  },
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
                 ),
+                onChanged: (query) {
+                  controller.deBouncer.call(() {
+                    controller.isLoading.value = true;
+                    controller.findWorkers();
+                    Future.delayed(
+                        const Duration(
+                          seconds: 1,
+                        ), () {
+                      controller.isLoading.value = false;
+                    });
+                  });
+                },
               ),
             ),
           )),
@@ -92,77 +88,6 @@ class WorkerListScreen extends BaseView<WorkerController> {
     return SafeArea(
       child: CustomScrollView(
         slivers: [
-          // SliverAppBar(
-          //   pinned: true,
-          //   centerTitle: true,
-          //   title: Image.asset(
-          //     'assets/images/manpower_name_logo.png',
-          //     fit: BoxFit.cover,
-          //     color: Colors.white,
-          //   ),
-          //   leading: IconButton(
-          //       onPressed: () {
-          //         Get.back();
-          //       },
-          //       icon: const Icon(
-          //         Icons.arrow_back,
-          //         color: Colors.white,
-          //       )),
-          //   bottom: PreferredSize(
-          //       preferredSize: const Size.fromHeight(60),
-          //       child: Container(
-          //         decoration: const BoxDecoration(
-          //             color: LightThemeColors.primaryColor,
-          //             borderRadius: BorderRadius.only(
-          //                 topLeft: Radius.circular(10),
-          //                 topRight: Radius.circular(10))),
-          //         child: Padding(
-          //           padding: const EdgeInsets.symmetric(
-          //               vertical: 10.0, horizontal: 8),
-          //           child: ClipRRect(
-          //             borderRadius: BorderRadius.circular(20),
-          //
-          //             /// Worker Search Bar
-          //             child: TextField(
-          //               controller: controller.workerSearchController,
-          //               keyboardType: TextInputType.text,
-          //               cursorColor: Colors.green,
-          //               style: const TextStyle(fontWeight: FontWeight.normal),
-          //               decoration: InputDecoration(
-          //                 // fillColor: Colors.grey[300],
-          //                 hintText: 'Search Worker',
-          //                 filled: true,
-          //                 isDense: true,
-          //                 prefixIcon: const Icon(Icons.search_outlined),
-          //                 focusedBorder: const OutlineInputBorder(
-          //                     borderRadius:
-          //                         BorderRadius.all(Radius.circular(10)),
-          //                     borderSide:
-          //                         BorderSide(color: Colors.white, width: 1.0)),
-          //                 enabledBorder: const OutlineInputBorder(
-          //                   borderRadius: BorderRadius.all(Radius.circular(10)),
-          //                   borderSide:
-          //                       BorderSide(color: Colors.white, width: 1.0),
-          //                 ),
-          //               ),
-          //               onChanged: (query) {
-          //                 controller.deBouncer.call(() {
-          //                   controller.isLoading.value = true;
-          //                   controller.findWorkers();
-          //                   Future.delayed(
-          //                       const Duration(
-          //                         seconds: 1,
-          //                       ), () {
-          //                     controller.isLoading.value = false;
-          //                   });
-          //                 });
-          //               },
-          //             ),
-          //           ),
-          //         ),
-          //       )),
-          // ),
-
           /// Worker list Widget
           // controller.findByWorker.isEmpty? SliverPadding(
           //   padding: const EdgeInsets.all(10),
@@ -428,7 +353,9 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                             side: const BorderSide(),
                                             backgroundColor: isSelected
                                                 ? Colors.red[100]
-                                                : Colors.white,
+                                                : controller.isDarkMode.value
+                                                ? Colors.white70
+                                                :  Colors.white,
                                           ),
                                           icon: Icon(
                                             isSelected
@@ -438,7 +365,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                           ),
                                           label: Text(
                                             isSelected ? "Remove" : 'Select ',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.black),
                                           )),

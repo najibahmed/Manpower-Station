@@ -122,11 +122,12 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                   children: [
                     Text(
                       "${service.servicePrice} ",
-                      style: const TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          fontSize: 18,
-                          color: LightThemeColors.bodyTextColor,
-                          fontWeight: FontWeight.normal),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(decoration: TextDecoration.lineThrough,)
+                      // const TextStyle(
+                      //     decoration: TextDecoration.lineThrough,
+                      //     fontSize: 18,
+                      //     color: LightThemeColors.bodyTextColor,
+                      //     fontWeight: FontWeight.normal),
                     ),
                     Text(
                       "${Constants.banglaCurrency}${getDiscountAmount(service.serviceDiscount,service.servicePrice!)}",

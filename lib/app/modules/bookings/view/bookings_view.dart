@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
-import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:manpower_station/app/services/api_service.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
@@ -28,8 +25,7 @@ class BookingHistoryView extends BaseView<BookingsController> {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            floating: true,
-            // backgroundColor: Colors.white,
+            floating: false,
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(0),
               child: SizedBox(
@@ -41,7 +37,8 @@ class BookingHistoryView extends BaseView<BookingsController> {
                   indicatorWeight: 6,
                   dividerColor: Colors.grey,
                   indicatorColor: Colors.orangeAccent,
-                  labelStyle:  TextStyle(color: Colors.white),//TextStyle(color: Colors.green),
+                  labelStyle: const TextStyle(
+                      color: Colors.white), //TextStyle(color: Colors.green),
                   controller: controller.tabController,
                   tabs: const [
                     Tab(text: 'Active Order'),
@@ -55,11 +52,11 @@ class BookingHistoryView extends BaseView<BookingsController> {
             child: SizedBox(
               child: Column(
                 children: [
-                  _getTabAtIndex(controller.tabIndex.value, controller),
+                  _getTabAtIndex(controller.tabIndex.value),
                   // TabBarView(
                   //   controller: controller.tabController,
-                  //   children:  [
-                  //     ActiveOrder( controller: controller,),
+                  //   children: const [
+                  //     ActiveOrder(),
                   //     OrderHistory(),
                   //   ],
                   // ),
@@ -73,124 +70,116 @@ class BookingHistoryView extends BaseView<BookingsController> {
   }
 }
 
-Widget _getTabAtIndex(
-  int index,
-  BookingsController controller,
-) {
+Widget _getTabAtIndex(int index) {
   var list = [
-    ActiveOrder(
-      controller: controller,
-    ),
+    const ActiveOrder(),
     const OrderHistory(),
   ];
   return list[index];
 }
-
+/// First Tab page
 class ActiveOrder extends StatelessWidget {
-  final BookingsController controller;
   const ActiveOrder({
     super.key,
-    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bookings = controller.bookingsList;
-
+    // Get the screen size for responsive design
+    final size = MediaQuery.of(context).size;
+    final double cardWidth = size.width * 1; // 100% of screen width
+    final double cardPadding = size.width * 0.05;
     return SingleChildScrollView(
         child: Padding(
       padding: const EdgeInsets.only(top: 12.0, left: 16, right: 16),
-      child: Obx(
-        () => Column(
+      child: GetX<BookingsController>(builder: (bController) {
+        final bookings = bController.bookingsList;
+        print(bController.isDarkMode);
+        return Column(
             children: List.generate(
           bookings.length,
           (index) {
             BookingsModel booking = bookings[index];
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: buildContainer(booking, context),
+              child: Container(
+                width: cardWidth,
+                padding: EdgeInsets.all(cardPadding),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12),
+                  // color: bController.isDark.value
+                  //     ? DarkThemeColors.cardColor
+                  //     : LightThemeColors
+                  //         .cardColor, // Background color of the card
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.green.withOpacity(0.1),
+                      spreadRadius: 5,
+                      blurRadius: 6,
+                      offset: const Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ///Booking info Button & Status
+                    _buildButtonRow(context, booking, bController),
+
+                    /// Service Title
+                    Container(
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                          color: LightThemeColors.primaryColor,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          booking.services!.first.service!.name!,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: size.height * 0.01),
+
+                    /// Worker Name
+                    SizedBox(height: size.height * 0.01),
+
+                    /// Service Details
+                    _buildServiceDetails(booking),
+                    SizedBox(height: size.height * 0.02),
+
+                    /// Bottom Action Buttons (Cancel Booking & Payment)
+                    // booking.isPaymentStatus == 'Completed'
+                    //     ? const SizedBox()
+                    //     :
+                    _buildActionButtons(context, bController),
+                  ],
+                ),
+              ),
             );
           },
         ).toList()
             //
-            ),
-      ),
+            );
+      }),
     ));
   }
 
-  Container buildContainer(BookingsModel booking, BuildContext context) {
-    // Get the screen size for responsive design
-    final size = MediaQuery.of(context).size;
-    final double cardWidth = size.width * 1; // 100% of screen width
-    final double cardPadding = size.width * 0.05;
-    // 5% padding
-    return Container(
-      width: cardWidth,
-      padding: EdgeInsets.all(cardPadding),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black12),
-        // color: LightThemeColors.cardColor, // Background color of the card
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.green.withOpacity(0.1),
-            spreadRadius: 5,
-            blurRadius: 6,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ///Booking info Button & Status
-          _buildButtonRow(context, booking),
-
-          /// Service Title
-          Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-                color: LightThemeColors.primaryColor,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10))),
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(
-                booking.services!.first.service!.name!,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.start,
-              ),
-            ),
-          ),
-
-          SizedBox(height: size.height * 0.01),
-
-          /// Worker Name
-          SizedBox(height: size.height * 0.01),
-
-          /// Service Details
-          _buildServiceDetails(booking),
-          SizedBox(height: size.height * 0.02),
-
-          /// Bottom Action Buttons (Cancel Booking & Payment)
-          // booking.isPaymentStatus == 'Completed'
-          //     ? const SizedBox()
-          //     :
-          _buildActionButtons(context),
-        ],
-      ),
-    );
-  }
-
   /// Button Row (Booking Info Button)
-  Widget _buildButtonRow(BuildContext context, BookingsModel booking) {
+  Widget _buildButtonRow(BuildContext context, BookingsModel booking,
+      BookingsController bookingController) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return Row(
@@ -201,9 +190,12 @@ class ActiveOrder extends StatelessWidget {
           width: screenWidth * 0.35,
           child: OutlinedButton(
             onPressed: () {
-              controller.isLoading.value=true;
-              controller.getWorkerInformation("${booking.workers!.first.user}");
-              Future.delayed(const Duration(seconds: 2),(){controller.isLoading.value=false;});
+              bookingController.isLoading.value = true;
+              bookingController
+                  .getWorkerInformation("${booking.workers!.first.user}");
+              Future.delayed(const Duration(seconds: 2), () {
+                bookingController.isLoading.value = false;
+              });
               Get.toNamed(AppPages.OrderHistoryDetails,
                   arguments: [booking, booking.isPaymentStatus]);
             },
@@ -266,31 +258,9 @@ class ActiveOrder extends StatelessWidget {
     );
   }
 
-  /// Rating (Stars)
-  Widget _buildReviewSection({required controller}) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      const Text('Review:', style: TextStyle(fontWeight: FontWeight.bold)),
-      RatingBar.builder(
-        initialRating: 0.0,
-        minRating: 0.0,
-        direction: Axis.horizontal,
-        allowHalfRating: true,
-        ignoreGestures: false,
-        itemCount: 5,
-        itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-        itemBuilder: (context, _) => const Icon(
-          Icons.star,
-          color: Colors.amber,
-        ),
-        onRatingUpdate: (rating) {
-          controller.userRating.value = rating;
-        },
-      ),
-    ]);
-  }
-
   /// Action Buttons (Cancel Booking & Payment)
-  Widget _buildActionButtons(BuildContext context) {
+  Widget _buildActionButtons(
+      BuildContext context, BookingsController bookingController) {
     final double buttonWidth = MediaQuery.of(context).size.width * 0.35;
     return Center(
       child: Row(
@@ -303,6 +273,7 @@ class ActiveOrder extends StatelessWidget {
             child: OutlinedButton(
               onPressed: () {
                 /// Handle cancel booking
+                print(bookingController.isDarkMode.value);
               },
               style: OutlinedButton.styleFrom(
                 side: const BorderSide(color: Colors.red),
@@ -362,7 +333,7 @@ class ActiveOrder extends StatelessWidget {
     );
   }
 }
-
+/// Second tab page
 class OrderHistory extends StatelessWidget {
   const OrderHistory({
     super.key,
