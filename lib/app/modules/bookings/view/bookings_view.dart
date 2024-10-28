@@ -94,7 +94,7 @@ class ActiveOrder extends StatelessWidget {
       padding: const EdgeInsets.only(top: 12.0, left: 16, right: 16),
       child: GetX<BookingsController>(builder: (bController) {
         final bookings = bController.bookingsList;
-        print(bController.isDarkMode);
+        print(bController.isLightMode);
         return Column(
             children: List.generate(
           bookings.length,
@@ -273,7 +273,7 @@ class ActiveOrder extends StatelessWidget {
             child: OutlinedButton(
               onPressed: () {
                 /// Handle cancel booking
-                print(bookingController.isDarkMode.value);
+                print(bookingController.isLightMode.value);
               },
               style: OutlinedButton.styleFrom(
                 side: const BorderSide(color: Colors.red),

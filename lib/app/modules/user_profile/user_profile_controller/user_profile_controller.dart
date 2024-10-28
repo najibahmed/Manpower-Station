@@ -85,7 +85,7 @@ class UserController extends BaseController {
           if (response.statusCode == 201) {
             final responseData=response.data['client'];
             userData?.value= UserModel.fromJson(responseData);
-            Get.snackbar('Success', '${response.data['message']}');
+            // Get.snackbar('Success', '${response.data['message']}');
           } else {
             Get.snackbar('Error', 'Having problem to get user data!',);
           }

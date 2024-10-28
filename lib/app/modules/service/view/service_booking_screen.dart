@@ -202,7 +202,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       ),
                       SizedBox(height: screenHeight * .01),
                       Card(
-                        color: controller.isDarkMode.value
+                        color: controller.isLightMode.value
                             ? DarkThemeColors.cardColor
                             : LightThemeColors
                                 .cardColor, // Background color of the card
@@ -363,7 +363,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
             right: 5,
             left: 5,
             child: Card(
-              color: controller.isDarkMode.value
+              color: controller.isLightMode.value
                   ? DarkThemeColors.cardColor
                   : LightThemeColors
                   .cardColor,

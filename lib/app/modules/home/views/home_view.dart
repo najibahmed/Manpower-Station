@@ -175,9 +175,9 @@ class HomeView extends BaseView<HomeController> {
                               height: size.height * 0.2,
                               autoPlay: true,
                               aspectRatio: 16 / 9,
-                              autoPlayInterval: const Duration(seconds: 2),
+                              autoPlayInterval: const Duration(seconds: 3),
                               autoPlayAnimationDuration:
-                                  const Duration(seconds: 2),
+                                  const Duration(milliseconds: 1000),
                               enlargeCenterPage: true,
                               autoPlayCurve: Curves.fastOutSlowIn,
                               pauseAutoPlayOnTouch: true,

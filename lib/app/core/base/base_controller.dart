@@ -7,8 +7,12 @@ abstract class BaseController extends GetxController {
   final isAuthenticated = false.obs;
   final isTopBgRequired = false.obs;
   final resizeToAvoidBottomInset = true.obs;
-  final RxBool isDarkMode=Get.isDarkMode.obs;
-
+  final RxBool isLightMode= Get.isDarkMode.obs;
+@override
+  void onInit() {
+  isLightMode.value=true;
+    super.onInit();
+  }
   //final logger = Logger();
 
   // final GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();

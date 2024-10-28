@@ -22,7 +22,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
       title: Image.asset(
         'assets/images/manpower_name_logo.png',
         fit: BoxFit.cover,
-        color: controller.isDarkMode.value
+        color: controller.isLightMode.value
             ? DarkThemeColors.primaryColor
             :  Colors.white,
       ),
@@ -353,7 +353,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                             side: const BorderSide(),
                                             backgroundColor: isSelected
                                                 ? Colors.red[100]
-                                                : controller.isDarkMode.value
+                                                : controller.isLightMode.value
                                                 ? Colors.white70
                                                 :  Colors.white,
                                           ),

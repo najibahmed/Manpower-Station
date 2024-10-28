@@ -95,7 +95,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
 // Widget to display order summary
   Widget orderSummary(CartModel item) {
     return Card(
-      color: controller.isDarkMode.value
+      color: controller.isLightMode.value
           ? DarkThemeColors.cardColor
           : LightThemeColors
           .cardColor,
@@ -167,7 +167,7 @@ Widget buildHeaderSection(String title) {
 Widget customWorkerTile(
     WorkerModel worker, double screenHeight, double screenWidth, CheckoutController controller) {
   return Card(
-    color: controller.isDarkMode.value
+    color: controller.isLightMode.value
         ? DarkThemeColors.cardColor
         : LightThemeColors
         .cardColor,
@@ -249,7 +249,7 @@ Widget customWorkerTile(
 Widget customServiceTile(
     CartModel item, double screenHeight, double screenWidth, CheckoutController controller) {
   return Card(
-    color: controller.isDarkMode.value
+    color: controller.isLightMode.value
         ? DarkThemeColors.cardColor
         : LightThemeColors
         .cardColor,
@@ -304,7 +304,7 @@ Widget customServiceTile(
                     TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
                         fontWeight: FontWeight.normal,
-                        color: controller.isDarkMode.value
+                        color: controller.isLightMode.value
                             ? DarkThemeColors.displayTextColor
                             :  Colors.black45),
                     children: [
@@ -313,7 +313,7 @@ Widget customServiceTile(
                         style: TextStyle(
                             fontSize: MyFonts.bodyMediumSize,
                             fontWeight: FontWeight.bold,
-                            color:controller.isDarkMode.value
+                            color:controller.isLightMode.value
                                 ? DarkThemeColors.displayTextColor
                                 :  Colors.white),
                       ),
@@ -326,7 +326,7 @@ Widget customServiceTile(
                     style: TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
                         fontWeight: FontWeight.normal,
-                        color: controller.isDarkMode.value
+                        color: controller.isLightMode.value
                             ? DarkThemeColors.displayTextColor
                             :  Colors.black45),
                     children: [
@@ -336,7 +336,7 @@ Widget customServiceTile(
                         style: TextStyle(
                             fontSize: MyFonts.bodyMediumSize,
                             fontWeight: FontWeight.bold,
-                            color: controller.isDarkMode.value
+                            color: controller.isLightMode.value
                                 ? DarkThemeColors.displayTextColor
                                 :  Colors.white),
                       ),
@@ -348,7 +348,7 @@ Widget customServiceTile(
                     style: TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
                         fontWeight: FontWeight.normal,
-                        color: controller.isDarkMode.value
+                        color: controller.isLightMode.value
                             ? DarkThemeColors.displayTextColor
                             :  Colors.black45),
                     children: [
@@ -358,7 +358,7 @@ Widget customServiceTile(
                         style: TextStyle(
                             fontSize: MyFonts.bodyMediumSize,
                             fontWeight: FontWeight.bold,
-                            color:controller.isDarkMode.value
+                            color:controller.isLightMode.value
                                 ? DarkThemeColors.displayTextColor
                                 :  Colors.white),
                       ),

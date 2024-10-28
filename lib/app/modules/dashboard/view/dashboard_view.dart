@@ -44,7 +44,7 @@ class DashboardScreen extends BaseView<DashBoardController> {
       title: Image.asset(
         'assets/images/manpower_name_logo.png',
         fit: BoxFit.cover,
-        color:  controller.isDarkMode.value? Colors.white:LightThemeColors.primaryColor,
+        color:  controller.isLightMode.value? Colors.white : LightThemeColors.primaryColor,
       ),
       actions: [
         Row(
@@ -62,18 +62,18 @@ class DashboardScreen extends BaseView<DashBoardController> {
                 },
                 icon:  Icon(
                   Icons.notifications_active_outlined,
-                  color: controller.isDarkMode.value ?  Colors.white: LightThemeColors.primaryColor,
+                  color: controller.isLightMode.value ?  Colors.white: LightThemeColors.primaryColor,
                 )),
             InkWell(
               onTap: ()  {
-                controller.isDarkMode.value=  Get.isDarkMode;
+                controller.isLightMode.value=  Get.isDarkMode;
                 MyTheme.changeTheme();
               },
               child: SizedBox(
                 height: 39.h,
                 width: 39.h,
                 child: SvgPicture.asset(
-                  controller.isDarkMode.value ? 'assets/vectors/moon.svg' : 'assets/vectors/sun.svg',
+                  controller.isLightMode.value ? 'assets/vectors/moon.svg' : 'assets/vectors/sun.svg',
                   fit: BoxFit.none,
                   color: Colors.white,
                   height: 10,
