@@ -16,14 +16,19 @@ class ApiServices{
           var jsonData = response.data['worker'];
            workerModel = WorkerModel.fromJson(jsonData);
         } else {
-          print('Failed to load worker: ${response.statusMessage}');
+          CustomSnackBar.showCustomErrorToast(
+              message: 'Failed to load Worker: ${response.statusMessage}',
+              duration: const Duration(seconds: 1));
         }
       });
     } catch (e) {
-      print(e);
+      CustomSnackBar.showCustomErrorToast(
+          message: 'Error: $e',
+          duration: const Duration(seconds: 1));
     }
     return workerModel;
   }
+
 static Future<void> userReview(bookingId, Map<String, dynamic> reviewData ) async {
     try {
       var url='/api/reviews/create/review/$bookingId';
@@ -48,11 +53,46 @@ static Future<void> userReview(bookingId, Map<String, dynamic> reviewData ) asyn
                 message: "${response.data["message"]}");
           }
         } else {
-          print('Failed to give review: ${response.statusMessage}');
+          CustomSnackBar.showCustomErrorToast(
+              message: 'Failed to give review: ${response.statusMessage}',
+              duration: const Duration(seconds: 1));
         }
       });
     } catch (e) {
-      print('Failed to give review: $e');
+      CustomSnackBar.showCustomErrorToast(
+          message: 'Error: $e',
+          duration: const Duration(seconds: 1));
+    }
+  }
+
+
+  static Future<void> userReport(userId, Map<String, dynamic> reviewData ) async {
+    try {
+      var url='/api/contracts/client/send/$userId';
+      await BaseClient.safeApiCall(
+          url, RequestType.post,
+          headers: {
+        'Authorization': Constants.accessToken
+          },
+          data:reviewData,
+          onSuccess: (response) {
+        if (response.statusCode == 200) {
+          var flag = response.data["flag"];
+          if(flag){
+            CustomSnackBar.showCustomSnackBar(
+                title: "Done",
+                message: "${response.data["message"]}");
+          }
+        } else {
+          CustomSnackBar.showCustomErrorToast(
+              message: 'Failed to give report: ${response.statusMessage}',
+              duration: const Duration(seconds: 1));
+        }
+      });
+    } catch (e) {
+      CustomSnackBar.showCustomErrorToast(
+          message: 'Error: $e',
+          duration: const Duration(seconds: 1));
     }
   }
 }

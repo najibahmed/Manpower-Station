@@ -56,7 +56,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
               Text(title),
             ],
           ),
-          backgroundColor: LightThemeColors.primaryColor,
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor
         ),
         SliverToBoxAdapter(
           child: controller.isLoading.value
@@ -160,7 +160,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                                   maxLines: 2,
                                   controller: controller.reviewController,
                                   decoration: const InputDecoration(
-                                    fillColor: Colors.white,
+                                    // fillColor: Colors.white,
                                     filled: true,
                                     labelText: 'Give a review',
                                     labelStyle: TextStyle(color: Colors.grey),

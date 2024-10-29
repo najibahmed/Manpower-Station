@@ -19,13 +19,13 @@ class MenuItem extends StatelessWidget {
         elevation: 4,
         child: ListTile(
           leading: Icon(icon, color: Colors.green),
-          title: Text(text,style:TextStyle(color: LightThemeColors.bodyTextColor,fontSize: MyFonts.listTileTitleSize),),
+          title: Text(text,style: Theme.of(context).textTheme.bodyMedium,),
           trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: BorderSide(color: Colors.grey.shade200),
           ),
-          tileColor: Colors.white,
+          tileColor:  Theme.of(context).cardColor,
           onTap:onTap
         ),
       ),

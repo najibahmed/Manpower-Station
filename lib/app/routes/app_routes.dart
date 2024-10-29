@@ -26,6 +26,7 @@ abstract class Routes {
   static const updateEmailPhone = _Paths.UpdateEmailPhone;
   static const updateOtp = _Paths.UpdateOtp;
   static const bookingHistoryDetails = _Paths.BookingHistoryDetails;
+  static const reportPage = _Paths.ReportPage;
 
 }
 
@@ -52,5 +53,6 @@ abstract class _Paths {
   static const UpdateEmailPhone = '/updateEmailPhone';
   static const UpdateOtp = '/updateOtp';
   static const BookingHistoryDetails = '/booking_history_details';
+  static const ReportPage = '/report_page';
 
 }

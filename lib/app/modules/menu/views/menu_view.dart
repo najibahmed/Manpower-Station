@@ -63,7 +63,7 @@ class MenuView extends BaseView<HomeController>{
           // ),
           Text(
             userController.userData!.value.phoneOrEmail.toString(),
-            style: const TextStyle(fontSize: 16, color: Colors.grey),
+            style:  Theme.of(context).textTheme.displayMedium,
           ),
           SizedBox(height: 30.h),
           MenuItem(icon: Icons.person, text: 'Profile', onTap: () { Get.toNamed(AppPages.UserProfile); },),

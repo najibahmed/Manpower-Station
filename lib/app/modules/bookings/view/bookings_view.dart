@@ -77,6 +77,7 @@ Widget _getTabAtIndex(int index) {
   ];
   return list[index];
 }
+
 /// First Tab page
 class ActiveOrder extends StatelessWidget {
   const ActiveOrder({
@@ -94,7 +95,6 @@ class ActiveOrder extends StatelessWidget {
       padding: const EdgeInsets.only(top: 12.0, left: 16, right: 16),
       child: GetX<BookingsController>(builder: (bController) {
         final bookings = bController.bookingsList;
-        print(bController.isLightMode);
         return Column(
             children: List.generate(
           bookings.length,
@@ -107,10 +107,7 @@ class ActiveOrder extends StatelessWidget {
                 padding: EdgeInsets.all(cardPadding),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black12),
-                  // color: bController.isDark.value
-                  //     ? DarkThemeColors.cardColor
-                  //     : LightThemeColors
-                  //         .cardColor, // Background color of the card
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
@@ -131,29 +128,21 @@ class ActiveOrder extends StatelessWidget {
                     /// Service Title
                     Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(
-                          color: LightThemeColors.primaryColor,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).highlightColor,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10))),
                       child: Padding(
-                        padding: const EdgeInsets.all(4.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6.0, vertical: 4),
                         child: Text(
                           booking.services!.first.service!.name!,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 2,
-                            color: Colors.white,
-                          ),
+                          style: Theme.of(context).textTheme.displayLarge,
                           textAlign: TextAlign.start,
                         ),
                       ),
                     ),
-
-                    SizedBox(height: size.height * 0.01),
-
-                    /// Worker Name
                     SizedBox(height: size.height * 0.01),
 
                     /// Service Details
@@ -170,9 +159,7 @@ class ActiveOrder extends StatelessWidget {
               ),
             );
           },
-        ).toList()
-            //
-            );
+        ).toList());
       }),
     ));
   }
@@ -200,7 +187,8 @@ class ActiveOrder extends StatelessWidget {
                   arguments: [booking, booking.isPaymentStatus]);
             },
             style: OutlinedButton.styleFrom(
-              side: const BorderSide(width: 1.0, color: Colors.green),
+              backgroundColor: Theme.of(context).dialogBackgroundColor,
+              side:  BorderSide(width: 1.0, color: Theme.of(context).focusColor),
             ),
             child: const Text(
               "Booking Details",
@@ -333,6 +321,7 @@ class ActiveOrder extends StatelessWidget {
     );
   }
 }
+
 /// Second tab page
 class OrderHistory extends StatelessWidget {
   const OrderHistory({

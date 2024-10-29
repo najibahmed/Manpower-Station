@@ -36,8 +36,9 @@ class FaqView extends BaseView<HelpController> {
     return ListView.separated(
       padding: const EdgeInsets.all(16.0),
       separatorBuilder: (context, index) {
-        return const Divider(
-          thickness: 5,
+        return  Divider(
+          thickness: 2,
+          color: Theme.of(context).dividerColor,
         );
       },
       itemCount: controller.faqItems.length,
@@ -62,7 +63,7 @@ class FaqView extends BaseView<HelpController> {
                 title: Text(
                   item.answer,
                   textAlign: TextAlign.justify,
-                  style: TextStyle(fontSize: MyFonts.bodySmallTextSize),
+                  style:  Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               isExpanded: item.isExpanded,

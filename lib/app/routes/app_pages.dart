@@ -9,6 +9,7 @@ import 'package:manpower_station/app/modules/checkOut/bindings/checkout_binding.
 import 'package:manpower_station/app/modules/checkOut/views/checkout_screen.dart';
 import 'package:manpower_station/app/modules/help_support/binding/help_binding.dart';
 import 'package:manpower_station/app/modules/help_support/view/help_view.dart';
+import 'package:manpower_station/app/modules/help_support/view/report_page.dart';
 import 'package:manpower_station/app/modules/service/bindings/service_binding.dart';
 import 'package:manpower_station/app/modules/service/view/service_booking_screen.dart';
 import 'package:manpower_station/app/modules/service/view/service_details.dart';
@@ -59,6 +60,7 @@ class AppPages {
   static const UpdateEmailPhone = Routes.updateEmailPhone;
   static const UpdateOtp = Routes.updateOtp;
   static const OrderHistoryDetails = Routes.bookingHistoryDetails;
+  static const ReportScreen = Routes.reportPage;
 
   static final routes = [
     GetPage(
@@ -108,6 +110,11 @@ class AppPages {
         binding: HelpBinding(),
       transition: Transition.rightToLeft
     ),GetPage(
+      name: _Paths.ReportPage,
+      page: () =>  ReportPage(),
+        binding: HelpBinding(),
+      transition: Transition.fadeIn
+    ),GetPage(
       name: _Paths.ServiceBooking,
       page: () =>   ServiceBookingScreen(),
         binding: ServiceBinding(),
@@ -155,7 +162,7 @@ class AppPages {
       name: _Paths.SupportView,
       page: () =>   const HelpView(),
         binding: HelpBinding(),
-      transition: Transition.rightToLeftWithFade
+      // transition: Transition.fadeIn
     ),GetPage(
       name: _Paths.UpdateEmailPhone,
       page: () =>  UpdatePhoneEmail(),

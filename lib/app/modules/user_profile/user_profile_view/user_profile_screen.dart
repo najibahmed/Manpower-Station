@@ -9,7 +9,6 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
-
 // ignore: must_be_immutable
 class UserProfileScreen extends BaseView<UserController> {
   TextStyle myTextStyle = TextStyle(
@@ -38,23 +37,25 @@ class UserProfileScreen extends BaseView<UserController> {
             color: LightThemeColors.primaryColor, fontWeight: FontWeight.bold),
       ),
       actions: [
-        controller.userData!=null ? IconButton(
-            onPressed: () {
-              Get.toNamed(AppPages.UpdateProfile);
-            },
-            icon: const Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: Icon(
-                Icons.edit,
-                color: Colors.green,
+        controller.userData != null
+            ? IconButton(
+                onPressed: () {
+                  Get.toNamed(AppPages.UpdateProfile);
+                },
+                icon: const Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: Icon(
+                    Icons.edit,
+                    color: Colors.green,
+                  ),
+                ))
+            : const Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: Icon(
+                  Icons.edit,
+                  color: Colors.green,
+                ),
               ),
-            )): const Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: Icon(
-                        Icons.edit,
-                        color: Colors.green,
-                      ),
-            ),
       ],
     );
   }
@@ -66,7 +67,7 @@ class UserProfileScreen extends BaseView<UserController> {
     return controller.isLoading.value
         ? const Center(child: CircularProgressIndicator())
         : SingleChildScrollView(
-          child: Padding(
+            child: Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 22, right: 22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,7 +86,9 @@ class UserProfileScreen extends BaseView<UserController> {
                             color: Colors.grey.withOpacity(.30),
                           ),
                           child: controller.userData?.value.avatar != null
-                              ? isSvgOrJpg("${controller.userData?.value.avatar}", context)
+                              ? isSvgOrJpg(
+                                  "${controller.userData?.value.avatar}",
+                                  context)
                               : const Icon(
                                   Icons.person,
                                   color: LightThemeColors.primaryColor,
@@ -99,24 +102,24 @@ class UserProfileScreen extends BaseView<UserController> {
                     height: screenHeight * 0.03,
                   ),
                   ListTile(
-                      tileColor: Colors.green[100],
+                      tileColor:  Theme.of(context).cardColor,
                       onTap: () {
                         Get.toNamed(AppPages.UpdateEmailPhone);
                       },
                       leading: const Icon(Icons.perm_device_information),
-                      title: const Text(
+                      title:  Text(
                         "Change Email or Phone Number Here!",
-                        style: TextStyle(color: Colors.black),
+                        style: Theme.of(context).textTheme.displaySmall,
                       ),
-                      trailing: const Icon(
+                      trailing:  Icon(
                         Icons.compare_arrows,
-                        color: Colors.black,
+                        color:  Theme.of(context).iconTheme.color,
                       )),
                   SizedBox(
                     height: screenHeight * 0.01,
                   ),
                   _buildUserFieldCard('Name', Icons.person_outline_sharp,
-                      "${controller.userData?.value.username}"),
+                      "${controller.userData?.value.username}", context),
                   SizedBox(
                     height: screenHeight * 0.002,
                   ),
@@ -124,19 +127,19 @@ class UserProfileScreen extends BaseView<UserController> {
                       'Account',
                       Icons.phone_android_outlined,
                       controller.userData?.value.phoneOrEmail ??
-                          "Login Email or phone number here."),
+                          "Login Email or phone number here.",context),
                   SizedBox(
                     height: screenHeight * 0.002,
                   ),
                   _buildUserFieldCard('Description', Icons.info_outline,
-                      "${controller.userData?.value.profileDescription}"),
+                      "${controller.userData?.value.profileDescription}",context),
                   SizedBox(
                     height: screenHeight * 0.005,
                   ),
                   _buildUserFieldCard('Address', Icons.home_outlined,
-                      "${controller.userData?.value.address}"),
+                      "${controller.userData?.value.address}",context),
                   _buildUserFieldCard('Area', Icons.signpost_outlined,
-                      "${controller.userData?.value.area}"),
+                      "${controller.userData?.value.area}",context),
                   SizedBox(
                     height: screenHeight * 0.005,
                   ),
@@ -153,10 +156,11 @@ class UserProfileScreen extends BaseView<UserController> {
                 ],
               ),
             ),
-        );
+          );
   }
 
-  _buildUserFieldCard(String title, IconData icon, String subTitle) {
+  _buildUserFieldCard(
+      String title, IconData icon, String subTitle, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
       child: Column(
@@ -174,10 +178,7 @@ class UserProfileScreen extends BaseView<UserController> {
               ),
               Text(
                 title,
-                style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(height: 2.h),
             ],
@@ -190,10 +191,7 @@ class UserProfileScreen extends BaseView<UserController> {
                 Text(
                   textAlign: TextAlign.justify,
                   subTitle,
-                  style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87),
+                  style:  Theme.of(context).textTheme.bodyLarge,
                 ),
                 Divider(
                   thickness: 1,
@@ -207,4 +205,3 @@ class UserProfileScreen extends BaseView<UserController> {
     );
   }
 }
-

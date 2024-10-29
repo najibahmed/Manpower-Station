@@ -3,6 +3,8 @@
 import 'package:intl/intl.dart';
 class Constants {
   static const String baseUrl = 'https://manpower-test-deploy.onrender.com';
+  static const String logoAssetPath = 'assets/images/manpower_name_logo.png'
+  ;
   // static const String baseUrl = 'http://172.16.154.11';
   // static const String avatarImgUrl = 'http://172.16.154.11/images/avatars/';
   // static const String bannerImgUrl = 'http://172.16.154.11/images/banners/';

@@ -31,7 +31,7 @@ class HelpView extends BaseView<HelpController> {
         title: Text(
           'Help & Support',
           style: TextStyle(
-            color: Colors.black54,
+            color: Theme.of(context).primaryColor,
             fontSize: MyFonts.appBarTittleSize,
           ),
         ));
@@ -40,79 +40,105 @@ class HelpView extends BaseView<HelpController> {
   @override
   Widget body(BuildContext context) {
     // TODO: implement body
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0, left: 22, right: 22),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "${Strings.welcomeSupport.tr}!",
-            style: TextStyle(
-              color: DarkThemeColors.primaryColor,
-              fontSize: MyFonts.displayMediumSize,
-            ),
-          ),
-          SizedBox(
-            height: 5.h,
-          ),
-          Text(
-            "${Strings.supportAdvise.tr}.",
-            style: TextStyle(
-              fontSize: MyFonts.bodySmallTextSize,
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
-          ),
-          Container(
-            child: Center(
-              child: Image.asset(
-                'assets/images/help_support.png',
-                fit: BoxFit.cover,
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 22, right: 22),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${Strings.welcomeSupport.tr}!",
+                style: TextStyle(
+                  color: DarkThemeColors.primaryColor,
+                  fontSize: MyFonts.displayMediumSize,
+                ),
               ),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .06,
-          ),
-          Material(
-            elevation: 5,
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-            child: ListTile(
-              tileColor: Colors.white,
-              splashColor: LightThemeColors.primaryColor,
-              onTap: (){},
-              leading: SizedBox(
-                height: 60.h,
-                width: 30.w,
-                child: SvgPicture.asset('assets/vectors/24_help_icon.svg')
+              SizedBox(
+                height: 5.h,
               ),
-              title: Text(Strings.takeHelp.tr,style: TextStyle(color: LightThemeColors.primaryColor,fontSize: MyFonts.listTileTitleSize),),
-              subtitle: Text(Strings.instantSupport.tr,style:TextStyle(color: LightThemeColors.bodyTextColor,fontSize: MyFonts.bodySmallTextSize), ),
-              trailing: const Icon(Icons.arrow_forward_ios),
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height * .03,),
-          Material(
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-            elevation: 5,
-            child: ListTile(
-              tileColor: Colors.white,
-              splashColor: LightThemeColors.primaryColor,
-              onTap: (){
-                Get.toNamed(AppPages.FaqScreen);
-              },
-              leading: SizedBox(
-                  height: 60.h,
-                  width: 30.w,
-                  child: SvgPicture.asset('assets/vectors/support_icon.svg')
+              Text(
+                "${Strings.supportAdvise.tr}.",
+                style: TextStyle(
+                  fontSize: MyFonts.bodySmallTextSize,
+                ),
               ),
-              title: Text(Strings.faqs.tr,style: TextStyle(color: LightThemeColors.primaryColor,fontSize: MyFonts.listTileTitleSize),),
-              subtitle: Text(Strings.seeFaqs.tr,style:TextStyle(color: LightThemeColors.bodyTextColor,fontSize: MyFonts.bodySmallTextSize), ),
-              trailing: const Icon(Icons.arrow_forward_ios),
-            ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1,
+              ),
+              Center(
+                child: Image.asset(
+                  'assets/images/help_support.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .06,
+              ),
+              Material(
+                elevation: 5,
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                child: ListTile(
+                  tileColor: Theme.of(context).cardColor,
+                  splashColor: LightThemeColors.primaryColor,
+                  onTap: () {
+                    Get.toNamed(AppPages.ReportScreen);
+                  },
+                  leading: SizedBox(
+                      height: 60.h,
+                      width: 30.w,
+                      child: SvgPicture.asset(
+                        'assets/vectors/24_help_icon.svg',
+                        color: Theme.of(context).iconTheme.color,
+                      )),
+                  title: Text(
+                    Strings.takeHelp.tr,
+                    style: TextStyle(
+                        color: LightThemeColors.primaryColor,
+                        fontSize: MyFonts.listTileTitleSize),
+                  ),
+                  subtitle: Text(
+                    Strings.instantSupport.tr,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .03,
+              ),
+              Material(
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                elevation: 5,
+                child: ListTile(
+                  tileColor: Theme.of(context).cardColor,
+                  splashColor: LightThemeColors.primaryColor,
+                  onTap: () {
+                    Get.toNamed(AppPages.FaqScreen);
+                  },
+                  leading: SizedBox(
+                      height: 60.h,
+                      width: 30.w,
+                      child: SvgPicture.asset(
+                        'assets/vectors/support_icon.svg',
+                        color: Theme.of(context).iconTheme.color,
+                      )),
+                  title: Text(
+                    Strings.faqs.tr,
+                    style: TextStyle(
+                        color: LightThemeColors.primaryColor,
+                        fontSize: MyFonts.listTileTitleSize),
+                  ),
+                  subtitle: Text(
+                    Strings.seeFaqs.tr,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
