@@ -23,10 +23,7 @@ class _ShippingFormState extends State<ShippingForm> {
     return Form(
       key: controller.formKey,
       child: Card(
-        color: controller.isLightMode.value
-            ? DarkThemeColors.cardColor
-            : LightThemeColors
-            .cardColor,
+        color: Theme.of(context).cardColor,
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(16.0),

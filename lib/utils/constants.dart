@@ -14,6 +14,7 @@ class Constants {
   static const String serviceImgUrl = 'https://manpower-test-deploy.onrender.com/images/services/';
   static const String appSplashUrl = "assets/images/splash_screen.png";
   static const String banglaCurrency = '৳';
+  static const String starSymbol = '⭐';
   static const String userId = '66dc0571a521a07c53202ae7';
   static const String accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzAyNWQzYTE0MGRiMzQ0NjVmOTU1MjAiLCJpYXQiOjE3MjgyMDg0NDEsImV4cCI6MTczMDgwMDQ0MX0.BSdm2lQmDKvG1Q5lvNASL0i0E-cEjMBb4IF-C3EMFJU';
   static  DateFormat formatDateTime = DateFormat('dd MMMM yyyy, hh:mm a');

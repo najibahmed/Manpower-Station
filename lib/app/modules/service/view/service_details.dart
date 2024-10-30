@@ -14,39 +14,140 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
-class ServiceDetailsScreen extends BaseView<ServiceController> {
+class ServiceDetailsScreen extends GetView<ServiceController> {
   const ServiceDetailsScreen({
     super.key,
   });
 
-  @override
-  PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      title: const Text(
-        "Service Details",
-      ),
-    );
-  }
+  // @override
+  // PreferredSizeWidget? appBar(BuildContext context) {
+  //   return AppBar(
+  //     leading: IconButton(
+  //         onPressed: () {
+  //           Get.offNamed(AppPages.DashboardView);
+  //         },
+  //         icon: Icon(Icons.arrow_back)),
+  //     title: const Text(
+  //       "Service Details",
+  //     ),
+  //   );
+  // }
 
   @override
-  Widget body(BuildContext context) {
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     ServiceModel service = Get.arguments;
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+    return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //       // // leading: IconButton(
+      //       // //     onPressed: () {
+      //       // //       Get.offNamed(AppPages.DashboardView);
+      //       // //     },
+      //       // //     icon: Icon(Icons.arrow_back)),
+      //       // title: const Text(
+      //       //   "Service Details",
+      //       // ),
+      //     ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            // Adding header with image, title, rating, etc.
+            Stack(
+              clipBehavior: Clip.none,
+              // fit: StackFit.expand,
+              children: [
+                Hero(
+                  tag: "imgHero",
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    height: 300,
+                    width: double.infinity,
+                    imageUrl: '${Constants.serviceImgUrl}${service.image}',
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    progressIndicatorBuilder: (context, url, progress) => Center(
+                      child: CircularProgressIndicator(
+                        value: progress.progress,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: screenHeight * 0.3,
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    width: screenWidth * 1,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          service.name!,
+                          style: const TextStyle(
+                              fontSize: 28, fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            Text("${service.ratings!} ${Constants.starSymbol} ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500)),
+                            // SizedBox(
+                            //   child:RatingBar.builder(
+                            //     initialRating: service.ratings!.toDouble(),
+                            //     direction: Axis.horizontal,
+                            //     ignoreGestures: true,
+                            //     itemCount: 5,
+                            //     itemSize: 22,
+                            //     itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                            //     itemBuilder: (context, _) => const Icon(
+                            //       Icons.star,
+                            //       color: Colors.amber,
+                            //     ), onRatingUpdate: (double value) {  },
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: screenHeight * 0.06,
+                  left: screenWidth * 0.03,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    child: Center(
+                      child: IconButton(
+                          onPressed: () {
+                            Get.offNamed(AppPages.DashboardView);
+                          },
+                          icon: const Icon(Icons.arrow_back,color: Colors.white,size: 26,)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             _buildHeader(service, context),
             TabBar(
               labelPadding: const EdgeInsets.all(4),
               dividerColor: Colors.black12,
               indicatorColor: LightThemeColors.primaryColor,
               labelColor: LightThemeColors.primaryColor,
-              labelStyle: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold
-              ),
+              labelStyle:
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               onTap: (index) {
                 controller.changeTabIndex(index);
               },
@@ -57,7 +158,7 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
                 Tab(text: "FAQ"),
               ],
             ),
-            _getTabAtIndex(controller.tabIndex.value, service),
+            Obx(()=> _getTabAtIndex(controller.tabIndex.value, service)),
           ],
         ),
       ),
@@ -65,108 +166,59 @@ class ServiceDetailsScreen extends BaseView<ServiceController> {
   }
 
   Widget _buildHeader(ServiceModel service, context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Hero(
-              tag: "imgHero",
-              child:CachedNetworkImage(
-                fit: BoxFit.cover,
-                height: 200,
-                width: double.infinity,
-                imageUrl:
-                '${Constants.serviceImgUrl}${service.image}',
-                errorWidget: (context, url, error) =>
-                const Icon(Icons.error),
-                progressIndicatorBuilder:
-                    (context, url, progress) => Center(
-                  child: CircularProgressIndicator(
-                    value: progress.progress,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    "${service.servicePrice} ",
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        decoration: TextDecoration.lineThrough, fontSize: 20),
                   ),
+                  Text(
+                    "${Constants.banglaCurrency}${getDiscountAmount(service.serviceDiscount, service.servicePrice!)}",
+                    style: const TextStyle(
+                        fontSize: 26,
+                        color: LightThemeColors.primaryColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    " (starting with)",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.4,
+              height: MediaQuery.of(context).size.height * 0.04,
+              child: ElevatedButton(
+                onPressed: () {
+                  Get.offNamed(AppPages.ServiceBooking, arguments: service);
+                },
+                child: Text(
+                  'Reserve Service',
+                  style: TextStyle(
+                      color: Colors.white, fontSize: MyFonts.buttonTextSize),
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  service.name!,
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                 SizedBox(
-                  child:RatingBar.builder(
-                    initialRating: service.ratings!.toDouble(),
-                    direction: Axis.horizontal,
-                    ignoreGestures: true,
-                    itemCount: 5,
-                    itemSize: 22,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ), onRatingUpdate: (double value) {  },
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Text(
-                      "${service.servicePrice} ",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(decoration: TextDecoration.lineThrough,)
-                      // const TextStyle(
-                      //     decoration: TextDecoration.lineThrough,
-                      //     fontSize: 18,
-                      //     color: LightThemeColors.bodyTextColor,
-                      //     fontWeight: FontWeight.normal),
-                    ),
-                    Text(
-                      "${Constants.banglaCurrency}${getDiscountAmount(service.serviceDiscount,service.servicePrice!)}",
-                      style: const TextStyle(
-                          fontSize: 22,
-                          color: LightThemeColors.primaryColor,
-                          fontWeight: FontWeight.bold),
-                    ),
-                     Text(
-                      " (starting with)",
-                      style: Theme.of(context).textTheme.displaySmall,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-              ],
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.4,
-                height: MediaQuery.of(context).size.height * 0.04,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.offNamed(AppPages.ServiceBooking, arguments: service);
-                  },
-                  child: Text(
-                    'Reserve Service',
-                    style: TextStyle(
-                        color: Colors.white, fontSize: MyFonts.buttonTextSize),
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 
@@ -215,7 +267,8 @@ class ServiceDescription extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               textAlign: TextAlign.justify,
-              style: const TextStyle(fontSize: 14,fontWeight: FontWeight.normal),
+              style:
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
               service.description!,
             ),
             const SizedBox(height: 16),

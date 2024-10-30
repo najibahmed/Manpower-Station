@@ -57,7 +57,7 @@ dependencies:
 
   flutter_easyloading: ^3.0.5 # loading indicator
   shimmer: ^3.0.0 # for shimmer effect
-  aamarpay: ^1.0.11
+  aamarpay: ^1.0.13
   google_fonts: ^6.1.0 # for using google fonts
   flutter_svg: ^2.0.9 # for svg images
   image_picker: ^1.1.2 # for picking images from gallery or camera

@@ -4,20 +4,16 @@ import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 
-import '../../../services/api_client.dart';
 
 class ServiceController extends BaseController
     with GetSingleTickerProviderStateMixin {
 
   TextEditingController reviewController=TextEditingController();
-  var serviceData = <dynamic>[].obs;
   RxInt timeLimit = 3.obs;
   RxString selectedTimeKey = 'Hours'.obs;
   RxList time = [3, 4, 5, 6, 7, 8].obs;
   late TabController tabController;
   var tabIndex = 0.obs;
-  RxList<DateTime> highlightedDates = <DateTime>[].obs;
-  Rx<DateTime>? selectedDay = DateTime.now().obs;
   Rx<DateTime?> selectedDateTime = DateTime.now().obs;
   late ServiceModel selectedService;
   RxList<CartModel> cartItems = <CartModel>[].obs;
@@ -97,7 +93,8 @@ class ServiceController extends BaseController
         serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey.value}");
     cartItems.add(cartModel);
   }
-
+  late AnimationController _controller;
+  late Animation<double> animation;
   @override
   void onInit() {
     // getServiceData();

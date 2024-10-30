@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -69,7 +68,6 @@ abstract class BaseView<Controller extends BaseController>
 
   //optional
   Widget? bottomNavigationBar() {
-
     return null;
   }
 

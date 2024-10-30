@@ -50,18 +50,18 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             buildHeaderSection('Service Info'),
             /// Service Info,
             customServiceTile(
-                controller.cartItem.first, screenHeight, screenWidth,controller),
+                controller.cartItem.first, screenHeight, screenWidth,controller,context),
             SizedBox(height: screenHeight * 0.015),
             buildHeaderSection('Worker Info'),
 
             /// Worker Info,
             customWorkerTile(
-                controller.worker.first, screenHeight, screenWidth,controller),
+                controller.worker.first, screenHeight, screenWidth,controller,context),
             SizedBox(height: screenHeight * 0.015),
 
             ///Order Summary
             buildHeaderSection('Order Summary'),
-            orderSummary(controller.cartItem.first),
+            orderSummary(controller.cartItem.first,context),
             SizedBox(height: screenHeight * 0.015),
 
             ///Shipping Form
@@ -93,12 +93,9 @@ class CheckOutScreen extends BaseView<CheckoutController> {
   }
 
 // Widget to display order summary
-  Widget orderSummary(CartModel item) {
+  Widget orderSummary(CartModel item, BuildContext context) {
     return Card(
-      color: controller.isLightMode.value
-          ? DarkThemeColors.cardColor
-          : LightThemeColors
-          .cardColor,
+      color: Theme.of(context).cardColor,
       elevation: 3,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -165,12 +162,9 @@ Widget buildHeaderSection(String title) {
 
 // Custom Worker Tile
 Widget customWorkerTile(
-    WorkerModel worker, double screenHeight, double screenWidth, CheckoutController controller) {
+    WorkerModel worker, double screenHeight, double screenWidth, CheckoutController controller, BuildContext context) {
   return Card(
-    color: controller.isLightMode.value
-        ? DarkThemeColors.cardColor
-        : LightThemeColors
-        .cardColor,
+    color: Theme.of(context).cardColor,
     elevation: 3,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),
@@ -247,12 +241,9 @@ Widget customWorkerTile(
 
 // Custom Service Tile
 Widget customServiceTile(
-    CartModel item, double screenHeight, double screenWidth, CheckoutController controller) {
+    CartModel item, double screenHeight, double screenWidth, CheckoutController controller, BuildContext context) {
   return Card(
-    color: controller.isLightMode.value
-        ? DarkThemeColors.cardColor
-        : LightThemeColors
-        .cardColor,
+    color: Theme.of(context).cardColor,
     elevation: 3,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),
@@ -304,18 +295,14 @@ Widget customServiceTile(
                     TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
                         fontWeight: FontWeight.normal,
-                        color: controller.isLightMode.value
-                            ? DarkThemeColors.displayTextColor
-                            :  Colors.black45),
+                        color: Theme.of(context).textTheme.displayMedium?.color),
                     children: [
                       TextSpan(
                         text: item.serviceTimeSchedule,
                         style: TextStyle(
                             fontSize: MyFonts.bodyMediumSize,
                             fontWeight: FontWeight.bold,
-                            color:controller.isLightMode.value
-                                ? DarkThemeColors.displayTextColor
-                                :  Colors.white),
+                            color:Theme.of(context).textTheme.bodyMedium?.color),
                       ),
                     ]),
               ),
@@ -326,9 +313,7 @@ Widget customServiceTile(
                     style: TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
                         fontWeight: FontWeight.normal,
-                        color: controller.isLightMode.value
-                            ? DarkThemeColors.displayTextColor
-                            :  Colors.black45),
+                        color: Theme.of(context).textTheme.displayMedium?.color),
                     children: [
                       TextSpan(
                         text: Constants.formatDate
@@ -336,9 +321,7 @@ Widget customServiceTile(
                         style: TextStyle(
                             fontSize: MyFonts.bodyMediumSize,
                             fontWeight: FontWeight.bold,
-                            color: controller.isLightMode.value
-                                ? DarkThemeColors.displayTextColor
-                                :  Colors.white),
+                            color: Theme.of(context).textTheme.bodyMedium?.color),
                       ),
                     ]),
               ),
@@ -348,9 +331,7 @@ Widget customServiceTile(
                     style: TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
                         fontWeight: FontWeight.normal,
-                        color: controller.isLightMode.value
-                            ? DarkThemeColors.displayTextColor
-                            :  Colors.black45),
+                        color: Theme.of(context).textTheme.displayMedium?.color),
                     children: [
                       TextSpan(
                         text: Constants.formatTime
@@ -358,9 +339,7 @@ Widget customServiceTile(
                         style: TextStyle(
                             fontSize: MyFonts.bodyMediumSize,
                             fontWeight: FontWeight.bold,
-                            color:controller.isLightMode.value
-                                ? DarkThemeColors.displayTextColor
-                                :  Colors.white),
+                            color:Theme.of(context).textTheme.bodyMedium?.color),
                       ),
                     ]),
               )

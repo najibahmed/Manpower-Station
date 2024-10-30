@@ -5,10 +5,10 @@ packages:
     dependency: "direct main"
     description:
       name: aamarpay
-      sha256: "09fa290432b7c486f73880a0e27ac2ff49437df511b8f746b9b87a271aafb3f7"
+      sha256: "2441838a84a4d3d25890ab4f65c82158f57f3ffd22d7bde2e2968386138c6351"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.12"
+    version: "1.0.13"
   ansicolor:
     dependency: transitive
     description:
