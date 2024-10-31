@@ -36,6 +36,7 @@ class SingleCategoryServices extends BaseView<CategoryController> {
 
   @override
   Widget body(BuildContext context) {
+    /// future builder function for get services for a particular category
     return FutureBuilder<List<dynamic>>(
       future: controller.getOneCategoryServices(
           controller.catId), // Call the async function here
@@ -43,7 +44,7 @@ class SingleCategoryServices extends BaseView<CategoryController> {
         // Check the state of the Future
         if (snapshot.connectionState == ConnectionState.waiting) {
           // While the data is being fetched, show a loading spinner
-          return LottieLoading();
+          return const LottieLoading();
           //   Padding(
           //   padding: const EdgeInsets.symmetric(vertical: 50.0,horizontal: 12),
           //   child: GridView.builder(
@@ -66,25 +67,6 @@ class SingleCategoryServices extends BaseView<CategoryController> {
           List<dynamic>? data = snapshot.data;
           return CustomScrollView(
             slivers: [
-              // SliverAppBar(
-              //   floating: true,
-              //   centerTitle: true,
-              //   leading: IconButton(
-              //       onPressed: () {
-              //         Get.back();
-              //       },
-              //       icon: const Icon(
-              //         Icons.arrow_back,
-              //       )),
-              //   title: Text(
-              //     controller.categoryTitle,
-              //     // '${controller.serviceList.first.serviceCategoryId.categoryName}',
-              //     style: const TextStyle(
-              //       fontWeight: FontWeight.bold,
-              //       letterSpacing: 1,
-              //     ),
-              //   ),
-              // ),
               SliverPadding(
                 padding: const EdgeInsets.all(8.0),
                 sliver: SliverGrid(

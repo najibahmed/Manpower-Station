@@ -21,8 +21,14 @@ class CheckOutScreen extends BaseView<CheckoutController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: const Text("Checkout",style:  TextStyle(
-          fontSize: 22,letterSpacing: 1 ,fontWeight: FontWeight.bold, color: Colors.white),),
+      title: const Text(
+        "Checkout",
+        style: TextStyle(
+            fontSize: 22,
+            letterSpacing: 1,
+            fontWeight: FontWeight.bold,
+            color: Colors.white),
+      ),
       leading: IconButton(
           onPressed: () {
             Get.back();
@@ -36,7 +42,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
     );
   }
 
-  String paymentMethodGroupValue = PaymentMethod.cod;
+
   @override
   Widget body(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -48,20 +54,21 @@ class CheckOutScreen extends BaseView<CheckoutController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildHeaderSection('Service Info'),
+
             /// Service Info,
-            customServiceTile(
-                controller.cartItem.first, screenHeight, screenWidth,controller,context),
+            customServiceTile(controller.cartItem.first, screenHeight,
+                screenWidth, controller, context),
             SizedBox(height: screenHeight * 0.015),
             buildHeaderSection('Worker Info'),
 
             /// Worker Info,
-            customWorkerTile(
-                controller.worker.first, screenHeight, screenWidth,controller,context),
+            customWorkerTile(controller.worker.first, screenHeight, screenWidth,
+                controller, context),
             SizedBox(height: screenHeight * 0.015),
 
             ///Order Summary
             buildHeaderSection('Order Summary'),
-            orderSummary(controller.cartItem.first,context),
+            orderSummary(controller.cartItem.first, context),
             SizedBox(height: screenHeight * 0.015),
 
             ///Shipping Form
@@ -110,7 +117,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
                     '${Constants.banglaCurrency} ${controller.serviceController.cartSubtotal}.00'),
               ],
             ),
-             SizedBox(height: 10.h),
+            SizedBox(height: 10.h),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -118,7 +125,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
                 Text('${Constants.banglaCurrency} +6.70'),
               ],
             ),
-             SizedBox(height: 10.h),
+            SizedBox(height: 10.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -149,6 +156,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
   }
 }
 
+//header section for each card
 Widget buildHeaderSection(String title) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
@@ -161,8 +169,8 @@ Widget buildHeaderSection(String title) {
 }
 
 // Custom Worker Tile
-Widget customWorkerTile(
-    WorkerModel worker, double screenHeight, double screenWidth, CheckoutController controller, BuildContext context) {
+Widget customWorkerTile(WorkerModel worker, double screenHeight,
+    double screenWidth, CheckoutController controller, BuildContext context) {
   return Card(
     color: Theme.of(context).cardColor,
     elevation: 3,
@@ -179,12 +187,9 @@ Widget customWorkerTile(
             width: screenWidth * 0.34,
             child: CachedNetworkImage(
               fit: BoxFit.cover,
-              imageUrl:
-              '${Constants.avatarImgUrl}${worker.avatar}',
-              errorWidget: (context, url, error) =>
-                  const Icon(Icons.error),
-              progressIndicatorBuilder:
-                  (context, url, progress) => Center(
+              imageUrl: '${Constants.avatarImgUrl}${worker.avatar}',
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              progressIndicatorBuilder: (context, url, progress) => Center(
                 child: CircularProgressIndicator(
                   value: progress.progress,
                 ),
@@ -198,10 +203,7 @@ Widget customWorkerTile(
         ),
         Expanded(
             child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8.0,
-            vertical: 8
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -213,22 +215,26 @@ Widget customWorkerTile(
               SizedBox(height: screenHeight * 0.01),
               Text(
                 "Gender:  ${worker.gender!}",
-                style:
-                const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                style: const TextStyle(
+                    fontWeight: FontWeight.normal, fontSize: 14),
               ),
               Text(
                 "Area:  ${worker.area!}",
-                style:
-                    const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                style: const TextStyle(
+                    fontWeight: FontWeight.normal, fontSize: 14),
               ),
               Row(
                 children: [
                   Text(
                     "Rating:  ${worker.ratings!} ",
-                    style:
-                        const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.normal, fontSize: 14),
                   ),
-                  const Icon(Icons.star,size: 16,color: Colors.orangeAccent,)
+                  const Icon(
+                    Icons.star,
+                    size: 16,
+                    color: Colors.orangeAccent,
+                  )
                 ],
               ),
             ],
@@ -240,8 +246,8 @@ Widget customWorkerTile(
 }
 
 // Custom Service Tile
-Widget customServiceTile(
-    CartModel item, double screenHeight, double screenWidth, CheckoutController controller, BuildContext context) {
+Widget customServiceTile(CartModel item, double screenHeight,
+    double screenWidth, CheckoutController controller, BuildContext context) {
   return Card(
     color: Theme.of(context).cardColor,
     elevation: 3,
@@ -254,16 +260,13 @@ Widget customServiceTile(
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
           child: SizedBox(
-            height: screenHeight * 0.15,
+            height: screenHeight * 0.155,
             width: screenWidth * 0.34,
             child: CachedNetworkImage(
               fit: BoxFit.cover,
-              imageUrl:
-              '${Constants.serviceImgUrl}${item.serviceImageUrl}',
-              errorWidget: (context, url, error) =>
-              const Icon(Icons.error),
-              progressIndicatorBuilder:
-                  (context, url, progress) => Center(
+              imageUrl: '${Constants.serviceImgUrl}${item.serviceImageUrl}',
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              progressIndicatorBuilder: (context, url, progress) => Center(
                 child: CircularProgressIndicator(
                   value: progress.progress,
                 ),
@@ -287,22 +290,23 @@ Widget customServiceTile(
               ),
               // const Divider(color: Colors.black26,),
               const MySeparator(),
-              SizedBox(height: screenHeight * 0.01 ),
+              SizedBox(height: screenHeight * 0.01),
               RichText(
                 text: TextSpan(
                     text: 'Duration:    ',
-                    style:
-                    TextStyle(
+                    style: TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
                         fontWeight: FontWeight.normal,
-                        color: Theme.of(context).textTheme.displayMedium?.color),
+                        color:
+                            Theme.of(context).textTheme.displayMedium?.color),
                     children: [
                       TextSpan(
                         text: item.serviceTimeSchedule,
                         style: TextStyle(
                             fontSize: MyFonts.bodyMediumSize,
                             fontWeight: FontWeight.bold,
-                            color:Theme.of(context).textTheme.bodyMedium?.color),
+                            color:
+                                Theme.of(context).textTheme.bodyMedium?.color),
                       ),
                     ]),
               ),
@@ -313,7 +317,8 @@ Widget customServiceTile(
                     style: TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
                         fontWeight: FontWeight.normal,
-                        color: Theme.of(context).textTheme.displayMedium?.color),
+                        color:
+                            Theme.of(context).textTheme.displayMedium?.color),
                     children: [
                       TextSpan(
                         text: Constants.formatDate
@@ -321,7 +326,8 @@ Widget customServiceTile(
                         style: TextStyle(
                             fontSize: MyFonts.bodyMediumSize,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).textTheme.bodyMedium?.color),
+                            color:
+                                Theme.of(context).textTheme.bodyMedium?.color),
                       ),
                     ]),
               ),
@@ -331,7 +337,8 @@ Widget customServiceTile(
                     style: TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
                         fontWeight: FontWeight.normal,
-                        color: Theme.of(context).textTheme.displayMedium?.color),
+                        color:
+                            Theme.of(context).textTheme.displayMedium?.color),
                     children: [
                       TextSpan(
                         text: Constants.formatTime
@@ -339,10 +346,12 @@ Widget customServiceTile(
                         style: TextStyle(
                             fontSize: MyFonts.bodyMediumSize,
                             fontWeight: FontWeight.bold,
-                            color:Theme.of(context).textTheme.bodyMedium?.color),
+                            color:
+                                Theme.of(context).textTheme.bodyMedium?.color),
                       ),
                     ]),
-              )
+              ),
+              const SizedBox(height: 5),
             ],
           ),
         ))
@@ -351,6 +360,7 @@ Widget customServiceTile(
   );
 }
 
+// payment method commented COD or Online Payment
 Widget buildPaymentMethodSection({required CheckoutController controller}) {
   return Card(
     color: Colors.grey[100],

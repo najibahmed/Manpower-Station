@@ -34,33 +34,32 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
       child: CustomScrollView(slivers: [
         /// AppBar
         SliverAppBar(
-          // leading: IconButton(
-          //     onPressed: () {
-          //       Get.back();
-          //       controller.isLoading.value=true;
-          //     },
-          //     icon: const Icon(
-          //       Icons.arrow_back,
-          //       color: Colors.white,
-          //     )),
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.check_circle,
-                color: Colors.white,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(title),
-            ],
-          ),
-          backgroundColor: Theme.of(context).appBarTheme.backgroundColor
-        ),
+            // leading: IconButton(
+            //     onPressed: () {
+            //       Get.back();
+            //       controller.isLoading.value=true;
+            //     },
+            //     icon: const Icon(
+            //       Icons.arrow_back,
+            //       color: Colors.white,
+            //     )),
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.check_circle,
+                  color: Colors.white,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(title),
+              ],
+            ),
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor),
         SliverToBoxAdapter(
           child: controller.isLoading.value
-              ?  Column(
+              ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -83,7 +82,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                       SizedBox(height: screenHeight * 0.02),
                       Container(
                         height: screenHeight * .01,
-                        color: Colors.grey[100],
+                        color:Theme.of(context).cardColor,
                       ),
                       SizedBox(height: screenHeight * 0.02),
 
@@ -96,7 +95,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                       SizedBox(height: screenHeight * 0.01),
                       Container(
                         height: screenHeight * .01,
-                        color: Colors.grey[100],
+                        color: Theme.of(context).cardColor,
                       ),
 
                       ///Worker Card
@@ -104,7 +103,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                       SizedBox(height: screenHeight * 0.01),
                       Container(
                         height: screenHeight * .01,
-                        color: Colors.grey[100],
+                        color: Theme.of(context).cardColor,
                       ),
                       SizedBox(height: screenHeight * 0.02),
 
@@ -125,7 +124,8 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                               ),
                               SizedBox(height: screenHeight * 0.01),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   RatingBar.builder(
                                     initialRating: 1,
@@ -220,236 +220,235 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
       ]),
     );
   }
-
+/// Shimmmer Widget for booking details
   Widget _buildCardShimmer(double screenHeight, double screenWidth) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(height: screenHeight * 0.01),
-          Card(
-            elevation: 3,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  ShimmerWidget.rectangular(
-                      height: screenHeight * 0.035, width: screenWidth * 0.4),
-                  SizedBox(height: screenHeight * 0.02),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ShimmerWidget.rectangular(
-                          height: screenHeight * 0.02,
-                          width: screenWidth * 0.4),
-                      SizedBox(height: screenHeight * 0.025),
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.02,
-                        width: screenWidth * 0.23,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.02,
-                        width: screenWidth * 0.35,
-                      ),
-                      SizedBox(height: screenHeight * 0.025),
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.02,
-                        width: screenWidth * 0.15,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.02,
-                        width: screenWidth * 0.45,
-                      ),
-                      SizedBox(height: screenHeight * 0.025),
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.02,
-                        width: screenWidth * 0.2,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: screenHeight * 0.015),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.04,
-                        width: screenWidth * 0.3,
-                      ),
-                      SizedBox(height: screenHeight * 0.025),
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.04,
-                        width: screenWidth * 0.3,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SizedBox(height: screenHeight * 0.01),
+        Card(
+          elevation: 3,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                ShimmerWidget.rectangular(
+                    height: screenHeight * 0.035, width: screenWidth * 0.4),
+                SizedBox(height: screenHeight * 0.02),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ShimmerWidget.rectangular(
+                        height: screenHeight * 0.02, width: screenWidth * 0.4),
+                    SizedBox(height: screenHeight * 0.025),
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.02,
+                      width: screenWidth * 0.23,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.02,
+                      width: screenWidth * 0.35,
+                    ),
+                    SizedBox(height: screenHeight * 0.025),
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.02,
+                      width: screenWidth * 0.15,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.02,
+                      width: screenWidth * 0.45,
+                    ),
+                    SizedBox(height: screenHeight * 0.025),
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.02,
+                      width: screenWidth * 0.2,
+                    ),
+                  ],
+                ),
+                SizedBox(height: screenHeight * 0.015),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.04,
+                      width: screenWidth * 0.3,
+                    ),
+                    SizedBox(height: screenHeight * 0.025),
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.04,
+                      width: screenWidth * 0.3,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-          SizedBox(height: screenHeight * 0.03),
-          ShimmerWidget.rectangular(
-              height: screenHeight * .18, width: screenWidth * 1),
-          SizedBox(height: screenHeight * 0.03),
-          ShimmerWidget.rectangular(
-              height: screenHeight * 0.03, width: screenWidth * 0.3),
-          SizedBox(height: screenHeight * 0.01),
-          Card(
-            elevation: 3,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ShimmerWidget.rectangular(
-                          height: screenHeight * 0.02,
-                          width: screenWidth * 0.4),
-                      SizedBox(height: screenHeight * 0.025),
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.02,
-                        width: screenWidth * 0.23,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.02,
-                        width: screenWidth * 0.35,
-                      ),
-                      SizedBox(height: screenHeight * 0.025),
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.02,
-                        width: screenWidth * 0.15,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.02,
-                        width: screenWidth * 0.45,
-                      ),
-                      SizedBox(height: screenHeight * 0.025),
-                      ShimmerWidget.rectangular(
-                        height: screenHeight * 0.02,
-                        width: screenWidth * 0.2,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+        ),
+        SizedBox(height: screenHeight * 0.03),
+        ShimmerWidget.rectangular(
+            height: screenHeight * .18, width: screenWidth * 1),
+        SizedBox(height: screenHeight * 0.03),
+        ShimmerWidget.rectangular(
+            height: screenHeight * 0.03, width: screenWidth * 0.3),
+        SizedBox(height: screenHeight * 0.01),
+        Card(
+          elevation: 3,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ShimmerWidget.rectangular(
+                        height: screenHeight * 0.02, width: screenWidth * 0.4),
+                    SizedBox(height: screenHeight * 0.025),
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.02,
+                      width: screenWidth * 0.23,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.02,
+                      width: screenWidth * 0.35,
+                    ),
+                    SizedBox(height: screenHeight * 0.025),
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.02,
+                      width: screenWidth * 0.15,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.02,
+                      width: screenWidth * 0.45,
+                    ),
+                    SizedBox(height: screenHeight * 0.025),
+                    ShimmerWidget.rectangular(
+                      height: screenHeight * 0.02,
+                      width: screenWidth * 0.2,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-          SizedBox(height: screenHeight * 0.03),
-          ShimmerWidget.rectangular(
-              height: screenHeight * 0.03, width: screenWidth * 0.3),
-          SizedBox(height: screenHeight * 0.01),
-          SizedBox(
-              height: screenHeight * .2,
-              child: Card(
-                elevation: 3,
-                child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Row(children: [
-                          ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                bottomLeft: Radius.circular(15)),
-                            child: SizedBox(
-                              child: ShimmerWidget.rectangular(
-                                height: screenHeight * 0.17,
-                                width: screenWidth * 0.25,
-                              ),
-                              //  Image.network(
-                              //   '${Constants.avatarImgUrl}${controller.workersData.value?.avatar}',
-                              //   fit: BoxFit.cover,
-                              // ),
+        ),
+        SizedBox(height: screenHeight * 0.03),
+        ShimmerWidget.rectangular(
+            height: screenHeight * 0.03, width: screenWidth * 0.3),
+        SizedBox(height: screenHeight * 0.01),
+        SizedBox(
+            height: screenHeight * .2,
+            child: Card(
+              elevation: 3,
+              child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Row(children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              bottomLeft: Radius.circular(15)),
+                          child: SizedBox(
+                            child: ShimmerWidget.rectangular(
+                              height: screenHeight * 0.17,
+                              width: screenWidth * 0.25,
+                            ),
+                            //  Image.network(
+                            //   '${Constants.avatarImgUrl}${controller.workersData.value?.avatar}',
+                            //   fit: BoxFit.cover,
+                            // ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: screenHeight * 0.01),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ShimmerWidget.rectangular(
+                                        height: screenHeight * 0.02,
+                                        width: screenWidth * 0.3),
+                                    ShimmerWidget.rectangular(
+                                        height: screenHeight * 0.02,
+                                        width: screenWidth * 0.1),
+                                  ],
+                                ),
+                                SizedBox(height: screenHeight * 0.01),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ShimmerWidget.rectangular(
+                                        height: screenHeight * 0.02,
+                                        width: screenWidth * 0.2),
+                                    ShimmerWidget.rectangular(
+                                        height: screenHeight * 0.02,
+                                        width: screenWidth * 0.2),
+                                  ],
+                                ),
+                                SizedBox(height: screenHeight * 0.01),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ShimmerWidget.rectangular(
+                                        height: screenHeight * 0.02,
+                                        width: screenWidth * 0.3),
+                                    ShimmerWidget.rectangular(
+                                        height: screenHeight * 0.02,
+                                        width: screenWidth * 0.2),
+                                  ],
+                                ),
+                                SizedBox(height: screenHeight * 0.01),
+                                Wrap(
+                                  children: [
+                                    ShimmerWidget.rectangular(
+                                        height: screenHeight * 0.02,
+                                        width: screenWidth * 0.2),
+                                    SizedBox(width: screenWidth * 0.1),
+                                    ShimmerWidget.rectangular(
+                                        height: screenHeight * 0.02,
+                                        width: screenWidth * 0.2),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: screenHeight * 0.01),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      ShimmerWidget.rectangular(
-                                          height: screenHeight * 0.02,
-                                          width: screenWidth * 0.3),
-                                      ShimmerWidget.rectangular(
-                                          height: screenHeight * 0.02,
-                                          width: screenWidth * 0.1),
-                                    ],
-                                  ),
-                                  SizedBox(height: screenHeight * 0.01),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      ShimmerWidget.rectangular(
-                                          height: screenHeight * 0.02,
-                                          width: screenWidth * 0.2),
-                                      ShimmerWidget.rectangular(
-                                          height: screenHeight * 0.02,
-                                          width: screenWidth * 0.2),
-                                    ],
-                                  ),
-                                  SizedBox(height: screenHeight * 0.01),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      ShimmerWidget.rectangular(
-                                          height: screenHeight * 0.02,
-                                          width: screenWidth * 0.3),
-                                      ShimmerWidget.rectangular(
-                                          height: screenHeight * 0.02,
-                                          width: screenWidth * 0.2),
-                                    ],
-                                  ),
-                                  SizedBox(height: screenHeight * 0.01),
-                                  Wrap(
-                                    children: [
-                                      ShimmerWidget.rectangular(
-                                          height: screenHeight * 0.02,
-                                          width: screenWidth * 0.2),
-                                      SizedBox(width: screenWidth * 0.1),
-                                      ShimmerWidget.rectangular(
-                                          height: screenHeight * 0.02,
-                                          width: screenWidth * 0.2),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ]),
-                      ],
-                    )),
-              ))
-        ]));
+                        ),
+                      ]),
+                    ],
+                  )),
+            ))
+      ]),
+    );
   }
-
+/// Payment summary section
   Column _paymentSummary(
       double screenWidth, double screenHeight, BookingsModel booking) {
     return Column(
@@ -489,6 +488,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
     );
   }
 
+  /// Review method
   void giveReview(booking) {
     if (controller.formKey.currentState!.validate()) {
       if (controller.reviewController.text.trim().isNotEmpty) {
@@ -508,6 +508,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
     }
   }
 
+  /// Message card with bookingId and booking date
   Card _messageCard(
       double screenWidth, double screenHeight, BookingsModel booking) {
     return Card(
@@ -556,7 +557,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
       ),
     );
   }
-
+/// Service details section
   Widget _serviceDetails(
       double screenWidth, double screenHeight, BookingsModel booking) {
     return Padding(
@@ -715,7 +716,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
       ),
     );
   }
-
+/// Action Button on payment summary
   Widget _buildActionButtons(BuildContext context) {
     final double buttonWidth = MediaQuery.of(context).size.width * 0.35;
     return Center(

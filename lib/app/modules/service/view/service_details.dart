@@ -2,9 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/modules/service/view/service_reviews.dart';
@@ -39,17 +37,6 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
     final screenHeight = MediaQuery.of(context).size.height;
     ServiceModel service = Get.arguments;
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //       // // leading: IconButton(
-      //       // //     onPressed: () {
-      //       // //       Get.offNamed(AppPages.DashboardView);
-      //       // //     },
-      //       // //     icon: Icon(Icons.arrow_back)),
-      //       // title: const Text(
-      //       //   "Service Details",
-      //       // ),
-      //     ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -64,18 +51,22 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                     height: 300,
                     width: double.infinity,
                     imageUrl: '${Constants.serviceImgUrl}${service.image}',
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                    progressIndicatorBuilder: (context, url, progress) => Center(
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    progressIndicatorBuilder: (context, url, progress) =>
+                        Center(
                       child: CircularProgressIndicator(
                         value: progress.progress,
                       ),
                     ),
                   ),
                 ),
+                /// Stack curve corner
                 Positioned(
-                  top: screenHeight * 0.3,
+                  top: screenHeight * 0.31,
                   child: Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
                     width: screenWidth * 1,
                     decoration: BoxDecoration(
                       color: Theme.of(context).scaffoldBackgroundColor,
@@ -84,63 +75,34 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                         topRight: Radius.circular(20),
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          service.name!,
-                          style: const TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          children: [
-                            Text("${service.ratings!} ${Constants.starSymbol} ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w500)),
-                            // SizedBox(
-                            //   child:RatingBar.builder(
-                            //     initialRating: service.ratings!.toDouble(),
-                            //     direction: Axis.horizontal,
-                            //     ignoreGestures: true,
-                            //     itemCount: 5,
-                            //     itemSize: 22,
-                            //     itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-                            //     itemBuilder: (context, _) => const Icon(
-                            //       Icons.star,
-                            //       color: Colors.amber,
-                            //     ), onRatingUpdate: (double value) {  },
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      ],
-                    ),
                   ),
                 ),
+                /// back button for this page stack in the image
                 Positioned(
                   top: screenHeight * 0.06,
                   left: screenWidth * 0.03,
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Center(
                       child: IconButton(
                           onPressed: () {
                             Get.offNamed(AppPages.DashboardView);
                           },
-                          icon: const Icon(Icons.arrow_back,color: Colors.white,size: 26,)),
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 26,
+                          )),
                     ),
                   ),
                 ),
               ],
             ),
+            /// Service price discount and discount price
             _buildHeader(service, context),
+            /// Tab Bar items
             TabBar(
               labelPadding: const EdgeInsets.all(4),
               dividerColor: Colors.black12,
@@ -158,13 +120,15 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                 Tab(text: "FAQ"),
               ],
             ),
-            Obx(()=> _getTabAtIndex(controller.tabIndex.value, service)),
+            ///Tab bar page according to tab index
+            Obx(() => _getTabAtIndex(controller.tabIndex.value, service)),
           ],
         ),
       ),
     );
   }
 
+  /// Service price discount and discount price
   Widget _buildHeader(ServiceModel service, context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,7 +138,34 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
+              /// Title and rating
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 300,
+                    child: Text(
+                      service.name!,
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "${service.ratings!} ${Constants.starSymbol} ",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 5),
               Row(
                 children: [
                   Text(
@@ -195,7 +186,9 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
             ],
           ),
         ),
@@ -203,8 +196,8 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.4,
-              height: MediaQuery.of(context).size.height * 0.04,
+              width: MediaQuery.of(context).size.width * 0.5,
+              height: MediaQuery.of(context).size.height * 0.05,
               child: ElevatedButton(
                 onPressed: () {
                   Get.offNamed(AppPages.ServiceBooking, arguments: service);
@@ -222,6 +215,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
     );
   }
 
+  /// Get tab pages using tab indexes
   Widget _getTabAtIndex(int index, ServiceModel service) {
     var list = [
       ServiceDescription(
@@ -235,6 +229,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
     return list[index];
   }
 
+  /// Faq for particular service
   Widget _buildFAQTab() {
     return const Center(
       child: Padding(
@@ -245,6 +240,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
   }
 }
 
+/// service Description page
 class ServiceDescription extends StatelessWidget {
   ServiceModel service;
   ServiceDescription({

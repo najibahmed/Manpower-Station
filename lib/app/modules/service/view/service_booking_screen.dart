@@ -46,25 +46,6 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
         children: [
           CustomScrollView(
             slivers: [
-              // SliverAppBar(
-              //   pinned: true,
-              //   leading: IconButton(
-              //       onPressed: () {
-              //         Get.back();
-              //       },
-              //       icon: const Icon(
-              //         Icons.arrow_back,
-              //         color: Colors.white,
-              //       )),
-              //   title: Text(
-              //     '${controller.serviceModel.name}',
-              //     overflow: TextOverflow.clip,
-              //     style: const TextStyle(
-              //         fontSize: 20,
-              //         fontWeight: FontWeight.bold,
-              //         color: Colors.white),
-              //   ),
-              // ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding:
@@ -111,6 +92,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                           color: Colors.grey),
                                     ),
                                     SizedBox(height: screenHeight * .01),
+                                    /// Drop Down button for selection of time duration
                                     DropdownMenu(
                                       inputDecorationTheme:
                                           const InputDecorationTheme(
@@ -152,6 +134,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                         color: Colors.grey),
                                   ),
                                   SizedBox(height: screenHeight * .01),
+                                  /// Drop Down button for selection of time factors
                                   DropdownMenu<String>(
                                     inputDecorationTheme:
                                         const InputDecorationTheme(
@@ -235,14 +218,15 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         ),
                       ),
                       SizedBox(height: screenHeight * .01),
+                      /// Calender dialogue
                       Center(
                           child: SizedBox(
                               height: screenHeight * .06,
                                width: 200,
                           child: ElevatedButton.icon(
                             onPressed: () async {
-                              bool themeIsLight =
-                                  MySharedPref.getThemeIsLight();
+                              // bool themeIsLight =
+                              //     MySharedPref.getThemeIsLight();
                               controller.selectedDateTime.value =
                                   await showOmniDateTimePicker(
                                 separator: const Column(
@@ -307,6 +291,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       SizedBox(
                         height: screenHeight * .01,
                       ),
+                      /// button go to worker list page
                       Center(
                         child: InkWell(
                           onTap: () {
@@ -355,6 +340,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
               ),
             ],
           ),
+          /// Bottom sub total widget
           Positioned(
             bottom: 5,
             right: 5,

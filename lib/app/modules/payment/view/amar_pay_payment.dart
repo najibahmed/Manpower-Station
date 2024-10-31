@@ -1,5 +1,6 @@
 import 'package:aamarpay/aamarpay.dart';
 import 'package:flutter/material.dart';
+import 'package:manpower_station/app/components/custom_snackbar.dart';
 
 class MyPay extends StatefulWidget {
   const MyPay({super.key});
@@ -38,12 +39,24 @@ class _MyPayState extends State<MyPay> {
               },
               // This will return the payment event with a message
               status: (EventState event, String message) {
-
-                print('---->this is the payment event message $message');
-                if (event == EventState.error) {
+                if(event == EventState.backButtonPressed|| event ==EventState.cancel|| event == EventState.error){
                   setState(() {
                     isLoading = false;
                   });
+                  CustomSnackBar.showCustomErrorToast(message: message);
+                }
+                print('---->this is the payment event message $message');
+                if (event == EventState.fail) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  CustomSnackBar.showCustomErrorToast(message: message);
+                }
+                if (event == EventState.success) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  CustomSnackBar.showCustomToast(message: message);
                 }
               },
 
