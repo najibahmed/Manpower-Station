@@ -7,7 +7,7 @@ class AuthenticationBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<AuthenticationController>(
-      () => AuthenticationController(),
+          () => AuthenticationController(),
     );
   }
 }

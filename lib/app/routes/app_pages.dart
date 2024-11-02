@@ -1,12 +1,15 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, prefer_const_constructors
 
 import 'package:get/get.dart';
+import 'package:manpower_station/app/modules/bookings/binding/bookings_binding.dart';
+import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
 import 'package:manpower_station/app/modules/category/bindings/category_bindings.dart';
 import 'package:manpower_station/app/modules/category/views/single_category_services.dart';
 import 'package:manpower_station/app/modules/checkOut/bindings/checkout_binding.dart';
 import 'package:manpower_station/app/modules/checkOut/views/checkout_screen.dart';
 import 'package:manpower_station/app/modules/help_support/binding/help_binding.dart';
 import 'package:manpower_station/app/modules/help_support/view/help_view.dart';
+import 'package:manpower_station/app/modules/help_support/view/report_page.dart';
 import 'package:manpower_station/app/modules/service/bindings/service_binding.dart';
 import 'package:manpower_station/app/modules/service/view/service_booking_screen.dart';
 import 'package:manpower_station/app/modules/service/view/service_details.dart';
@@ -22,17 +25,15 @@ import 'package:manpower_station/app/modules/dashboard/view/dashboard_view.dart'
 import 'package:manpower_station/app/modules/help_support/view/faq_view.dart';
 import 'package:manpower_station/app/modules/menu/bindings/menu_bindings.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
-import 'package:manpower_station/app/modules/order_history/binding/order_binding.dart';
-import 'package:manpower_station/app/modules/order_history/view/order_history_view.dart';
 import 'package:manpower_station/app/modules/worker/bindings/worker_binding.dart';
 import 'package:manpower_station/app/modules/worker/view/worker_details.dart';
 import 'package:manpower_station/app/modules/worker/view/worker_list_screen.dart';
 import 'package:manpower_station/redirect_screen.dart';
 import '../modules/authentication/Auth Bindings/authentication_binding.dart';
 import '../modules/authentication/views/registration/registration_view.dart';
+import '../modules/bookings/view/booking_history_details.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-
 part 'app_routes.dart';
 
 class AppPages {
@@ -58,6 +59,8 @@ class AppPages {
   static const SupportScreen = Routes.supportScreen;
   static const UpdateEmailPhone = Routes.updateEmailPhone;
   static const UpdateOtp = Routes.updateOtp;
+  static const OrderHistoryDetails = Routes.bookingHistoryDetails;
+  static const ReportScreen = Routes.reportPage;
 
   static final routes = [
     GetPage(
@@ -87,9 +90,9 @@ class AppPages {
       binding: UserBinding(),
       transition: Transition.native
     ),GetPage(
-      name: _Paths.OrderHistory,
-      page: () => const OrderHistoryView(),
-        binding: OrderBinding(),
+      name: _Paths.BookingHistory,
+      page: () => const BookingHistoryView(),
+        binding: BookingsBinding(),
       transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.DashBoard,
@@ -107,10 +110,19 @@ class AppPages {
         binding: HelpBinding(),
       transition: Transition.rightToLeft
     ),GetPage(
+      name: _Paths.ReportPage,
+      page: () =>  ReportPage(),
+        binding: HelpBinding(),
+      transition: Transition.fadeIn
+    ),GetPage(
       name: _Paths.ServiceBooking,
       page: () =>   ServiceBookingScreen(),
         binding: ServiceBinding(),
       transition: Transition.rightToLeft
+    ),GetPage(
+      name: _Paths.BookingHistoryDetails,
+      page: () =>   const BookingHistoryDetails(),
+        binding: BookingsBinding(),
     ),GetPage(
       name: _Paths.ServiceDetailsScreen,
       page: () => const ServiceDetailsScreen(),
@@ -140,7 +152,7 @@ class AppPages {
       name: _Paths.WorkerList,
       page: () =>   WorkerListScreen(),
         binding: WorkerBinding(),
-      transition: Transition.rightToLeftWithFade
+      // transition: Transition.rightToLeftWithFade
     ),GetPage(
       name: _Paths.WorkerDetails,
       page: () =>   const WorkerDetailsScreen(),
@@ -150,7 +162,7 @@ class AppPages {
       name: _Paths.SupportView,
       page: () =>   const HelpView(),
         binding: HelpBinding(),
-      transition: Transition.rightToLeftWithFade
+      // transition: Transition.fadeIn
     ),GetPage(
       name: _Paths.UpdateEmailPhone,
       page: () =>  UpdatePhoneEmail(),

@@ -1,11 +1,28 @@
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
+
+import '../../../services/api_service.dart';
 
 class HelpController extends BaseController {
 
-
   var faqItems = <FAQItem>[].obs;
+  TextEditingController userEmailController=TextEditingController();
+  TextEditingController userMessageController=TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final userData = Get.find<UserController>().userData;
+
+  Future<void> userReport()async{
+    Map<String,dynamic> requestData = {
+      "message":"${userMessageController.text.trim()}",
+      "email_or_phone":"${userEmailController.text.trim()}",
+      "username":"${userData?.value.username}",
+    };
+    await ApiServices.userReport(userData?.value.user?.id, requestData);
+
+  }
 
   @override
   void onInit() {
@@ -44,15 +61,7 @@ class HelpController extends BaseController {
     faqItems[index].isExpanded = !faqItems[index].isExpanded;
     faqItems.refresh();
   }
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }
 
 class FAQItem {

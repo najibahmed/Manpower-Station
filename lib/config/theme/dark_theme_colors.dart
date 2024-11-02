@@ -10,13 +10,13 @@ class DarkThemeColors
   static Color accentColor = Colors.blueAccent;
 
   //Appbar
-  static const Color appbarColor = Colors.black;
+  static const Color appbarColor = Colors.black26;
 
   //SCAFFOLD
   static const Color scaffoldBackgroundColor = Color(0xff2D2D2D);
   static const Color backgroundColor = Color(0xff2D2D2D);
   static const Color dividerColor = Color(0xff686868);
-  static const Color cardColor = Color(0xff1e2336);
+  static const Color cardColor = Color(0xff193525);
 
   //ICONS
   static const Color appBarIconsColor = Colors.white;
@@ -30,7 +30,8 @@ class DarkThemeColors
 
   //TEXT
   static const Color bodyTextColor = Colors.white70;
-  static const Color displayTextColor = Colors.white;
+  static const Color bodyThemeTextColor = primaryColor;
+  static const Color displayTextColor = Colors.white60;
   static const Color bodySmallTextColor =  Color(0xff7C7C7C);
   static const Color hintTextColor = Color(0xff686868);
 

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'dart:async';
 import 'dart:io';
 
@@ -25,7 +27,7 @@ class BaseClient {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization':MySharedPref.getAccessToken()
+      'Authorization':  Constants.accessToken         //MySharedPref.getAccessToken()
     },
     connectTimeout: const Duration(seconds: 15),
     // sendTimeout: const Duration(seconds: 30),
@@ -33,7 +35,7 @@ class BaseClient {
     ..interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         // Attach the access token to every request
-        String? accessToken = await MySharedPref.getAccessToken();
+        String? accessToken = MySharedPref.getAccessToken();
         if (accessToken != null) {
           options.headers['Authorization'] = '$accessToken';
         }
@@ -277,6 +279,7 @@ class BaseClient {
         message: error.message ?? 'Un Expected Api Error!',
         response: error.response,
         statusCode: error.response?.statusCode);
+
     if (onError != null) {
       return onError(exception);
     } else {
@@ -317,7 +320,6 @@ Future<Map<String, String>> _refreshToken() async {
   final response = await dio.post(
     '/api/users/refresh/token',
   );
-
   if (response.statusCode == 200) {
     return {
       'access_token': response.data['access_token'],

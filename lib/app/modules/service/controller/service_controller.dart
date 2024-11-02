@@ -4,20 +4,16 @@ import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 
-import '../../../services/api_client.dart';
 
 class ServiceController extends BaseController
     with GetSingleTickerProviderStateMixin {
 
   TextEditingController reviewController=TextEditingController();
-  var serviceData = <dynamic>[].obs;
   RxInt timeLimit = 3.obs;
   RxString selectedTimeKey = 'Hours'.obs;
   RxList time = [3, 4, 5, 6, 7, 8].obs;
   late TabController tabController;
   var tabIndex = 0.obs;
-  RxList<DateTime> highlightedDates = <DateTime>[].obs;
-  Rx<DateTime>? selectedDay = DateTime.now().obs;
   Rx<DateTime?> selectedDateTime = DateTime.now().obs;
   late ServiceModel selectedService;
   RxList<CartModel> cartItems = <CartModel>[].obs;
@@ -27,7 +23,7 @@ class ServiceController extends BaseController
 
   // Get price
   getServicePrice(time, timeKey, price) {
-    var servicePrice;
+    dynamic servicePrice;
     if (timeKey == 'Hours') {
        servicePrice = (price ~/ 3) * time;
 
@@ -58,57 +54,32 @@ class ServiceController extends BaseController
 //   }
 
   /// Get Service Data
-  Future<void> getServiceData() async {
-    try {
-      // Map<String, dynamic> requestData = {
-      //   'phone_or_email': phoneNumberEmailController.text.trim(),
-      // };
-      var url = "/api/services/get/all";
-      await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
-        // if (kDebugMode) {
-        //   print(response.data);
-        // }
-        if (response.statusCode == 200) {
-          var jsonData =
-              response.data['services']; // Assuming the response is a list
-          var serviceList =
-              jsonData.map((e) => ServiceModel.fromJson(e)).toList();
-          serviceData.assignAll(serviceList); // Update the RxList with new data
-        } else {
-          print('Failed to load services: ${response.statusMessage}');
-        }
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Future<void> getServiceData() async {
+  //   try {
+  //     // Map<String, dynamic> requestData = {
+  //     //   'phone_or_email': phoneNumberEmailController.text.trim(),
+  //     // };
+  //     var url = "/api/services/get/all";
+  //     await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
+  //       // if (kDebugMode) {
+  //       //   print(response.data);
+  //       // }
+  //       if (response.statusCode == 200) {
+  //         var jsonData =
+  //             response.data['services']; // Assuming the response is a list
+  //         var serviceList =
+  //             jsonData.map((e) => ServiceModel.fromJson(e)).toList();
+  //         serviceData.assignAll(serviceList); // Update the RxList with new data
+  //       } else {
+  //         print('Failed to load services: ${response.statusMessage}');
+  //       }
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
-  /// Create Review
-  Future<void> createReview() async {
-    try {
-      Map<String, dynamic> requestData = {
-        'comment': reviewController.text.trim(),
-        'serviceId': reviewController.text.trim(),
-      };
-      var url = "/api/reviews/create/review/:bookingId";
-      await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
-        // if (kDebugMode) {
-        //   print(response.data);
-        // }
-        if (response.statusCode == 200) {
-          // var jsonData =
-          //     response.data['services']; // Assuming the response is a list
-          // var serviceList =
-          //     jsonData.map((e) => ServiceModel.fromJson(e)).toList();
-          // serviceData.assignAll(serviceList); // Update the RxList with new data
-        } else {
-          print('Failed to load services: ${response.statusMessage}');
-        }
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
+
 
 /// on tap to select worker service is added to cart
   void addToCartList() {
@@ -121,9 +92,9 @@ class ServiceController extends BaseController
         servicePrice: cartSubtotal.value,
         serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey.value}");
     cartItems.add(cartModel);
-    print("----cart first item---->${cartItems.first.toMap()}");
   }
-
+  late AnimationController _controller;
+  late Animation<double> animation;
   @override
   void onInit() {
     // getServiceData();
@@ -136,6 +107,7 @@ class ServiceController extends BaseController
 
   @override
   void onClose() {
+    tabController.dispose();
     super.onClose();
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,6 +13,7 @@ abstract class BaseView<Controller extends BaseController>
       onTap: () => FocusScope.of(context).unfocus(),
       child: Obx(() {
         return Scaffold(
+          // backgroundColor: Colors.green[50],
           //sets ios status bar color
           // TODO: backgroundColor: add your screen bg color here,
           // key: controller.globalKey,
@@ -47,9 +47,10 @@ abstract class BaseView<Controller extends BaseController>
   Widget? connectionStatusView(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
-      child: SizedBox(
+      child: Container(
           width: double.infinity,
           height: 30,
+          color: Colors.redAccent,
           // TODO: color: add your color here,
           child: Center(
             child: Text(
@@ -58,7 +59,7 @@ abstract class BaseView<Controller extends BaseController>
               style: Theme.of(context)
                   .textTheme
                   .bodySmall
-                  ?.copyWith(fontSize: 12.sp),
+                  ?.copyWith(fontSize: 12.sp,color: Colors.white),
             ),
           )),
     );
@@ -69,7 +70,6 @@ abstract class BaseView<Controller extends BaseController>
 
   //optional
   Widget? bottomNavigationBar() {
-
     return null;
   }
 

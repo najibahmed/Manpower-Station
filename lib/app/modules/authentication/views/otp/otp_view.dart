@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
-import 'package:pinput/pinput.dart';
 import '../../../../../config/theme/light_theme_colors.dart';
 import '../../../../../config/theme/my_fonts.dart';
 import '../../../../../config/translations/strings_enum.dart';

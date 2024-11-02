@@ -22,15 +22,6 @@ class SearchScreen extends BaseView<SearchViewController> {
     return SafeArea(
       child: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            centerTitle: true,
-            backgroundColor: LightThemeColors.primaryColor,
-            title: Image.asset(
-              'assets/images/manpower_name_logo.png',
-              fit: BoxFit.cover,
-              color: Colors.white,
-            ),
-          ),
           SliverToBoxAdapter(
             child: Container(
               height: MediaQuery.of(context).size.height * 0.075,
@@ -44,6 +35,7 @@ class SearchScreen extends BaseView<SearchViewController> {
                   cursorColor: Colors.green,
                   style: const TextStyle(fontWeight: FontWeight.normal),
                   decoration: const InputDecoration(
+                    hintText: 'Search Service',
                     filled: true,
                     isDense: true,
                     prefixIcon: Icon(Icons.search_outlined),
@@ -58,7 +50,7 @@ class SearchScreen extends BaseView<SearchViewController> {
                   ),
                   onChanged: (query) {
                     controller.deBouncer.call(() {
-                      if (controller.searchController.text.isNotEmpty) {
+                      // if (controller.searchController.text.isNotEmpty) {
                         controller.isLoading.value = true;
                         controller.findServices();
                         Future.delayed(
@@ -67,7 +59,7 @@ class SearchScreen extends BaseView<SearchViewController> {
                             ), () {
                           controller.isLoading.value = false;
                         });
-                      }
+                      // }
                     });
                   },
                 ),
@@ -98,7 +90,7 @@ class SearchScreen extends BaseView<SearchViewController> {
                           crossAxisCount: 2,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
-                          childAspectRatio: 0.8,
+                          childAspectRatio: 0.71,
                         ),
                         delegate: SliverChildBuilderDelegate(
                           childCount: controller.isLoading.value

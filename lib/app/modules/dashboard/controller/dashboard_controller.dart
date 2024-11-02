@@ -6,21 +6,10 @@ class DashBoardController extends BaseController{
   void onItemTapped(int index) {
     selectedIndex.value = index;
   }
-
-
   @override
   void onInit() {
     selectedIndex.value=0;
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

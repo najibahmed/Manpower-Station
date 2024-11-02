@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/preferred_size.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
@@ -8,162 +8,232 @@ import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
+import 'package:manpower_station/utils/constants.dart';
+
+import '../../../../config/theme/dark_theme_colors.dart';
 
 class WorkerListScreen extends BaseView<WorkerController> {
-  WorkerListScreen({super.key});
+  const WorkerListScreen({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return null;
+    return AppBar(
+      centerTitle: true,
+      title: Image.asset(
+        'assets/images/manpower_name_logo.png',
+        fit: BoxFit.cover,
+        color: controller.isLightMode.value
+            ? DarkThemeColors.primaryColor
+            :  Colors.white,
+      ),
+      leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          )),
+      bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: Container(
+            decoration: const BoxDecoration(
+                color: LightThemeColors.primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10))),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  vertical: 10.0, horizontal: 8),
+              child: TextField(
+                controller: controller.workerSearchController,
+                keyboardType: TextInputType.text,
+                cursorColor: Colors.green,
+                style: const TextStyle(fontWeight: FontWeight.normal),
+                decoration: const InputDecoration(
+                  // fillColor: Colors.grey[300],
+                  hintText: 'Search Worker',
+                  filled: true,
+                  isDense: true,
+                  prefixIcon: Icon(Icons.search_outlined),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(20)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                ),
+                onChanged: (query) {
+                  controller.deBouncer.call(() {
+                    controller.isLoading.value = true;
+                    controller.findWorkers();
+                    Future.delayed(
+                        const Duration(
+                          seconds: 1,
+                        ), () {
+                      controller.isLoading.value = false;
+                    });
+                  });
+                },
+              ),
+            ),
+          )),
+    );
   }
 
   @override
   Widget body(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            pinned: true,
-            leading: IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                )),
-            bottom: PreferredSize(preferredSize: const Size.fromHeight(60),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10))
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 8),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: InkWell(
-                        onTap: () {
-                          // showSearch(
-                          //     useRootNavigator: true,
-                          //     query: '',
-                          //     context: context,
-                          //     delegate: _itemSearchDelegate());
-                        },
-                        child: Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(.25),
-                            borderRadius: BorderRadius.circular(20),
-                            // border: Border.all(width: 1, color: Colors.black),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Icon(
-                                Icons.search_outlined,
-                                color: Colors.black54,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Search',
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  // letterSpacing: 1,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                )),
-          ),
-
-          /// Search Bar
-          // SliverToBoxAdapter(
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(8.0),
-          //     child: ClipRRect(
-          //       borderRadius: BorderRadius.circular(20),
-          //       child: InkWell(
-          //         onTap: () {
-          //           // showSearch(
-          //           //     useRootNavigator: true,
-          //           //     query: '',
-          //           //     context: context,
-          //           //     delegate: _itemSearchDelegate());
-          //         },
-          //         child: Container(
-          //           height: 40,
-          //           decoration: BoxDecoration(
-          //             color: Colors.grey.withOpacity(.25),
-          //             borderRadius: BorderRadius.circular(20),
-          //             // border: Border.all(width: 1, color: Colors.black),
-          //           ),
-          //           child: const Row(
-          //             mainAxisAlignment: MainAxisAlignment.start,
-          //             children: [
-          //               SizedBox(
-          //                 width: 10,
-          //               ),
-          //               Icon(
-          //                 Icons.search_outlined,
-          //                 color: Colors.black54,
-          //               ),
-          //               SizedBox(
-          //                 width: 10,
-          //               ),
-          //               Text(
-          //                 'Search',
-          //                 style: TextStyle(
-          //                   color: Colors.black54,
-          //                   // letterSpacing: 1,
+          /// Worker list Widget
+          // controller.findByWorker.isEmpty? SliverPadding(
+          //   padding: const EdgeInsets.all(10),
+          //   sliver: SliverGrid(
+          //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //       crossAxisCount: 2,
+          //       crossAxisSpacing: 10,
+          //       mainAxisSpacing: 10,
+          //       childAspectRatio: 0.75 // Adjust the aspect ratio based on your design
+          //     ),
+          //     delegate: SliverChildBuilderDelegate(
+          //       childCount: controller.allWorkerList.isEmpty
+          //           ? 6
+          //           : controller.allWorkerList.length,
+          //           (context, index) {
+          //         if (controller.allWorkerList.isEmpty) {
+          //           return _buildServiceCardShimmer();
+          //         } else {
+          //           WorkerModel
+          //           worker = controller.allWorkerList[index];
+          //           return InkWell(
+          //             onTap: (){
+          //               Get.toNamed(AppPages.WorkerDetails,arguments: worker);
+          //             },
+          //             child: Card(
+          //               elevation: 4,
+          //               child: Padding(
+          //                 padding: const EdgeInsets.all(8.0),
+          //                 child: Column(
+          //                   mainAxisAlignment: MainAxisAlignment.start,
+          //                   crossAxisAlignment: CrossAxisAlignment.center,
+          //                   children: [
+          //                     Padding(
+          //                       padding: const EdgeInsets.symmetric(
+          //                           horizontal: 8.0, vertical: 4),
+          //                       child: Center(
+          //                         child: Image.network(
+          //                           '${Constants.avatarImgUrl}${worker
+          //                               .avatar}',
+          //                           height: size.height * 0.1,
+          //                           width: size.width * 0.1,
+          //                           fit: BoxFit.cover,
+          //                         ),
+          //                       ),
+          //                     ),
+          //                     Center(
+          //                       child: Text(
+          //                         worker.username!,
+          //                         style: const TextStyle(
+          //                             fontWeight: FontWeight.bold, fontSize: 14),
+          //                       ),
+          //                     ),
+          //                     SizedBox(
+          //                       height: size.height * 0.01,
+          //                     ),
+          //                     Row(
+          //                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //                       children: [
+          //                         const Text('Gender:',style: TextStyle(
+          //                           color: Colors.grey
+          //                         ),),
+          //                         Text('${worker.gender}',style: const TextStyle(
+          //                           color: Colors.black54,
+          //                           fontWeight: FontWeight.bold
+          //                         ),),
+          //                       ],
+          //                     ),
+          //                     RatingBar.builder(
+          //                       itemSize: 22,
+          //                       initialRating: worker.ratings! .toDouble() ,
+          //                       minRating: 0.0,
+          //                       direction: Axis.horizontal,
+          //                       allowHalfRating: true,
+          //                       ignoreGestures: true,
+          //                       itemCount: 5,
+          //                       itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+          //                       itemBuilder: (context, _) => const Icon(
+          //                         Icons.star,
+          //                         color: Colors.amber,
+          //                       ), onRatingUpdate: (double value) {  },
+          //                     ),
+          //                     SizedBox(
+          //                       height: size.height * 0.02,
+          //                     ),
+          //                     Row(
+          //                       mainAxisAlignment: MainAxisAlignment.center,
+          //                       children: [
+          //                         SizedBox(
+          //                           height: size.height * 0.035,
+          //                           width: size.width * 0.23,
+          //                           child: ElevatedButton(
+          //                               onPressed: () {
+          //                                 if(controller.selectedWorkerList.isNotEmpty){
+          //                                   controller.selectedWorkerList.clear();
+          //                                 }
+          //                                 if (controller.selectedWorkerList.length < 1) {
+          //                                   Get.toNamed(AppPages.CheckoutScreen);
+          //                                   controller.addWorker(worker);
+          //                                 }
+          //
+          //                               },
+          //                               style: ElevatedButton.styleFrom(
+          //                                 backgroundColor:
+          //                                 LightThemeColors.primaryColor,
+          //                               ),
+          //                               child: const Text(
+          //                                 'Proceed',
+          //                                 style: TextStyle(
+          //                                     fontSize: 12, color: Colors.white),
+          //                               )),
+          //                         )
+          //                       ],
+          //                     )
+          //                   ],
           //                 ),
-          //               )
-          //             ],
-          //           ),
-          //         ),
-          //       ),
+          //               ),
+          //             ),
+          //           );
+          //         }
+          //       },
           //     ),
           //   ),
-          // ),
-
+          // ):
           /// Worker list Widget
           SliverPadding(
             padding: const EdgeInsets.all(10),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 0.75 // Adjust the aspect ratio based on your design
-              ),
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio:
+                      0.75 // Adjust the aspect ratio based on your design
+                  ),
               delegate: SliverChildBuilderDelegate(
-                childCount: controller.allWorkerList.isEmpty
-                    ? 6
-                    : controller.allWorkerList.length,
-                    (context, index) {
-                  if (controller.allWorkerList.isEmpty) {
+                childCount: controller.isLoading.value
+                    ? 4
+                    : controller.findByWorker.length,
+                (context, index) {
+                  if (controller.isLoading.value) {
                     return _buildServiceCardShimmer();
                   } else {
-                    WorkerModel
-                    worker = controller.allWorkerList[index];
+                    WorkerModel worker = controller.findByWorker[index];
                     return InkWell(
-                      onTap: (){
-                        Get.toNamed(AppPages.WorkerDetails,arguments: worker);
+                      onTap: () {
+                        Get.toNamed(AppPages.WorkerDetails, arguments: worker);
                       },
                       child: Card(
                         elevation: 4,
@@ -171,18 +241,26 @@ class WorkerListScreen extends BaseView<WorkerController> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8.0, vertical: 4),
                                 child: Center(
-                                  child: Image.network(
-                                    'http://172.16.154.43/images/avatars/${worker
-                                        .avatar}',
+                                  child: CachedNetworkImage(
                                     height: size.height * 0.1,
                                     width: size.width * 0.1,
                                     fit: BoxFit.cover,
+                                    imageUrl:
+                                        '${Constants.avatarImgUrl}${worker.avatar}',
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                    progressIndicatorBuilder:
+                                        (context, url, progress) => Center(
+                                      child: CircularProgressIndicator(
+                                        value: progress.progress,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -190,32 +268,51 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                 child: Text(
                                   worker.username!,
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 14),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
                                 ),
                               ),
                               SizedBox(
                                 height: size.height * 0.01,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  const Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // Text('Area:'),
-                                      Text('Gender:'),
-                                      Text('Ratings:'),
-                                      // Text('Fee:'),
-                                    ],
+                                  const Text(
+                                    'Gender:',
+                                    style: TextStyle(color: Colors.grey),
                                   ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // Text(worker.area ??'null'),
-                                      Text('${worker.gender}'),
-                                      Text('${worker.ratings} Stars'),
-                                      // Text('${worker.fee} Tk'),
-                                    ],
+                                  Text(
+                                    '${worker.gender}',
+                                    style: const TextStyle(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  RatingBar.builder(
+                                    itemSize: 22,
+                                    initialRating: worker.ratings!.toDouble(),
+                                    minRating: 0.0,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    ignoreGestures: true,
+                                    itemCount: 5,
+                                    itemPadding: const EdgeInsets.symmetric(
+                                        horizontal: 0.0),
+                                    itemBuilder: (context, _) => const Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (double value) {},
+                                  ),
+                                  Text(
+                                    " ${worker.ratings!}⭐",
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 ],
                               ),
@@ -225,30 +322,55 @@ class WorkerListScreen extends BaseView<WorkerController> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SizedBox(
-                                    height: size.height * 0.035,
-                                    width: size.width * 0.23,
-                                    child: ElevatedButton(
-                                        onPressed: () {
-                                          if(controller.selectedWorkerList.isNotEmpty){
-                                            controller.selectedWorkerList.clear();
-                                          }
-                                          if (controller.selectedWorkerList.length < 1) {
-                                            Get.toNamed(AppPages.CheckoutScreen);
-                                            controller.addWorker(worker);
-                                          }
-
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                          LightThemeColors.primaryColor,
-                                        ),
-                                        child: const Text(
-                                          'Proceed',
-                                          style: TextStyle(
-                                              fontSize: 12, color: Colors.white),
-                                        )),
-                                  )
+                                  GetX<WorkerController>(
+                                      builder: (wController) {
+                                    final isSelected = controller
+                                        .isWorkerSelected(worker.user!.id!);
+                                    return SizedBox(
+                                      height: size.height * 0.035,
+                                      width: size.width * 0.29,
+                                      child: OutlinedButton.icon(
+                                          onPressed: () {
+                                            if (!isSelected) {
+                                              if (controller.selectedWorkerList
+                                                  .isNotEmpty) {
+                                                controller.selectedWorkerList
+                                                    .clear();
+                                              }
+                                              if (controller.selectedWorkerList
+                                                      .length <
+                                                  1) {
+                                                Get.toNamed(
+                                                    AppPages.CheckoutScreen);
+                                                controller.addWorker(worker);
+                                              }
+                                            } else {
+                                              controller.removeWorker(
+                                                  worker.user!.id);
+                                            }
+                                          },
+                                          style: OutlinedButton.styleFrom(
+                                            side: const BorderSide(),
+                                            backgroundColor: isSelected
+                                                ? Colors.red[100]
+                                                : controller.isLightMode.value
+                                                ? Colors.white70
+                                                :  Colors.white,
+                                          ),
+                                          icon: Icon(
+                                            isSelected
+                                                ? Icons.remove_circle_outline
+                                                : Icons.add,
+                                            color: Colors.black,
+                                          ),
+                                          label: Text(
+                                            isSelected ? "Remove" : 'Select ',
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black),
+                                          )),
+                                    );
+                                  })
                                 ],
                               )
                             ],
@@ -265,7 +387,6 @@ class WorkerListScreen extends BaseView<WorkerController> {
       ),
     );
   }
-
 
   Widget _buildServiceCardShimmer() {
     return Card(
@@ -297,20 +418,4 @@ class WorkerListScreen extends BaseView<WorkerController> {
       ),
     );
   }
-
-  final categoryList = [
-    "Home Cleaning",
-    "Office Cleaning",
-    "Cloth Washing",
-    "Printer Service",
-    "Desktop Service",
-    "Laptop Service",
-    "Over Service",
-    "Commercial Shifting",
-    "Painting Service",
-    "Carpentry Service",
-    "CCTv Camera Service",
-    "Driver Service",
-    "Car Wash",
-  ];
 }

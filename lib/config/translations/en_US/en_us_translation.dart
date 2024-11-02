@@ -58,5 +58,5 @@ const Map<String, String> enUs = {
   Strings.careGiver : 'Care Giver',
   Strings.babySitter : 'Baby Sitter',
   Strings.more : 'More',
-  Strings.askTypeOfService :'What type of manpower do you require?',
+  Strings.askTypeOfService :'Which Category of manpower do you require',
 };

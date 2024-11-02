@@ -30,7 +30,8 @@ class LightThemeColors
 
   //TEXT
   static const Color bodyTextColor = Colors.black;
-  static const Color displayTextColor = Color(0xFF1E2432);
+  static const Color bodyThemeTextColor = Colors.white;
+  static const Color displayTextColor = Colors.black54;
   static const Color bodySmallTextColor = Color(0xff7C7C7C);
   static const Color hintTextColor =  Color(0xffBFBFBF);
   static const Color opacityTextColor =  Color(0xff808080);

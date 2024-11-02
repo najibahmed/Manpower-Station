@@ -38,12 +38,10 @@ class VerificationCompleted extends BaseView<AuthenticationController>{
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.2,
           ),
-          Container(
-            child: Center(
-              child: Image.asset(
-                'assets/images/verification_done.png',
-                fit: BoxFit.cover,
-              ),
+          Center(
+            child: Image.asset(
+              'assets/images/verification_done.png',
+              fit: BoxFit.cover,
             ),
           ),
           SizedBox(

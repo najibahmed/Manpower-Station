@@ -1,11 +1,16 @@
-/// _id : "66ebe8179805d827adaa6911"
-/// user : {"_id":"66ebe7e89805d827adaa690a","email":"abcd@gmail.com","userType":"client","is_phone_verified":true,"createdAt":"2024-09-19T08:59:20.733Z","updatedAt":"2024-09-19T09:00:07.266Z","__v":0}
+/// _id : "66dc0583a521a07c53202aeb"
+/// user : {"_id":"66dc0571a521a07c53202ae7","email":"mahim@gmail.com","userType":"client","is_phone_verified":true,"createdAt":"2024-09-07T07:49:05.151Z","updatedAt":"2024-10-07T12:34:17.923Z","__v":0}
 /// role : "client"
-/// phone_or_email : "abcd@gmail.com"
+/// phone_or_email : "mahim@gmail.com"
 /// is_point : 0
-/// createdAt : "2024-09-19T09:00:07.263Z"
-/// updatedAt : "2024-09-19T09:00:07.263Z"
+/// createdAt : "2024-09-07T07:49:23.557Z"
+/// updatedAt : "2024-10-07T11:07:23.974Z"
 /// __v : 0
+/// address : "hi"
+/// area : "hu"
+/// avatar : "8DJNFOfny-avatar.svg"
+/// profile_description : "na"
+/// username : "Mahim"
 
 class UserModel {
   UserModel({
@@ -16,7 +21,12 @@ class UserModel {
       num? isPoint, 
       String? createdAt, 
       String? updatedAt, 
-      num? v,}){
+      num? v, 
+      String? address, 
+      String? area, 
+      String? avatar, 
+      String? profileDescription, 
+      String? username,}){
     _id = id;
     _user = user;
     _role = role;
@@ -25,6 +35,11 @@ class UserModel {
     _createdAt = createdAt;
     _updatedAt = updatedAt;
     _v = v;
+    _address = address;
+    _area = area;
+    _avatar = avatar;
+    _profileDescription = profileDescription;
+    _username = username;
 }
 
   UserModel.fromJson(dynamic json) {
@@ -36,6 +51,11 @@ class UserModel {
     _createdAt = json['createdAt'];
     _updatedAt = json['updatedAt'];
     _v = json['__v'];
+    _address = json['address'];
+    _area = json['area'];
+    _avatar = json['avatar'];
+    _profileDescription = json['profile_description'];
+    _username = json['username'];
   }
   String? _id;
   User? _user;
@@ -45,6 +65,11 @@ class UserModel {
   String? _createdAt;
   String? _updatedAt;
   num? _v;
+  String? _address;
+  String? _area;
+  String? _avatar;
+  String? _profileDescription;
+  String? _username;
 UserModel copyWith({  String? id,
   User? user,
   String? role,
@@ -53,6 +78,11 @@ UserModel copyWith({  String? id,
   String? createdAt,
   String? updatedAt,
   num? v,
+  String? address,
+  String? area,
+  String? avatar,
+  String? profileDescription,
+  String? username,
 }) => UserModel(  id: id ?? _id,
   user: user ?? _user,
   role: role ?? _role,
@@ -61,6 +91,11 @@ UserModel copyWith({  String? id,
   createdAt: createdAt ?? _createdAt,
   updatedAt: updatedAt ?? _updatedAt,
   v: v ?? _v,
+  address: address ?? _address,
+  area: area ?? _area,
+  avatar: avatar ?? _avatar,
+  profileDescription: profileDescription ?? _profileDescription,
+  username: username ?? _username,
 );
   String? get id => _id;
   User? get user => _user;
@@ -70,6 +105,11 @@ UserModel copyWith({  String? id,
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
   num? get v => _v;
+  String? get address => _address;
+  String? get area => _area;
+  String? get avatar => _avatar;
+  String? get profileDescription => _profileDescription;
+  String? get username => _username;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -83,17 +123,22 @@ UserModel copyWith({  String? id,
     map['createdAt'] = _createdAt;
     map['updatedAt'] = _updatedAt;
     map['__v'] = _v;
+    map['address'] = _address;
+    map['area'] = _area;
+    map['avatar'] = _avatar;
+    map['profile_description'] = _profileDescription;
+    map['username'] = _username;
     return map;
   }
 
 }
 
-/// _id : "66ebe7e89805d827adaa690a"
-/// email : "abcd@gmail.com"
+/// _id : "66dc0571a521a07c53202ae7"
+/// email : "mahim@gmail.com"
 /// userType : "client"
 /// is_phone_verified : true
-/// createdAt : "2024-09-19T08:59:20.733Z"
-/// updatedAt : "2024-09-19T09:00:07.266Z"
+/// createdAt : "2024-09-07T07:49:05.151Z"
+/// updatedAt : "2024-10-07T12:34:17.923Z"
 /// __v : 0
 
 class User {

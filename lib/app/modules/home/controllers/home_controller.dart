@@ -4,6 +4,7 @@ import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 
+import '../../../components/custom_snackbar.dart';
 import '../../../core/base/base_controller.dart';
 
 class HomeController extends BaseController {
@@ -11,7 +12,7 @@ class HomeController extends BaseController {
   var allCategoryData = <dynamic>[].obs;
 
 /// Get all service
-  Future<void> getAllServiceData() async {
+  Future<List> getAllServiceData() async {
     try {
       // Map<String, dynamic> requestData = {
       //   'phone_or_email': phoneNumberEmailController.text.trim(),
@@ -29,14 +30,16 @@ class HomeController extends BaseController {
               var serviceList = jsonData.map((e) => ServiceModel.fromJson(e))
                   .toList();
               allServiceData.assignAll(serviceList);// Update the RxList with new data
+              return allServiceData;
             } else {
-              print('Failed to load services: ${response.statusMessage}');
+              CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services:',message: '${response.statusMessage}');
             }
           }
       );
     } catch (e) {
-      print(e);
+      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get service:',message: '$e');
     }
+    return allServiceData;
   }
 
   /// Get all service categories
@@ -56,12 +59,12 @@ class HomeController extends BaseController {
                   .toList();
               allCategoryData.assignAll(categoryList);// Update the RxList with new data
             } else {
-              print('Failed to load Categories: ${response.statusMessage}');
+              CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load Categories:',message: '${response.statusMessage}');
             }
           }
       );
     } catch (e) {
-      print(e);
+      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get category:',message: '$e');
     }
   }
 
@@ -83,12 +86,12 @@ class HomeController extends BaseController {
                   .toList();
               oneCategoryServicesData.assignAll(serviceList);// Update the RxList with new data
             } else {
-              print('Failed to load services by one category: ${response.statusMessage}');
+              CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services by one category:',message: ' ${response.statusMessage}');
             }
           }
       );
     } catch (e) {
-      print(e);
+      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get all service cat:',message: '$e');
     }
   }
 
@@ -108,12 +111,13 @@ class HomeController extends BaseController {
               var jsonData = response.data['banner'];
               activeBanners.value = ActiveBanner.fromJson(jsonData);
             } else {
-              print('Failed to load banners: ${response.statusMessage}');
+              CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load banners:',message:  '${response.statusMessage}');
             }
           }
       );
     } catch (e) {
-      print(e);
+      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get banner:',message: '$e');
+
     }
   }
 
@@ -125,15 +129,6 @@ class HomeController extends BaseController {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
 
 }

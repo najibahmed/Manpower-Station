@@ -9,7 +9,7 @@ class RedirectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3),() async {
+    Future.delayed(const Duration(seconds: 1),() async {
       final isUserLoggedIn =await MySharedPref.getLoginStatus();
       if(isUserLoggedIn){
         Get.offNamed(AppPages.Registration);
@@ -19,12 +19,12 @@ class RedirectScreen extends StatelessWidget {
     },);
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
           statusBarBrightness: Brightness.dark,
-          statusBarColor: Colors.black26,
+          statusBarColor: Colors.white12,
         ),
       ),
       body: Image.asset(

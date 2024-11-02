@@ -4,6 +4,7 @@ import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
 
+import '../../../components/custom_snackbar.dart';
 import '../../../core/base/base_controller.dart';
 
 class SearchViewController extends BaseController {
@@ -14,13 +15,12 @@ class SearchViewController extends BaseController {
 
   /// find service with workerId
   Future<void> findServices() async {
-
     try {
       late String url;
-      if(searchController.text.isNotEmpty){
-         url = "/api/services/get/all?keyword=${searchController.text}";
-      }else{
-        url="/api/services/get/all";
+      if (searchController.text.isNotEmpty) {
+        url = "/api/services/get/all?keyword=${searchController.text}";
+      } else {
+        url = "/api/services/get/all";
       }
       await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
         if (response.statusCode == 200) {
@@ -30,21 +30,22 @@ class SearchViewController extends BaseController {
           findByService
               .assignAll(serviceList); // Update the RxList with new data
         } else {
-          print('Failed to load service: ${response.statusMessage}');
+          CustomSnackBar.showCustomErrorSnackBar(
+              title: 'Failed to load search service::',
+              message: '${response.statusMessage}');
         }
       });
     } catch (e) {
-      print(e);
+      CustomSnackBar.showCustomErrorSnackBar(
+          title: 'Error try get search:', message: '$e');
     }
   }
 
   @override
   void onInit() {
+    findServices();
     super.onInit();
   }
-
-
-
 
   @override
   void onClose() {

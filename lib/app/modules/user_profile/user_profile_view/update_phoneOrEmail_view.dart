@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
-import 'package:manpower_station/app/components/link_button.dart';
+import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -10,6 +10,8 @@ import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+
+import '../../../components/custom_snackbar.dart';
 
 class UpdatePhoneEmail extends BaseView<UserController> {
   UpdatePhoneEmail({super.key});
@@ -151,7 +153,7 @@ class UpdatePhoneEmail extends BaseView<UserController> {
                 width: 298,
                 onTap: () {
                   _sendOtp();
-                  Get.toNamed(AppPages.UpdateOtp);
+                  // Get.toNamed(AppPages.UpdateOtp);
                 },
               )),
               SizedBox(
@@ -166,14 +168,13 @@ class UpdatePhoneEmail extends BaseView<UserController> {
 
   void _sendOtp() async {
     if (_formKey.currentState!.validate()) {
-      controller.showLoading();
-      try {
-        await controller.updatePhoneOrEmail();
 
-        controller.hideLoading();
+      try {
+        showLoadingOverLay(asyncFunction: controller.updatePhoneOrEmail(),msg:'Loading' );
       } catch (error) {
-        controller.hideLoading();
-        print(error);
+        CustomSnackBar.showCustomErrorToast(
+            message: 'Verify try update email: $error',
+            duration: const Duration(seconds: 1));
       }
     }
   }

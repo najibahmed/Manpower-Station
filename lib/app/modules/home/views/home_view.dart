@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,13 +7,20 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/models/category_model.dart';
+import 'package:manpower_station/app/modules/home/views/horizontal_service_card.dart';
+import 'package:manpower_station/app/modules/payment/view/amar_pay_payment.dart';
+import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
+import '../../../../config/theme/dark_theme_colors.dart';
+import '../../../../config/theme/my_theme.dart';
 import '../../../../config/translations/localization_service.dart';
 import '../../../core/base/base_view.dart';
+import '../../service/view/service_card.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends BaseView<HomeController> {
@@ -32,151 +40,100 @@ class HomeView extends BaseView<HomeController> {
         onRefresh: _handleRefresh,
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
-                backgroundColor: Colors.white,
-                centerTitle: true,
-                leading: InkWell(
-                  onTap: () => LocalizationService.updateLanguage(
-                    LocalizationService.getCurrentLocal().languageCode == 'bn'
-                        ? 'en'
-                        : 'bn',
-                  ),
-                  child: SizedBox(
-                    height: 30.h,
-                    width: 30.h,
-                    child: SvgPicture.asset(
-                      'assets/vectors/language.svg',
-                      color: LightThemeColors.primaryColor,
-                      fit: BoxFit.none,
-                      height: 10,
-                      width: 10,
-                    ),
-                  ),
-                ),
-                title: Image.asset(
-                  'assets/images/manpower_name_logo.png',
-                  fit: BoxFit.cover,
-                ),
-                actions: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                          onPressed: ()async {
-                            print('access token----${MySharedPref.getAccessToken()}');
-                            print("refresh token---${await MySharedPref.getRefreshToken()}");
-                            print("userId----${await MySharedPref.getUserId()}");
-                          },
-                          icon: const Icon(
-                            Icons.notifications_active_outlined,
-                            color: LightThemeColors.primaryColor,
-                          )),
-                      // InkWell(
-                      //   onTap: () => MyTheme.changeTheme(),
-                      //   child: SizedBox(
-                      //     height: 39.h,
-                      //     width: 39.h,
-                      //     // decoration:
-                      //     // theme.extension<HeaderContainerThemeData>()?.decoration,
-                      //     child: SvgPicture.asset(
-                      //       Get.isDarkMode
-                      //           ? 'assets/vectors/sun.svg'
-                      //           : 'assets/vectors/moon.svg',
-                      //       fit: BoxFit.none,
-                      //       color: Get.isDarkMode
-                      //           ? LightThemeColors.backgroundColor
-                      //           : DarkThemeColors.backgroundColor,
-                      //       height: 10,
-                      //       width: 10,
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ]),
             SliverToBoxAdapter(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Wrap(
-                      children: [
-                        SizedBox(
-                          height: 55,
-                          width: 55,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.grey.withOpacity(.30),
-                            radius: 100,
-                            child: const Icon(
-                              Icons.person,
-                              color: LightThemeColors.primaryColor,
-                              size: 40,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Hello!',
-                              style: TextStyle(
-                                  fontSize: MyFonts.bodyMediumSize,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              Strings.help.tr,
-                              style: TextStyle(
-                                  fontSize: MyFonts.bodySmallTextSize,
-                                  color: Colors.black.withOpacity(.65),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              Strings.chooseService.tr,
-                              style: TextStyle(
-                                  fontSize: MyFonts.bodyMediumSize,
-                                  color: Colors.black.withOpacity(.65),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    ClipRRect(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// Header of the screen with welcome message
+                  // Wrap(
+                  //   children: [
+                  //     SizedBox(
+                  //       height: 55.h,
+                  //       width: 50.w,
+                  //       child: CircleAvatar(
+                  //         backgroundColor: Colors.grey.withOpacity(.30),
+                  //         radius: 100,
+                  //         child: const Icon(
+                  //           Icons.person,
+                  //           color: LightThemeColors.primaryColor,
+                  //           size: 40,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 10.w,
+                  //     ),
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           'Hello!',
+                  //           style: TextStyle(
+                  //               fontSize: MyFonts.bodyMediumSize,
+                  //               fontWeight: FontWeight.bold),
+                  //         ),
+                  //         SizedBox(height: 2.h),
+                  //         Text(
+                  //           Strings.help.tr,
+                  //           style: TextStyle(
+                  //               fontSize: MyFonts.bodySmallTextSize,
+                  //               color: Colors.black.withOpacity(.65),
+                  //               fontWeight: FontWeight.bold),
+                  //         ),
+                  //         Text(
+                  //           Strings.chooseService.tr,
+                  //           style: TextStyle(
+                  //               fontSize: MyFonts.bodyMediumSize,
+                  //               color: Colors.black.withOpacity(.65),
+                  //               fontWeight: FontWeight.bold),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(height: 10.h),
+                   SizedBox(height: 8.h,),
+                  /// Application Banner
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: controller.allServiceData.isEmpty
                           ? _buildBannerShimmer()
                           : CarouselSlider(
                               options: CarouselOptions(
-                                height: 180.0,
+                                height: size.height * 0.19,
                                 autoPlay: true,
                                 // enlargeCenterPage: true,
                                 aspectRatio: 16 / 9,
-                                autoPlayInterval: const Duration(seconds: 3),
+                                autoPlayInterval: const Duration(seconds: 6),
                                 autoPlayAnimationDuration:
-                                    const Duration(milliseconds: 800),
+                                    const Duration(milliseconds: 300),
                                 autoPlayCurve: Curves.fastOutSlowIn,
                                 pauseAutoPlayOnTouch: true,
                                 viewportFraction: 1.0,
                               ),
                               items: controller.activeBanners.value.images
                                   ?.map((url) {
-                                var image = url.image;
+                                var banner = url.image;
                                 return Builder(
                                   builder: (BuildContext context) {
                                     return Container(
                                       width: MediaQuery.of(context).size.width,
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 5.0),
-                                      child: Image.network(
-                                        'http://172.16.154.43/images/banners/$image',
+                                      child: CachedNetworkImage(
                                         fit: BoxFit.fitWidth,
+                                        imageUrl:
+                                            '${Constants.bannerImgUrl}$banner',
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                        progressIndicatorBuilder:
+                                            (context, url, progress) => Center(
+                                          child: CircularProgressIndicator(
+                                            value: progress.progress,
+                                          ),
+                                        ),
                                       ),
                                     );
                                   },
@@ -184,74 +141,77 @@ class HomeView extends BaseView<HomeController> {
                               }).toList(),
                             ),
                     ),
-                    SizedBox(height: 15.h),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text(
-                    //       'Service Categories',
-                    //       style: TextStyle(
-                    //           fontSize: MyFonts.bodyLargeSize,
-                    //           color: Colors.black.withOpacity(.65),
-                    //           fontWeight: FontWeight.w500),
-                    //     ),
-                    //     Padding(
-                    //       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    //       child: TextButton(
-                    //           onPressed: () {},
-                    //           child: Text(
-                    //             'see all',
-                    //             style: TextStyle(
-                    //                 fontSize: MyFonts.bodyLargeSize,
-                    //                 color: Colors.black.withOpacity(.65),
-                    //                 fontWeight: FontWeight.normal),
-                    //           )),
-                    //     ),
-                    //   ],
-                    // ),
-                    // SizedBox(height: 5.h),
-                    // SizedBox(
-                    //   height: 100,
-                    //   child: controller.allCategoryData.isEmpty
-                    //       ? ListView.builder(
-                    //           scrollDirection: Axis.horizontal,
-                    //           itemCount: 5,
-                    //           itemBuilder: (BuildContext context, int index) {
-                    //             return _buildCategoryShimmer();
-                    //           },
-                    //         )
-                    //       : ListView.builder(
-                    //           scrollDirection: Axis.horizontal,
-                    //           itemCount:  controller.allCategoryData.length,
-                    //           itemBuilder: (BuildContext context, int index) {
-                    //             CategoryModel category =
-                    //                 controller.allCategoryData[index];
-                    //             var id =category.id.toString();
-                    //             return
-                    //               ServiceOption(
-                    //               label: category.categoryName!,
-                    //               image: 'assets/images/maid_icon.png',
-                    //               onTap: () {
-                    //                  controller.getOneCategoryServices(id);
-                    //                   var serviceList=controller.oneCategoryServicesData.value;
-                    //                   Get.toNamed(AppPages.SingleCateServicesScreen,arguments: serviceList);
-                    //
-                    //               });
-                    //           }),
-                    // ),
-                    SizedBox(height: 10.h),
-                    Text(
-                      '${Strings.askTypeOfService.tr}?',
-                      style: TextStyle(
-                          fontSize: MyFonts.bodyLargeSize,
-                          color: Colors.black.withOpacity(.65),
-                          fontWeight: FontWeight.w500),
+                  ),
+                  Padding(
+                    padding:const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Popular Services',
+                          style: Theme.of(context).textTheme.displayLarge,
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        //   child: TextButton(
+                        //       onPressed: () {},
+                        //       child: Text(
+                        //         'see all',
+                        //         style: TextStyle(
+                        //             fontSize: MyFonts.bodyLargeSize,
+                        //             color: Colors.black.withOpacity(.65),
+                        //             fontWeight: FontWeight.normal),
+                        //       )),
+                        // ),
+                      ],
                     ),
-                    SizedBox(height: 5.h),
-                  ],
-                ),
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: controller.allServiceData.isEmpty
+                        ? _buildBannerShimmer()
+                        : CarouselSlider(
+                            options: CarouselOptions(
+                              height: size.height * 0.2,
+                              autoPlay: true,
+                              aspectRatio: 16 / 9,
+                              autoPlayInterval: const Duration(seconds: 3),
+                              autoPlayAnimationDuration:
+                                  const Duration(milliseconds: 1000),
+                              enlargeCenterPage: true,
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              pauseAutoPlayOnTouch: true,
+                              viewportFraction: .55,
+                            ),
+                            items: controller.allServiceData.map((service) {
+                              return InkWell(
+                                onTap: () {
+                                  Get.toNamed(AppPages.ServiceDetails,
+                                      arguments: service);
+                                },
+                                child: HorizontalServiceCard(
+                                  title: service.name!,
+                                  image: service.image!,
+                                  service: service,
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                  ),
+                  /// Category text message
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
+                    child: Text(
+                      '${Strings.askTypeOfService.tr}?',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                  ),
+                  SizedBox(height: 5.h),
+                ],
               ),
             ),
+
+            ///Category list card
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               sliver: SliverGrid(
@@ -269,17 +229,17 @@ class HomeView extends BaseView<HomeController> {
                       if (controller.allCategoryData.isEmpty) {
                         return buildServiceCardShimmer();
                       } else {
+                        var image = categoryImage[index];
                         CategoryModel category =
                             controller.allCategoryData[index];
                         var id = category.id.toString();
+                        String catTitle = category.categoryName!;
                         return InkWell(
                             onTap: () {
                               controller.oneCategoryServicesData.clear();
                               controller.getOneCategoryServices(id);
-                              var serviceList =
-                                  controller.oneCategoryServicesData;
                               Get.toNamed(AppPages.SingleCateServicesScreen,
-                                  arguments: serviceList);
+                                  arguments: [catTitle, id]);
                             },
                             child: Card(
                               shape: RoundedRectangleBorder(
@@ -292,15 +252,14 @@ class HomeView extends BaseView<HomeController> {
                                     borderRadius: const BorderRadius.vertical(
                                         top: Radius.circular(15)),
                                     child: Image.asset(
-                                      'assets/images/maid_icon.png',
-                                      height: 120,
+                                      image,
+                                      height: size.height * 0.14,
                                       width: double.infinity,
                                       fit: BoxFit.cover,
-                                      color: Colors.green,
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(6.0),
                                     child: Text(
                                       category.categoryName!,
                                       overflow: TextOverflow.ellipsis,
@@ -312,6 +271,7 @@ class HomeView extends BaseView<HomeController> {
                                     ),
                                   ),
                                   const Spacer(),
+                                  // Divider(color: Colors.black26,),
                                   Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8.0),
@@ -321,34 +281,35 @@ class HomeView extends BaseView<HomeController> {
                                         children: [
                                           SizedBox(
                                             height: size.height * 0.035,
-                                            width: size.width * 0.4,
-                                            child: ElevatedButton(
+                                            width: size.width * 0.25,
+                                            child: OutlinedButton(
                                                 onPressed: () {
                                                   controller
                                                       .getOneCategoryServices(
                                                           id);
-                                                  var serviceList = controller
-                                                      .oneCategoryServicesData;
                                                   Get.toNamed(
                                                       AppPages
                                                           .SingleCateServicesScreen,
-                                                      arguments: serviceList);
+                                                      arguments: [
+                                                        catTitle,
+                                                        id
+                                                      ]);
                                                 },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      LightThemeColors
-                                                          .primaryColor,
-                                                ),
+                                                style: OutlinedButton.styleFrom(
+                                                    // backgroundColor:
+                                                    //     LightThemeColors
+                                                    //         .primaryColor,
+                                                    ),
                                                 child: const Text(
                                                   'View All',
                                                   style: TextStyle(
                                                       fontSize: 12,
-                                                      color: Colors.white),
+                                                      color: Colors.green),
                                                 )),
                                           ),
                                         ],
                                       )),
-                                  const SizedBox(height: 10),
+                                  SizedBox(height: size.height * 0.01),
                                 ],
                               ),
                             ));
@@ -370,21 +331,7 @@ class HomeView extends BaseView<HomeController> {
   }
 
   Widget _buildBannerShimmer() {
-    return Card(
-        elevation: 5,
-        child: Container(
-          child: const ShimmerWidget.rectangular(height: 180),
-        ));
-  }
-
-  Widget _buildCategoryShimmer() {
-    return Card(
-        elevation: 5,
-        child: Container(
-          child: const ShimmerWidget.rectangular(
-            height: 100,
-            width: 110,
-          ),
-        ));
+    return const Card(
+        elevation: 5, child: ShimmerWidget.rectangular(height: 180));
   }
 }

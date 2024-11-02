@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
-
 import 'app/core/binding/initial_binding.dart';
 import 'app/data/local/my_shared_pref.dart';
 import 'app/routes/app_pages.dart';
@@ -39,7 +36,7 @@ Future<void> main() async {
           debugShowCheckedModeBanner: false,
           builder: (context, widget) {
             bool themeIsLight = MySharedPref.getThemeIsLight();
-            return Theme(
+            return  Theme(
               data: MyTheme.getThemeData(isLight: themeIsLight),
               child: MediaQuery(
                 // prevent font from scaling (some people use big/small device fonts)

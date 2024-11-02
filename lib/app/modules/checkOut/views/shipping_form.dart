@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 
+import '../../../../config/theme/dark_theme_colors.dart';
+import '../../../../config/theme/light_theme_colors.dart';
+
 // Widget for shipping form
 class ShippingForm extends StatefulWidget {
   const ShippingForm({super.key});
@@ -17,12 +20,10 @@ class _ShippingFormState extends State<ShippingForm> {
   @override
   Widget build(BuildContext context) {
     final controller=Get.put(CheckoutController());
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Form(
       key: controller.formKey,
       child: Card(
+        color: Theme.of(context).cardColor,
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(16.0),

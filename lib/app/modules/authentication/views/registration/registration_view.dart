@@ -1,12 +1,10 @@
-
-// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_literals_to_create_immutables, unnecessary_string_interpolations
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/custom_button.dart';
+import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/link_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
-import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
@@ -29,6 +27,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
       ),
     );
   }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget body(BuildContext context) {
@@ -41,7 +40,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
               Center(
                 child: Image.asset(
@@ -50,7 +49,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.07,
+                height: MediaQuery.of(context).size.height * 0.03,
               ),
               Text("${Strings.enterEmailPhnNum.tr}",
                   style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
@@ -62,7 +61,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                       fontSize: MyFonts.bodyMediumSize,
                       color: LightThemeColors.opacityTextColor)),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
+                height: MediaQuery.of(context).size.height * 0.04,
               ),
               TextFormField(
                 // autofocus: true,
@@ -90,11 +89,13 @@ class RegistrationView extends BaseView<AuthenticationController> {
                           color: LightThemeColors.opacityTextColor, width: 2.0),
                     ),
                     hintText: '01********** or abc@gmail.com',
-                    hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
+                    hintStyle:
+                        TextStyle(color: LightThemeColors.hintTextColor)),
                 validator: (String? value) {
                   // Define the regex pattern for the allowed prefixes and 11 digits.
                   String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
-                  String emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+                  String emailPattern =
+                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
                   // Create the regex object.
                   RegExp regExpEmail = RegExp(emailPattern);
                   RegExp regExp = RegExp(phonePattern);
@@ -102,18 +103,18 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your phone number';
                   }
-                  if(value.isEmail){
+                  if (value.isEmail) {
                     // Validate the input using the regex.
                     if (!regExpEmail.hasMatch(value)) {
                       return 'Please enter a valid email address';
                     }
-                  }else if(value.isPhoneNumber){
+                  } else if (value.isPhoneNumber) {
                     // Validate the input using the regex.
                     if (!regExp.hasMatch(value)) {
                       return 'Please enter a valid phone number.';
                     }
-                  }else{
-                    return 'Please enter a valid credential.' ;
+                  } else {
+                    return 'Please enter a valid credential.';
                   }
                   // If the input is valid, return null (no error).
                   return null;
@@ -138,7 +139,8 @@ class RegistrationView extends BaseView<AuthenticationController> {
                             baseline: TextBaseline.alphabetic,
                             child: LinkButton(
                                 urlLabel: " ${Strings.termsAndCondition.tr}",
-                                url: "https://example.com/terms-and-conditions"),
+                                url:
+                                    "https://example.com/terms-and-conditions"),
                           ),
                           TextSpan(
                             text: ' ${Strings.and.tr} ',
@@ -160,27 +162,47 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
               Center(
-                  child: CustomButton(
-                title: "${Strings.sendOtp.tr}",
-                height: 38,
-                width: 298,
-                onTap: () {
-                 _sendOtp();
-                  // Get.toNamed(AppPages.OtpScreen);
-                },
-              )),
+                child: SizedBox(
+                  height: 38,
+                  width: 298,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        _sendOtp();
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange),
+                      child: Text(
+                        "${Strings.sendOtp.tr}",
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium
+                            ?.copyWith(color: Colors.white),
+                      )),
+                ),
+              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(child: Divider(thickness: 1,color: Colors.grey,)),
+                  Expanded(
+                      child: Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  )),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18.0),
-                    child: Text("Or",style: TextStyle(color: Colors.black54),),
+                    child: Text(
+                      "Or",
+                      style: TextStyle(color: Colors.black54),
+                    ),
                   ),
-                  Expanded(child: Divider(thickness: 1,color: Colors.grey,))
+                  Expanded(
+                      child: Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ))
                 ],
               ),
               SizedBox(
@@ -198,10 +220,10 @@ class RegistrationView extends BaseView<AuthenticationController> {
                                   borderRadius: BorderRadius.circular(8)),
                               backgroundColor: Colors.white,
                               elevation: 5),
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Row(
                               children: [
                                 SizedBox(
@@ -228,7 +250,6 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   ],
                 ),
               ),
-      
             ],
           ),
         ),
@@ -236,14 +257,16 @@ class RegistrationView extends BaseView<AuthenticationController> {
     );
   }
 
-void _sendOtp() async {
-  if (_formKey.currentState!.validate()) {
-    try {
-      await controller.loginWithPhoneOrEmail();
-    } catch (error) {
-      //   controller.errMsg.value = error.message;
-      print(error);
+  void _sendOtp() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        showLoadingOverLay(
+            asyncFunction: controller.loginWithPhoneOrEmail(), msg: "Loading");
+        // await controller.loginWithPhoneOrEmail();
+      } catch (error) {
+        //   controller.errMsg.value = error.message;
+        print(error);
+      }
     }
   }
-}
 }

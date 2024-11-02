@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/utils/constants.dart';
 
@@ -14,7 +13,8 @@ class WorkerReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(WorkerController());
     return Card(
-      elevation: 2,
+      color: Colors.green[50],
+      elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -42,7 +42,7 @@ class WorkerReviewCard extends StatelessWidget {
                   },
                 ),
                 const SizedBox(width: 8),
-                Container(
+                SizedBox(
                   width: 160,
                   child: Text(
                     overflow: TextOverflow.ellipsis,
@@ -53,7 +53,7 @@ class WorkerReviewCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            Text(Constants.formatDate.format(DateTime.parse( review.date!)),
+            Text(Constants.formatDateTime.format(DateTime.parse( review.date!)),
               style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 8),
