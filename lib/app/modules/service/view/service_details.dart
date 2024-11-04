@@ -88,7 +88,8 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                     child: Center(
                       child: IconButton(
                           onPressed: () {
-                            Get.offNamed(AppPages.DashboardView);
+                            // Get.offNamed(AppPages.DashboardView);
+                            Get.back();
                           },
                           icon: const Icon(
                             Icons.arrow_back,

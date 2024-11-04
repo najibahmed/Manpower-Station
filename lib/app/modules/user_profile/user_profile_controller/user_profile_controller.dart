@@ -111,9 +111,9 @@ class UserController extends BaseController {
       await BaseClient.safeApiCall(
         "/api/users/update/user/phone_or_email",
         RequestType.put,
-        headers: {
-          'Authorization': Constants.accessToken
-        },
+        // headers: {
+        //   'Authorization': Constants.accessToken
+        // },
         data: requestData,
         onSuccess: (response){
           if(response.statusCode==201){
@@ -164,9 +164,9 @@ class UserController extends BaseController {
       await BaseClient.safeApiCall(
         url,
         RequestType.put,
-        headers: {
-          'Authorization': Constants.accessToken
-        },
+        // headers: {
+        //   'Authorization': Constants.accessToken
+        // },
         data: formData  ,
         onSuccess: (response) {
           if (response.statusCode == 200){

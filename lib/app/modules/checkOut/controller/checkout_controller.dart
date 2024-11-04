@@ -79,11 +79,11 @@ class CheckoutController extends BaseController {
             url,
             RequestType.post,
             data: requestData,
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Authorization':  Constants.accessToken         //MySharedPref.getAccessToken()
-            },
+            // headers: {
+            //   'Content-Type': 'application/json',
+            //   'Accept': 'application/json',
+            //   'Authorization':  Constants.accessToken         //MySharedPref.getAccessToken()
+            // },
             onSuccess: (response) async {
               if (kDebugMode) {
                 print(response.data);

@@ -8,7 +8,7 @@ import 'package:manpower_station/app/services/api_client.dart';
 import 'package:manpower_station/app/services/api_service.dart';
 import 'package:manpower_station/utils/constants.dart';
 
-class BookingsController extends BaseController with GetSingleTickerProviderStateMixin{
+class BookingsController extends BaseController with GetTickerProviderStateMixin{
    late TabController tabController;
    RxInt tabIndex=0.obs;
    RxList bookingsList= <dynamic>[].obs;
@@ -48,9 +48,9 @@ class BookingsController extends BaseController with GetSingleTickerProviderStat
        await BaseClient.safeApiCall(
            url,
            RequestType.get,
-           headers: {
-             'Authorization': Constants.accessToken
-           },
+           // headers: {
+           //   'Authorization': Constants.accessToken
+           // },
            onSuccess: (response) {
              if (response.statusCode == 201) {
                var jsonData = response.data['bookings'];

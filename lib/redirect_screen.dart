@@ -12,9 +12,9 @@ class RedirectScreen extends StatelessWidget {
     Future.delayed(const Duration(seconds: 1),() async {
       final isUserLoggedIn =await MySharedPref.getLoginStatus();
       if(isUserLoggedIn){
-        Get.offNamed(AppPages.Registration);
-      }else{
         Get.offNamed(AppPages.DashboardView);
+      }else{
+        Get.offNamed(AppPages.Registration);
       }
     },);
 

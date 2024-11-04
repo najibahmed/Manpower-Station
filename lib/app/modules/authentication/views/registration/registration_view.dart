@@ -261,7 +261,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
     if (_formKey.currentState!.validate()) {
       try {
         showLoadingOverLay(
-            asyncFunction: controller.loginWithPhoneOrEmail(), msg: "Loading");
+            asyncFunction: controller.loginUser(), msg: "Loading");
         // await controller.loginWithPhoneOrEmail();
       } catch (error) {
         //   controller.errMsg.value = error.message;
