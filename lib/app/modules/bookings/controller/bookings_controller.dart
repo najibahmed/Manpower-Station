@@ -63,7 +63,7 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
            }
        );
      } catch (e) {
-       CustomSnackBar.showCustomErrorSnackBar(title: 'Error login :',message: e.toString());
+       CustomSnackBar.showCustomErrorSnackBar(title: 'Error bookings :',message: e.toString());
      }
    }
 

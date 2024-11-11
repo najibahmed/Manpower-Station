@@ -18,41 +18,41 @@ class AuthenticationController extends BaseController {
   final RxString errorMessage = ''.obs;
 
 
- loginUser(){
-  ApiServices.loginWithPhoneOrEmail(phoneNumberEmailController.text.trim());
-}
+//  loginUser(){
+//   ApiServices.loginWithPhoneOrEmail(phoneNumberEmailController.text.trim());
+// }
 
 
 
 // /// Login with email or phone Number
-//   Future<void> loginWithPhoneOrEmail() async {
-//     try {
-//       Map<String, dynamic> requestData = {
-//         'phone_or_email': phoneNumberEmailController.text.trim(),
-//       };
-//       await BaseClient.safeApiCall(
-//         "/api/users/sign_in/sign_up",
-//         RequestType.post,
-//         data: requestData,
-//         onSuccess: (response){
-//           if(response.statusCode==200){
-//             // if (kDebugMode) {
-//             //   print('Success data here------${response.data['success']}');
-//             //   print('Message data here------${response.data['message']}');
-//             // }
-//             Get.snackbar('Success','${response.data['message']}');
-//             if(response.data['success'] == true){
-//               Get.toNamed(AppPages.OtpScreen);
-//             }else{
-//               CustomSnackBar.showCustomErrorSnackBar(title: 'Error',message: 'Having problem to send otp');
-//             }
-//           }
-//         },
-//       );
-//     } catch (e) {
-//       Get.snackbar('Error login :',e.toString());
-//     }
-//   }
+  Future<void> loginWithPhoneOrEmail() async {
+    try {
+      Map<String, dynamic> requestData = {
+        'phone_or_email': phoneNumberEmailController.text.trim(),
+      };
+      await BaseClient.safeApiCall(
+        "/api/users/sign_in/sign_up",
+        RequestType.post,
+        data: requestData,
+        onSuccess: (response){
+          if(response.statusCode==200){
+            // if (kDebugMode) {
+            //   print('Success data here------${response.data['success']}');
+            //   print('Message data here------${response.data['message']}');
+            // }
+            Get.snackbar('Success','${response.data['message']}');
+            if(response.data['success'] == true){
+              Get.toNamed(AppPages.OtpScreen);
+            }else{
+              CustomSnackBar.showCustomErrorSnackBar(title: 'Error',message: 'Having problem to send otp');
+            }
+          }
+        },
+      );
+    } catch (e) {
+      Get.snackbar('Error login :',e.toString());
+    }
+  }
   /// Login with Gmail
   Future<void> loginWithGmail() async {
     try {

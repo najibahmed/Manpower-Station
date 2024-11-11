@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import '../../../../../config/theme/light_theme_colors.dart';
 import '../../../../../config/theme/my_fonts.dart';
 import '../../../../../config/translations/strings_enum.dart';
+import '../../../../components/custom_loading_overlay.dart';
 import '../../../../core/base/base_view.dart';
 import '../../Auth controller/authentication_controller.dart';
 
@@ -111,7 +111,8 @@ class OtpView extends BaseView<AuthenticationController> {
                       enabledBorder: OutlineInputBorder(
                         // borderRadius: BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
-                            color: LightThemeColors.opacityTextColor, width: 2.0),
+                            color: LightThemeColors.opacityTextColor,
+                            width: 2.0),
                       ),
                       labelText: "Enter Otp",
                       labelStyle:
@@ -207,11 +208,9 @@ class OtpView extends BaseView<AuthenticationController> {
 
   void authenticateOtp() {
     if (_formKey.currentState!.validate()) {
-      try {
-        controller.otpVerification();
-      } catch (e) {
-        print("Verify otp error: $e");
-      }
+      showLoadingOverLay(
+          asyncFunction: controller.otpVerification(), msg: "Verifying");
+      // controller.otpVerification();
     }
   }
 }

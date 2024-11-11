@@ -2,25 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
-import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/home/views/horizontal_service_card.dart';
-import 'package:manpower_station/app/modules/payment/view/amar_pay_payment.dart';
-import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
-import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
-import '../../../../config/theme/dark_theme_colors.dart';
-import '../../../../config/theme/my_theme.dart';
-import '../../../../config/translations/localization_service.dart';
 import '../../../core/base/base_view.dart';
-import '../../service/view/service_card.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends BaseView<HomeController> {
@@ -96,50 +86,53 @@ class HomeView extends BaseView<HomeController> {
                   /// Application Banner
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: controller.allServiceData.isEmpty
-                          ? _buildBannerShimmer()
-                          : CarouselSlider(
-                              options: CarouselOptions(
-                                height: size.height * 0.19,
-                                autoPlay: true,
-                                // enlargeCenterPage: true,
-                                aspectRatio: 16 / 9,
-                                autoPlayInterval: const Duration(seconds: 6),
-                                autoPlayAnimationDuration:
-                                    const Duration(milliseconds: 300),
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                pauseAutoPlayOnTouch: true,
-                                viewportFraction: 1.0,
-                              ),
-                              items: controller.activeBanners.value.images
-                                  ?.map((url) {
-                                var banner = url.image;
-                                return Builder(
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 5.0),
-                                      child: CachedNetworkImage(
-                                        fit: BoxFit.fitWidth,
-                                        imageUrl:
-                                            '${Constants.bannerImgUrl}$banner',
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
-                                        progressIndicatorBuilder:
-                                            (context, url, progress) => Center(
-                                          child: CircularProgressIndicator(
-                                            value: progress.progress,
+                    child: Card(
+                      elevation: 8,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: controller.allServiceData.isEmpty
+                            ? _buildBannerShimmer()
+                            : CarouselSlider(
+                                options: CarouselOptions(
+                                  height: size.height * 0.19,
+                                  autoPlay: true,
+                                  // enlargeCenterPage: true,
+                                  aspectRatio: 16 / 9,
+                                  autoPlayInterval: const Duration(seconds: 6),
+                                  autoPlayAnimationDuration:
+                                      const Duration(milliseconds: 300),
+                                  autoPlayCurve: Curves.fastOutSlowIn,
+                                  pauseAutoPlayOnTouch: true,
+                                  viewportFraction: 1.0,
+                                ),
+                                items: controller.activeBanners.value.images
+                                    ?.map((url) {
+                                  var banner = url.image;
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        child: CachedNetworkImage(
+                                          fit: BoxFit.fitWidth,
+                                          imageUrl:
+                                              '${Constants.bannerImgUrl}$banner',
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                          progressIndicatorBuilder:
+                                              (context, url, progress) => Center(
+                                            child: CircularProgressIndicator(
+                                              value: progress.progress,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              }).toList(),
-                            ),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                      ),
                     ),
                   ),
                   Padding(

@@ -12,54 +12,54 @@ import '../routes/app_pages.dart';
 class ApiServices {
   /// Login with email or phone Number
   static Future<void> loginWithPhoneOrEmail(String emailOrPhone) async {
-    Dio dio = Dio(
-      BaseOptions(
-        baseUrl: Constants.baseUrl,
-      ),
-    );
+    // Dio dio = Dio(
+    //   BaseOptions(
+    //     baseUrl: Constants.baseUrl,
+    //   ),
+    // );
     try {
       Map<String, dynamic> requestData = {
         'phone_or_email': emailOrPhone,
       };
-      var response =
-          await dio.post("/api/users/sign_in/sign_up", data: requestData);
-      if (response.statusCode == 200) {
-
-        if (kDebugMode) {
-          print('Success data here------${response.data['success']}');
-          print('Message data here------${response.data['message']}');
-        }
-        Get.snackbar('Success', '${response.data['message']}');
-        if (response.data['success'] == true) {
-          Get.toNamed(AppPages.OtpScreen);
-        } else {
-          CustomSnackBar.showCustomErrorSnackBar(
-              title: 'Error', message: 'Having problem to send otp');
-        }
-      }
-      // await BaseClient.safeApiCall(
-      //   "/api/users/sign_in/sign_up",
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Accept': 'application/json',
-      //   },
-      //   RequestType.post,
-      //   data: requestData,
-      //   onSuccess: (response){
-      //     if(response.statusCode==200){
-      //       // if (kDebugMode) {
-      //       //   print('Success data here------${response.data['success']}');
-      //       //   print('Message data here------${response.data['message']}');
-      //       // }
-      //       Get.snackbar('Success','${response.data['message']}');
-      //       if(response.data['success'] == true){
-      //         Get.toNamed(AppPages.OtpScreen);
-      //       }else{
-      //         CustomSnackBar.showCustomErrorSnackBar(title: 'Error',message: 'Having problem to send otp');
-      //       }
-      //     }
-      //   },
-      // );
+    //   var response =
+    //       await dio.post("/api/users/sign_in/sign_up", data: requestData);
+    //   if (response.statusCode == 200) {
+    //
+    //     if (kDebugMode) {
+    //       print('Success data here------${response.data['success']}');
+    //       print('Message data here------${response.data['message']}');
+    //     }
+    //     Get.snackbar('Success', '${response.data['message']}');
+    //     if (response.data['success'] == true) {
+    //       Get.toNamed(AppPages.OtpScreen);
+    //     } else {
+    //       CustomSnackBar.showCustomErrorSnackBar(
+    //           title: 'Error', message: 'Having problem to send otp');
+    //     }
+    //   }
+      await BaseClient.safeApiCall(
+        "/api/users/sign_in/sign_up",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        RequestType.post,
+        data: requestData,
+        onSuccess: (response){
+          if(response.statusCode==200){
+            // if (kDebugMode) {
+            //   print('Success data here------${response.data['success']}');
+            //   print('Message data here------${response.data['message']}');
+            // }
+            Get.snackbar('Success','${response.data['message']}');
+            if(response.data['success'] == true){
+              Get.toNamed(AppPages.OtpScreen);
+            }else{
+              CustomSnackBar.showCustomErrorSnackBar(title: 'Error',message: 'Having problem to send otp');
+            }
+          }
+        },
+      );
     } catch (e) {
       Get.snackbar('Error login :', e.toString());
     }

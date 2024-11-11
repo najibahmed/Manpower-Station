@@ -20,12 +20,14 @@ class _MyPayState extends State<MyPay> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Pay Advance"),
-            Text("Image or another widget"),
-            Text("Image or another widget"),
-            Text("Image or another widget"),
-            Text("Image or another widget"),
-            SizedBox(height: 20,),
+            const Text("Pay Advance "),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text("You have to pay advance 99 tk to book this service"),
+            const SizedBox(
+              height: 20,
+            ),
             Aamarpay(
               // This will return a payment url based on failUrl,cancelUrl,successUrl
               returnUrl: (String url) {
@@ -39,7 +41,9 @@ class _MyPayState extends State<MyPay> {
               },
               // This will return the payment event with a message
               status: (EventState event, String message) {
-                if(event == EventState.backButtonPressed|| event ==EventState.cancel|| event == EventState.error){
+                if (event == EventState.backButtonPressed ||
+                    event == EventState.cancel ||
+                    event == EventState.error) {
                   setState(() {
                     isLoading = false;
                   });
@@ -79,23 +83,23 @@ class _MyPayState extends State<MyPay> {
               //The transactionID must be unique for every payment
               /// transactionID: "transactionID",
               description: "test",
-              // When the application goes to the producation the isSandbox must be false
+              // When the application goes to the production the isSandbox must be false
               isSandBox: true,
               child: isLoading
                   ? const Center(
-                child: CircularProgressIndicator(),
-              )
+                      child: CircularProgressIndicator(),
+                    )
                   : Container(
-                color: Colors.orange,
-                height: 50,
-                child: const Center(
-                  child: Text(
-                    "Payment",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
-              ),
+                      color: Colors.orange,
+                      height: 50,
+                      child: const Center(
+                        child: Text(
+                          "Payment",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                      ),
+                    ),
             ),
           ],
         ),
@@ -103,5 +107,3 @@ class _MyPayState extends State<MyPay> {
     );
   }
 }
-
-

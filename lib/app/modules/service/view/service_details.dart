@@ -169,11 +169,11 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
               const SizedBox(height: 5),
               Row(
                 children: [
-                  Text(
+                  service.serviceDiscount!.discount.toString()!='0'? Text(
                     "${service.servicePrice} ",
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         decoration: TextDecoration.lineThrough, fontSize: 20),
-                  ),
+                  ):const SizedBox(),
                   Text(
                     "${Constants.banglaCurrency}${getDiscountAmount(service.serviceDiscount, service.servicePrice!)}",
                     style: const TextStyle(
@@ -185,6 +185,16 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                     " (starting with)",
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
+                  const Spacer(),
+                  service.serviceDiscount!.discount.toString()!='0'? Text(
+                    textAlign: TextAlign.center,
+                    '${service.serviceDiscount!.discount}'
+                        '${service.serviceDiscount!.discountType == "Percentage Discount" ? '%' : Constants.banglaCurrency} OFF',
+                    style: const TextStyle(
+                      fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange
+                    ),): const SizedBox(),
                 ],
               ),
               SizedBox(

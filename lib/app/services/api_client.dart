@@ -27,11 +27,12 @@ class BaseClient {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization':  Constants.accessToken         //MySharedPref.getAccessToken()
+      // 'Authorization': MySharedPref.getAccessToken()
+      //Constants.accessToken         //MySharedPref.getAccessToken()
     },
     connectTimeout: const Duration(seconds: 15),
-    // sendTimeout: const Duration(seconds: 30),
-  ))
+  )
+  )
     ..interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         // Attach the access token to every request
@@ -42,8 +43,10 @@ class BaseClient {
         return handler.next(options); // Continue
       },
       onError: (DioException error, handler) async {
-        // Check if the error is due to expired access token (401)
-        if (error.response?.statusCode == 401) {
+        print(
+            "interceptor for refreshToken error: ${error.response?.statusCode}");
+        // Check if the error is due to expired access token (400)
+        if (error.response?.statusCode == 400) {
           // Attempt to refresh the token
           try {
             final newTokens = await _refreshToken();

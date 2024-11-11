@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../config/translations/strings_enum.dart';
 
@@ -42,7 +43,9 @@ Widget _getLoadingIndicator({String? msg}){
     ),
     child: Column(mainAxisSize: MainAxisSize.min,children: [
       Image.asset('assets/images/manpower_name_logo.png',height: 45.h,),
-      SizedBox(width: 8.h,),
+      SizedBox(width: 3.h,),
+      const CircularProgressIndicator(),
+      SizedBox(width: 4.h,),
       Text(msg ?? Strings.loading.tr,style: Get.theme.textTheme.bodyLarge),
     ],),
   );
