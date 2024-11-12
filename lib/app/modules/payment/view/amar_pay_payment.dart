@@ -1,6 +1,8 @@
 import 'package:aamarpay/aamarpay.dart';
 import 'package:flutter/material.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
+import 'package:manpower_station/utils/constants.dart';
+import 'package:manpower_station/utils/helper_function.dart';
 
 class MyPay extends StatefulWidget {
   const MyPay({super.key});
@@ -20,13 +22,17 @@ class _MyPayState extends State<MyPay> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Pay Advance "),
+            Container(
+              color: Theme.of(context).cardColor,
+                width:getScreenWidth(context)*1,
+                height: getScreenHeight(context)*0.05,
+                child: const Center(child: Text("Pay Advance "))),
             const SizedBox(
               height: 20,
             ),
-            const Text("You have to pay advance 99 tk to book this service"),
+            const Text("You have to pay advance 99${Constants.banglaCurrency} to confirm this service."),
             const SizedBox(
-              height: 20,
+              height: 40,
             ),
             Aamarpay(
               // This will return a payment url based on failUrl,cancelUrl,successUrl

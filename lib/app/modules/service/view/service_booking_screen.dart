@@ -202,7 +202,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                     'Date-Time:',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .displayMedium,
+                                        .displaySmall,
                                   ),
                                   Text(
                                     Constants.formatDateTime.format(

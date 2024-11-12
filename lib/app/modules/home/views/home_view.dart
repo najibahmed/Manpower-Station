@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/home/views/horizontal_service_card.dart';
@@ -10,6 +11,7 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
+import '../../../../config/theme/my_fonts.dart';
 import '../../../core/base/base_view.dart';
 import '../controllers/home_controller.dart';
 
@@ -82,7 +84,10 @@ class HomeView extends BaseView<HomeController> {
                   //   ],
                   // ),
                   // SizedBox(height: 10.h),
-                   SizedBox(height: 8.h,),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+
                   /// Application Banner
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -110,18 +115,18 @@ class HomeView extends BaseView<HomeController> {
                                   var banner = url.image;
                                   return Builder(
                                     builder: (BuildContext context) {
-                                      return Container(
-                                        width: MediaQuery.of(context).size.width,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 5.0),
+                                      return SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         child: CachedNetworkImage(
-                                          fit: BoxFit.fitWidth,
+                                          fit: BoxFit.cover,
                                           imageUrl:
                                               '${Constants.bannerImgUrl}$banner',
                                           errorWidget: (context, url, error) =>
                                               const Icon(Icons.error),
                                           progressIndicatorBuilder:
-                                              (context, url, progress) => Center(
+                                              (context, url, progress) =>
+                                                  Center(
                                             child: CircularProgressIndicator(
                                               value: progress.progress,
                                             ),
@@ -136,7 +141,8 @@ class HomeView extends BaseView<HomeController> {
                     ),
                   ),
                   Padding(
-                    padding:const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -191,9 +197,11 @@ class HomeView extends BaseView<HomeController> {
                             }).toList(),
                           ),
                   ),
+
                   /// Category text message
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8),
                     child: Text(
                       '${Strings.askTypeOfService.tr}?',
                       style: Theme.of(context).textTheme.displayLarge,

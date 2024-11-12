@@ -22,7 +22,16 @@ num getDiscountAmount(discount,num price) {
     return price-discount.discount!;
   }
 }
+/// Device
+double getScreenWidth(BuildContext context) {
+  return MediaQuery.of(context).size.width;
+}
 
+double getScreenHeight(BuildContext context){
+  return MediaQuery.of(context).size.height;
+}
+
+/// Check image format
 Widget isSvgOrJpg(String imageUrl, BuildContext context) {
   // Check for .svg extension
   if (imageUrl.toLowerCase().endsWith('.svg')) {
