@@ -9,6 +9,7 @@ import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+import 'package:manpower_station/utils/app_Images.dart';
 
 class RegistrationView extends BaseView<AuthenticationController> {
   RegistrationView({super.key});
@@ -44,7 +45,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
               ),
               Center(
                 child: Image.asset(
-                  'assets/images/registration_vactor.png',
+                  AppImages.instance.registrationVector,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -52,14 +53,16 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
               Text("${Strings.enterEmailPhnNum.tr}",
-                  style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
+                  style: TextStyle(fontSize: MyFonts.displayMediumSize)),
               const SizedBox(
                 height: 2,
               ),
-              Text("${Strings.getVerification.tr}.",
-                  style: TextStyle(
-                      fontSize: MyFonts.bodyMediumSize,
-                      color: LightThemeColors.opacityTextColor)),
+              Center(
+                child: Text("${Strings.getVerification.tr}",
+                    style: TextStyle(
+                        fontSize: MyFonts.bodyMediumSize,
+                        color: LightThemeColors.opacityTextColor)),
+              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.04,
               ),
@@ -83,11 +86,13 @@ class RegistrationView extends BaseView<AuthenticationController> {
                       borderSide: BorderSide(
                           color: LightThemeColors.primaryColor, width: 2.0),
                     ),
-                    enabledBorder: UnderlineInputBorder(
-                      // borderRadius: BorderRadius.all(Radius.circular(10)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(18)),
                       borderSide: BorderSide(
                           color: LightThemeColors.opacityTextColor, width: 2.0),
                     ),
+                    labelText: "Enter Email or Phone Number",
+                    labelStyle: TextStyle(color: LightThemeColors.hintTextColor),
                     hintText: '01********** or abc@gmail.com',
                     hintStyle:
                         TextStyle(color: LightThemeColors.hintTextColor)),
@@ -159,17 +164,20 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+                height: MediaQuery.of(context).size.height * 0.03,
               ),
               Center(
                 child: SizedBox(
-                  height: 38,
-                  width: 298,
+                  height: 45,
+                  width: 300,
                   child: ElevatedButton(
                       onPressed: () {
                         _sendOtp();
                       },
                       style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)
+                        ),
                           backgroundColor: Colors.orange),
                       child: Text(
                         "${Strings.sendOtp.tr}",
@@ -194,7 +202,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18.0),
                     child: Text(
-                      "Or",
+                      "Or Sign Up With",
                       style: TextStyle(color: Colors.black54),
                     ),
                   ),
@@ -206,50 +214,97 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
+                height: MediaQuery.of(context).size.height * 0.04,
               ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 260,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              backgroundColor: Colors.white,
-                              elevation: 5),
-                          onPressed: () {},
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: Image.asset(
-                                    'assets/images/google.png',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                const Text(
-                                  'Continue with Google',
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.w400),
-                                )
-                              ],
-                            ),
-                          )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    height: 60,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color:Theme.of(context).hintColor)),
+                    child: IconButton(
+                      icon: Image.asset(
+                        AppImages.instance.appleLogo,
+                        height: 40,
+                      ),
+                      onPressed: () {},
                     ),
-                  ],
-                ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    height: 60,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Theme.of(context).hintColor)),
+                    child: IconButton(
+                      icon: Image.asset(
+                        AppImages.instance.googleLogo,
+                        height: 30,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    height: 60,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Theme.of(context).hintColor)),
+                    child: IconButton(
+                      icon: Image.asset(
+                        AppImages.instance.facebookLogo,
+                        height: 30,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
               ),
+              // Center(
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       SizedBox(
+              //         width: 260,
+              //         child: ElevatedButton(
+              //             style: ElevatedButton.styleFrom(
+              //                 shape: RoundedRectangleBorder(
+              //                     borderRadius: BorderRadius.circular(8)),
+              //                 backgroundColor: Colors.white,
+              //                 elevation: 5),
+              //             onPressed: () {},
+              //             child: Padding(
+              //               padding:
+              //                   const EdgeInsets.symmetric(horizontal: 8.0),
+              //               child: Row(
+              //                 children: [
+              //                   SizedBox(
+              //                     height: 30,
+              //                     width: 30,
+              //                     child: Image.asset(
+              //                       AppImages.instance.googleLogo,
+              //                       fit: BoxFit.fill,
+              //                     ),
+              //                   ),
+              //                   const SizedBox(
+              //                     width: 20,
+              //                   ),
+              //                   const Text(
+              //                     'Continue with Google',
+              //                     style: TextStyle(
+              //                         color: Colors.black54,
+              //                         fontWeight: FontWeight.w400),
+              //                   )
+              //                 ],
+              //               ),
+              //             )),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

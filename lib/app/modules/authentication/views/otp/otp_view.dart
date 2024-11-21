@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
+import 'package:manpower_station/utils/app_Images.dart';
 import '../../../../../config/theme/light_theme_colors.dart';
 import '../../../../../config/theme/my_fonts.dart';
 import '../../../../../config/translations/strings_enum.dart';
@@ -75,7 +76,7 @@ class OtpView extends BaseView<AuthenticationController> {
                 ),
                 Center(
                   child: Image.asset(
-                    'assets/images/otp_lock.png',
+                    AppImages.instance.otpVector,
                     width: 124,
                     height: 114,
                     fit: BoxFit.fitWidth,

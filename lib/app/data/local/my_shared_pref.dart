@@ -16,6 +16,7 @@ class MySharedPref {
   static const String _lightThemeKey = 'is_theme_light';
   static const String refreshTokenKey='refresh_token';
   static const String isLoggedIn = 'isLoggedIn';
+  static const String isOnBoardingChecked = 'isOnBoardingChecked';
   static const String userId = 'adminId';
 
   /// init get storage services
@@ -59,6 +60,16 @@ class MySharedPref {
 
   /// clear all data from shared pref
   static Future<void> clear() async => await _sharedPreferences.clear();
+
+  /// check onBoarding status
+  static Future<bool> setOnBoardingStatus(bool status) async {
+    final pref = await SharedPreferences.getInstance();
+    return pref.setBool(isOnBoardingChecked, status);
+  }
+  static Future<bool> getOnBoardingStatus() async {
+    final pref = await SharedPreferences.getInstance();
+    return pref.getBool(isOnBoardingChecked) ?? false;
+  }
 
   /// check user login status
   static Future<bool> setLoginStatus(bool status) async {

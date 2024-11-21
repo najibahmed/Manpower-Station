@@ -24,7 +24,7 @@ class Strings {
   static const String internetError = 'internet error';
 
 
-  static const String enterEmailPhnNum = 'Enter your Email or Phone Number';
+  static const String enterEmailPhnNum = 'Register with your Email or Phone Number';
   static const String getVerification = 'You will get 6-digit verification code.';
   static const String acceptTermMsg = 'By entering your email or phone number, you agree to our';
   static const String and = 'and';

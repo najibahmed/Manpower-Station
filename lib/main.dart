@@ -12,6 +12,7 @@ Future<void> main() async {
   // wait for bindings
   WidgetsFlutterBinding.ensureInitialized();
   await MySharedPref.init();
+  final onboardingComplete = await MySharedPref.getOnBoardingStatus();
   // initialize local notifications service
   // await AwesomeNotificationsHelper.init();
   runApp(
@@ -38,7 +39,7 @@ Future<void> main() async {
               ),
             );
           },
-          initialRoute:AppPages.INITIAL, // first screen to show when app is running
+          initialRoute: onboardingComplete? AppPages.INITIAL: AppPages.OnBoardingView , // first screen to show when app is running
           getPages: AppPages.routes, // app screens
           initialBinding: InitialBinding(),
           locale: MySharedPref.getCurrentLocal(), // app language

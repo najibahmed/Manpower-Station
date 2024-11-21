@@ -85,7 +85,7 @@ class _RedirectScreenState extends State<RedirectScreen> with SingleTickerProvid
               builder: (context, child) {
                 return Opacity(
                   opacity: _fadeInAnimation1.value,
-                  child: Image.asset(AppImages.instance.appLogo,color: LightThemeColors.primaryColor,)
+                  child: Image.asset(AppImages.instance.manpower_Logo,color: LightThemeColors.primaryColor,)
                 );
               },
             ),

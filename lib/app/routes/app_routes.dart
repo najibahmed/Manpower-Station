@@ -27,6 +27,7 @@ abstract class Routes {
   static const updateOtp = _Paths.UpdateOtp;
   static const bookingHistoryDetails = _Paths.BookingHistoryDetails;
   static const reportPage = _Paths.ReportPage;
+  static const onBoarding = _Paths.OnBoarding;
 
 }
 
@@ -54,5 +55,6 @@ abstract class _Paths {
   static const UpdateOtp = '/updateOtp';
   static const BookingHistoryDetails = '/booking_history_details';
   static const ReportPage = '/report_page';
+  static const OnBoarding = '/on_boarding';
 
 }

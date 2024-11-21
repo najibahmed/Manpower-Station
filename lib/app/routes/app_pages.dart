@@ -10,6 +10,8 @@ import 'package:manpower_station/app/modules/checkOut/views/checkout_screen.dart
 import 'package:manpower_station/app/modules/help_support/binding/help_binding.dart';
 import 'package:manpower_station/app/modules/help_support/view/help_view.dart';
 import 'package:manpower_station/app/modules/help_support/view/report_page.dart';
+import 'package:manpower_station/app/modules/onBoarding/on_boarding_bindings.dart';
+import 'package:manpower_station/app/modules/onBoarding/on_boarding_view.dart';
 import 'package:manpower_station/app/modules/service/bindings/service_binding.dart';
 import 'package:manpower_station/app/modules/service/view/service_booking_screen.dart';
 import 'package:manpower_station/app/modules/service/view/service_details.dart';
@@ -61,9 +63,14 @@ class AppPages {
   static const UpdateOtp = Routes.updateOtp;
   static const OrderHistoryDetails = Routes.bookingHistoryDetails;
   static const ReportScreen = Routes.reportPage;
+  static const OnBoardingView = Routes.onBoarding;
 
   static final routes = [
     GetPage(
+      name: _Paths.OnBoarding,
+      page: () => const OnBoardingScreen(),
+      binding: OnBoardingBindings(),
+    ),GetPage(
       name: _Paths.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
