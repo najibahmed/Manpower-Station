@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/preferred_size.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/help_support/controller/help_controller.dart';
-
 import '../../../../config/theme/light_theme_colors.dart';
 import '../../../components/custom_loading_overlay.dart';
 import '../../../components/custom_snackbar.dart';
@@ -28,7 +24,6 @@ class ReportPage extends BaseView<HelpController>{
 
   @override
   Widget body(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
     return SafeArea(
         child: Padding(

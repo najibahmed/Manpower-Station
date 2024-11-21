@@ -51,7 +51,8 @@ dependencies:
 
 #  firebase_core: ^2.24.2 # to initialize firebase services
 #  firebase_messaging: ^14.7.10 # fcm services
-  awesome_notifications: ^0.9.1 # notifications services (will be used for fcm)
+  awesome_notifications: ^0.10.0 # notifications services (will be used for fcm)
+  permission_handler: ^11.0.0 # handle permission
 
   connectivity_plus: ^5.0.2 # check internet connection
 
@@ -74,11 +75,10 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   cached_network_image: ^3.4.1
   lottie: ^3.1.3
-  flutter_native_splash:
+#  flutter_native_splash:
 
 
 #  webview_flutter: ^4.9.0
-#  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:

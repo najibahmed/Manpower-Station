@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
@@ -12,7 +11,6 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
-import '../../../../config/theme/dark_theme_colors.dart';
 
 class ServiceBookingScreen extends BaseView<ServiceController> {
   const ServiceBookingScreen({super.key});
@@ -74,6 +72,13 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         ),
                       ),
                       SizedBox(height: screenHeight * .02),
+                      Text(
+                        'Choose a Duration and Time.',
+                        style: TextStyle(
+                          // color: LightThemeColors.bodyTextColor,
+                            fontSize: MyFonts.bodyLargeSize,
+                            fontWeight: FontWeight.bold),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(

@@ -1,10 +1,6 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
-import 'package:manpower_station/utils/constants.dart';
 
 import '../components/custom_snackbar.dart';
 import '../routes/app_pages.dart';

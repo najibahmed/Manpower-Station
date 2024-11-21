@@ -86,7 +86,7 @@ class UserProfileScreen extends BaseView<UserController> {
                             color: Colors.grey.withOpacity(.30),
                           ),
                           child: controller.userData?.value.avatar != null
-                              ? isSvgOrJpg(
+                              ? HelperFunction.instance.isSvgOrJpg(
                                   "${controller.userData?.value.avatar}",
                                   context)
                               : const Icon(

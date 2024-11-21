@@ -75,9 +75,9 @@ class UserController extends BaseController {
   /// Get user information
   Future<void> getUserInformation() async {
     try {
-      String userid = MySharedPref.getUserId().toString();
+      String? userId = await MySharedPref.getUserId();
       String url =
-          "/api/clients/get/unique/client/profile/${Constants.userId}";
+          "/api/clients/get/unique/client/profile/$userId";
       await BaseClient.safeApiCall(
         url,
         RequestType.get,
@@ -158,9 +158,9 @@ class UserController extends BaseController {
       //     'area' : updateAreaController.text.trim(),
       //   };
       // }
-      String userid = MySharedPref.getUserId().toString();
+      String? userId = await MySharedPref.getUserId();
       String url =
-          "/api/clients/update/client/profile/${Constants.userId}";
+          "/api/clients/update/client/profile/$userId";
       await BaseClient.safeApiCall(
         url,
         RequestType.put,

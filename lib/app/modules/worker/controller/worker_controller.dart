@@ -4,7 +4,6 @@ import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/services/api_client.dart';
-import 'package:manpower_station/utils/appLoggerUtils.dart';
 
 import '../../../components/custom_snackbar.dart';
 

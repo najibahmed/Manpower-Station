@@ -72,14 +72,14 @@ class MySharedPref {
   }
 
   /// set and get user ID
-  static Future<bool> setUserId(int id) async {
+  static Future<bool> setUserId(String id) async {
     final pref = await SharedPreferences.getInstance();
-    return pref.setInt(userId, id);
+    return pref.setString(userId, id);
   }
 
-  static Future<int> getUserId() async {
+  static Future<String?> getUserId() async {
     final pref = await SharedPreferences.getInstance();
-    return pref.getInt(userId) ?? 0;
+    return pref.getString(userId);
   }
 
 ///saved jwt

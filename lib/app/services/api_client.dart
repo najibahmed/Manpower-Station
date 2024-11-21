@@ -4,9 +4,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:logger/logger.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
+import 'package:manpower_station/utils/appLoggerUtils.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -27,12 +29,9 @@ class BaseClient {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      // 'Authorization': MySharedPref.getAccessToken()
-      //Constants.accessToken         //MySharedPref.getAccessToken()
     },
     connectTimeout: const Duration(seconds: 15),
-  )
-  )
+  ))
     ..interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         // Attach the access token to every request
@@ -43,14 +42,15 @@ class BaseClient {
         return handler.next(options); // Continue
       },
       onError: (DioException error, handler) async {
-        print(
-            "interceptor for refreshToken error: ${error.response?.statusCode}");
+        // "interceptor for refreshToken error: ${error.response?.statusCode}");
         // Check if the error is due to expired access token (400)
         if (error.response?.statusCode == 400) {
+          print(
+              "interceptor for refreshToken error: ${error.response?.statusCode}");
           // Attempt to refresh the token
           try {
+            print('inside try refresh token');
             final newTokens = await _refreshToken();
-
             // Save the new tokens
             await MySharedPref.setAccessToken(newTokens['access_token']!);
             await MySharedPref.setRefreshToken(newTokens['refresh_token']!);
@@ -201,7 +201,7 @@ class BaseClient {
         url: url,
       ));
     } else {
-      _handleError(error.toString());
+      _handleError("${error.toString()}");
     }
   }
 
@@ -279,7 +279,7 @@ class BaseClient {
 
     var exception = ApiException(
         url: url,
-        message: error.message ?? 'Un Expected Api Error!',
+        message: error.message ?? 'Un-Expected Api Error!',
         response: error.response,
         statusCode: error.response?.statusCode);
 
@@ -295,19 +295,24 @@ class BaseClient {
   /// from api it will show the reason (the dio message)
   static handleApiError(ApiException apiException) {
     String msg = apiException.toString();
-    CustomSnackBar.showCustomErrorToast(message: msg);
+    if(kDebugMode){
+      // CustomSnackBar.showCustomErrorToast(message: "handle api error:$msg");
+      print("handle api error:$msg");
+    }
   }
 
   /// handle errors without response (500, out of time, no internet,..etc)
   static _handleError(String msg) {
-    CustomSnackBar.showCustomErrorToast(message: msg);
+    CustomSnackBar.showCustomErrorToast(message: "handle error:$msg");
   }
 }
 
 Future<Map<String, String>> _refreshToken() async {
-  String? refreshToken = await MySharedPref.getRefreshToken();
-
+  print('inside refresh token');
+  String? refreshToken =  await MySharedPref.getRefreshToken();
+  print("refresh token:${refreshToken}");
   if (refreshToken == null) {
+    LoggerUtil.instance.printLog(msg: "Refresh token null : ${MySharedPref.getRefreshToken()}",logType: LogType.warning);
     throw Exception('No Access token available');
   }
   Dio dio = Dio(
@@ -324,6 +329,7 @@ Future<Map<String, String>> _refreshToken() async {
     '/api/users/refresh/token',
   );
   if (response.statusCode == 200) {
+    LoggerUtil.instance.printLog(msg: response.data);
     return {
       'access_token': response.data['access_token'],
       'refresh_token': response.data['refresh_token'],

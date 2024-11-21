@@ -79,7 +79,7 @@ class ServiceCard extends StatelessWidget {
                         children: [
                           Text(
                             "${Constants.banglaCurrency}"
-                                 "${getDiscountAmount(service.serviceDiscount,service.servicePrice!)} ",
+                                 "${HelperFunction.instance.getDiscountAmount(service.serviceDiscount,service.servicePrice!)} ",
                             style: const TextStyle(
                                 fontSize: 18,
                                 color: LightThemeColors.primaryColor,

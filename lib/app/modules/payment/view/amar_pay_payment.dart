@@ -24,8 +24,8 @@ class _MyPayState extends State<MyPay> {
           children: [
             Container(
               color: Theme.of(context).cardColor,
-                width:getScreenWidth(context)*1,
-                height: getScreenHeight(context)*0.05,
+                width:HelperFunction.instance.getScreenWidth(context)*1,
+                height:HelperFunction.instance.getScreenHeight(context)*0.05,
                 child: const Center(child: Text("Pay Advance "))),
             const SizedBox(
               height: 20,

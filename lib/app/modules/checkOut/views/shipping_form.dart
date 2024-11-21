@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 
-import '../../../../config/theme/dark_theme_colors.dart';
-import '../../../../config/theme/light_theme_colors.dart';
 
 // Widget for shipping form
 class ShippingForm extends StatefulWidget {
@@ -66,10 +64,23 @@ class _ShippingFormState extends State<ShippingForm> {
                     borderSide: BorderSide(color: Colors.black54, width: 1.0),
                   ),
                 ),
-                validator: (value) {
+                validator: (String? value) {
+                  // Define the regex pattern for the allowed prefixes and 11 digits.
+                  String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
+                  RegExp regExp = RegExp(phonePattern);
+                  // Check if the input is null or empty.
                   if (value == null || value.isEmpty) {
-                    return 'Provide a valid phone number';
+                    return 'Please enter your phone number';
                   }
+                   if (value.isPhoneNumber) {
+                    // Validate the input using the regex.
+                    if (!regExp.hasMatch(value)) {
+                      return 'Please enter a valid phone number.';
+                    }
+                  } else {
+                    return 'Please enter a valid Number.';
+                  }
+                  // If the input is valid, return null (no error).
                   return null;
                 },
               ),

@@ -24,7 +24,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
         fit: BoxFit.cover,
         color: controller.isLightMode.value
             ? DarkThemeColors.primaryColor
-            :  Colors.white,
+            : Colors.white,
       ),
       leading: IconButton(
           onPressed: () {
@@ -43,8 +43,8 @@ class WorkerListScreen extends BaseView<WorkerController> {
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10))),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 10.0, horizontal: 8),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
               child: TextField(
                 controller: controller.workerSearchController,
                 keyboardType: TextInputType.text,
@@ -57,8 +57,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                   isDense: true,
                   prefixIcon: Icon(Icons.search_outlined),
                   focusedBorder: OutlineInputBorder(
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(20)),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -354,8 +353,8 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                             backgroundColor: isSelected
                                                 ? Colors.red[100]
                                                 : controller.isLightMode.value
-                                                ? Colors.white70
-                                                :  Colors.white,
+                                                    ? Colors.white70
+                                                    : Colors.white,
                                           ),
                                           icon: Icon(
                                             isSelected

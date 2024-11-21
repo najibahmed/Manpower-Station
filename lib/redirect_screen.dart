@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/app_Images.dart';
-import 'package:manpower_station/utils/constants.dart';
 class RedirectScreen extends StatefulWidget {
   const RedirectScreen({super.key});
 
@@ -56,9 +54,9 @@ class _RedirectScreenState extends State<RedirectScreen> with SingleTickerProvid
     Future.delayed(const Duration(seconds: 4),() async {
       final isUserLoggedIn =await MySharedPref.getLoginStatus();
       if(isUserLoggedIn){
-        Get.offNamed(AppPages.Registration);
-      }else{
         Get.offNamed(AppPages.DashboardView);
+      }else{
+        Get.offNamed(AppPages.Registration);
       }
     },);
 

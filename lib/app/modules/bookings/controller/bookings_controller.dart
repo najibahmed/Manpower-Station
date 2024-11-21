@@ -8,6 +8,8 @@ import 'package:manpower_station/app/services/api_client.dart';
 import 'package:manpower_station/app/services/api_service.dart';
 import 'package:manpower_station/utils/constants.dart';
 
+import '../../../data/local/my_shared_pref.dart';
+
 class BookingsController extends BaseController with GetTickerProviderStateMixin{
    late TabController tabController;
    RxInt tabIndex=0.obs;
@@ -42,15 +44,18 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
    }
    /// get all bookings for particular userId
    Future<void> getAllBookingsByUid() async {
-     var userID=Constants.userId;
+     String? userId = await MySharedPref.getUserId();
      try {
-       var url="/api/bookings/get/unique/user/booking/$userID";
+       var url="/api/bookings/get/unique/user/booking/$userId";
        await BaseClient.safeApiCall(
            url,
            RequestType.get,
-           // headers: {
-           //   'Authorization': Constants.accessToken
-           // },
+           headers: {
+                 'Content-Type': 'application/json',
+                 'Accept': 'application/json',
+                 'Authorization': MySharedPref.getAccessToken()
+                 //Constants.accessToken         //MySharedPref.getAccessToken()
+               },
            onSuccess: (response) {
              if (response.statusCode == 201) {
                var jsonData = response.data['bookings'];
@@ -69,7 +74,7 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
 
   @override
   void onInit() {
-     getAllBookingsByUid();
+     // getAllBookingsByUid();
     tabController = TabController(length: 2,initialIndex: 0,vsync: this);
     super.onInit();
   }
