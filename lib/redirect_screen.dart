@@ -51,12 +51,12 @@ class _RedirectScreenState extends State<RedirectScreen> with SingleTickerProvid
   }
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 4),() async {
+    Future.delayed(const Duration(seconds: 3),() async {
       final isUserLoggedIn =await MySharedPref.getLoginStatus();
       if(isUserLoggedIn){
-        Get.offNamed(AppPages.DashboardView);
-      }else{
         Get.offNamed(AppPages.Registration);
+      }else{
+        Get.offNamed(AppPages.DashboardView);
       }
     },);
 

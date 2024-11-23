@@ -9,7 +9,6 @@ abstract class Routes {
   static const dashBoard = _Paths.DashBoard;
   static const registrationScreen = _Paths.Registration;
   static const otpScreen = _Paths.OtpScreen;
-  static const verificationDone = _Paths.VerificationDone;
   static const userProfile = _Paths.UserProfile;
   static const orderHistory = _Paths.BookingHistory;
   static const menusPage = _Paths.MenusPage;
@@ -28,6 +27,8 @@ abstract class Routes {
   static const bookingHistoryDetails = _Paths.BookingHistoryDetails;
   static const reportPage = _Paths.ReportPage;
   static const onBoarding = _Paths.OnBoarding;
+  static const welcomePage = _Paths.WelcomePage;
+
 
 }
 
@@ -37,7 +38,6 @@ abstract class _Paths {
   static const DashBoard = '/dash_board';
   static const Registration = '/registration';
   static const OtpScreen = '/otp';
-  static const VerificationDone = '/registration_done';
   static const UserProfile = '/user_profile';
   static const MenusPage = '/menus_page';
   static const BookingHistory = '/order_history';
@@ -56,5 +56,6 @@ abstract class _Paths {
   static const BookingHistoryDetails = '/booking_history_details';
   static const ReportPage = '/report_page';
   static const OnBoarding = '/on_boarding';
+  static const WelcomePage = '/welcome_page';
 
 }

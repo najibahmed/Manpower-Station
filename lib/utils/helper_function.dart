@@ -1,12 +1,26 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/utils/constants.dart';
 class HelperFunction {
-  static HelperFunction instance = HelperFunction();
+  static HelperFunction instance=HelperFunction();
+
+  ///  Singleton pattern
+  // static HelperFunction _instance;
+//   static get instance => _instance;
+//
+// //private constructor
+//   HelperFunction._internal();
+//
+//   // Factory constructor implementing Singleton
+//   factory HelperFunction() {
+//     _instance ??= HelperFunction._internal();
+//     return _instance!;
+//   }
 
 
   getFormattedDate(DateTime dt, {String pattern = 'yyyy-MM-dd – kk:mm'}) =>
@@ -326,4 +340,9 @@ class HelperFunction {
     );
   }
 
+
+  Future<bool> isInternetConnected() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult != ConnectivityResult.none;
+  }
 }

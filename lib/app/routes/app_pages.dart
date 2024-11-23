@@ -12,6 +12,7 @@ import 'package:manpower_station/app/modules/help_support/view/help_view.dart';
 import 'package:manpower_station/app/modules/help_support/view/report_page.dart';
 import 'package:manpower_station/app/modules/onBoarding/on_boarding_bindings.dart';
 import 'package:manpower_station/app/modules/onBoarding/on_boarding_view.dart';
+import 'package:manpower_station/app/modules/onBoarding/welcome_screen.dart';
 import 'package:manpower_station/app/modules/service/bindings/service_binding.dart';
 import 'package:manpower_station/app/modules/service/view/service_booking_screen.dart';
 import 'package:manpower_station/app/modules/service/view/service_details.dart';
@@ -44,7 +45,6 @@ class AppPages {
   static const Home = Routes.homeScreen;
   static const Registration = Routes.registrationScreen;
   static const OtpScreen = Routes.otpScreen;
-  static const RegistrationDone = Routes.verificationDone;
   static const UserProfile = Routes.userProfile;
   static const OrderHistory = Routes.orderHistory;
   static const MenusPage = Routes.menusPage;
@@ -64,6 +64,7 @@ class AppPages {
   static const OrderHistoryDetails = Routes.bookingHistoryDetails;
   static const ReportScreen = Routes.reportPage;
   static const OnBoardingView = Routes.onBoarding;
+  static const WelcomeView = Routes.welcomePage;
 
   static final routes = [
     GetPage(
@@ -88,8 +89,8 @@ class AppPages {
         transition: Transition.rightToLeft
     ),
     GetPage(
-      name: _Paths.VerificationDone,
-      page: () =>  VerificationCompleted(),
+      name: _Paths.WelcomePage,
+      page: () =>  WelcomeScreen(),
         transition: Transition.rightToLeft
     ),GetPage(
       name: _Paths.UserProfile,

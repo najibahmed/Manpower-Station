@@ -18,7 +18,6 @@ class WelcomeScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title:  Image.asset(
-          // height: MediaQuery.of(context).size.height * 0.2,
           AppImages.instance.manpower_Logo,
         ),
         backgroundColor: Colors.transparent,

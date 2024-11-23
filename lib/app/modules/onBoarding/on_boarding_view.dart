@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/modules/onBoarding/on_boarding_controller.dart';
-import 'package:manpower_station/app/modules/onBoarding/welcome_screen.dart';
+import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/app_Images.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -28,11 +28,7 @@ class OnBoardingScreen extends GetView<OnBoardingController> {
             children: [
               TextButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const WelcomeScreen()));
+                   Get.offNamed(AppPages.WelcomeView);
                   },
                   child: const Text(
                     "Skip",
@@ -218,11 +214,7 @@ class OnBoardingScreen extends GetView<OnBoardingController> {
                           backgroundColor: LightThemeColors.primaryColor),
                       onPressed: () {
                         if (controller.currentPage.value == 2) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const WelcomeScreen()));
+                          Get.offNamed(AppPages.WelcomeView);
                         }
                         controller.currentPage.value++;
                         controller.pageController.animateToPage(

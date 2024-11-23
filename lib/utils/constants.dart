@@ -27,12 +27,4 @@ List categoryImage=[
   'assets/category/painting.jpg',
   'assets/category/washing.jpg',
   'assets/category/category_cleaning.jpg',
-  'assets/category/category_cleaning.jpg',
-  'assets/category/category_cleaning.jpg',
-  'assets/category/category_cleaning.jpg',
-  'assets/category/category_cleaning.jpg',
-  'assets/category/category_cleaning.jpg',
-  'assets/category/category_cleaning.jpg',
-  'assets/category/category_cleaning.jpg',
-
 ];

@@ -52,8 +52,10 @@ class RegistrationView extends BaseView<AuthenticationController> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              Text("${Strings.enterEmailPhnNum.tr}",
-                  style: TextStyle(fontSize: MyFonts.displayMediumSize)),
+              Center(
+                child: Text("${Strings.enterEmailPhnNum.tr}",
+                    style: TextStyle(fontSize: MyFonts.displayMediumSize)),
+              ),
               const SizedBox(
                 height: 2,
               ),
@@ -126,7 +128,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 },
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
               Row(
                 children: [
@@ -164,7 +166,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
+                height: MediaQuery.of(context).size.height * 0.06,
               ),
               Center(
                 child: SizedBox(
