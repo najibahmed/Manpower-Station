@@ -7,7 +7,6 @@ import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/home/controllers/home_controller.dart';
-import 'package:manpower_station/app/modules/menu/controller/menu_controller.dart';
 import 'package:manpower_station/app/modules/menu/widgets/menu_item.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -46,7 +45,7 @@ class MenuView extends BaseView<HomeController>{
                     color: Colors.grey.withOpacity(.30),
                   ),
                   child: userController.userData?.value.avatar != null
-                      ? isSvgOrJpg("${userController.userData?.value.avatar}", context)
+                      ? HelperFunction.instance.isSvgOrJpg("${userController.userData?.value.avatar}", context)
                       : const Icon(
                     Icons.person,
                     color: LightThemeColors.primaryColor,

@@ -6,23 +6,17 @@ import 'app/data/local/my_shared_pref.dart';
 import 'app/routes/app_pages.dart';
 import 'config/theme/my_theme.dart';
 import 'config/translations/localization_service.dart';
-import 'utils/awesome_notifications_helper.dart';
+
 
 Future<void> main() async {
   // wait for bindings
   WidgetsFlutterBinding.ensureInitialized();
-
-
-  // TODO: implement the FcmHelper class
-  // inti fcm services
-  // await FcmHelper.initFcm();
   await MySharedPref.init();
+  final onboardingComplete = await MySharedPref.getOnBoardingStatus();
   // initialize local notifications service
-  await AwesomeNotificationsHelper.init();
-
+  // await AwesomeNotificationsHelper.init();
   runApp(
     ScreenUtilInit(
-      // todo add your (Xd / Figma) artboard size
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
@@ -30,7 +24,6 @@ Future<void> main() async {
       rebuildFactor: (old, data) => true,
       builder: (context, widget) {
         return GetMaterialApp(
-          // todo add your app name
           title: "ManPowerStation",
           useInheritedMediaQuery: true,
           debugShowCheckedModeBanner: false,
@@ -46,12 +39,11 @@ Future<void> main() async {
               ),
             );
           },
-          initialRoute:AppPages.INITIAL, // first screen to show when app is running
+          initialRoute: onboardingComplete? AppPages.INITIAL: AppPages.OnBoardingView , // first screen to show when app is running
           getPages: AppPages.routes, // app screens
           initialBinding: InitialBinding(),
           locale: MySharedPref.getCurrentLocal(), // app language
           translations: LocalizationService.getInstance(), // localization services in app (controller app language)
-          //TODO: implement fallback locale
           //fallbackLocale: LocalizationService.fallbackLocale, // fallback language if app language is not found
         );
       },

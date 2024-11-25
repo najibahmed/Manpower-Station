@@ -11,8 +11,8 @@ import 'package:manpower_station/app/modules/worker/controller/worker_controller
 import 'package:manpower_station/app/services/api_client.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
-import '../../../../utils/constants.dart';
 import '../../../components/custom_snackbar.dart';
+import '../../../data/local/my_shared_pref.dart';
 import '../views/checkout_screen.dart';
 
 class CheckoutController extends BaseController {
@@ -82,7 +82,7 @@ class CheckoutController extends BaseController {
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
-              'Authorization':  Constants.accessToken         //MySharedPref.getAccessToken()
+              'Authorization': MySharedPref.getAccessToken()        //MySharedPref.getAccessToken()
             },
             onSuccess: (response) async {
               if (kDebugMode) {

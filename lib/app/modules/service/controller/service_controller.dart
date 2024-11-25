@@ -11,7 +11,7 @@ class ServiceController extends BaseController
   TextEditingController reviewController=TextEditingController();
   RxInt timeLimit = 3.obs;
   RxString selectedTimeKey = 'Hours'.obs;
-  RxList time = [3, 4, 5, 6, 7, 8].obs;
+  // RxList time = [3, 4, 5, 6, 7, 8].obs;
   late TabController tabController;
   var tabIndex = 0.obs;
   Rx<DateTime?> selectedDateTime = DateTime.now().obs;

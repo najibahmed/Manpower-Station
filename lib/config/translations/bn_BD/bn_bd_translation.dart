@@ -59,5 +59,5 @@ const Map<String, String> bnBD = {
   Strings.careGiver : 'পরিচর্যাকারী',
   Strings.babySitter : 'বাচ্চার যত্ন',
   Strings.more : 'আরো',
-  Strings.askTypeOfService : 'আপনি কি ধরনের জনবল প্রয়োজন?',
+  Strings.askTypeOfService : 'আপনার কি ধরনের জনবল প্রয়োজন?',
 };

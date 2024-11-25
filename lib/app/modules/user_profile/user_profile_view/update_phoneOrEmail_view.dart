@@ -5,7 +5,6 @@ import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
-import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';

@@ -16,6 +16,7 @@ class MySharedPref {
   static const String _lightThemeKey = 'is_theme_light';
   static const String refreshTokenKey='refresh_token';
   static const String isLoggedIn = 'isLoggedIn';
+  static const String isOnBoardingChecked = 'isOnBoardingChecked';
   static const String userId = 'adminId';
 
   /// init get storage services
@@ -60,6 +61,16 @@ class MySharedPref {
   /// clear all data from shared pref
   static Future<void> clear() async => await _sharedPreferences.clear();
 
+  /// check onBoarding status
+  static Future<bool> setOnBoardingStatus(bool status) async {
+    final pref = await SharedPreferences.getInstance();
+    return pref.setBool(isOnBoardingChecked, status);
+  }
+  static Future<bool> getOnBoardingStatus() async {
+    final pref = await SharedPreferences.getInstance();
+    return pref.getBool(isOnBoardingChecked) ?? false;
+  }
+
   /// check user login status
   static Future<bool> setLoginStatus(bool status) async {
     final pref = await SharedPreferences.getInstance();
@@ -72,14 +83,14 @@ class MySharedPref {
   }
 
   /// set and get user ID
-  static Future<bool> setUserId(int id) async {
+  static Future<bool> setUserId(String id) async {
     final pref = await SharedPreferences.getInstance();
-    return pref.setInt(userId, id);
+    return pref.setString(userId, id);
   }
 
-  static Future<int> getUserId() async {
+  static Future<String?> getUserId() async {
     final pref = await SharedPreferences.getInstance();
-    return pref.getInt(userId) ?? 0;
+    return pref.getString(userId);
   }
 
 ///saved jwt

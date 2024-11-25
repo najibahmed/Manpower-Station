@@ -44,39 +44,45 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
               clipBehavior: Clip.none,
               // fit: StackFit.expand,
               children: [
-                Hero(
-                  tag: "imgHero",
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    height: 300,
-                    width: double.infinity,
-                    imageUrl: '${Constants.serviceImgUrl}${service.image}',
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    progressIndicatorBuilder: (context, url, progress) =>
-                        Center(
-                      child: CircularProgressIndicator(
-                        value: progress.progress,
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20)),
+                  child: Hero(
+                    tag: "imgHero",
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      height: 300,
+                      width: double.infinity,
+                      imageUrl: '${Constants.serviceImgUrl}${service.image}',
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          Center(
+                        child: CircularProgressIndicator(
+                          value: progress.progress,
+                        ),
                       ),
                     ),
                   ),
                 ),
+
                 /// Stack curve corner
-                Positioned(
-                  top: screenHeight * 0.31,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
-                    width: screenWidth * 1,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   top: screenHeight * 0.31,
+                //   child: Container(
+                //     padding: const EdgeInsets.symmetric(
+                //         horizontal: 10, vertical: 15),
+                //     width: screenWidth * 1,
+                //     decoration: BoxDecoration(
+                //       color: Theme.of(context).scaffoldBackgroundColor,
+                //       borderRadius: const BorderRadius.only(
+                //         topLeft: Radius.circular(20),
+                //         topRight: Radius.circular(20),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 /// back button for this page stack in the image
                 Positioned(
                   top: screenHeight * 0.06,
@@ -88,7 +94,8 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                     child: Center(
                       child: IconButton(
                           onPressed: () {
-                            Get.offNamed(AppPages.DashboardView);
+                            // Get.offNamed(AppPages.DashboardView);
+                            Get.back();
                           },
                           icon: const Icon(
                             Icons.arrow_back,
@@ -100,8 +107,10 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                 ),
               ],
             ),
+
             /// Service price discount and discount price
             _buildHeader(service, context),
+
             /// Tab Bar items
             TabBar(
               labelPadding: const EdgeInsets.all(4),
@@ -120,6 +129,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                 Tab(text: "FAQ"),
               ],
             ),
+
             ///Tab bar page according to tab index
             Obx(() => _getTabAtIndex(controller.tabIndex.value, service)),
           ],
@@ -134,7 +144,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -154,12 +164,8 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                     children: [
                       Text(
                         "${service.ratings!} ${Constants.starSymbol} ",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: 22, fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
@@ -168,13 +174,19 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
               const SizedBox(height: 5),
               Row(
                 children: [
+                  service.serviceDiscount!.discount.toString() != '0'
+                      ? Text(
+                          "${service.servicePrice} ",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: 20),
+                        )
+                      : const SizedBox(),
                   Text(
-                    "${service.servicePrice} ",
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        decoration: TextDecoration.lineThrough, fontSize: 20),
-                  ),
-                  Text(
-                    "${Constants.banglaCurrency}${getDiscountAmount(service.serviceDiscount, service.servicePrice!)}",
+                    "${Constants.banglaCurrency}${HelperFunction.instance.getDiscountAmount(service.serviceDiscount, service.servicePrice!)}",
                     style: const TextStyle(
                         fontSize: 26,
                         color: LightThemeColors.primaryColor,
@@ -184,6 +196,18 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                     " (starting with)",
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
+                  const Spacer(),
+                  service.serviceDiscount!.discount.toString() != '0'
+                      ? Text(
+                          textAlign: TextAlign.center,
+                          '${service.serviceDiscount!.discount}'
+                          '${service.serviceDiscount!.discountType == "Percentage Discount" ? '%' : Constants.banglaCurrency} OFF',
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange),
+                        )
+                      : const SizedBox(),
                 ],
               ),
               SizedBox(
@@ -243,6 +267,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
 /// service Description page
 class ServiceDescription extends StatelessWidget {
   ServiceModel service;
+
   ServiceDescription({
     super.key,
     required this.service,

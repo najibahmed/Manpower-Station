@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
-import 'package:manpower_station/config/theme/my_fonts.dart';
 
 class MenuItem extends StatelessWidget {
   final IconData icon;

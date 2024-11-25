@@ -45,7 +45,7 @@ class HomeController extends BaseController {
   /// Get all service categories
   Future<void> getAllServiceCategories() async {
     try {
-      var url="/api/services/categories/get/all";
+      var url="/api/services/categories/get/all/parent";
       await BaseClient.safeApiCall(
           url,
           RequestType.get,

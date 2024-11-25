@@ -1,10 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 class Constants {
-  static const String baseUrl = 'https://manpower-test-deploy.onrender.com';
-  static const String logoAssetPath = 'assets/images/manpower_name_logo.png'
-  ;
+  static const String baseUrl = 'https://manpower-update-deploy.onrender.com';
+  static const String logoAssetPath = 'assets/images/manpower_name_logo.png';
   // static const String baseUrl = 'http://172.16.154.11';
   // static const String avatarImgUrl = 'http://172.16.154.11/images/avatars/';
   // static const String bannerImgUrl = 'http://172.16.154.11/images/banners/';
@@ -21,12 +21,19 @@ class Constants {
   static  DateFormat formatDate = DateFormat('dd MMMM yyyy');
   static  DateFormat formatTime = DateFormat('hh:mm a');
 }
-List categoryImage=[
+
+final List<String> optionTime=[
+'Hours',
+'Days',
+'Weeks',
+'Months'
+];
+final List <int> timeFrequency = [3, 4, 5, 6, 7, 8];
+final List categoryImage=[
   'assets/category/category_electronics.jpg',
   'assets/category/car_care.jpg',
   'assets/category/shifting.jpg',
   'assets/category/painting.jpg',
   'assets/category/washing.jpg',
   'assets/category/category_cleaning.jpg',
-
 ];

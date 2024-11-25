@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
@@ -95,71 +93,101 @@ class ActiveOrder extends StatelessWidget {
       padding: const EdgeInsets.only(top: 12.0, left: 16, right: 16),
       child: GetX<BookingsController>(builder: (bController) {
         final bookings = bController.bookingsList;
+        if(bookings.isEmpty){
+          return Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 22, right: 22),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.2,
+                ),
+                Center(
+                  child: Image.asset(
+                    'assets/images/no_order_history.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .04,
+                ),
+                Center(
+                    child: Text(
+                      Strings.noActiveHistory.tr,
+                      style: TextStyle(
+                        fontSize: MyFonts.displayMediumSize,
+                      ),
+                    ))
+              ],
+            ),
+          );
+        }else{
         return Column(
             children: List.generate(
-          bookings.length,
-          (index) {
-            BookingsModel booking = bookings[index];
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: cardWidth,
-                padding: EdgeInsets.all(cardPadding),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black12),
-                  color: Theme.of(context).cardColor,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.green.withOpacity(0.1),
-                      spreadRadius: 5,
-                      blurRadius: 6,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ///Booking info Button & Status
-                    _buildButtonRow(context, booking, bController),
-
-                    /// Service Title
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).highlightColor,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10))),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6.0, vertical: 4),
-                        child: Text(
-                          booking.services!.first.service!.name!,
-                          style: Theme.of(context).textTheme.displayLarge,
-                          textAlign: TextAlign.start,
+              bookings.length,
+                  (index) {
+                BookingsModel booking = bookings[index];
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: cardWidth,
+                    padding: EdgeInsets.all(cardPadding),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black12),
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.green.withOpacity(0.1),
+                          spreadRadius: 5,
+                          blurRadius: 6,
+                          offset: const Offset(0, 3), // changes position of shadow
                         ),
-                      ),
+                      ],
                     ),
-                    SizedBox(height: size.height * 0.01),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ///Booking info Button & Status
+                        _buildButtonRow(context, booking, bController),
 
-                    /// Service Details
-                    _buildServiceDetails(booking),
-                    SizedBox(height: size.height * 0.02),
+                        /// Service Title
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).highlightColor,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6.0, vertical: 4),
+                            child: Text(
+                              booking.services!.first.service!.name!,
+                              style: Theme.of(context).textTheme.displayLarge,
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: size.height * 0.01),
 
-                    /// Bottom Action Buttons (Cancel Booking & Payment)
-                    // booking.isPaymentStatus == 'Completed'
-                    //     ? const SizedBox()
-                    //     :
-                    _buildActionButtons(context, bController),
-                  ],
-                ),
-              ),
-            );
-          },
-        ).toList());
+                        /// Service Details
+                        _buildServiceDetails(booking),
+                        SizedBox(height: size.height * 0.02),
+
+                        /// Bottom Action Buttons (Cancel Booking & Payment)
+                        // booking.isPaymentStatus == 'Completed'
+                        //     ? const SizedBox()
+                        //     :
+                        _buildActionButtons(context, bController),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ).toList());
+        }
       }),
     ));
   }

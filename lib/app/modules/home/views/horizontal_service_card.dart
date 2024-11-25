@@ -1,9 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
-import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
 import '../../../../config/theme/light_theme_colors.dart';
@@ -82,7 +79,7 @@ class HorizontalServiceCard extends StatelessWidget {
                         children: [
                           Text(
                             "${Constants.banglaCurrency}"
-                                "${getDiscountAmount(service.serviceDiscount,service.servicePrice!)} ",
+                                "${HelperFunction.instance.getDiscountAmount(service.serviceDiscount,service.servicePrice!)} ",
                             style: const TextStyle(
                                 fontSize: 18,
                                 color: LightThemeColors.primaryColor,

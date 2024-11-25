@@ -42,7 +42,9 @@ Widget _getLoadingIndicator({String? msg}){
     ),
     child: Column(mainAxisSize: MainAxisSize.min,children: [
       Image.asset('assets/images/manpower_name_logo.png',height: 45.h,),
-      SizedBox(width: 8.h,),
+      SizedBox(width: 3.h,),
+      const CircularProgressIndicator(),
+      SizedBox(width: 4.h,),
       Text(msg ?? Strings.loading.tr,style: Get.theme.textTheme.bodyLarge),
     ],),
   );

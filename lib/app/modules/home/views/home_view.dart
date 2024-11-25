@@ -2,25 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
-import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/home/views/horizontal_service_card.dart';
-import 'package:manpower_station/app/modules/payment/view/amar_pay_payment.dart';
-import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
-import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
-import '../../../../config/theme/dark_theme_colors.dart';
-import '../../../../config/theme/my_theme.dart';
-import '../../../../config/translations/localization_service.dart';
 import '../../../core/base/base_view.dart';
-import '../../service/view/service_card.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends BaseView<HomeController> {
@@ -92,58 +82,15 @@ class HomeView extends BaseView<HomeController> {
                   //   ],
                   // ),
                   // SizedBox(height: 10.h),
-                   SizedBox(height: 8.h,),
+                  // SizedBox(
+                  //   height: 8.h,
+                  // ),
                   /// Application Banner
+                  _buildBanner(size),
+                  /// Popular Services Text
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: controller.allServiceData.isEmpty
-                          ? _buildBannerShimmer()
-                          : CarouselSlider(
-                              options: CarouselOptions(
-                                height: size.height * 0.19,
-                                autoPlay: true,
-                                // enlargeCenterPage: true,
-                                aspectRatio: 16 / 9,
-                                autoPlayInterval: const Duration(seconds: 6),
-                                autoPlayAnimationDuration:
-                                    const Duration(milliseconds: 300),
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                pauseAutoPlayOnTouch: true,
-                                viewportFraction: 1.0,
-                              ),
-                              items: controller.activeBanners.value.images
-                                  ?.map((url) {
-                                var banner = url.image;
-                                return Builder(
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 5.0),
-                                      child: CachedNetworkImage(
-                                        fit: BoxFit.fitWidth,
-                                        imageUrl:
-                                            '${Constants.bannerImgUrl}$banner',
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
-                                        progressIndicatorBuilder:
-                                            (context, url, progress) => Center(
-                                          child: CircularProgressIndicator(
-                                            value: progress.progress,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              }).toList(),
-                            ),
-                    ),
-                  ),
-                  Padding(
-                    padding:const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -166,41 +113,12 @@ class HomeView extends BaseView<HomeController> {
                       ],
                     ),
                   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: controller.allServiceData.isEmpty
-                        ? _buildBannerShimmer()
-                        : CarouselSlider(
-                            options: CarouselOptions(
-                              height: size.height * 0.2,
-                              autoPlay: true,
-                              aspectRatio: 16 / 9,
-                              autoPlayInterval: const Duration(seconds: 3),
-                              autoPlayAnimationDuration:
-                                  const Duration(milliseconds: 1000),
-                              enlargeCenterPage: true,
-                              autoPlayCurve: Curves.fastOutSlowIn,
-                              pauseAutoPlayOnTouch: true,
-                              viewportFraction: .55,
-                            ),
-                            items: controller.allServiceData.map((service) {
-                              return InkWell(
-                                onTap: () {
-                                  Get.toNamed(AppPages.ServiceDetails,
-                                      arguments: service);
-                                },
-                                child: HorizontalServiceCard(
-                                  title: service.name!,
-                                  image: service.image!,
-                                  service: service,
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                  ),
+                  /// Popular Services
+                  _buildPopularService(size),
                   /// Category text message
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8),
                     child: Text(
                       '${Strings.askTypeOfService.tr}?',
                       style: Theme.of(context).textTheme.displayLarge,
@@ -210,8 +128,7 @@ class HomeView extends BaseView<HomeController> {
                 ],
               ),
             ),
-
-            ///Category list card
+            ///Category Grid card
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               sliver: SliverGrid(
@@ -227,92 +144,15 @@ class HomeView extends BaseView<HomeController> {
                         : controller.allCategoryData.length,
                     (context, index) {
                       if (controller.allCategoryData.isEmpty) {
-                        return buildServiceCardShimmer();
+                        return HelperFunction.instance.buildServiceCardShimmer();
                       } else {
                         var image = categoryImage[index];
                         CategoryModel category =
                             controller.allCategoryData[index];
                         var id = category.id.toString();
                         String catTitle = category.categoryName!;
-                        return InkWell(
-                            onTap: () {
-                              controller.oneCategoryServicesData.clear();
-                              controller.getOneCategoryServices(id);
-                              Get.toNamed(AppPages.SingleCateServicesScreen,
-                                  arguments: [catTitle, id]);
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              elevation: 4,
-                              child: Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.vertical(
-                                        top: Radius.circular(15)),
-                                    child: Image.asset(
-                                      image,
-                                      height: size.height * 0.14,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Text(
-                                      category.categoryName!,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  // Divider(color: Colors.black26,),
-                                  Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            height: size.height * 0.035,
-                                            width: size.width * 0.25,
-                                            child: OutlinedButton(
-                                                onPressed: () {
-                                                  controller
-                                                      .getOneCategoryServices(
-                                                          id);
-                                                  Get.toNamed(
-                                                      AppPages
-                                                          .SingleCateServicesScreen,
-                                                      arguments: [
-                                                        catTitle,
-                                                        id
-                                                      ]);
-                                                },
-                                                style: OutlinedButton.styleFrom(
-                                                    // backgroundColor:
-                                                    //     LightThemeColors
-                                                    //         .primaryColor,
-                                                    ),
-                                                child: const Text(
-                                                  'View All',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.green),
-                                                )),
-                                          ),
-                                        ],
-                                      )),
-                                  SizedBox(height: size.height * 0.01),
-                                ],
-                              ),
-                            ));
+                        ///build single Category card
+                        return _buildCategoryCard(id, catTitle, image, size, category);
                       }
                     },
                   )),
@@ -323,11 +163,182 @@ class HomeView extends BaseView<HomeController> {
     );
   }
 
+  InkWell _buildCategoryCard(String id, String catTitle, image, Size size, CategoryModel category) {
+    return InkWell(
+                          onTap: () {
+                            controller.oneCategoryServicesData.clear();
+                            controller.getOneCategoryServices(id);
+                            Get.toNamed(AppPages.SingleCateServicesScreen,
+                                arguments: [catTitle, id]);
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            elevation: 4,
+                            child: Column(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(15)),
+                                  child: Image.asset(
+                                    image,
+                                    height: size.height * 0.14,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Text(
+                                    category.categoryName!,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                const Spacer(),
+                                // Divider(color: Colors.black26,),
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: size.height * 0.035,
+                                          width: size.width * 0.25,
+                                          child: OutlinedButton(
+                                              onPressed: () {
+                                                controller
+                                                    .getOneCategoryServices(
+                                                        id);
+                                                Get.toNamed(
+                                                    AppPages
+                                                        .SingleCateServicesScreen,
+                                                    arguments: [
+                                                      catTitle,
+                                                      id
+                                                    ]);
+                                              },
+                                              style: OutlinedButton.styleFrom(
+                                                  // backgroundColor:
+                                                  //     LightThemeColors
+                                                  //         .primaryColor,
+                                                  ),
+                                              child: const Text(
+                                                'View All',
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.green),
+                                              )),
+                                        ),
+                                      ],
+                                    )),
+                                SizedBox(height: size.height * 0.01),
+                              ],
+                            ),
+                          ));
+  }
+
+Widget _buildBanner(Size size){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 8,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: controller.allServiceData.isEmpty
+              ? _buildBannerShimmer()
+              : CarouselSlider(
+            options: CarouselOptions(
+              height: size.height * 0.19,
+              autoPlay: true,
+              // enlargeCenterPage: true,
+              aspectRatio: 16 / 9,
+              autoPlayInterval: const Duration(seconds: 6),
+              autoPlayAnimationDuration:
+              const Duration(milliseconds: 300),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              pauseAutoPlayOnTouch: true,
+              viewportFraction: 1.0,
+            ),
+            items: controller.activeBanners.value.images
+                ?.map((url) {
+              var banner = url.image;
+              return Builder(
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    width:
+                    MediaQuery.of(context).size.width,
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl:
+                      '${Constants.bannerImgUrl}$banner',
+                      errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
+                      progressIndicatorBuilder:
+                          (context, url, progress) =>
+                          Center(
+                            child: CircularProgressIndicator(
+                              value: progress.progress,
+                            ),
+                          ),
+                    ),
+                  );
+                },
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
+}
+
   Future<void> _handleRefresh() async {
     controller.getAllServiceData();
     controller.getAllServiceCategories();
     controller.getActiveBanners();
     return Future.delayed(const Duration(seconds: 3));
+  }
+
+  Widget _buildPopularService(Size size){
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: controller.allServiceData.isEmpty
+          ? _buildBannerShimmer()
+          : CarouselSlider(
+        options: CarouselOptions(
+          height: size.height * 0.2,
+          autoPlay: true,
+          aspectRatio: 16 / 9,
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration:
+          const Duration(milliseconds: 1000),
+          enlargeCenterPage: true,
+          autoPlayCurve: Curves.fastOutSlowIn,
+          pauseAutoPlayOnTouch: true,
+          viewportFraction: .55,
+        ),
+        items: controller.allServiceData.map((service) {
+          return InkWell(
+            onTap: () {
+              Get.toNamed(AppPages.ServiceDetails,
+                  arguments: service);
+            },
+            child: HorizontalServiceCard(
+              title: service.name!,
+              image: service.image!,
+              service: service,
+            ),
+          );
+        }).toList(),
+      ),
+    );
   }
 
   Widget _buildBannerShimmer() {

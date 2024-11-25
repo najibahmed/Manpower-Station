@@ -79,7 +79,7 @@ class SearchScreen extends BaseView<SearchViewController> {
                     ),
                     delegate: SliverChildBuilderDelegate(childCount: 5,
                         (context, index) {
-                      return buildServiceCardShimmer();
+                      return HelperFunction.instance.buildServiceCardShimmer();
                     }))
                 : SliverPadding(
                     padding: const EdgeInsets.symmetric(
@@ -98,7 +98,7 @@ class SearchScreen extends BaseView<SearchViewController> {
                               : controller.findByService.length,
                           (context, index) {
                             if (controller.isLoading.value) {
-                              return buildServiceCardShimmer();
+                              return HelperFunction.instance.buildServiceCardShimmer();
                             } else {
                               ServiceModel service =
                                   controller.findByService[index];

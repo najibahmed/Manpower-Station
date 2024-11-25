@@ -12,6 +12,7 @@ import '../../../models/worker_model.dart';
 
 class WorkerDetailsScreen extends BaseView<WorkerController> {
   const WorkerDetailsScreen({super.key});
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
@@ -106,7 +107,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.grey[100],
+                        color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
@@ -123,10 +124,13 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                         children: [
                           Row(
                             children: [
-                              const Text(
+                              Text(
                                 'Area:  ',
                                 style: TextStyle(
-                                  color: Colors.black54,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.color,
                                   fontSize: 16,
                                 ),
                               ),
@@ -142,10 +146,13 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                           SizedBox(width: screenHeight * .01),
                           Row(
                             children: [
-                              const Text(
+                              Text(
                                 'Address:  ',
                                 style: TextStyle(
-                                  color: Colors.black54,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.color,
                                   fontSize: 16,
                                 ),
                               ),
@@ -160,10 +167,14 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                           ),
                           Row(
                             children: [
-                              const Text(
+                              Text(
                                 'Gender:  ',
                                 style: TextStyle(
-                                    color: Colors.black54, fontSize: 16),
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.color,
+                                    fontSize: 16),
                               ),
                               Text(
                                 '${worker.gender}',
@@ -226,11 +237,12 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                       thickness: 1,
                       color: Colors.black26,
                     ),
-                    const Center(
+                    Center(
                       child: Text(
                         "Reviews",
                         style: TextStyle(
-                          color: Colors.black87,
+                          color:
+                              Theme.of(context).textTheme.displayMedium?.color,
                           fontSize: 20,
                           letterSpacing: 1,
                           fontWeight: FontWeight.bold,

@@ -13,7 +13,7 @@ class WorkerReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(WorkerController());
     return Card(
-      color: Colors.green[50],
+      color: Theme.of(context).cardColor,
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(

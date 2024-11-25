@@ -16,17 +16,30 @@ class WorkerController extends BaseController {
   RxBool isLoading = true.obs;
   final findByWorker = <dynamic>[].obs;
 
+
+  @override
+  void onInit() {
+    findWorkers();
+    Future.delayed(const Duration(seconds: 2), () {
+      isLoading.value = false;
+    });
+    // TODO: implement onInit
+    super.onInit();
+  }
+
+  /// Add worker list
   void addWorker(WorkerModel worker) {
     return selectedWorkerList.add(worker);
   }
-
+  /// Remove worker from workerList
   void removeWorker(workerId) {
-    var temp =
-        selectedWorkerList.where((worker) => worker.user!.id != workerId).toList();
+    var temp = selectedWorkerList
+        .where((worker) => worker.user!.id != workerId)
+        .toList();
     selectedWorkerList.value = temp;
   }
 
-
+  /// Check weather worker is selected or not
   bool isWorkerSelected(String uId) {
     bool tag = false;
     for (final worker in selectedWorkerList) {
@@ -37,6 +50,7 @@ class WorkerController extends BaseController {
     }
     return tag;
   }
+
   // Future<void> getAllWorkerData() async {
   //   try {
   //     var url= "/api/workers/get/all";
@@ -83,20 +97,12 @@ class WorkerController extends BaseController {
       });
     } catch (e) {
       CustomSnackBar.showCustomErrorSnackBar(
-          title: 'Error try find worker:', message: '$e',
+          title: 'Error try find worker:',
+          message: '$e',
           duration: const Duration(seconds: 1));
     }
   }
 
-  @override
-  void onInit() {
-    findWorkers();
-    Future.delayed(const Duration(seconds: 2), () {
-      isLoading.value = false;
-    });
-    // TODO: implement onInit
-    super.onInit();
-  }
 
   @override
   void onClose() {
