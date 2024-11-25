@@ -115,7 +115,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                       initialSelection:
                                           controller.timeLimit.value,
                                       dropdownMenuEntries:
-                                          controller.time.map((time) {
+                                          timeFrequency.map((time) {
                                         return DropdownMenuEntry<int>(
                                           value: time,
                                           label: '$time',
@@ -156,12 +156,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                     },
                                     initialSelection:
                                         controller.selectedTimeKey.value,
-                                    dropdownMenuEntries: [
-                                      'Hours',
-                                      'Days',
-                                      'Weeks',
-                                      'Months'
-                                    ].map((String key) {
+                                    dropdownMenuEntries: optionTime.map((String key) {
                                       return DropdownMenuEntry<String>(
                                         value: key,
                                         label: key,
