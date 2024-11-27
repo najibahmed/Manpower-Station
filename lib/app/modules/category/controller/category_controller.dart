@@ -10,7 +10,7 @@ import '../../service/model/service_list_model.dart';
 class CategoryController extends BaseController {
   RxBool isLoading=true.obs;
   // RxList oneCategoryServicesData = <dynamic>[].obs;
-List serviceList=<dynamic>[].obs;
+List _serviceList=<dynamic>[].obs;
    var categoryTitle=Get.arguments[0];
   final catId=Get.arguments[1];
 
@@ -28,7 +28,7 @@ List serviceList=<dynamic>[].obs;
             // }
             if (response.statusCode == 200) {
               var jsonData = response.data['servicesLists'];
-               serviceList = jsonData.map((item) => ServiceModel.fromJson(item))
+               _serviceList = jsonData.map((item) => ServiceModel.fromJson(item))
                   .toList();
             } else {
               CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services by one category:',message: ' ${response.statusMessage}');
@@ -38,7 +38,7 @@ List serviceList=<dynamic>[].obs;
     } catch (e) {
       CustomSnackBar.showCustomErrorSnackBar(title:'Error try get all service cat:',message: '$e');
     }
-    return serviceList;
+    return _serviceList;
   }
   // Future<void> getAllServiceCategories() async {
   //   try {

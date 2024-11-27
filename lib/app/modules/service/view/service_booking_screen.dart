@@ -295,11 +295,9 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       Center(
                         child: InkWell(
                           onTap: () {
-                            controller.showLoading();
                             controller.selectedService =
                                 controller.serviceModel;
                             controller.addToCartList();
-                            controller.hideLoading();
                             Get.toNamed(AppPages.WorkerListView);
                           },
                           child: Card(

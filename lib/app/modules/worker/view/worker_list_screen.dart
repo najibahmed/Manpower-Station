@@ -10,7 +10,6 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
 
-import '../../../../config/theme/dark_theme_colors.dart';
 
 class WorkerListScreen extends BaseView<WorkerController> {
   const WorkerListScreen({super.key});
@@ -22,9 +21,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
       title: Image.asset(
         'assets/images/manpower_name_logo.png',
         fit: BoxFit.cover,
-        color: controller.isLightMode.value
-            ? DarkThemeColors.primaryColor
-            : Colors.white,
+        color: Colors.white,
       ),
       leading: IconButton(
           onPressed: () {
