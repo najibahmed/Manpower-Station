@@ -147,7 +147,7 @@ class UpdatePhoneEmail extends BaseView<UserController> {
               ),
               Center(
                   child: CustomButton(
-                title: "${Strings.sendOtp.tr}",
+                title: "${Strings.signUp.tr}",
                 height: 38,
                 width: 298,
                 onTap: () {

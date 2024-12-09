@@ -25,13 +25,13 @@ const Map<String, String> enUs = {
   Strings.internetError : 'Error Occurred Check Your Internet Connection! ⚠️',
 
 
-  Strings.enterEmailPhnNum : 'Enter your Email or Phone Number',
-  Strings.getVerification : 'You will get 6-digit verification code.',
+  Strings.registerAccount : 'Enter your Email or Phone Number',
+  Strings.getVerification : 'Complete your details or continue \nwith social media.',
   Strings.acceptTermMsg : 'By entering your email or phone number, you agree to our',
   Strings.and : 'and',
   Strings.termsAndCondition : 'Terms and Conditions',
   Strings.privacyPolicy : 'Privacy Policy',
-  Strings.sendOtp : 'Send OTP',
+  Strings.signUp : 'Sign Up',
   Strings.verifyNumMsg : 'Verifying your Phone number and Email',
   Strings.verificationCodeSent : 'A verification code has been sent to',
   Strings.enterCode : 'Enter 4-digit code',

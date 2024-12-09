@@ -11,7 +11,6 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
-
 class ServiceBookingScreen extends BaseView<ServiceController> {
   const ServiceBookingScreen({super.key});
 
@@ -75,7 +74,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       Text(
                         'Choose a Duration and Time.',
                         style: TextStyle(
-                          // color: LightThemeColors.bodyTextColor,
+                            // color: LightThemeColors.bodyTextColor,
                             fontSize: MyFonts.bodyLargeSize,
                             fontWeight: FontWeight.bold),
                       ),
@@ -85,47 +84,47 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             SizedBox(
-                                width: screenWidth * .4,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Duration',
-                                      style: TextStyle(
-                                          fontSize: MyFonts.bodyLargeSize,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey),
-                                    ),
-                                    SizedBox(height: screenHeight * .01),
-                                    /// Drop Down button for selection of time duration
-                                    DropdownMenu(
-                                      inputDecorationTheme:
-                                          const InputDecorationTheme(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.green,
-                                          ),
+                              width: screenWidth * .4,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Duration',
+                                    style: TextStyle(
+                                        fontSize: MyFonts.bodyLargeSize,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                  ),
+                                  SizedBox(height: screenHeight * .01),
+
+                                  /// Drop Down button for selection of time duration
+                                  DropdownMenu(
+                                    inputDecorationTheme:
+                                        const InputDecorationTheme(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.green,
                                         ),
                                       ),
-                                      textStyle: const TextStyle(
-                                          color: LightThemeColors.primaryColor),
-                                      onSelected: (value) {
-                                        controller.timeLimit.value = value!;
-                                      },
-                                      initialSelection:
-                                          controller.timeLimit.value,
-                                      dropdownMenuEntries:
-                                          timeFrequency.map((time) {
-                                        return DropdownMenuEntry<int>(
-                                          value: time,
-                                          label: '$time',
-                                        );
-                                      }).toList(),
                                     ),
-                                  ],
-                                )
-                                //
-                                ),
+                                    textStyle: const TextStyle(
+                                        color: LightThemeColors.primaryColor),
+                                    onSelected: (value) {
+                                      controller.timeLimit.value = value!;
+                                    },
+                                    initialSelection:
+                                        controller.timeLimit.value,
+                                    dropdownMenuEntries:
+                                        timeFrequency.map((time) {
+                                      return DropdownMenuEntry<int>(
+                                        value: time,
+                                        label: '$time',
+                                      );
+                                    }).toList(),
+                                  ),
+                                ],
+                              ),
+                            ),
                             SizedBox(
                               width: screenWidth * .4,
                               child: Column(
@@ -139,6 +138,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                         color: Colors.grey),
                                   ),
                                   SizedBox(height: screenHeight * .01),
+
                                   /// Drop Down button for selection of time factors
                                   DropdownMenu<String>(
                                     inputDecorationTheme:
@@ -156,7 +156,8 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                     },
                                     initialSelection:
                                         controller.selectedTimeKey.value,
-                                    dropdownMenuEntries: optionTime.map((String key) {
+                                    dropdownMenuEntries:
+                                        optionTime.map((String key) {
                                       return DropdownMenuEntry<String>(
                                         value: key,
                                         label: key,
@@ -185,7 +186,8 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       ),
                       SizedBox(height: screenHeight * .01),
                       Card(
-                        color: Theme.of(context).cardColor, // Background color of the card
+                        color: Theme.of(context)
+                            .cardColor, // Background color of the card
                         // Colors.grey[100],
                         elevation: 3,
                         child: SizedBox(
@@ -218,11 +220,12 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         ),
                       ),
                       SizedBox(height: screenHeight * .01),
+
                       /// Calender dialogue
                       Center(
-                          child: SizedBox(
-                              height: screenHeight * .06,
-                               width: 200,
+                        child: SizedBox(
+                          height: screenHeight * .06,
+                          width: 200,
                           child: ElevatedButton.icon(
                             onPressed: () async {
                               // bool themeIsLight =
@@ -238,13 +241,13 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                   ],
                                 ),
                                 theme: ThemeData(
-                                    colorScheme:ColorScheme.light(
-                                  primary: LightThemeColors
-                                      .primaryColor, // header color
-                                  onPrimary: Colors.white, // text color
-                                  surface: Colors.grey[50]!, // background color
-                                ),
-
+                                  colorScheme: ColorScheme.light(
+                                    primary: LightThemeColors
+                                        .primaryColor, // header color
+                                    onPrimary: Colors.white, // text color
+                                    surface:
+                                        Colors.grey[50]!, // background color
+                                  ),
                                 ),
                                 context: context,
                                 initialDate: DateTime.now(),
@@ -270,8 +273,10 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                             icon: const Icon(
                               Icons.calendar_month_outlined,
                               color: Colors.white,
-                            )),
-                      )),
+                            ),
+                          ),
+                        ),
+                      ),
                       SizedBox(height: screenHeight * .02),
                       Divider(
                         thickness: 1,
@@ -291,6 +296,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       SizedBox(
                         height: screenHeight * .01,
                       ),
+
                       /// button go to worker list page
                       Center(
                         child: InkWell(
@@ -338,6 +344,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
               ),
             ],
           ),
+
           /// Bottom sub total widget
           Positioned(
             bottom: 5,
@@ -356,16 +363,12 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     RichText(
                       text: TextSpan(
                           text: 'SUB TOTAL:    ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayMedium,
+                          style: Theme.of(context).textTheme.displayMedium,
                           children: [
                             TextSpan(
                               text:
                                   '${Constants.banglaCurrency} ${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}.00',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayMedium,
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                           ]),
                     ),

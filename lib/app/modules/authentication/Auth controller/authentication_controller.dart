@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,20 +6,19 @@ import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/app/services/api_client.dart';
-import 'package:manpower_station/utils/appLoggerUtils.dart';
 import '../../../core/base/base_controller.dart';
 
 class AuthenticationController extends BaseController {
   late TextEditingController phoneNumberEmailController;
+  late TextEditingController passwordController;
+  late TextEditingController nameController;
   late TextEditingController otpController;
   final RxString errorMessage = ''.obs;
-
+  RxBool obSecurePass = RxBool(false);
 
 //  loginUser(){
 //   ApiServices.loginWithPhoneOrEmail(phoneNumberEmailController.text.trim());
 // }
-
-
 
 // /// Login with email or phone Number
   Future<void> loginWithPhoneOrEmail() async {
@@ -33,36 +30,38 @@ class AuthenticationController extends BaseController {
         "/api/users/sign_in/sign_up",
         RequestType.post,
         data: requestData,
-        onSuccess: (response){
-          if(response.statusCode==201){
+        onSuccess: (response) {
+          if (response.statusCode == 201) {
             // if (kDebugMode) {
             //   print('Success data here------${response.data['success']}');
             //   print('Message data here------${response.data['message']}');
             // }
-            Get.snackbar('Success','${response.data['message']}');
-            if(response.data['success']){
+            Get.snackbar('Success', '${response.data['message']}');
+            if (response.data['success']) {
               Get.toNamed(AppPages.OtpScreen);
-            }else{
-              CustomSnackBar.showCustomErrorSnackBar(title: 'Error',message: 'Having problem to send otp');
+            } else {
+              CustomSnackBar.showCustomErrorSnackBar(
+                  title: 'Error', message: 'Having problem to send otp');
             }
           }
         },
       );
     } catch (e) {
-      Get.snackbar('Error login :',e.toString());
+      Get.snackbar('Error login :', e.toString());
     }
   }
+
   /// Login with Gmail
   Future<void> loginWithGmail() async {
     try {
-    //   Map<String, dynamic> requestData = {
-    //     'phone_or_email': phoneNumberEmailController.text.trim(),
-    //   };
+      //   Map<String, dynamic> requestData = {
+      //     'phone_or_email': phoneNumberEmailController.text.trim(),
+      //   };
       await BaseClient.safeApiCall(
         "/api/users/google",
         RequestType.get,
-        onSuccess: (response){
-          if(response.statusCode==200){
+        onSuccess: (response) {
+          if (response.statusCode == 200) {
             // if (kDebugMode) {
             //   print('Success data here------${response.data['success']}');
             //   print('Message data here------${response.data['message']}');
@@ -76,7 +75,8 @@ class AuthenticationController extends BaseController {
         },
       );
     } catch (e) {
-      CustomSnackBar.showCustomErrorSnackBar(title: 'Error Login Gmail:',message: e.toString());
+      CustomSnackBar.showCustomErrorSnackBar(
+          title: 'Error Login Gmail:', message: e.toString());
     }
   }
 
@@ -91,26 +91,27 @@ class AuthenticationController extends BaseController {
         RequestType.put,
         data: requestData,
         onError: (p0) {
-         var response= p0.response;
+          var response = p0.response;
           otpController.clear();
-          CustomSnackBar.showCustomErrorSnackBar(title:" Wrong otp", message: "${response!.data['message']}");
+          CustomSnackBar.showCustomErrorSnackBar(
+              title: " Wrong otp", message: "${response!.data['message']}");
         },
         onSuccess: (response) {
           if (response.statusCode == 200) {
-            Map<String,dynamic> responseData = response.data;
-            OtpModel otpData= OtpModel.fromJson(responseData);
-             String accToken=otpData.token!.accesstoken!;
-             String refToken=otpData.token!.refreshtoken!;
-             String userId=otpData.user!.id!;
+            Map<String, dynamic> responseData = response.data;
+            OtpModel otpData = OtpModel.fromJson(responseData);
+            String accToken = otpData.token!.accesstoken!;
+            String refToken = otpData.token!.refreshtoken!;
+            String userId = otpData.user!.id!;
             MySharedPref.setAccessToken(accToken);
             MySharedPref.setRefreshToken(refToken);
             MySharedPref.setUserId(userId);
             MySharedPref.setLoginStatus(true);
 
             // Success handling (for example, navigate to another screen)
-              Get.snackbar('Success', '${otpData.message}');
-              Get.offAllNamed(AppPages.DashboardView);
-          }else{
+            Get.snackbar('Success', '${otpData.message}');
+            Get.offAllNamed(AppPages.DashboardView);
+          } else {
             // Handle error
             // errorMessage.value = 'Error: ${response.data['message']}';
             Get.snackbar('Error otp response', errorMessage.value);
@@ -120,20 +121,25 @@ class AuthenticationController extends BaseController {
     } catch (e) {
       // Handle other types of errors
       errorMessage.value = 'Something went wrong: $e';
-      CustomSnackBar.showCustomErrorSnackBar(title: 'Error otp try',message: errorMessage.value);
+      CustomSnackBar.showCustomErrorSnackBar(
+          title: 'Error otp try', message: errorMessage.value);
     }
   }
 
   @override
   void onInit() {
-    phoneNumberEmailController=TextEditingController();
-    otpController=TextEditingController();
+    phoneNumberEmailController = TextEditingController();
+    nameController = TextEditingController();
+    passwordController = TextEditingController();
+    otpController = TextEditingController();
     super.onInit();
   }
 
   @override
   void onClose() {
     phoneNumberEmailController.dispose();
+    nameController.dispose();
+    passwordController.dispose();
     otpController.dispose();
     super.onClose();
   }

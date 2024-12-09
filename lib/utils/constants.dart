@@ -20,6 +20,7 @@ class Constants {
   static  DateFormat formatDateTime = DateFormat('dd MMMM yyyy, hh:mm a');
   static  DateFormat formatDate = DateFormat('dd MMMM yyyy');
   static  DateFormat formatTime = DateFormat('hh:mm a');
+
 }
 
 final List<String> optionTime=[

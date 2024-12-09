@@ -125,7 +125,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     onPressed: () async{
                    await MySharedPref.setOnBoardingStatus(true);
-                   Get.offAllNamed(AppPages.Registration);
+                   Get.offAllNamed(AppPages.SignIn);
                     },
                     child: const Text(
                       "Let's Get Started",

@@ -15,7 +15,6 @@ class RedirectScreen extends StatefulWidget {
 class _RedirectScreenState extends State<RedirectScreen> with SingleTickerProviderStateMixin{
   late AnimationController _controller;
   late Animation<double> _fadeInAnimation1;
-  // late Animation<double> _fadeInAnimation2;
   @override
   void initState() {
     // TODO: implement initState
@@ -32,15 +31,6 @@ class _RedirectScreenState extends State<RedirectScreen> with SingleTickerProvid
         curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
       ),
     );
-
-    // // Second text fades in during the second half of the duration
-    // _fadeInAnimation2 = Tween<double>(begin: 0.0, end: 1.0).animate(
-    //   CurvedAnimation(
-    //     parent: _controller,
-    //     curve: const Interval(0.5, 1.0, curve: Curves.easeIn),
-    //   ),
-    // );
-
     _controller.forward(); // Start the animations
   }
   @override
@@ -54,9 +44,9 @@ class _RedirectScreenState extends State<RedirectScreen> with SingleTickerProvid
     Future.delayed(const Duration(seconds: 3),() async {
       final isUserLoggedIn =await MySharedPref.getLoginStatus();
       if(isUserLoggedIn){
-        Get.offNamed(AppPages.Registration);
-      }else{
         Get.offNamed(AppPages.DashboardView);
+      }else{
+        Get.offNamed(AppPages.SignIn);
       }
     },);
 

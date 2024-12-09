@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names, prefer_const_constructors
 
 import 'package:get/get.dart';
+import 'package:manpower_station/app/modules/authentication/views/Sign%20In/signin_screen.dart';
 import 'package:manpower_station/app/modules/bookings/binding/bookings_binding.dart';
 import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
 import 'package:manpower_station/app/modules/category/bindings/category_bindings.dart';
@@ -44,6 +45,7 @@ class AppPages {
 
   static const Home = Routes.homeScreen;
   static const Registration = Routes.registrationScreen;
+  static const SignIn = Routes.signInScreen;
   static const OtpScreen = Routes.otpScreen;
   static const UserProfile = Routes.userProfile;
   static const OrderHistory = Routes.orderHistory;
@@ -79,6 +81,12 @@ class AppPages {
     GetPage(
       name: _Paths.Registration,
       page: () =>  RegistrationView(),
+      binding: AuthenticationBinding(),
+      // transition: Transition.rightToLeft
+    ),
+    GetPage(
+      name: _Paths.SignIn,
+      page: () =>  SignInScreen(),
       binding: AuthenticationBinding(),
       // transition: Transition.rightToLeft
     ),

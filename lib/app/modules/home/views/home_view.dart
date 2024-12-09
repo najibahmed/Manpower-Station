@@ -87,6 +87,7 @@ class HomeView extends BaseView<HomeController> {
                   // ),
                   /// Application Banner
                   _buildBanner(size),
+
                   /// Popular Services Text
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -113,8 +114,10 @@ class HomeView extends BaseView<HomeController> {
                       ],
                     ),
                   ),
+
                   /// Popular Services
                   _buildPopularService(size),
+
                   /// Category text message
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -128,6 +131,7 @@ class HomeView extends BaseView<HomeController> {
                 ],
               ),
             ),
+
             ///Category Grid card
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -144,15 +148,18 @@ class HomeView extends BaseView<HomeController> {
                         : controller.allCategoryData.length,
                     (context, index) {
                       if (controller.allCategoryData.isEmpty) {
-                        return HelperFunction.instance.buildServiceCardShimmer();
+                        return HelperFunction.instance
+                            .buildServiceCardShimmer();
                       } else {
                         var image = categoryImage[index];
                         CategoryModel category =
                             controller.allCategoryData[index];
                         var id = category.id.toString();
                         String catTitle = category.categoryName!;
+
                         ///build single Category card
-                        return _buildCategoryCard(id, catTitle, image, size, category);
+                        return _buildCategoryCard(
+                            id, catTitle, image, size, category);
                       }
                     },
                   )),
@@ -163,89 +170,80 @@ class HomeView extends BaseView<HomeController> {
     );
   }
 
-  InkWell _buildCategoryCard(String id, String catTitle, image, Size size, CategoryModel category) {
+  InkWell _buildCategoryCard(
+      String id, String catTitle, image, Size size, CategoryModel category) {
     return InkWell(
-                          onTap: () {
-                            controller.oneCategoryServicesData.clear();
-                            controller.getOneCategoryServices(id);
-                            Get.toNamed(AppPages.SingleCateServicesScreen,
-                                arguments: [catTitle, id]);
-                          },
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 4,
-                            child: Column(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.vertical(
-                                      top: Radius.circular(15)),
-                                  child: Image.asset(
-                                    image,
-                                    height: size.height * 0.14,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
+        onTap: () {
+          controller.oneCategoryServicesData.clear();
+          controller.getOneCategoryServices(id);
+          Get.toNamed(AppPages.SingleCateServicesScreen,
+              arguments: [catTitle, id]);
+        },
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 4,
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(15)),
+                child: Image.asset(
+                  image,
+                  height: size.height * 0.14,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Text(
+                  category.categoryName!,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              // Divider(color: Colors.black26,),
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: size.height * 0.035,
+                        width: size.width * 0.25,
+                        child: OutlinedButton(
+                            onPressed: () {
+                              controller.getOneCategoryServices(id);
+                              Get.toNamed(AppPages.SingleCateServicesScreen,
+                                  arguments: [catTitle, id]);
+                            },
+                            style: OutlinedButton.styleFrom(
+                                // backgroundColor:
+                                //     LightThemeColors
+                                //         .primaryColor,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Text(
-                                    category.categoryName!,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                const Spacer(),
-                                // Divider(color: Colors.black26,),
-                                Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: size.height * 0.035,
-                                          width: size.width * 0.25,
-                                          child: OutlinedButton(
-                                              onPressed: () {
-                                                controller
-                                                    .getOneCategoryServices(
-                                                        id);
-                                                Get.toNamed(
-                                                    AppPages
-                                                        .SingleCateServicesScreen,
-                                                    arguments: [
-                                                      catTitle,
-                                                      id
-                                                    ]);
-                                              },
-                                              style: OutlinedButton.styleFrom(
-                                                  // backgroundColor:
-                                                  //     LightThemeColors
-                                                  //         .primaryColor,
-                                                  ),
-                                              child: const Text(
-                                                'View All',
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.green),
-                                              )),
-                                        ),
-                                      ],
-                                    )),
-                                SizedBox(height: size.height * 0.01),
-                              ],
-                            ),
-                          ));
+                            child: const Text(
+                              'View All',
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.green),
+                            )),
+                      ),
+                    ],
+                  )),
+              SizedBox(height: size.height * 0.01),
+            ],
+          ),
+        ));
   }
 
-Widget _buildBanner(Size size){
+  Widget _buildBanner(Size size) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -255,49 +253,45 @@ Widget _buildBanner(Size size){
           child: controller.allServiceData.isEmpty
               ? _buildBannerShimmer()
               : CarouselSlider(
-            options: CarouselOptions(
-              height: size.height * 0.19,
-              autoPlay: true,
-              // enlargeCenterPage: true,
-              aspectRatio: 16 / 9,
-              autoPlayInterval: const Duration(seconds: 6),
-              autoPlayAnimationDuration:
-              const Duration(milliseconds: 300),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              pauseAutoPlayOnTouch: true,
-              viewportFraction: 1.0,
-            ),
-            items: controller.activeBanners.value.images
-                ?.map((url) {
-              var banner = url.image;
-              return Builder(
-                builder: (BuildContext context) {
-                  return SizedBox(
-                    width:
-                    MediaQuery.of(context).size.width,
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl:
-                      '${Constants.bannerImgUrl}$banner',
-                      errorWidget: (context, url, error) =>
-                      const Icon(Icons.error),
-                      progressIndicatorBuilder:
-                          (context, url, progress) =>
-                          Center(
-                            child: CircularProgressIndicator(
-                              value: progress.progress,
+                  options: CarouselOptions(
+                    height: size.height * 0.19,
+                    autoPlay: true,
+                    // enlargeCenterPage: true,
+                    aspectRatio: 16 / 9,
+                    autoPlayInterval: const Duration(seconds: 6),
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 300),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    pauseAutoPlayOnTouch: true,
+                    viewportFraction: 1.0,
+                  ),
+                  items: controller.activeBanners.value.images?.map((url) {
+                    var banner = url.image;
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: '${Constants.bannerImgUrl}$banner',
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            progressIndicatorBuilder:
+                                (context, url, progress) => Center(
+                              child: CircularProgressIndicator(
+                                value: progress.progress,
+                              ),
                             ),
                           ),
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-          ),
+                        );
+                      },
+                    );
+                  }).toList(),
+                ),
         ),
       ),
     );
-}
+  }
 
   Future<void> _handleRefresh() async {
     controller.getAllServiceData();
@@ -306,38 +300,36 @@ Widget _buildBanner(Size size){
     return Future.delayed(const Duration(seconds: 3));
   }
 
-  Widget _buildPopularService(Size size){
+  Widget _buildPopularService(Size size) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: controller.allServiceData.isEmpty
           ? _buildBannerShimmer()
           : CarouselSlider(
-        options: CarouselOptions(
-          height: size.height * 0.2,
-          autoPlay: true,
-          aspectRatio: 16 / 9,
-          autoPlayInterval: const Duration(seconds: 3),
-          autoPlayAnimationDuration:
-          const Duration(milliseconds: 1000),
-          enlargeCenterPage: true,
-          autoPlayCurve: Curves.fastOutSlowIn,
-          pauseAutoPlayOnTouch: true,
-          viewportFraction: .55,
-        ),
-        items: controller.allServiceData.map((service) {
-          return InkWell(
-            onTap: () {
-              Get.toNamed(AppPages.ServiceDetails,
-                  arguments: service);
-            },
-            child: HorizontalServiceCard(
-              title: service.name!,
-              image: service.image!,
-              service: service,
+              options: CarouselOptions(
+                height: size.height * 0.2,
+                autoPlay: true,
+                aspectRatio: 16 / 9,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+                enlargeCenterPage: true,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                pauseAutoPlayOnTouch: true,
+                viewportFraction: .55,
+              ),
+              items: controller.allServiceData.map((service) {
+                return InkWell(
+                  onTap: () {
+                    Get.toNamed(AppPages.ServiceDetails, arguments: service);
+                  },
+                  child: HorizontalServiceCard(
+                    title: service.name!,
+                    image: service.image!,
+                    service: service,
+                  ),
+                );
+              }).toList(),
             ),
-          );
-        }).toList(),
-      ),
     );
   }
 

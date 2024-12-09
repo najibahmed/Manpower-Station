@@ -10,7 +10,6 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
 
-
 class WorkerListScreen extends BaseView<WorkerController> {
   const WorkerListScreen({super.key});
 
@@ -32,49 +31,48 @@ class WorkerListScreen extends BaseView<WorkerController> {
             color: Colors.white,
           )),
       bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: Container(
-            decoration: const BoxDecoration(
-                color: LightThemeColors.primaryColor,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10))),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
-              child: TextField(
-                controller: controller.workerSearchController,
-                keyboardType: TextInputType.text,
-                cursorColor: Colors.green,
-                style: const TextStyle(fontWeight: FontWeight.normal),
-                decoration: const InputDecoration(
-                  // fillColor: Colors.grey[300],
-                  hintText: 'Search Worker',
-                  filled: true,
-                  isDense: true,
-                  prefixIcon: Icon(Icons.search_outlined),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
+        preferredSize: const Size.fromHeight(60),
+        child: Container(
+          decoration: const BoxDecoration(
+              color: LightThemeColors.primaryColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
+            child: TextField(
+              controller: controller.workerSearchController,
+              keyboardType: TextInputType.text,
+              cursorColor: Colors.green,
+              style: const TextStyle(fontWeight: FontWeight.normal),
+              decoration: const InputDecoration(
+                // fillColor: Colors.grey[300],
+                hintText: 'Search Worker',
+                filled: true,
+                isDense: true,
+                prefixIcon: Icon(Icons.search_outlined),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
-                onChanged: (query) {
-                  controller.deBouncer.call(() {
-                    controller.isLoading.value = true;
-                    controller.findWorkers();
-                    Future.delayed(
-                        const Duration(
-                          seconds: 1,
-                        ), () {
-                      controller.isLoading.value = false;
-                    });
-                  });
-                },
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
               ),
+              onChanged: (query) {
+                controller.deBouncer.call(() {
+                  controller.isLoading.value = true;
+                  controller.findWorkers();
+                  Future.delayed(
+                      const Duration(
+                        seconds: 1,
+                      ), () {
+                    controller.isLoading.value = false;
+                  });
+                });
+              },
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 
@@ -249,10 +247,8 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                     fit: BoxFit.cover,
                                     imageUrl:
                                         '${Constants.avatarImgUrl}${worker.avatar}',
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                    progressIndicatorBuilder:
-                                        (context, url, progress) => Center(
+                                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                                    progressIndicatorBuilder: (context, url, progress) => Center(
                                       child: CircularProgressIndicator(
                                         value: progress.progress,
                                       ),

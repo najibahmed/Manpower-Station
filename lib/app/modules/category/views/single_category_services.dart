@@ -69,30 +69,30 @@ class SingleCategoryServices extends BaseView<CategoryController> {
               SliverPadding(
                 padding: const EdgeInsets.all(8.0),
                 sliver: SliverGrid(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 0.75,
-                    ),
-                    delegate: SliverChildBuilderDelegate(
-                      childCount: data!.length,
-                      (context, index) {
-                        ServiceModel service = data[index];
-                        return InkWell(
-                          onTap: () {
-                            Get.toNamed(AppPages.ServiceDetails,
-                                arguments: service);
-                          },
-                          child: ServiceCard(
-                            title: service.name!,
-                            image: service.image!,
-                            service: service,
-                          ),
-                        );
-                      },
-                    )),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.75,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: data!.length,
+                    (context, index) {
+                      ServiceModel service = data[index];
+                      return InkWell(
+                        onTap: () {
+                          Get.toNamed(AppPages.ServiceDetails,
+                              arguments: service);
+                        },
+                        child: ServiceCard(
+                          title: service.name!,
+                          image: service.image!,
+                          service: service,
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ),
             ],
           );

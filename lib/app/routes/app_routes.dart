@@ -8,6 +8,7 @@ abstract class Routes {
   static const homeScreen = _Paths.HOME;
   static const dashBoard = _Paths.DashBoard;
   static const registrationScreen = _Paths.Registration;
+  static const signInScreen = _Paths.SignIn;
   static const otpScreen = _Paths.OtpScreen;
   static const userProfile = _Paths.UserProfile;
   static const orderHistory = _Paths.BookingHistory;
@@ -37,6 +38,7 @@ abstract class _Paths {
   static const HOME = '/home';
   static const DashBoard = '/dash_board';
   static const Registration = '/registration';
+  static const SignIn = '/signIn';
   static const OtpScreen = '/otp';
   static const UserProfile = '/user_profile';
   static const MenusPage = '/menus_page';
