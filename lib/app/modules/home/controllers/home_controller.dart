@@ -2,10 +2,10 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/models/active_banner.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
-import 'package:manpower_station/app/services/api_client.dart';
 
 import '../../../components/custom_snackbar.dart';
 import '../../../core/base/base_controller.dart';
+import '../../../network/api_client.dart';
 
 class HomeController extends BaseController {
   var allServiceData = <dynamic>[].obs;

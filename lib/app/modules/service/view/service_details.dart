@@ -144,7 +144,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -210,9 +210,6 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                       : const SizedBox(),
                 ],
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
-              ),
             ],
           ),
         ),
@@ -220,12 +217,15 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
+              width: MediaQuery.of(context).size.width * 0.9,
               height: MediaQuery.of(context).size.height * 0.05,
               child: ElevatedButton(
                 onPressed: () {
                   Get.offNamed(AppPages.ServiceBooking, arguments: service);
                 },
+                style: ElevatedButton.styleFrom(
+                 shape:const RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(50)))
+                ),
                 child: Text(
                   'Reserve Service',
                   style: TextStyle(
@@ -234,7 +234,10 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
               ),
             ),
           ),
-        )
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.02,
+        ),
       ],
     );
   }

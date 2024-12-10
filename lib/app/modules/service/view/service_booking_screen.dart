@@ -224,8 +224,8 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       /// Calender dialogue
                       Center(
                         child: SizedBox(
-                          height: screenHeight * .06,
-                          width: 200,
+                          height: screenHeight * .055,
+                          width: screenWidth  * 0.8,
                           child: ElevatedButton.icon(
                             onPressed: () async {
                               // bool themeIsLight =
@@ -274,6 +274,9 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                               Icons.calendar_month_outlined,
                               color: Colors.white,
                             ),
+                            style: ElevatedButton.styleFrom(
+                                shape:const RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(50)))
+                            ),
                           ),
                         ),
                       ),
@@ -307,31 +310,30 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                             Get.toNamed(AppPages.WorkerListView);
                           },
                           child: Card(
+                            shape: const RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(50)),),
                             color: LightThemeColors.primaryColor,
                             elevation: 5,
                             child: SizedBox(
-                              height: screenHeight * 0.06,
-                              width: screenWidth * 0.5,
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(
-                                        "Choose Worker",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: MyFonts.bodyLargeSize,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const Icon(
-                                        Icons.arrow_forward_outlined,
-                                        color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
+                              height: screenHeight * 0.055,
+                              width: screenWidth * 0.8,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "Choose Worker",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: MyFonts.bodyLargeSize,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    const Icon(
+                                      Icons.arrow_forward_outlined,
+                                      color: Colors.white,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -347,7 +349,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
 
           /// Bottom sub total widget
           Positioned(
-            bottom: 5,
+            bottom: 0,
             right: 5,
             left: 5,
             child: Card(

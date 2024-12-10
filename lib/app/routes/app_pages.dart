@@ -22,7 +22,6 @@ import 'package:manpower_station/app/modules/user_profile/user_profile_view/upda
 import 'package:manpower_station/app/modules/user_profile/user_profile_view/update_phoneOrEmail_view.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_view/update_profile.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_view/user_profile_screen.dart';
-import 'package:manpower_station/app/modules/authentication/verification_done.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_view.dart';
 import 'package:manpower_station/app/modules/dashboard/bindings/dashboard_binding.dart';
 import 'package:manpower_station/app/modules/dashboard/view/dashboard_view.dart';

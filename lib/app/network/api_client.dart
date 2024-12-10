@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get_utils/get_utils.dart';
@@ -11,7 +10,6 @@ import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/utils/appLoggerUtils.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
 import 'api_exceptions.dart';
 import '../../../config/translations/strings_enum.dart';
 import '../components/custom_snackbar.dart';

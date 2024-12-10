@@ -7,6 +7,7 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+import 'package:manpower_station/utils/app_Images.dart';
 import 'package:manpower_station/utils/constants.dart';
 
 class BookingHistoryView extends BaseView<BookingsController> {
@@ -369,7 +370,8 @@ class OrderHistory extends StatelessWidget {
             ),
             Center(
               child: Image.asset(
-                'assets/images/no_order_history.png',
+                AppImages.instance.noOrder,
+                scale: 0.7,
                 fit: BoxFit.cover,
               ),
             ),

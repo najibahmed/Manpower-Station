@@ -24,41 +24,7 @@ class ReviewsScreen extends StatelessWidget {
               height: 8,
             ),
             _buildRatingBars(),
-            // TextFormField(
-            //   controller: controller.reviewController,
-            //   decoration: const InputDecoration(
-            //     labelText: 'Give a review',
-            //     labelStyle: TextStyle(color: Colors.grey),
-            //     focusedBorder: OutlineInputBorder(
-            //       borderSide: BorderSide(color: Colors.green, width: 2),
-            //     ),
-            //     enabledBorder: OutlineInputBorder(
-            //       borderSide: BorderSide(color: Colors.grey, width: 1),
-            //     ),
-            //     border: OutlineInputBorder(
-            //         borderSide: BorderSide(color: Colors.black12)),
-            //   ),
-            //   validator: (value) {
-            //     if (value != null) {
-            //       CustomSnackBar.showCustomErrorToast(
-            //           message: 'Please write review');
-            //     }
-            //     return null;
-            //   },
-            // ),
-            // const SizedBox(height: 8),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     // Add write review functionality
-            //   },
-            //   style: ElevatedButton.styleFrom(
-            //     backgroundColor: Colors.green,
-            //   ),
-            //   child: const Text(
-            //     'Submit',
-            //     style: TextStyle(color: Colors.white),
-            //   ),
-            // ),
+
             const SizedBox(height: 8),
             const Divider(color: Colors.black26,),
             const SizedBox(height: 8),

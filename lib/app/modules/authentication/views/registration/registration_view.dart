@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, unnecessary_string_interpolations
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/link_button.dart';
@@ -110,7 +109,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
               TextFormField(
                 // autofocus: true,
                 keyboardType: TextInputType.text,
-                controller: controller.phoneNumberEmailController,
+                controller: controller.emailController,
                 decoration:  InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -131,30 +130,63 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 ),
                 validator: (String? value) {
                   // Define the regex pattern for the allowed prefixes and 11 digits.
-                  String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
                   String emailPattern =
-                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+                      r'^[a-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
                   // Create the regex object.
                   RegExp regExpEmail = RegExp(emailPattern);
+                  // Check if the input is null or empty.
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your Email';
+                  } else if (!regExpEmail.hasMatch(value)) {
+                    // Validate the input using the regex.
+                    // if (!regExpEmail.hasMatch(value)) {
+                      return 'Please enter a valid Email Address';
+                    // }
+                  } else {
+                    return 'Please enter a valid Email Address.';
+                  }
+                  // If the input is valid, return null (no error).
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+              TextFormField(
+                // autofocus: true,
+                keyboardType: TextInputType.text,
+                controller: controller.phoneNumberController,
+                decoration:  InputDecoration(
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    borderSide: BorderSide(
+                        color: LightThemeColors.primaryColor, width: 2.0),
+                  ),
+                  hintText: 'Enter Phone number',
+                  hintStyle: TextStyle(color: Colors.grey[600]),
+                  suffixIcon: Icon(Icons.phone_android_outlined,color: Colors.grey,),
+                  filled: true,
+                  fillColor: const Color(0xFFF5FCF9),
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16.0 * 1.5, vertical: 16.0),
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                  ),
+                ),
+                validator: (String? value) {
+                  // Define the regex pattern for the allowed prefixes and 11 digits.
+                  String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
+                  // Create the regex object.
                   RegExp regExp = RegExp(phonePattern);
                   // Check if the input is null or empty.
                   if (value == null || value.isEmpty) {
                     return 'Please enter your phone number';
-                  }
-                  if (value.isEmail) {
-                    // Validate the input using the regex.
-                    if (!regExpEmail.hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
-                  } else if (value.isPhoneNumber) {
-                    // Validate the input using the regex.
-                    if (!regExp.hasMatch(value)) {
+                  } else if (!regExp.hasMatch(value)) {
                       return 'Please enter a valid phone number.';
-                    }
                   } else {
                     return 'Please enter a valid credential.';
                   }
-                  // If the input is valid, return null (no error).
                   return null;
                 },
               ),
@@ -172,7 +204,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   hintText: 'Password',
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
-                  suffixIcon: Icon(Icons.lock,color: Colors.grey,),
+                  suffixIcon: const Icon(Icons.lock,color: Colors.grey,),
                   fillColor: const Color(0xFFF5FCF9),
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16.0 * 1.5, vertical: 16.0),
@@ -293,7 +325,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
   void _sendOtp() async {
     if (_formKey.currentState!.validate()) {
       showLoadingOverLay(
-          asyncFunction: controller.loginWithPhoneOrEmail(), msg: "Loading");
+          asyncFunction: controller.loginUser(), msg: "Loading");
       // await controller.loginWithPhoneOrEmail();
     }
   }
@@ -311,7 +343,7 @@ class SocialCard extends StatelessWidget {
       children: [
         Container(
           width: MediaQuery.of(context).size.width * 0.15,
-          height: 50,
+          height: 60,
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Theme.of(context).hintColor)),
@@ -323,23 +355,26 @@ class SocialCard extends StatelessWidget {
             onPressed: () {},
           ),
         ),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.15,
-          height: 50,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Theme.of(context).hintColor)),
-          child: IconButton(
-            icon: Image.asset(
-              AppImages.instance.googleLogo,
-              height: 30,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.15,
+            height: 60,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Theme.of(context).hintColor)),
+            child: IconButton(
+              icon: Image.asset(
+                AppImages.instance.googleLogo,
+                height: 30,
+              ),
+              onPressed: () {},
             ),
-            onPressed: () {},
           ),
         ),
         Container(
           width: MediaQuery.of(context).size.width * 0.15,
-          height: 50,
+          height: 60,
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Theme.of(context).hintColor)),

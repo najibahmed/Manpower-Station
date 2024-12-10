@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
-import 'package:manpower_station/app/services/api_client.dart';
-
 import '../../../components/custom_snackbar.dart';
 import '../../../core/base/base_controller.dart';
+import '../../../network/api_client.dart';
 
 class SearchViewController extends BaseController {
   Debouncer deBouncer = Debouncer(delay: const Duration(milliseconds: 500));

@@ -37,7 +37,7 @@ class SingleCategoryServices extends BaseView<CategoryController> {
   Widget body(BuildContext context) {
     /// future builder function for get services for a particular category
     return FutureBuilder<List<dynamic>>(
-      future: controller.getOneCategoryServices(
+      future: controller.getSingleCatServices(
           controller.catId), // Call the async function here
       builder: (context, snapshot) {
         // Check the state of the Future

@@ -5,7 +5,6 @@ import 'package:manpower_station/app/modules/search_view/controller/search_contr
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/modules/service/view/service_card.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
@@ -51,14 +50,14 @@ class SearchScreen extends BaseView<SearchViewController> {
                   onChanged: (query) {
                     controller.deBouncer.call(() {
                       // if (controller.searchController.text.isNotEmpty) {
-                        controller.isLoading.value = true;
-                        controller.findServices();
-                        Future.delayed(
-                            const Duration(
-                              seconds: 1,
-                            ), () {
-                          controller.isLoading.value = false;
-                        });
+                      controller.isLoading.value = true;
+                      controller.findServices();
+                      Future.delayed(
+                          const Duration(
+                            seconds: 1,
+                          ), () {
+                        controller.isLoading.value = false;
+                      });
                       // }
                     });
                   },
@@ -98,7 +97,8 @@ class SearchScreen extends BaseView<SearchViewController> {
                               : controller.findByService.length,
                           (context, index) {
                             if (controller.isLoading.value) {
-                              return HelperFunction.instance.buildServiceCardShimmer();
+                              return HelperFunction.instance
+                                  .buildServiceCardShimmer();
                             } else {
                               ServiceModel service =
                                   controller.findByService[index];

@@ -8,11 +8,11 @@ import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
-import 'package:manpower_station/app/services/api_client.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 import '../../../components/custom_snackbar.dart';
 import '../../../data/local/my_shared_pref.dart';
+import '../../../network/api_client.dart';
 import '../views/checkout_screen.dart';
 
 class CheckoutController extends BaseController {

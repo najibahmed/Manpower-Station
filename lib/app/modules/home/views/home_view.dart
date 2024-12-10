@@ -10,6 +10,7 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
+import '../../../../config/theme/light_theme_colors.dart';
 import '../../../core/base/base_view.dart';
 import '../controllers/home_controller.dart';
 
@@ -224,11 +225,6 @@ class HomeView extends BaseView<HomeController> {
                               Get.toNamed(AppPages.SingleCateServicesScreen,
                                   arguments: [catTitle, id]);
                             },
-                            style: OutlinedButton.styleFrom(
-                                // backgroundColor:
-                                //     LightThemeColors
-                                //         .primaryColor,
-                                ),
                             child: const Text(
                               'View All',
                               style:
@@ -247,7 +243,7 @@ class HomeView extends BaseView<HomeController> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        elevation: 8,
+        elevation: 3,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: controller.allServiceData.isEmpty
@@ -304,7 +300,7 @@ class HomeView extends BaseView<HomeController> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: controller.allServiceData.isEmpty
-          ? _buildBannerShimmer()
+          ? _buildPopularShimmer(size)
           : CarouselSlider(
               options: CarouselOptions(
                 height: size.height * 0.2,
@@ -336,5 +332,32 @@ class HomeView extends BaseView<HomeController> {
   Widget _buildBannerShimmer() {
     return const Card(
         elevation: 5, child: ShimmerWidget.rectangular(height: 180));
+  }
+
+  Widget _buildPopularShimmer(Size size) {
+    return  Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Card(
+            elevation: 5,
+            child: ShimmerWidget.rectangular(
+              height: size.height*0.16,
+              width: size.width*.25,
+
+            )),
+        Card(
+            elevation: 5,
+            child: ShimmerWidget.rectangular(
+              height: size.height*0.18,
+              width: size.width*.4,
+            )),
+        Card(
+            elevation: 5,
+            child: ShimmerWidget.rectangular(
+              height: size.height*0.16,
+              width: size.width*.25,
+            )),
+      ],
+    );
   }
 }

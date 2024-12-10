@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_loading_overlay.dart';
-import 'package:manpower_station/app/components/link_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -78,7 +77,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
               ),
               TextFormField(
                 keyboardType: TextInputType.text,
-                controller: controller.phoneNumberEmailController,
+                controller: controller.emailController,
                 decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -237,7 +236,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
   void _sendOtp() async {
     if (_formKey.currentState!.validate()) {
       showLoadingOverLay(
-          asyncFunction: controller.loginWithPhoneOrEmail(), msg: "Loading");
+          asyncFunction: controller.loginUser(), msg: "Loading");
       // await controller.loginWithPhoneOrEmail();
     }
   }
@@ -251,7 +250,7 @@ class SocialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: MediaQuery.of(context).size.width * 0.15,
@@ -267,19 +266,22 @@ class SocialCard extends StatelessWidget {
             onPressed: () {},
           ),
         ),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.15,
-          height: 60,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Theme.of(context).hintColor)),
-          child: IconButton(
-            icon: Image.asset(
-              AppImages.instance.googleLogo,
-              height: 30,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.15,
+            height: 60,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Theme.of(context).hintColor)),
+            child: IconButton(
+              icon: Image.asset(
+                AppImages.instance.googleLogo,
+                height: 30,
+              ),
+              onPressed: () {
+              },
             ),
-            onPressed: () {
-            },
           ),
         ),
         Container(

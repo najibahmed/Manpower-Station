@@ -9,10 +9,8 @@ import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_model.dart';
 import 'package:manpower_station/app/modules/user_profile/model/user_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:manpower_station/app/services/api_client.dart';
-import 'package:manpower_station/utils/constants.dart';
-
 import '../../../components/custom_snackbar.dart';
+import '../../../network/api_client.dart';
 
 class UserController extends BaseController {
   final profilePic = Rx<File?>(null);

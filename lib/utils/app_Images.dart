@@ -23,5 +23,6 @@ class AppImages{
   /// Lottie
   String get logoAnim => 'assets/splash.json';
 
-
+  ///Order section
+  String get noOrder => 'assets/images/no_order.png';
 }
