@@ -12,7 +12,7 @@ import 'package:manpower_station/utils/constants.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class ServiceBookingScreen extends BaseView<ServiceController> {
-  const ServiceBookingScreen({super.key});
+   ServiceBookingScreen({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
@@ -33,6 +33,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
       ),
     );
   }
+  var segmentStringList=["Monthly","Today","Weekly","Tomorrow"];
 
   @override
   Widget body(BuildContext context) {
@@ -72,11 +73,41 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       ),
                       SizedBox(height: screenHeight * .02),
                       Text(
-                        'Choose a Duration and Time.',
+                        'Select Package Duration',
                         style: TextStyle(
                             // color: LightThemeColors.bodyTextColor,
                             fontSize: MyFonts.bodyLargeSize,
                             fontWeight: FontWeight.bold),
+                      ),
+                      Center(
+                        child: SegmentedButton<String>(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
+                              if (states.contains(WidgetState.selected)) {
+                                return LightThemeColors.primaryColor; // Selected button background color
+                              }
+                              return Colors.grey[100]; // Unselected button background color
+                            }),
+                            foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
+                              if (states.contains(WidgetState.selected)) {
+                                return Colors.white; // Selected button text color
+                              }
+                              return Colors.black54; // Unselected button text color
+                            }),
+                            textStyle: WidgetStateProperty.all(
+                              const TextStyle(fontWeight: FontWeight.bold), // Text style for all buttons
+                            ),
+                          ),
+                          showSelectedIcon: false,
+                          segments: segmentStringList.map((e){
+                            return ButtonSegment(value: e.toString(),label: Text(e));
+                          }).toList(),
+                          selected: {controller.selectedValue.value},
+                          onSelectionChanged: (newSelection) {
+                              controller.selectedValue.value = newSelection.first;
+
+                          },
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -138,7 +169,6 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                         color: Colors.grey),
                                   ),
                                   SizedBox(height: screenHeight * .01),
-
                                   /// Drop Down button for selection of time factors
                                   DropdownMenu<String>(
                                     inputDecorationTheme:
@@ -357,7 +387,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
               elevation: 5,
               // color: Colors.green.withOpacity(.85),
               child: SizedBox(
-                height: 60,
+                height: 50,
                 width: MediaQuery.of(context).size.width * .9,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

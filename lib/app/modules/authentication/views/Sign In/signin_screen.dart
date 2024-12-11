@@ -85,7 +85,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
                         color: LightThemeColors.primaryColor, width: 2.0),
                   ),
                   hintText: 'Enter Email',
-                  suffixIcon: Icon(
+                  suffixIcon: const Icon(
                     Icons.mail,
                     color: Colors.grey,
                   ),
@@ -100,31 +100,18 @@ class SignInScreen extends BaseView<AuthenticationController> {
                   ),
                 ),
                 validator: (String? value) {
-                  // Define the regex pattern for the allowed prefixes and 11 digits.
-                  String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
                   String emailPattern =
-                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+                      r'^[a-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
                   // Create the regex object.
                   RegExp regExpEmail = RegExp(emailPattern);
-                  RegExp regExp = RegExp(phonePattern);
                   // Check if the input is null or empty.
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your email or phone number';
+                    return 'Please enter your Email';
                   }
-                  if (value.isEmail) {
+                  if (!regExpEmail.hasMatch(value)) {
                     // Validate the input using the regex.
-                    if (!regExpEmail.hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
-                  } else if (value.isPhoneNumber) {
-                    // Validate the input using the regex.
-                    if (!regExp.hasMatch(value)) {
-                      return 'Please enter a valid phone number.';
-                    }
-                  } else {
-                    return 'Please enter a valid credential.';
+                    return 'Please enter a valid Email Address';
                   }
-                  // If the input is valid, return null (no error).
                   return null;
                 },
               ),
@@ -133,7 +120,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
               ),
               TextFormField(
                 controller: controller.passwordController,
-                obscureText: controller.obSecurePass.value,
+                obscureText: !controller.obSecurePass.value,
                 decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -148,9 +135,9 @@ class SignInScreen extends BaseView<AuthenticationController> {
                       },
                       icon: Icon(
                         Icons.remove_red_eye,
-                        color: controller.obSecurePass.value
-                            ? Colors.grey
-                            : LightThemeColors.primaryColor,
+                        color:  controller.obSecurePass.value
+                            ? LightThemeColors.primaryColor
+                            : Colors.grey,
                       )),
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,

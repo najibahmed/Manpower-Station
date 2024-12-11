@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
@@ -28,14 +27,7 @@ class CheckoutController extends BaseController {
   TextEditingController cityController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController areaController = TextEditingController();
-   String cartFieldServiceId = '_id';
-   String cartFieldServiceName = 'name';
-   String cartFieldServiceImageUrl = 'image';
-   String cartFieldServiceDiscountModel = 'service_discount';
-   String cartFieldServicePrice = 'service_price';
-   String cartFieldServiceTotalPrice = 'totalPrice';
-   String cartFieldServiceStartingDate = 'startWork';
-   String cartFieldServiceSchedule = 'timeSchedule';
+
 
  /// Save order or create bookings & payment
   Future<void> saveOrder() async{

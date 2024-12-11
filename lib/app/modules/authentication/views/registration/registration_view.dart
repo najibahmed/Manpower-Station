@@ -19,16 +19,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
-    return AppBar(
-      centerTitle: true,
-      // leading: IconButton(onPressed: (){Get.back();}, icon: const Icon(Icons.arrow_back,color: Colors.black,)),
-      backgroundColor:
-          Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
-      title: Image.asset(
-        'assets/images/manpower_name_logo.png',
-        fit: BoxFit.cover,
-      ),
-    );
+    return null;
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -41,11 +32,18 @@ class RegistrationView extends BaseView<AuthenticationController> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Image.asset(AppImages.instance.manpower_Logo),
+              ),
               Center(
                 child: Text("Sign Up",
-                    style: TextStyle(fontSize: MyFonts.displayLargeSize,fontWeight: FontWeight.bold,color: LightThemeColors.primaryColor)),
+                    style: TextStyle(
+                        fontSize: MyFonts.displayLargeSize,
+                        fontWeight: FontWeight.bold,
+                        color: LightThemeColors.primaryColor)),
               ),
               // SizedBox(
               //   height: MediaQuery.of(context).size.height * 0.15,
@@ -74,18 +72,21 @@ class RegistrationView extends BaseView<AuthenticationController> {
                         color: LightThemeColors.opacityTextColor)),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
+                height: MediaQuery.of(context).size.height * 0.03,
               ),
               TextFormField(
-                controller:controller.nameController,
-                decoration:  InputDecoration(
+                controller: controller.nameController,
+                decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                     borderSide: BorderSide(
                         color: LightThemeColors.primaryColor, width: 2.0),
                   ),
                   hintText: 'Full Name',
-                  suffixIcon: Icon(Icons.person,color: Colors.grey,),
+                  suffixIcon: const Icon(
+                    Icons.person,
+                    color: Colors.grey,
+                  ),
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
                   fillColor: const Color(0xFFF5FCF9),
@@ -96,7 +97,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
                 ),
-                validator: (value){
+                validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your full Name';
                   }
@@ -104,13 +105,13 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 },
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
+                height: MediaQuery.of(context).size.height * 0.01,
               ),
               TextFormField(
                 // autofocus: true,
                 keyboardType: TextInputType.text,
                 controller: controller.emailController,
-                decoration:  InputDecoration(
+                decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                     borderSide: BorderSide(
@@ -118,7 +119,10 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   ),
                   hintText: 'Enter Email',
                   hintStyle: TextStyle(color: Colors.grey[600]),
-                  suffixIcon: Icon(Icons.mail,color: Colors.grey,),
+                  suffixIcon: const Icon(
+                    Icons.mail,
+                    color: Colors.grey,
+                  ),
                   filled: true,
                   fillColor: const Color(0xFFF5FCF9),
                   contentPadding: const EdgeInsets.symmetric(
@@ -129,7 +133,6 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   ),
                 ),
                 validator: (String? value) {
-                  // Define the regex pattern for the allowed prefixes and 11 digits.
                   String emailPattern =
                       r'^[a-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
                   // Create the regex object.
@@ -137,26 +140,22 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   // Check if the input is null or empty.
                   if (value == null || value.isEmpty) {
                     return 'Please enter your Email';
-                  } else if (!regExpEmail.hasMatch(value)) {
-                    // Validate the input using the regex.
-                    // if (!regExpEmail.hasMatch(value)) {
-                      return 'Please enter a valid Email Address';
-                    // }
-                  } else {
-                    return 'Please enter a valid Email Address.';
                   }
-                  // If the input is valid, return null (no error).
+                  if (!regExpEmail.hasMatch(value)) {
+                    // Validate the input using the regex.
+                    return 'Please enter a valid Email Address';
+                  }
                   return null;
                 },
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
+                height: MediaQuery.of(context).size.height * 0.01,
               ),
               TextFormField(
                 // autofocus: true,
                 keyboardType: TextInputType.text,
                 controller: controller.phoneNumberController,
-                decoration:  InputDecoration(
+                decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                     borderSide: BorderSide(
@@ -164,7 +163,10 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   ),
                   hintText: 'Enter Phone number',
                   hintStyle: TextStyle(color: Colors.grey[600]),
-                  suffixIcon: Icon(Icons.phone_android_outlined,color: Colors.grey,),
+                  suffixIcon: const Icon(
+                    Icons.phone_android_outlined,
+                    color: Colors.grey,
+                  ),
                   filled: true,
                   fillColor: const Color(0xFFF5FCF9),
                   contentPadding: const EdgeInsets.symmetric(
@@ -182,20 +184,19 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   // Check if the input is null or empty.
                   if (value == null || value.isEmpty) {
                     return 'Please enter your phone number';
-                  } else if (!regExp.hasMatch(value)) {
-                      return 'Please enter a valid phone number.';
-                  } else {
-                    return 'Please enter a valid credential.';
+                  }
+                  if (!regExp.hasMatch(value)) {
+                    return 'Please enter a valid phone number.';
                   }
                   return null;
                 },
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
+                height: MediaQuery.of(context).size.height * 0.01,
               ),
               TextFormField(
                 controller: controller.passwordController,
-                decoration:  InputDecoration(
+                decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                     borderSide: BorderSide(
@@ -204,7 +205,10 @@ class RegistrationView extends BaseView<AuthenticationController> {
                   hintText: 'Password',
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
-                  suffixIcon: const Icon(Icons.lock,color: Colors.grey,),
+                  suffixIcon: const Icon(
+                    Icons.lock,
+                    color: Colors.grey,
+                  ),
                   fillColor: const Color(0xFFF5FCF9),
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16.0 * 1.5, vertical: 16.0),
@@ -213,7 +217,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
                 ),
-                validator: (value){
+                validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a password!';
                   }
@@ -264,7 +268,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
               Center(
                 child: SizedBox(
                   height: 45,
-                  width: MediaQuery.of(context).size.width* 1,
+                  width: MediaQuery.of(context).size.width * 1,
                   child: ElevatedButton(
                       onPressed: () {
                         _sendOtp();
@@ -283,7 +287,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
+                height: MediaQuery.of(context).size.height * 0.03,
               ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -294,7 +298,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                     color: Colors.grey,
                   )),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18.0),
+                    padding: EdgeInsets.symmetric(horizontal: 12.0),
                     child: Text(
                       "Or Sign Up With",
                       style: TextStyle(color: Colors.black54),
@@ -308,7 +312,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
+                height: MediaQuery.of(context).size.height * 0.03,
               ),
               const SocialCard(),
               SizedBox(
@@ -324,8 +328,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
 
   void _sendOtp() async {
     if (_formKey.currentState!.validate()) {
-      showLoadingOverLay(
-          asyncFunction: controller.loginUser(), msg: "Loading");
+      showLoadingOverLay(asyncFunction: controller.loginUser(), msg: "Loading");
       // await controller.loginWithPhoneOrEmail();
     }
   }

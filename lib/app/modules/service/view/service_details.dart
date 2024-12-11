@@ -52,7 +52,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                     tag: "imgHero",
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,
-                      height: 300,
+                      height: screenHeight *.3,
                       width: double.infinity,
                       imageUrl: '${Constants.serviceImgUrl}${service.image}',
                       errorWidget: (context, url, error) =>

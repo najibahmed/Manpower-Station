@@ -12,7 +12,6 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 
-
 class CheckOutScreen extends BaseView<CheckoutController> {
   CheckOutScreen({super.key});
 
@@ -40,7 +39,6 @@ class CheckOutScreen extends BaseView<CheckoutController> {
       // backgroundColor: LightThemeColors.primaryColor,
     );
   }
-
 
   @override
   Widget body(BuildContext context) {
@@ -259,7 +257,7 @@ Widget customServiceTile(CartModel item, double screenHeight,
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
           child: SizedBox(
-            height:screenHeight* 0.188,
+            height: screenHeight * 0.188,
             width: screenWidth * 0.34,
             child: CachedNetworkImage(
               fit: BoxFit.cover,

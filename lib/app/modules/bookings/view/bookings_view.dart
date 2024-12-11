@@ -105,7 +105,7 @@ class ActiveOrder extends StatelessWidget {
                 ),
                 Center(
                   child: Image.asset(
-                    'assets/images/no_order_history.png',
+                    AppImages.instance.noOrderHistory,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -158,7 +158,7 @@ class ActiveOrder extends StatelessWidget {
                           width: double.infinity,
                           decoration: BoxDecoration(
                               color: Theme.of(context).highlightColor,
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   topRight: Radius.circular(10))),
                           child: Padding(

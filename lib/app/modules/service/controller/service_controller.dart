@@ -26,6 +26,8 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
   late ServiceModel serviceModel;
   Rx<DateTime?> selectedDateTime = DateTime.now().obs;    //service selected date time
   RxList<CartModel> cartItems = <CartModel>[].obs;
+  var selectedValue = "Monthly".obs;
+
 
   // Get price
   getServicePrice(time, timeKey, price) {
