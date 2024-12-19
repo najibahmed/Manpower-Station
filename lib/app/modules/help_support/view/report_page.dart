@@ -53,16 +53,13 @@ class ReportPage extends BaseView<HelpController>{
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      CustomSnackBar.showCustomErrorToast(
-                          message: 'Please write review',
-                          duration: const Duration(seconds: 1));
+                      return 'Please enter your email';
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: screenHeight * .02,),
                 TextFormField(
-
                   maxLines: 3,
                   controller: controller.userMessageController,
                   decoration: const InputDecoration(
@@ -83,9 +80,8 @@ class ReportPage extends BaseView<HelpController>{
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      CustomSnackBar.showCustomErrorToast(
-                          message: 'Please write you want to report',
-                          duration: const Duration(seconds: 1));
+                      return 'Please write you want to report';
+
                     }
                     return null;
                   },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_loading_overlay.dart';
+import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -9,6 +10,7 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/app_Images.dart';
+import 'package:manpower_station/utils/helper_function.dart';
 
 class SignInScreen extends BaseView<AuthenticationController> {
   SignInScreen({super.key});
@@ -16,7 +18,8 @@ class SignInScreen extends BaseView<AuthenticationController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
-    return AppBar(
+    return null;
+      AppBar(
       centerTitle: true,
       backgroundColor:
           Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
@@ -26,9 +29,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
       ),
     );
   }
-
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget body(BuildContext context) {
     return SingleChildScrollView(
@@ -39,6 +40,18 @@ class SignInScreen extends BaseView<AuthenticationController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Image.asset(
+                    AppImages.instance.manpower_Logo,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.04,
+              ),
               Center(
                 child: Text("Sign In",
                     style: TextStyle(
@@ -56,7 +69,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
               //   ),
               // ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
+                height: MediaQuery.of(context).size.height * 0.01,
               ),
               Center(
                 child: Text("Welcome Back",
@@ -77,7 +90,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
               ),
               TextFormField(
                 keyboardType: TextInputType.text,
-                controller: controller.emailController,
+                controller: controller.signInEmailController,
                 decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -91,7 +104,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
                   ),
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
-                  fillColor: const Color(0xFFF5FCF9),
+                  fillColor: const Color(0xFFE4FAF1),
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16.0 * 1.5, vertical: 16.0),
                   border: const OutlineInputBorder(
@@ -141,7 +154,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
                       )),
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
-                  fillColor: const Color(0xFFF5FCF9),
+                  fillColor: const Color(0xFFE4FAF1),
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16.0 * 1.5, vertical: 16.0),
                   border: const OutlineInputBorder(
@@ -164,8 +177,12 @@ class SignInScreen extends BaseView<AuthenticationController> {
                   height: 45,
                   width: MediaQuery.of(context).size.width * 1,
                   child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async{
+                        if(await HelperFunction.instance.isInternetConnected()){
                         _sendOtp();
+                        }else{
+                          CustomSnackBar.showCustomErrorToast(message:" No Internet Connection");
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -222,11 +239,11 @@ class SignInScreen extends BaseView<AuthenticationController> {
 
   void _sendOtp() async {
     if (_formKey.currentState!.validate()) {
-      showLoadingOverLay(
-          asyncFunction: controller.loginUser(), msg: "Loading");
+      showLoadingOverLay(asyncFunction: controller.loginUser(), msg: "Loading");
       // await controller.loginWithPhoneOrEmail();
     }
   }
+
 }
 
 class SocialCard extends StatelessWidget {
@@ -266,8 +283,7 @@ class SocialCard extends StatelessWidget {
                 AppImages.instance.googleLogo,
                 height: 30,
               ),
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
           ),
         ),

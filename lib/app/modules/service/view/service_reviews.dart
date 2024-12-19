@@ -55,8 +55,8 @@ class ReviewsScreen extends StatelessWidget {
       children: [
         _buildRatingBar(5, 0.8),
         _buildRatingBar(4, 0.6),
-        _buildRatingBar(3, 0.4),
-        _buildRatingBar(2, 0.2),
+        _buildRatingBar(3, 0.2),
+        _buildRatingBar(2, 0.1),
         _buildRatingBar(1, 0.1),
       ],
     );

@@ -23,14 +23,15 @@ class _MyPayState extends State<MyPay> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              color: Theme.of(context).cardColor,
-                width:HelperFunction.instance.getScreenWidth(context)*1,
-                height:HelperFunction.instance.getScreenHeight(context)*0.05,
+                color: Theme.of(context).cardColor,
+                width: HelperFunction.instance.getScreenWidth(context) * 1,
+                height: HelperFunction.instance.getScreenHeight(context) * 0.05,
                 child: const Center(child: Text("Pay Advance "))),
             const SizedBox(
               height: 20,
             ),
-            const Text("You have to pay advance 99${Constants.banglaCurrency} to confirm this service."),
+            const Text(
+                "You have to pay advance 99${Constants.banglaCurrency} to confirm this service."),
             const SizedBox(
               height: 40,
             ),

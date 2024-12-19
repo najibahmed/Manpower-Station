@@ -12,7 +12,7 @@ import 'package:manpower_station/utils/constants.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class ServiceBookingScreen extends BaseView<ServiceController> {
-   ServiceBookingScreen({super.key});
+  ServiceBookingScreen({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
@@ -33,7 +33,8 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
       ),
     );
   }
-  var segmentStringList=["Monthly","Today","Weekly","Tomorrow"];
+
+  var segmentStringList = ["Monthly", "Today", "Weekly", "Tomorrow"];
 
   @override
   Widget body(BuildContext context) {
@@ -82,35 +83,45 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       Center(
                         child: SegmentedButton<String>(
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color?>(
+                                    (states) {
                               if (states.contains(WidgetState.selected)) {
-                                return LightThemeColors.primaryColor; // Selected button background color
+                                return LightThemeColors
+                                    .primaryColor; // Selected button background color
                               }
-                              return Colors.grey[100]; // Unselected button background color
+                              return Colors.grey[
+                                  100]; // Unselected button background color
                             }),
-                            foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
+                            foregroundColor:
+                                WidgetStateProperty.resolveWith<Color?>(
+                                    (states) {
                               if (states.contains(WidgetState.selected)) {
-                                return Colors.white; // Selected button text color
+                                return Colors
+                                    .white; // Selected button text color
                               }
-                              return Colors.black54; // Unselected button text color
+                              return Colors
+                                  .black54; // Unselected button text color
                             }),
                             textStyle: WidgetStateProperty.all(
-                              const TextStyle(fontWeight: FontWeight.bold), // Text style for all buttons
+                              const TextStyle(
+                                  fontWeight: FontWeight
+                                      .bold), // Text style for all buttons
                             ),
                           ),
                           showSelectedIcon: false,
-                          segments: segmentStringList.map((e){
-                            return ButtonSegment(value: e.toString(),label: Text(e));
+                          segments: segmentStringList.map((e) {
+                            return ButtonSegment(
+                                value: e.toString(), label: Text(e));
                           }).toList(),
                           selected: {controller.selectedValue.value},
                           onSelectionChanged: (newSelection) {
-                              controller.selectedValue.value = newSelection.first;
-
+                            controller.selectedValue.value = newSelection.first;
                           },
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(4.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -169,6 +180,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                         color: Colors.grey),
                                   ),
                                   SizedBox(height: screenHeight * .01),
+
                                   /// Drop Down button for selection of time factors
                                   DropdownMenu<String>(
                                     inputDecorationTheme:
@@ -221,7 +233,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         // Colors.grey[100],
                         elevation: 3,
                         child: SizedBox(
-                          height: screenHeight * 0.08,
+                          height: screenHeight * 0.06,
                           width: double.infinity,
                           child: Center(
                             child: Padding(
@@ -255,7 +267,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       Center(
                         child: SizedBox(
                           height: screenHeight * .055,
-                          width: screenWidth  * 0.8,
+                          width: screenWidth * 0.8,
                           child: ElevatedButton.icon(
                             onPressed: () async {
                               // bool themeIsLight =
@@ -305,8 +317,9 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                               color: Colors.white,
                             ),
                             style: ElevatedButton.styleFrom(
-                                shape:const RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(50)))
-                            ),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(50)))),
                           ),
                         ),
                       ),
@@ -340,7 +353,10 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                             Get.toNamed(AppPages.WorkerListView);
                           },
                           child: Card(
-                            shape: const RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(50)),),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50)),
+                            ),
                             color: LightThemeColors.primaryColor,
                             elevation: 5,
                             child: SizedBox(
@@ -370,6 +386,9 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 40,
+                      )
                     ],
                   ),
                 ),

@@ -178,9 +178,9 @@ class ActiveOrder extends StatelessWidget {
                         SizedBox(height: size.height * 0.02),
 
                         /// Bottom Action Buttons (Cancel Booking & Payment)
-                        // booking.isPaymentStatus == 'Completed'
-                        //     ? const SizedBox()
-                        //     :
+                        booking.isPaymentStatus == 'Completed'
+                            ? const SizedBox()
+                            :
                         _buildActionButtons(context, bController),
                       ],
                     ),

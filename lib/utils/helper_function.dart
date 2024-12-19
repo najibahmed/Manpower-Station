@@ -6,8 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/utils/constants.dart';
+
 class HelperFunction {
-  static HelperFunction instance=HelperFunction();
+  static HelperFunction instance = HelperFunction();
 
   ///  Singleton pattern
   // static HelperFunction _instance;
@@ -22,7 +23,6 @@ class HelperFunction {
 //     return _instance!;
 //   }
 
-
   getFormattedDate(DateTime dt, {String pattern = 'yyyy-MM-dd – kk:mm'}) =>
       DateFormat(pattern).format(dt);
 
@@ -32,19 +32,20 @@ class HelperFunction {
   String get generateOrderId =>
       'PB_${getFormattedDate(DateTime.now(), pattern: 'yyyyMMdd_HH:mm:ss')}';
 
-  num getDiscountAmount(discount,num price) {
-    if(discount.discountType=="Percentage Discount"){
-      return price-((price * discount.discount!) / 100).round();
-    }else{
-      return price-discount.discount!;
+  num getDiscountAmount(discount, num price) {
+    if (discount.discountType == "Percentage Discount") {
+      return price - ((price * discount.discount!) / 100).round();
+    } else {
+      return price - discount.discount!;
     }
   }
+
   /// Device
   double getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
 
-  double getScreenHeight(BuildContext context){
+  double getScreenHeight(BuildContext context) {
     return MediaQuery.of(context).size.height;
   }
 
@@ -76,9 +77,11 @@ class HelperFunction {
     }
 
     // You can handle other cases or return false if it doesn't match SVG or JPG
-    return const SizedBox(child: Center(
-      child: Text("image file format nor jpg,jpeg,png neither svg"),
-    ),); // Assuming it's not a known image type
+    return const SizedBox(
+      child: Center(
+        child: Text("image file format nor jpg,jpeg,png neither svg"),
+      ),
+    ); // Assuming it's not a known image type
   }
 
   Widget buildServiceCardShimmer() {
@@ -111,6 +114,7 @@ class HelperFunction {
       ),
     );
   }
+
   /// Shimmmer Widget for booking details
   Widget _buildCardShimmer(double screenHeight, double screenWidth) {
     return Padding(
@@ -280,7 +284,7 @@ class HelperFunction {
                                 SizedBox(height: screenHeight * 0.01),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     ShimmerWidget.rectangular(
                                         height: screenHeight * 0.02,
@@ -293,7 +297,7 @@ class HelperFunction {
                                 SizedBox(height: screenHeight * 0.01),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     ShimmerWidget.rectangular(
                                         height: screenHeight * 0.02,
@@ -306,7 +310,7 @@ class HelperFunction {
                                 SizedBox(height: screenHeight * 0.01),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     ShimmerWidget.rectangular(
                                         height: screenHeight * 0.02,
@@ -339,7 +343,6 @@ class HelperFunction {
       ]),
     );
   }
-
 
   Future<bool> isInternetConnected() async {
     var connectivityResult = await Connectivity().checkConnectivity();

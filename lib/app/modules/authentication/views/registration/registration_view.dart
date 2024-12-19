@@ -45,15 +45,6 @@ class RegistrationView extends BaseView<AuthenticationController> {
                         fontWeight: FontWeight.bold,
                         color: LightThemeColors.primaryColor)),
               ),
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height * 0.15,
-              //   child: Center(
-              //     child: Image.asset(
-              //       AppImages.instance.registrationVector,
-              //       fit: BoxFit.cover,
-              //     ),
-              //   ),
-              // ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
@@ -74,218 +65,27 @@ class RegistrationView extends BaseView<AuthenticationController> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              TextFormField(
-                controller: controller.nameController,
-                decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    borderSide: BorderSide(
-                        color: LightThemeColors.primaryColor, width: 2.0),
-                  ),
-                  hintText: 'Full Name',
-                  suffixIcon: const Icon(
-                    Icons.person,
-                    color: Colors.grey,
-                  ),
-                  hintStyle: TextStyle(color: Colors.grey[600]),
-                  filled: true,
-                  fillColor: const Color(0xFFF5FCF9),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0 * 1.5, vertical: 16.0),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your full Name';
-                  }
-                  return null;
-                },
-              ),
+              nameTextField(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
-              TextFormField(
-                // autofocus: true,
-                keyboardType: TextInputType.text,
-                controller: controller.emailController,
-                decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    borderSide: BorderSide(
-                        color: LightThemeColors.primaryColor, width: 2.0),
-                  ),
-                  hintText: 'Enter Email',
-                  hintStyle: TextStyle(color: Colors.grey[600]),
-                  suffixIcon: const Icon(
-                    Icons.mail,
-                    color: Colors.grey,
-                  ),
-                  filled: true,
-                  fillColor: const Color(0xFFF5FCF9),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0 * 1.5, vertical: 16.0),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                  ),
-                ),
-                validator: (String? value) {
-                  String emailPattern =
-                      r'^[a-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-                  // Create the regex object.
-                  RegExp regExpEmail = RegExp(emailPattern);
-                  // Check if the input is null or empty.
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your Email';
-                  }
-                  if (!regExpEmail.hasMatch(value)) {
-                    // Validate the input using the regex.
-                    return 'Please enter a valid Email Address';
-                  }
-                  return null;
-                },
-              ),
+              emailTextField(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
-              TextFormField(
-                // autofocus: true,
-                keyboardType: TextInputType.text,
-                controller: controller.phoneNumberController,
-                decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    borderSide: BorderSide(
-                        color: LightThemeColors.primaryColor, width: 2.0),
-                  ),
-                  hintText: 'Enter Phone number',
-                  hintStyle: TextStyle(color: Colors.grey[600]),
-                  suffixIcon: const Icon(
-                    Icons.phone_android_outlined,
-                    color: Colors.grey,
-                  ),
-                  filled: true,
-                  fillColor: const Color(0xFFF5FCF9),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0 * 1.5, vertical: 16.0),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                  ),
-                ),
-                validator: (String? value) {
-                  // Define the regex pattern for the allowed prefixes and 11 digits.
-                  String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
-                  // Create the regex object.
-                  RegExp regExp = RegExp(phonePattern);
-                  // Check if the input is null or empty.
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your phone number';
-                  }
-                  if (!regExp.hasMatch(value)) {
-                    return 'Please enter a valid phone number.';
-                  }
-                  return null;
-                },
-              ),
+              phoneNumberTextField(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
-              TextFormField(
-                controller: controller.passwordController,
-                decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    borderSide: BorderSide(
-                        color: LightThemeColors.primaryColor, width: 2.0),
-                  ),
-                  hintText: 'Password',
-                  hintStyle: TextStyle(color: Colors.grey[600]),
-                  filled: true,
-                  suffixIcon: const Icon(
-                    Icons.lock,
-                    color: Colors.grey,
-                  ),
-                  fillColor: const Color(0xFFF5FCF9),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0 * 1.5, vertical: 16.0),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a password!';
-                  }
-                  return null;
-                },
-              ),
+              passTextField(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: '${Strings.acceptTermMsg.tr}',
-                        style: TextStyle(
-                            color: LightThemeColors.opacityTextColor,
-                            fontSize: MyFonts.bodyMediumSize),
-                        children: <InlineSpan>[
-                          WidgetSpan(
-                            alignment: PlaceholderAlignment.baseline,
-                            baseline: TextBaseline.alphabetic,
-                            child: LinkButton(
-                                urlLabel: " ${Strings.termsAndCondition.tr}",
-                                url:
-                                    "https://example.com/terms-and-conditions"),
-                          ),
-                          TextSpan(
-                            text: ' ${Strings.and.tr} ',
-                          ),
-                          WidgetSpan(
-                            alignment: PlaceholderAlignment.baseline,
-                            baseline: TextBaseline.alphabetic,
-                            child: LinkButton(
-                                urlLabel: "${Strings.privacyPolicy.tr}.",
-                                url: "https://example.com/privacy-policy"),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              termsAndConditionTextSection(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              Center(
-                child: SizedBox(
-                  height: 45,
-                  width: MediaQuery.of(context).size.width * 1,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        _sendOtp();
-                      },
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)),
-                          backgroundColor: LightThemeColors.primaryColor),
-                      child: Text(
-                        "${Strings.signUp.tr}",
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium
-                            ?.copyWith(color: Colors.white),
-                      )),
-                ),
-              ),
+              signUpButton(context),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
@@ -324,6 +124,222 @@ class RegistrationView extends BaseView<AuthenticationController> {
         ),
       ),
     );
+  }
+
+  Row termsAndConditionTextSection() {
+    return Row(
+              children: [
+                Expanded(
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: '${Strings.acceptTermMsg.tr}',
+                      style: TextStyle(
+                          color: LightThemeColors.opacityTextColor,
+                          fontSize: MyFonts.bodyMediumSize),
+                      children: <InlineSpan>[
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.baseline,
+                          baseline: TextBaseline.alphabetic,
+                          child: LinkButton(
+                              urlLabel: " ${Strings.termsAndCondition.tr}",
+                              url:
+                                  "https://example.com/terms-and-conditions"),
+                        ),
+                        TextSpan(
+                          text: ' ${Strings.and.tr} ',
+                        ),
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.baseline,
+                          baseline: TextBaseline.alphabetic,
+                          child: LinkButton(
+                              urlLabel: "${Strings.privacyPolicy.tr}.",
+                              url: "https://example.com/privacy-policy"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+  }
+
+  Center signUpButton(BuildContext context) {
+    return Center(
+              child: SizedBox(
+                height: 45,
+                width: MediaQuery.of(context).size.width * 1,
+                child: ElevatedButton(
+                    onPressed: () {
+                      _sendOtp();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        backgroundColor: LightThemeColors.primaryColor),
+                    child: Text(
+                      "${Strings.signUp.tr}",
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(color: Colors.white),
+                    )),
+              ),
+            );
+  }
+
+  TextFormField passTextField() {
+    return TextFormField(
+              controller: controller.passwordController,
+              decoration: InputDecoration(
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  borderSide: BorderSide(
+                      color: LightThemeColors.primaryColor, width: 2.0),
+                ),
+                hintText: 'Password',
+                hintStyle: TextStyle(color: Colors.grey[600]),
+                filled: true,
+                suffixIcon: const Icon(
+                  Icons.lock,
+                  color: Colors.grey,
+                ),
+                fillColor: const Color(0xFFE4FAF1),
+                contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16.0 * 1.5, vertical: 16.0),
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                ),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a password!';
+                }
+                return null;
+              },
+            );
+  }
+
+  TextFormField phoneNumberTextField() {
+    return TextFormField(
+              // autofocus: true,
+              maxLength: 11,
+              keyboardType: TextInputType.text,
+              controller: controller.phoneNumberController,
+              decoration: InputDecoration(
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  borderSide: BorderSide(
+                      color: LightThemeColors.primaryColor, width: 2.0),
+                ),
+                hintText: 'Enter Phone number',
+                hintStyle: TextStyle(color: Colors.grey[600]),
+                suffixIcon: const Icon(
+                  Icons.phone_android_outlined,
+                  color: Colors.grey,
+                ),
+                filled: true,
+                fillColor: const Color(0xFFE4FAF1),
+                contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16.0 * 1.5, vertical: 16.0),
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                ),
+              ),
+              validator: (String? value) {
+                // Define the regex pattern for the allowed prefixes and 11 digits.
+                String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
+                // Create the regex object.
+                RegExp regExp = RegExp(phonePattern);
+                // Check if the input is null or empty.
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your phone number';
+                }
+                if (!regExp.hasMatch(value)) {
+                  return 'Please enter a valid phone number.';
+                }
+                return null;
+              },
+            );
+  }
+
+  TextFormField emailTextField() {
+    return TextFormField(
+              // autofocus: true,
+              keyboardType: TextInputType.text,
+              controller: controller.signUpEmailController,
+              decoration: InputDecoration(
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  borderSide: BorderSide(
+                      color: LightThemeColors.primaryColor, width: 2.0),
+                ),
+                hintText: 'Enter Email',
+                hintStyle: TextStyle(color: Colors.grey[600]),
+                suffixIcon: const Icon(
+                  Icons.mail,
+                  color: Colors.grey,
+                ),
+                filled: true,
+                fillColor: const Color(0xFFE4FAF1),
+                contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16.0 * 1.5, vertical: 16.0),
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                ),
+              ),
+              validator: (String? value) {
+                String emailPattern =
+                    r'^[a-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+                // Create the regex object.
+                RegExp regExpEmail = RegExp(emailPattern);
+                // Check if the input is null or empty.
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your Email';
+                }
+                if (!regExpEmail.hasMatch(value)) {
+                  // Validate the input using the regex.
+                  return 'Please enter a valid Email Address';
+                }
+                return null;
+              },
+            );
+  }
+
+  TextFormField nameTextField() {
+    return TextFormField(
+              controller: controller.nameController,
+              decoration: InputDecoration(
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  borderSide: BorderSide(
+                      color: LightThemeColors.primaryColor, width: 2.0),
+                ),
+                hintText: 'Full Name',
+                suffixIcon: const Icon(
+                  Icons.person,
+                  color: Colors.grey,
+                ),
+                hintStyle: TextStyle(color: Colors.grey[600]),
+                filled: true,
+                fillColor: const Color(0xFFE4FAF1),
+                contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16.0 * 1.5, vertical: 16.0),
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                ),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your full Name';
+                }
+                return null;
+              },
+            );
   }
 
   void _sendOtp() async {

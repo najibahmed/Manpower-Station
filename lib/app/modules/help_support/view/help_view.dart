@@ -80,7 +80,6 @@ class HelpView extends BaseView<HelpController> {
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 child: ListTile(
                   tileColor: Theme.of(context).cardColor,
-                  splashColor: LightThemeColors.primaryColor,
                   onTap: () {
                     Get.toNamed(AppPages.ReportScreen);
                   },
@@ -112,7 +111,6 @@ class HelpView extends BaseView<HelpController> {
                 elevation: 5,
                 child: ListTile(
                   tileColor: Theme.of(context).cardColor,
-                  splashColor: LightThemeColors.primaryColor,
                   onTap: () {
                     Get.toNamed(AppPages.FaqScreen);
                   },

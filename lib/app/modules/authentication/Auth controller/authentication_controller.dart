@@ -10,7 +10,8 @@ import '../../../network/api_client.dart';
 import '../../../network/api_service.dart';
 
 class AuthenticationController extends BaseController {
-  late TextEditingController emailController;
+  late TextEditingController signInEmailController;
+  late TextEditingController signUpEmailController;
   late TextEditingController phoneNumberController;
   late TextEditingController passwordController;
   late TextEditingController nameController;
@@ -19,7 +20,7 @@ class AuthenticationController extends BaseController {
 
   Future<void> loginUser() {
     return ApiServices.loginWithPhoneOrEmail(
-        emailController.text.trim());
+        signUpEmailController.text.trim());
   }
 
   Future<void> verifyUser() {
@@ -28,7 +29,8 @@ class AuthenticationController extends BaseController {
 
   @override
   void onInit() {
-    emailController = TextEditingController();
+    signUpEmailController = TextEditingController();
+    signInEmailController = TextEditingController();
     phoneNumberController = TextEditingController();
     nameController = TextEditingController();
     passwordController = TextEditingController();
@@ -38,7 +40,8 @@ class AuthenticationController extends BaseController {
 
   @override
   void onClose() {
-    emailController.dispose();
+    signInEmailController.dispose();
+    signUpEmailController.dispose();
     phoneNumberController.dispose();
     nameController.dispose();
     passwordController.dispose();

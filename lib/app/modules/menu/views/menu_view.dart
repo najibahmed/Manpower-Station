@@ -12,6 +12,7 @@ import 'package:manpower_station/app/modules/user_profile/user_profile_controlle
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+import 'package:manpower_station/utils/app_Images.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
 
@@ -75,12 +76,46 @@ class MenuView extends BaseView<HomeController>{
           // MenuItem(icon: Icons.document_scanner, text: 'Terms & Conditions', onTap: () {  },),
           MenuItem(icon: Icons.info_outline, text: 'About Us', onTap: () {  },),
           MenuItem(icon: Icons.exit_to_app_outlined, text: 'Exit', onTap: () {
-            MySharedPref.setLoginStatus(false);
-            Get.offAllNamed(AppPages.Registration);
+            showLogoutDialog(context);
           },),
         ],
       ),
     );
+  }
+
+  Future<dynamic> showLogoutDialog(BuildContext context) {
+    return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Logout'),
+                    Spacer(),
+                    Image.asset(AppImages.instance.manpower_Logo),
+                  ],
+                ),
+                content: Text('Are you sure you want to log out?'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: Text('No',style: TextStyle(color: Colors.red)),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                      MySharedPref.setLoginStatus(false);
+                      Get.offAllNamed(AppPages.SignIn);
+                    },
+                    child: Text('Yes',style: TextStyle(color: Colors.green),),
+                  ),
+                ],
+              );
+            },
+          );
   }
 }
 Widget _menuProfileShimmer() {

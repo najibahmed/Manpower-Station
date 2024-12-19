@@ -91,7 +91,7 @@ class OtpView extends BaseView<AuthenticationController> {
                   height: 2,
                 ),
                 Text('''${Strings.verificationCodeSent.tr}
-                ${controller.emailController.text}''',
+                ${controller.signUpEmailController.text}''',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
