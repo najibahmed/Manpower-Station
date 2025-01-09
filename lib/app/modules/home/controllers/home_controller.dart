@@ -12,6 +12,8 @@ class HomeController extends BaseController {
   var allServiceData = <dynamic>[].obs;
   var allCategoryData = <dynamic>[].obs;
 
+  List get allCatData => allCategoryData;
+
 /// Get all service
   Future<List> getAllServiceData() async {
     try {
