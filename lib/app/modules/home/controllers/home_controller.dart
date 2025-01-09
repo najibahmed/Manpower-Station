@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/models/active_banner.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
+import 'package:manpower_station/app/network/api_list.dart';
 
 import '../../../components/custom_snackbar.dart';
 import '../../../core/base/base_controller.dart';
@@ -17,7 +18,7 @@ class HomeController extends BaseController {
       // Map<String, dynamic> requestData = {
       //   'phone_or_email': phoneNumberEmailController.text.trim(),
       // };
-      var url="/api/services/get/all";
+      var url= ApiList.getAllServiceUrl;
       await BaseClient.safeApiCall(
           url,
           RequestType.get,
@@ -45,7 +46,7 @@ class HomeController extends BaseController {
   /// Get all service categories
   Future<void> getAllServiceCategories() async {
     try {
-      var url="/api/services/categories/get/all/parent";
+      var url = ApiList.getAllServicesCategoriesUrl;
       await BaseClient.safeApiCall(
           url,
           RequestType.get,
@@ -72,7 +73,7 @@ class HomeController extends BaseController {
   RxList oneCategoryServicesData = <dynamic>[].obs;
   Future<void> getOneCategoryServices(String id) async {
     try {
-      var url="/api/services/categories/services/$id";
+      var url= ApiList.singleCategoryServiceUrl(id);   //"/api/services/categories/services/$id";
       await BaseClient.safeApiCall(
           url,
           RequestType.get,
@@ -99,7 +100,7 @@ class HomeController extends BaseController {
   late Rx<ActiveBanner> activeBanners=ActiveBanner().obs;
   Future<void> getActiveBanners() async {
     try {
-      var url="/api/banners/get/active";
+      var url= ApiList.activeAppBannersUrl; //"/api/banners/get/active";
       await BaseClient.safeApiCall(
           url,
           RequestType.get,

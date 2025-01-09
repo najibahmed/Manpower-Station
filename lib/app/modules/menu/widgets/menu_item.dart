@@ -6,7 +6,13 @@ class MenuItem extends StatelessWidget {
   final IconData icon;
   final String text;
   final VoidCallback onTap;
-  const MenuItem({super.key, required this.icon, required this.text, required this.onTap,});
+
+  const MenuItem({
+    super.key,
+    required this.icon,
+    required this.text,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +22,18 @@ class MenuItem extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(15)),
         elevation: 4,
         child: ListTile(
-          leading: Icon(icon, color: Colors.green),
-          title: Text(text,style: Theme.of(context).textTheme.bodyMedium,),
-          trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: BorderSide(color: Colors.grey.shade200),
-          ),
-          tileColor:  Theme.of(context).cardColor,
-          onTap:onTap
+            leading: Icon(icon, color: Colors.green),
+            title: Text(
+              text,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(color: Colors.grey.shade200),
+            ),
+            tileColor: Theme.of(context).cardColor,
+            onTap: onTap
         ),
       ),
     );

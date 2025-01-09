@@ -210,7 +210,7 @@ class OtpView extends BaseView<AuthenticationController> {
   void authenticateOtp() {
     if (_formKey.currentState!.validate()) {
       showLoadingOverLay(
-          asyncFunction: controller.verifyUser(), msg: "Verifying");
+          asyncFunction: controller.verifyUserOtp(), msg: "Verifying");
       // controller.otpVerification();
     }
   }

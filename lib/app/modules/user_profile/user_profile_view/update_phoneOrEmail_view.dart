@@ -9,6 +9,7 @@ import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+import 'package:manpower_station/utils/app_Images.dart';
 
 import '../../../components/custom_snackbar.dart';
 
@@ -32,13 +33,14 @@ class UpdatePhoneEmail extends BaseView<UserController> {
       backgroundColor:
           Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
       title: Image.asset(
-        'assets/images/manpower_name_logo.png',
+        AppImages.instance.manpower_Logo,
         fit: BoxFit.cover,
       ),
     );
   }
 
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget body(BuildContext context) {
     return SingleChildScrollView(
@@ -84,8 +86,9 @@ class UpdatePhoneEmail extends BaseView<UserController> {
                     ),
                     // hintText: 'Your Old email or phone number.',
                     labelText: "Old Email or Phone number",
-                    labelStyle:TextStyle(color: LightThemeColors.hintTextColor)),
-                    // hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
+                    labelStyle:
+                        TextStyle(color: LightThemeColors.hintTextColor)),
+                // hintStyle: TextStyle(color: LightThemeColors.hintTextColor)),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your old phone or email';
@@ -112,7 +115,8 @@ class UpdatePhoneEmail extends BaseView<UserController> {
                           color: LightThemeColors.opacityTextColor, width: 2.0),
                     ),
                     labelText: "New Email or Phone number",
-                    labelStyle:TextStyle(color: LightThemeColors.hintTextColor)),
+                    labelStyle:
+                        TextStyle(color: LightThemeColors.hintTextColor)),
                 validator: (String? value) {
                   // Define the regex pattern for the allowed prefixes and 11 digits.
                   String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
@@ -147,7 +151,7 @@ class UpdatePhoneEmail extends BaseView<UserController> {
               ),
               Center(
                   child: CustomButton(
-                title: "${Strings.signUp.tr}",
+                title: Strings.signUp.tr,
                 height: 38,
                 width: 298,
                 onTap: () {
@@ -167,9 +171,9 @@ class UpdatePhoneEmail extends BaseView<UserController> {
 
   void _sendOtp() async {
     if (_formKey.currentState!.validate()) {
-
       try {
-        showLoadingOverLay(asyncFunction: controller.updatePhoneOrEmail(),msg:'Loading' );
+        showLoadingOverLay(
+            asyncFunction: controller.updatePhoneOrEmail(), msg: 'Loading');
       } catch (error) {
         CustomSnackBar.showCustomErrorToast(
             message: 'Verify try update email: $error',

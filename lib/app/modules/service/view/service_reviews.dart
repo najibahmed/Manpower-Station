@@ -13,25 +13,24 @@ class ReviewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ServiceController());
+    // final controller = Get.put(ServiceController());
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 8,
-            ),
-            _buildRatingBars(),
-
-            const SizedBox(height: 8),
-            const Divider(color: Colors.black26,),
-            const SizedBox(height: 8),
-            const Text(
-              "Reviews",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            // const SizedBox(
+            //   height: 4,
+            // ),
+            // _buildRatingBars(),
+            // const SizedBox(height: 8),
+            // const Divider(color: Colors.black26,),
+            // const SizedBox(height: 8),
+            // const Text(
+            //   "Reviews",
+            //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // ),
             const SizedBox(height: 8),
             reviews.isEmpty
                 ? const Center(child: Text("There is no review",style: TextStyle(fontSize: 16),))

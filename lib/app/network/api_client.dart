@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:logger/logger.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
+import 'package:manpower_station/app/network/api_list.dart';
 import 'package:manpower_station/utils/appLoggerUtils.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -23,11 +24,12 @@ enum RequestType {
 
 class BaseClient {
   static final Dio _dio = Dio(BaseOptions(
-    baseUrl: Constants.baseUrl,
+    baseUrl: ApiList.baseUrl,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
+    receiveTimeout: const Duration(seconds: 15),
     connectTimeout: const Duration(seconds: 15),
   ))
     ..interceptors.add(InterceptorsWrapper(
@@ -91,6 +93,7 @@ class BaseClient {
 
   /// dio getter (used for testing)
   static get dio => _dio;
+
 
   /// perform safe api request
   static safeApiCall(
@@ -293,24 +296,29 @@ class BaseClient {
   /// from api it will show the reason (the dio message)
   static handleApiError(ApiException apiException) {
     String msg = apiException.toString();
-    if(kDebugMode){
-      // CustomSnackBar.showCustomErrorToast(message: "handle api error:$msg");
+    if (kDebugMode) {
+      LoggerUtil.instance
+          .printLog(msg: "handle api error:$msg", logType: LogType.error);
       print("handle api error:$msg");
     }
   }
 
   /// handle errors without response (500, out of time, no internet,..etc)
   static _handleError(String msg) {
-    CustomSnackBar.showCustomErrorToast(message: "handle error:$msg");
+    if (kDebugMode) {
+      CustomSnackBar.showCustomErrorToast(message: "handle error:$msg");
+    }
   }
 }
 
 Future<Map<String, String>> _refreshToken() async {
   print('inside refresh token');
-  String? refreshToken =  await MySharedPref.getRefreshToken();
+  String? refreshToken = await MySharedPref.getRefreshToken();
   print("refresh token:${refreshToken}");
   if (refreshToken == null) {
-    LoggerUtil.instance.printLog(msg: "Refresh token null : ${MySharedPref.getRefreshToken()}",logType: LogType.warning);
+    LoggerUtil.instance.printLog(
+        msg: "Refresh token null : ${MySharedPref.getRefreshToken()}",
+        logType: LogType.warning);
     throw Exception('No Access token available');
   }
   Dio dio = Dio(

@@ -10,7 +10,6 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
-import '../../../../config/theme/light_theme_colors.dart';
 import '../../../core/base/base_view.dart';
 import '../controllers/home_controller.dart';
 
@@ -335,27 +334,26 @@ class HomeView extends BaseView<HomeController> {
   }
 
   Widget _buildPopularShimmer(Size size) {
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Card(
             elevation: 5,
             child: ShimmerWidget.rectangular(
-              height: size.height*0.16,
-              width: size.width*.25,
-
+              height: size.height * 0.16,
+              width: size.width * .25,
             )),
         Card(
             elevation: 5,
             child: ShimmerWidget.rectangular(
-              height: size.height*0.18,
-              width: size.width*.4,
+              height: size.height * 0.18,
+              width: size.width * .4,
             )),
         Card(
             elevation: 5,
             child: ShimmerWidget.rectangular(
-              height: size.height*0.16,
-              width: size.width*.25,
+              height: size.height * 0.16,
+              width: size.width * .25,
             )),
       ],
     );

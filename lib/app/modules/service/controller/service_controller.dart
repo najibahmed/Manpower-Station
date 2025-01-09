@@ -14,6 +14,7 @@ enum ServiceType{
 class ServiceController extends BaseController with GetSingleTickerProviderStateMixin {
 
 
+  late TabController tabController;
   TextEditingController reviewController = TextEditingController();
   RxInt timeLimit = 3.obs;       //dropdown time
   RxString selectedTimeKey = 'Hours'.obs;     //dropdown selected timekey
@@ -21,7 +22,6 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
   RxDouble userRating = 0.0.obs;
   RxInt cartSubtotal = 0.obs;       //cartSubtotal service booking page
   // RxList time = [3, 4, 5, 6, 7, 8].obs;
-  late TabController tabController;
   late ServiceModel selectedService;
   late ServiceModel serviceModel;
   Rx<DateTime?> selectedDateTime = DateTime.now().obs;    //service selected date time

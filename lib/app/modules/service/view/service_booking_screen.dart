@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/big_text.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -13,6 +14,64 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class ServiceBookingScreen extends BaseView<ServiceController> {
   ServiceBookingScreen({super.key});
+
+  @override
+  Widget? bottomNavigationBar() {
+    return Container(
+      height: 80,
+      padding: const EdgeInsets.only(top: 14, bottom: 14, right: 22, left: 22),
+      decoration: BoxDecoration(
+          color: Colors.green.withOpacity(.25),
+          borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(40),
+              topLeft: Radius.circular(40))),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BigText(text: 'Price',size:MyFonts.bodyMediumSize),
+              BigText(text:'${Constants.banglaCurrency} ${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}.00',size:MyFonts.bodyLargeSize),
+              // Text(
+              //   '${Constants.banglaCurrency} ${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}.00',
+              //   style: TextStyle(
+              //     fontWeight: FontWeight.w500,
+              //     fontSize: MyFonts.displayMediumSize,
+              //     color: Colors.black54,
+              //   ),
+              // )
+            ],
+          ),
+          TextButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all<Color>(
+                  LightThemeColors.primaryColor,
+                ),
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // Rounded button
+                  ),
+                ),
+              ),
+              onPressed: () {
+                controller.selectedService = controller.serviceModel;
+                controller.addToCartList();
+                Get.toNamed(AppPages.WorkerListView);
+              },
+              child: const Text(
+                'Hire Now',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              )),
+        ],
+      ),
+    );
+  }
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
@@ -56,30 +115,42 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
-                        child: CachedNetworkImage(
-                          height: screenHeight * .22,
-                          width: double.infinity,
-                          fit: BoxFit.fill,
-                          imageUrl:
-                              '${Constants.serviceImgUrl}${controller.serviceModel.image}',
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                          progressIndicatorBuilder: (context, url, progress) =>
-                              Center(
-                            child: CircularProgressIndicator(
-                              value: progress.progress,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.shade500,
+                                  offset: const Offset(4.0,4.0),
+                                  blurRadius: 18,
+                                  spreadRadius: 1.0
+                              ),
+                              const BoxShadow(
+                                  color: Colors.white,
+                                  offset: Offset(-4.0,-4.0),
+                                  blurRadius: 10,
+                                  spreadRadius: 1.0
+                              )
+                            ]
+                          ),
+                          child: CachedNetworkImage(
+                            height: screenHeight * .22,
+                            width: double.infinity,
+                            fit: BoxFit.fill,
+                            imageUrl:
+                                '${Constants.serviceImgUrl}${controller.serviceModel.image}',
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            progressIndicatorBuilder: (context, url, progress) =>
+                                Center(
+                              child: CircularProgressIndicator(
+                                value: progress.progress,
+                              ),
                             ),
                           ),
                         ),
                       ),
                       SizedBox(height: screenHeight * .02),
-                      Text(
-                        'Select Package Duration',
-                        style: TextStyle(
-                            // color: LightThemeColors.bodyTextColor,
-                            fontSize: MyFonts.bodyLargeSize,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      BigText(text: 'Select Package Duration',size:MyFonts.bodyLargeSize),
                       Center(
                         child: SegmentedButton<String>(
                           style: ButtonStyle(
@@ -219,13 +290,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         color: Colors.grey.withOpacity(.52),
                       ),
                       SizedBox(height: screenHeight * .01),
-                      Text(
-                        'Choose a start time to begin with.',
-                        style: TextStyle(
-                            // color: LightThemeColors.bodyTextColor,
-                            fontSize: MyFonts.bodyLargeSize,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      BigText(text: 'Choose a start time to begin with.',size:MyFonts.bodyLargeSize),
                       SizedBox(height: screenHeight * .01),
                       Card(
                         color: Theme.of(context)
@@ -324,68 +389,68 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         ),
                       ),
                       SizedBox(height: screenHeight * .02),
-                      Divider(
-                        thickness: 1,
-                        height: 5,
-                        color: Colors.grey.withOpacity(.52),
-                      ),
-                      SizedBox(
-                        height: screenHeight * .02,
-                      ),
-                      Text(
-                        'Move on to the Worker selection process.',
-                        style: TextStyle(
-                            // color: LightThemeColors.bodyTextColor,
-                            fontSize: MyFonts.bodyLargeSize,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: screenHeight * .01,
-                      ),
-
-                      /// button go to worker list page
-                      Center(
-                        child: InkWell(
-                          onTap: () {
-                            controller.selectedService =
-                                controller.serviceModel;
-                            controller.addToCartList();
-                            Get.toNamed(AppPages.WorkerListView);
-                          },
-                          child: Card(
-                            shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
-                            ),
-                            color: LightThemeColors.primaryColor,
-                            elevation: 5,
-                            child: SizedBox(
-                              height: screenHeight * 0.055,
-                              width: screenWidth * 0.8,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(
-                                      "Choose Worker",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: MyFonts.bodyLargeSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const Icon(
-                                      Icons.arrow_forward_outlined,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Divider(
+                      //   thickness: 1,
+                      //   height: 5,
+                      //   color: Colors.grey.withOpacity(.52),
+                      // ),
+                      // SizedBox(
+                      //   height: screenHeight * .02,
+                      // ),
+                      // Text(
+                      //   'Move on to the Worker selection process.',
+                      //   style: TextStyle(
+                      //       // color: LightThemeColors.bodyTextColor,
+                      //       fontSize: MyFonts.bodyLargeSize,
+                      //       fontWeight: FontWeight.bold),
+                      // ),
+                      // SizedBox(
+                      //   height: screenHeight * .01,
+                      // ),
+                      //
+                      // /// button go to worker list page
+                      // Center(
+                      //   child: InkWell(
+                      //     onTap: () {
+                      //       controller.selectedService =
+                      //           controller.serviceModel;
+                      //       controller.addToCartList();
+                      //       Get.toNamed(AppPages.WorkerListView);
+                      //     },
+                      //     child: Card(
+                      //       shape: const RoundedRectangleBorder(
+                      //         borderRadius:
+                      //             BorderRadius.all(Radius.circular(50)),
+                      //       ),
+                      //       color: LightThemeColors.primaryColor,
+                      //       elevation: 5,
+                      //       child: SizedBox(
+                      //         height: screenHeight * 0.055,
+                      //         width: screenWidth * 0.8,
+                      //         child: Padding(
+                      //           padding: const EdgeInsets.all(10.0),
+                      //           child: Row(
+                      //             mainAxisAlignment:
+                      //                 MainAxisAlignment.spaceAround,
+                      //             children: [
+                      //               Text(
+                      //                 "Choose Worker",
+                      //                 style: TextStyle(
+                      //                     color: Colors.white,
+                      //                     fontSize: MyFonts.bodyLargeSize,
+                      //                     fontWeight: FontWeight.bold),
+                      //               ),
+                      //               const Icon(
+                      //                 Icons.arrow_forward_outlined,
+                      //                 color: Colors.white,
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       const SizedBox(
                         height: 40,
                       )
@@ -396,38 +461,38 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
             ],
           ),
 
-          /// Bottom sub total widget
-          Positioned(
-            bottom: 0,
-            right: 5,
-            left: 5,
-            child: Card(
-              color: Theme.of(context).cardColor,
-              elevation: 5,
-              // color: Colors.green.withOpacity(.85),
-              child: SizedBox(
-                height: 50,
-                width: MediaQuery.of(context).size.width * .9,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                          text: 'SUB TOTAL:    ',
-                          style: Theme.of(context).textTheme.displayMedium,
-                          children: [
-                            TextSpan(
-                              text:
-                                  '${Constants.banglaCurrency} ${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}.00',
-                              style: Theme.of(context).textTheme.displayMedium,
-                            ),
-                          ]),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // /// Bottom sub total widget
+          // Positioned(
+          //   bottom: 0,
+          //   right: 5,
+          //   left: 5,
+          //   child: Card(
+          //     color: Theme.of(context).cardColor,
+          //     elevation: 5,
+          //     // color: Colors.green.withOpacity(.85),
+          //     child: SizedBox(
+          //       height: 50,
+          //       width: MediaQuery.of(context).size.width * .9,
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //         children: [
+          //           RichText(
+          //             text: TextSpan(
+          //                 text: 'SUB TOTAL:    ',
+          //                 style: Theme.of(context).textTheme.displayMedium,
+          //                 children: [
+          //                   TextSpan(
+          //                     text:
+          //                         '${Constants.banglaCurrency} ${controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}.00',
+          //                     style: Theme.of(context).textTheme.displayMedium,
+          //                   ),
+          //                 ]),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

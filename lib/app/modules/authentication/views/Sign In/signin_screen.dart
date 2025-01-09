@@ -19,17 +19,21 @@ class SignInScreen extends BaseView<AuthenticationController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
     return null;
-      AppBar(
+    AppBar(
       centerTitle: true,
       backgroundColor:
           Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
       title: Image.asset(
-       AppImages.instance.manpower_Logo,
+        AppImages.instance.manpower_Logo,
         fit: BoxFit.cover,
       ),
     );
   }
+
   final _formKey = GlobalKey<FormState>();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+
   @override
   Widget body(BuildContext context) {
     return SingleChildScrollView(
@@ -88,87 +92,11 @@ class SignInScreen extends BaseView<AuthenticationController> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.07,
               ),
-              TextFormField(
-                keyboardType: TextInputType.text,
-                controller: controller.signInEmailController,
-                decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    borderSide: BorderSide(
-                        color: LightThemeColors.primaryColor, width: 2.0),
-                  ),
-                  hintText: 'Enter Email',
-                  suffixIcon: const Icon(
-                    Icons.mail,
-                    color: Colors.grey,
-                  ),
-                  hintStyle: TextStyle(color: Colors.grey[600]),
-                  filled: true,
-                  fillColor: const Color(0xFFE4FAF1),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0 * 1.5, vertical: 16.0),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                  ),
-                ),
-                validator: (String? value) {
-                  String emailPattern =
-                      r'^[a-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-                  // Create the regex object.
-                  RegExp regExpEmail = RegExp(emailPattern);
-                  // Check if the input is null or empty.
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your Email';
-                  }
-                  if (!regExpEmail.hasMatch(value)) {
-                    // Validate the input using the regex.
-                    return 'Please enter a valid Email Address';
-                  }
-                  return null;
-                },
-              ),
+              emailTextField(context),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
-              TextFormField(
-                controller: controller.passwordController,
-                obscureText: !controller.obSecurePass.value,
-                decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    borderSide: BorderSide(
-                        color: LightThemeColors.primaryColor, width: 2.0),
-                  ),
-                  hintText: 'Password',
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        controller.obSecurePass.value =
-                            !controller.obSecurePass.value;
-                      },
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color:  controller.obSecurePass.value
-                            ? LightThemeColors.primaryColor
-                            : Colors.grey,
-                      )),
-                  hintStyle: TextStyle(color: Colors.grey[600]),
-                  filled: true,
-                  fillColor: const Color(0xFFE4FAF1),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0 * 1.5, vertical: 16.0),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                  ),
-                ),
-                validator: (value){
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
+              passwordTextField(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
@@ -177,11 +105,13 @@ class SignInScreen extends BaseView<AuthenticationController> {
                   height: 45,
                   width: MediaQuery.of(context).size.width * 1,
                   child: ElevatedButton(
-                      onPressed: () async{
-                        if(await HelperFunction.instance.isInternetConnected()){
-                        _sendOtp();
-                        }else{
-                          CustomSnackBar.showCustomErrorToast(message:" No Internet Connection");
+                      onPressed: () async {
+                        if (await HelperFunction.instance
+                            .isInternetConnected()) {
+                          _sendOtp();
+                        } else {
+                          CustomSnackBar.showCustomErrorToast(
+                              message: " No Internet Connection");
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -237,13 +167,99 @@ class SignInScreen extends BaseView<AuthenticationController> {
     );
   }
 
+  TextFormField passwordTextField() {
+    return TextFormField(
+      focusNode: _passwordFocusNode,
+      controller: controller.signInPasswordController,
+      obscureText: !controller.obSecurePass.value,
+      decoration: InputDecoration(
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+          borderSide:
+              BorderSide(color: LightThemeColors.primaryColor, width: 2.0),
+        ),
+        hintText: 'Password',
+        suffixIcon: IconButton(
+            onPressed: () {
+              controller.obSecurePass.value = !controller.obSecurePass.value;
+            },
+            icon: Icon(
+              Icons.remove_red_eye,
+              color: controller.obSecurePass.value
+                  ? LightThemeColors.primaryColor
+                  : Colors.grey,
+            )),
+        hintStyle: TextStyle(color: Colors.grey[600]),
+        filled: true,
+        fillColor: const Color(0xFFE4FAF1),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16.0 * 1.5, vertical: 16.0),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your password';
+        }
+        return null;
+      },
+    );
+  }
+
+  TextFormField emailTextField(context) {
+    return TextFormField(
+      onFieldSubmitted: (value){
+        FocusScope.of(context).requestFocus(_passwordFocusNode);
+      },
+      focusNode: _emailFocusNode,
+      keyboardType: TextInputType.text,
+      controller: controller.signInEmailController,
+      decoration: InputDecoration(
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+          borderSide:
+              BorderSide(color: LightThemeColors.primaryColor, width: 2.0),
+        ),
+        hintText: 'Enter Email',
+        suffixIcon: const Icon(
+          Icons.mail,
+          color: Colors.grey,
+        ),
+        hintStyle: TextStyle(color: Colors.grey[600]),
+        filled: true,
+        fillColor: const Color(0xFFE4FAF1),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16.0 * 1.5, vertical: 16.0),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+        ),
+      ),
+      validator: (String? value) {
+        String emailPattern = r'^[a-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+        // Create the regex object.
+        RegExp regExpEmail = RegExp(emailPattern);
+        // Check if the input is null or empty.
+        if (value == null || value.isEmpty) {
+          return 'Please enter your Email';
+        }
+        if (!regExpEmail.hasMatch(value)) {
+          // Validate the input using the regex.
+          return 'Please enter a valid Email Address';
+        }
+        return null;
+      },
+    );
+  }
+
   void _sendOtp() async {
     if (_formKey.currentState!.validate()) {
       showLoadingOverLay(asyncFunction: controller.loginUser(), msg: "Loading");
       // await controller.loginWithPhoneOrEmail();
     }
   }
-
 }
 
 class SocialCard extends StatelessWidget {

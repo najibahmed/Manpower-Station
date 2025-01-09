@@ -63,7 +63,6 @@ class _ResendSmsTileState extends State<ResendSmsTile> {
 
   void _resendSms() {
     // Your resend SMS logic here
-    print('SMS resent');
     emailFocusNode.unfocus();
     // Restart the timer after resending
     _startTimer();

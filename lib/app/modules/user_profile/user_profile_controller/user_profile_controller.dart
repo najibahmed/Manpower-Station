@@ -11,6 +11,7 @@ import 'package:manpower_station/app/modules/user_profile/model/user_model.dart'
 import 'package:manpower_station/app/routes/app_pages.dart';
 import '../../../components/custom_snackbar.dart';
 import '../../../network/api_client.dart';
+import '../../../network/api_list.dart';
 
 class UserController extends BaseController {
   final profilePic = Rx<File?>(null);
@@ -74,8 +75,7 @@ class UserController extends BaseController {
   Future<void> getUserInformation() async {
     try {
       String? userId = await MySharedPref.getUserId();
-      String url =
-          "/api/clients/get/unique/client/profile/$userId";
+      String url = ApiList.userProfileInfoUrl(userId!);
       await BaseClient.safeApiCall(
         url,
         RequestType.get,
@@ -107,7 +107,7 @@ class UserController extends BaseController {
         'newPhoneNumber_Or_email': newEmailPhoneController.text.trim(),
       };
       await BaseClient.safeApiCall(
-        "/api/users/update/user/phone_or_email",
+        ApiList.updateUserEmailUrl,
         RequestType.put,
         // headers: {
         //   'Authorization': Constants.accessToken
@@ -157,8 +157,7 @@ class UserController extends BaseController {
       //   };
       // }
       String? userId = await MySharedPref.getUserId();
-      String url =
-          "/api/clients/update/client/profile/$userId";
+      String url = ApiList.updateProfileInfoUrl(userId!);
       await BaseClient.safeApiCall(
         url,
         RequestType.put,
@@ -192,8 +191,7 @@ class UserController extends BaseController {
       Map<String, dynamic> requestData = {
         'otp': updateOtpController.text.trim(),
       };
-      await BaseClient.safeApiCall(
-        "/api/users/update/user/phone_email/verified",
+      await BaseClient.safeApiCall( ApiList.updateOtpVerificationUrl,
         RequestType.put,
         data: requestData,
         onError: (err) {
@@ -259,12 +257,4 @@ class UserController extends BaseController {
     updateAreaController.dispose();
     super.onClose();
   }
-}
-enum FieldType {
-  username,
-  email,
-  description,
-  address,
-  area,
-  avatar_image
 }

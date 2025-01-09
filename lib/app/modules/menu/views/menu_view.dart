@@ -102,7 +102,7 @@ class MenuView extends BaseView<HomeController>{
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the dialog
                     },
-                    child: Text('No',style: TextStyle(color: Colors.red)),
+                    child: Text('No',style: TextStyle(color: Colors.green)),
                   ),
                   TextButton(
                     onPressed: () {

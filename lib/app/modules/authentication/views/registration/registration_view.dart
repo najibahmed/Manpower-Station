@@ -5,7 +5,6 @@ import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/link_button.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
-import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
@@ -344,7 +343,7 @@ class RegistrationView extends BaseView<AuthenticationController> {
 
   void _sendOtp() async {
     if (_formKey.currentState!.validate()) {
-      showLoadingOverLay(asyncFunction: controller.loginUser(), msg: "Loading");
+      showLoadingOverLay(asyncFunction: controller.registerUser(), msg: "Loading");
       // await controller.loginWithPhoneOrEmail();
     }
   }

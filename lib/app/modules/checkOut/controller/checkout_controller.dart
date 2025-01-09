@@ -31,21 +31,7 @@ class CheckoutController extends BaseController {
 
  /// Save order or create bookings & payment
   Future<void> saveOrder() async{
-    // if (nameController.text.isEmpty) {
-    //   CustomSnackBar.showCustomToast(message:  'Please provide your address');
-    //   return;
-    // }
-    // if (addressLine1Controller.text.isEmpty) {
-    //   CustomSnackBar.showCustomToast(message:  'Please provide your zip code');
-    //   return;
-    // }
-    // if (cityController.text.isEmpty) {
-    //   CustomSnackBar.showCustomToast(message:  'Please type your city');
-    //   return;
-    // }if (phoneNumberController.text.isEmpty) {
-    //   CustomSnackBar.showCustomToast(message:  'Please enter your phone number');
-    //   return;
-    // }
+
     if(formKey.currentState!.validate()){
       try {
         var amount=99;

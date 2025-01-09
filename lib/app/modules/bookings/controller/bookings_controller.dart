@@ -4,6 +4,7 @@ import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
+import 'package:manpower_station/app/network/api_list.dart';
 import '../../../data/local/my_shared_pref.dart';
 import '../../../network/api_client.dart';
 import '../../../network/api_service.dart';
@@ -56,7 +57,7 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
   Future<void> getAllBookingsByUid() async {
     String? userId = await MySharedPref.getUserId();
     try {
-      var url = "/api/bookings/get/unique/user/booking/$userId";
+      var url = ApiList.getBookingsByUidUrl(userId!);
       await BaseClient.safeApiCall(url, RequestType.get, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

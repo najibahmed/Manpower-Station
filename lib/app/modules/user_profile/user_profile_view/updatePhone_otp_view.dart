@@ -8,6 +8,7 @@ import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/dark_theme_colors.dart';
+import 'package:manpower_station/utils/app_Images.dart';
 import '../../../../../config/theme/light_theme_colors.dart';
 import '../../../../../config/theme/my_fonts.dart';
 import '../../../../../config/translations/strings_enum.dart';
@@ -32,7 +33,7 @@ class UpdatePhoneOtpView extends BaseView<UserController> {
       backgroundColor:
           Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
       title: Image.asset(
-        'assets/images/manpower_name_logo.png',
+        AppImages.instance.manpower_Logo,
         width: 117,
         height: 34,
         fit: BoxFit.cover,
@@ -56,7 +57,7 @@ class UpdatePhoneOtpView extends BaseView<UserController> {
                 ),
                 Center(
                   child: Image.asset(
-                    'assets/images/otp_lock.png',
+                    AppImages.instance.otpVector,
                     width: 124,
                     height: 114,
                     fit: BoxFit.fitWidth,

@@ -123,7 +123,7 @@ class AppPages {
       name: _Paths.FaqScreen,
       page: () =>   FaqView(),
         binding: HelpBinding(),
-      transition: Transition.rightToLeft
+      transition: Transition.fadeIn
     ),GetPage(
       name: _Paths.ReportPage,
       page: () =>  ReportPage(),
@@ -142,7 +142,7 @@ class AppPages {
       name: _Paths.ServiceDetailsScreen,
       page: () => const ServiceDetailsScreen(),
         binding: ServiceBinding(),
-      // transition: Transition.rightToLeft
+      transition: Transition.fadeIn
     ),GetPage(
       name: _Paths.RedirectScreen,
       page: () => const RedirectScreen(),
@@ -177,7 +177,7 @@ class AppPages {
       name: _Paths.SupportView,
       page: () =>   const HelpView(),
         binding: HelpBinding(),
-      // transition: Transition.fadeIn
+      transition: Transition.fadeIn
     ),GetPage(
       name: _Paths.UpdateEmailPhone,
       page: () =>  UpdatePhoneEmail(),

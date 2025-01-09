@@ -2,30 +2,94 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
-import 'package:manpower_station/app/data/local/my_shared_pref.dart';
-import 'package:manpower_station/app/modules/authentication/views/otp/otp_model.dart';
-import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/app/modules/authentication/auth_repository/auth_repo.dart';
+import 'package:manpower_station/app/network/api_list.dart';
 import '../../../core/base/base_controller.dart';
+import '../../../data/local/my_shared_pref.dart';
 import '../../../network/api_client.dart';
 import '../../../network/api_service.dart';
+import '../../../routes/app_pages.dart';
+import '../views/otp/otp_model.dart';
 
 class AuthenticationController extends BaseController {
+
   late TextEditingController signInEmailController;
   late TextEditingController signUpEmailController;
   late TextEditingController phoneNumberController;
   late TextEditingController passwordController;
+  late TextEditingController signInPasswordController;
   late TextEditingController nameController;
   late TextEditingController otpController;
   RxBool obSecurePass = RxBool(false);
 
-  Future<void> loginUser() {
-    return ApiServices.loginWithPhoneOrEmail(
-        signUpEmailController.text.trim());
+
+  Future<void> registerUser()async {
+    Map<String, dynamic> requestData = {
+      'username': nameController.text.trim(),
+      'phone': phoneNumberController.text.trim(),
+      'email': signUpEmailController.text.trim(),
+      'password': passwordController.text.trim(),
+    };
+   var response =  await AuthRepository.postData(requestData, ApiList.userRegistrationUrl);
+   if(response.statusCode==201){
+     Get.snackbar(' Registration Success','${response.data['message']}');
+     if(response.data['success']==true){
+       Get.toNamed(AppPages.OtpScreen);
+     }
+   }else{
+     CustomSnackBar.showCustomErrorSnackBar(title: 'Error Registration ',message: '${response.data['message']}!',color: Colors.redAccent);
+   }
+
   }
 
-  Future<void> verifyUser() {
-    return ApiServices.otpVerification(otpController.text.trim());
+  Future<void> verifyUserOtp()async {
+    Map<String, dynamic> requestData = {
+      'otp': otpController.text.trim(),
+    };
+    var response =  await AuthRepository.putData(requestData, ApiList.userOtpVerificationUrl);
+    if(response.statusCode==200){
+      Map<String, dynamic> responseData = response.data;
+      OtpModel otpData = OtpModel.fromJson(responseData);
+      String accToken = otpData.token!.accesstoken!;
+      String refToken = otpData.token!.refreshtoken!;
+      String userId = otpData.user!.id!;
+      MySharedPref.setAccessToken(accToken);
+      MySharedPref.setRefreshToken(refToken);
+      MySharedPref.setUserId(userId);
+      MySharedPref.setLoginStatus(true);
+      // Success handling (for example, navigate to another screen)
+      Get.snackbar('Success', '${otpData.message}');
+      Get.offAllNamed(AppPages.DashboardView);
+    }else{
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Error Otp ',message: 'Check!',color: Colors.redAccent);
+    }
   }
+
+  Future<void> loginUser() async{
+    Map<String, dynamic> requestData = {
+      'phone_or_email': signInEmailController.text.trim(),
+      'password': signInPasswordController.text.trim(),
+    };
+    var response =  await AuthRepository.postData(requestData, ApiList.userLoginUrl);
+    if(response.statusCode==200){
+      Map<String, dynamic> responseData = response.data;
+      OtpModel otpData = OtpModel.fromJson(responseData);
+      String accToken = otpData.token!.accesstoken!;
+      String refToken = otpData.token!.refreshtoken!;
+      String userId = otpData.user!.id!;
+      MySharedPref.setAccessToken(accToken);
+      MySharedPref.setRefreshToken(refToken);
+      MySharedPref.setUserId(userId);
+      MySharedPref.setLoginStatus(true);
+      // Success handling (for example, navigate to another screen)
+      Get.snackbar('Successfully Logged In', '${otpData.message}');
+      Get.offAllNamed(AppPages.DashboardView);
+    }else{
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Error Registration ',message: '${response.data['message']}!',color: Colors.redAccent);
+    }
+  }
+
+
 
   @override
   void onInit() {
@@ -34,6 +98,7 @@ class AuthenticationController extends BaseController {
     phoneNumberController = TextEditingController();
     nameController = TextEditingController();
     passwordController = TextEditingController();
+    signInPasswordController = TextEditingController();
     otpController = TextEditingController();
     super.onInit();
   }
@@ -45,6 +110,7 @@ class AuthenticationController extends BaseController {
     phoneNumberController.dispose();
     nameController.dispose();
     passwordController.dispose();
+    signInPasswordController.dispose();
     otpController.dispose();
     super.onClose();
   }
@@ -82,33 +148,33 @@ class AuthenticationController extends BaseController {
 //   }
 
   /// Login with Gmail
-  Future<void> loginWithGmail() async {
-    try {
-      //   Map<String, dynamic> requestData = {
-      //     'phone_or_email': phoneNumberEmailController.text.trim(),
-      //   };
-      await BaseClient.safeApiCall(
-        "/api/users/google",
-        RequestType.get,
-        onSuccess: (response) {
-          if (response.statusCode == 200) {
-            // if (kDebugMode) {
-            //   print('Success data here------${response.data['success']}');
-            //   print('Message data here------${response.data['message']}');
-            // }
-            // if(response.data['success'] == true){
-            //   Get.toNamed(AppPages.OtpScreen);
-            // }else{
-            //   Get.snackbar('Error','Having problem to send otp');
-            // }
-          }
-        },
-      );
-    } catch (e) {
-      CustomSnackBar.showCustomErrorSnackBar(
-          title: 'Error Login Gmail:', message: e.toString());
-    }
-  }
+  // Future<void> loginWithGmail() async {
+  //   try {
+  //     //   Map<String, dynamic> requestData = {
+  //     //     'phone_or_email': phoneNumberEmailController.text.trim(),
+  //     //   };
+  //     await BaseClient.safeApiCall(
+  //       "/api/users/google",
+  //       RequestType.get,
+  //       onSuccess: (response) {
+  //         if (response.statusCode == 200) {
+  //           // if (kDebugMode) {
+  //           //   print('Success data here------${response.data['success']}');
+  //           //   print('Message data here------${response.data['message']}');
+  //           // }
+  //           // if(response.data['success'] == true){
+  //           //   Get.toNamed(AppPages.OtpScreen);
+  //           // }else{
+  //           //   Get.snackbar('Error','Having problem to send otp');
+  //           // }
+  //         }
+  //       },
+  //     );
+  //   } catch (e) {
+  //     CustomSnackBar.showCustomErrorSnackBar(
+  //         title: 'Error Login Gmail:', message: e.toString());
+  //   }
+  // }
 
 /// Otp verification
 // Future<void> otpVerification() async {

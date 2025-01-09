@@ -44,9 +44,9 @@ class _RedirectScreenState extends State<RedirectScreen> with SingleTickerProvid
     Future.delayed(const Duration(seconds: 3),() async {
       final isUserLoggedIn =await MySharedPref.getLoginStatus();
       if(isUserLoggedIn){
-        Get.offNamed(AppPages.SignIn);
-      }else{
         Get.offNamed(AppPages.DashboardView);
+      }else{
+        Get.offNamed(AppPages.SignIn);
       }
     },);
 

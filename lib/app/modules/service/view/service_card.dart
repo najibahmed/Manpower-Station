@@ -32,18 +32,21 @@ class ServiceCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                child:CachedNetworkImage(
-                  height: size.height*.13,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  imageUrl:
-                  '${Constants.serviceImgUrl}$image',
-                  errorWidget: (context, url, error) =>
-                  const Icon(Icons.error),
-                  progressIndicatorBuilder:
-                      (context, url, progress) => Center(
-                    child: CircularProgressIndicator(
-                      value: progress.progress,
+                child:Hero(
+                  tag: title,
+                  child: CachedNetworkImage(
+                    height: size.height*.13,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    imageUrl:
+                    '${Constants.serviceImgUrl}$image',
+                    errorWidget: (context, url, error) =>
+                    const Icon(Icons.error),
+                    progressIndicatorBuilder:
+                        (context, url, progress) => Center(
+                      child: CircularProgressIndicator(
+                        value: progress.progress,
+                      ),
                     ),
                   ),
                 ),

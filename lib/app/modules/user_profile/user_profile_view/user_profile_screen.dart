@@ -191,7 +191,7 @@ class UserProfileScreen extends BaseView<UserController> {
                 Text(
                   textAlign: TextAlign.justify,
                   subTitle,
-                  style:  Theme.of(context).textTheme.bodyLarge,
+                  style:  Theme.of(context).textTheme.bodyMedium,
                 ),
                 Divider(
                   thickness: 1,

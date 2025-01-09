@@ -1,16 +1,18 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_package;
+
 
 import 'package:intl/intl.dart';
+
 class Constants {
-  static const String baseUrl = 'https://manpower-update-deploy.onrender.com';
+  // static const String baseUrl = 'https://manpower-update-deploy.onrender.com';
   static const String logoAssetPath = 'assets/images/manpower_name_logo.png';
-  // static const String baseUrl = 'http://172.16.154.11';
+  static const String baseUrl = 'http://172.16.154.3:8000';
   // static const String avatarImgUrl = 'http://172.16.154.11/images/avatars/';
   // static const String bannerImgUrl = 'http://172.16.154.11/images/banners/';
   // static const String serviceImgUrl = 'http://172.16.154.11/images/services/';
-  static const String avatarImgUrl = 'https://manpower-test-deploy.onrender.com/images/avatars/';
-  static const String bannerImgUrl = 'https://manpower-test-deploy.onrender.com/images/banners/';
-  static const String serviceImgUrl = 'https://manpower-test-deploy.onrender.com/images/services/';
+  static const String avatarImgUrl = '${baseUrl}/images/avatars/';
+  static const String bannerImgUrl = '${baseUrl}/images/banners/';
+  static const String serviceImgUrl = '${baseUrl}/images/services/';
   static const String appSplashUrl = "assets/images/splash_screen.png";
   static const String banglaCurrency = '৳';
   static const String starSymbol = '⭐';

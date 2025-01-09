@@ -12,6 +12,8 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
+import '../../../components/big_text.dart';
+
 class ServiceDetailsScreen extends GetView<ServiceController> {
   const ServiceDetailsScreen({
     super.key,
@@ -49,10 +51,10 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                       bottomRight: Radius.circular(20),
                       bottomLeft: Radius.circular(20)),
                   child: Hero(
-                    tag: "imgHero",
+                    tag: service.name!,
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,
-                      height: screenHeight *.3,
+                      height: screenHeight * .4,
                       width: double.infinity,
                       imageUrl: '${Constants.serviceImgUrl}${service.image}',
                       errorWidget: (context, url, error) =>
@@ -85,7 +87,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                 // ),
                 /// back button for this page stack in the image
                 Positioned(
-                  top: screenHeight * 0.06,
+                  top: screenHeight * 0.08,
                   left: screenWidth * 0.03,
                   child: Container(
                     decoration: const BoxDecoration(
@@ -100,7 +102,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                           icon: const Icon(
                             Icons.arrow_back,
                             color: Colors.white,
-                            size: 26,
+                            size: 22,
                           )),
                     ),
                   ),
@@ -224,8 +226,8 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                   Get.offNamed(AppPages.ServiceBooking, arguments: service);
                 },
                 style: ElevatedButton.styleFrom(
-                 shape:const RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(50)))
-                ),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50)))),
                 child: Text(
                   'Reserve Service',
                   style: TextStyle(
@@ -280,14 +282,11 @@ class ServiceDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Service Description",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            BigText(text:  "Service Description",size:MyFonts.bodyLargeSize),
             const SizedBox(height: 8),
             Text(
               textAlign: TextAlign.justify,

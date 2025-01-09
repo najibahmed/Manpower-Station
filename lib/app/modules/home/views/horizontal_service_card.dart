@@ -4,7 +4,9 @@ import 'package:manpower_station/app/modules/service/model/service_list_model.da
 import 'package:manpower_station/utils/helper_function.dart';
 
 import '../../../../config/theme/light_theme_colors.dart';
+import '../../../../config/theme/my_fonts.dart';
 import '../../../../utils/constants.dart';
+import '../../../components/big_text.dart';
 
 class HorizontalServiceCard extends StatelessWidget {
   final String title;
@@ -59,15 +61,7 @@ class HorizontalServiceCard extends StatelessWidget {
                 padding: const EdgeInsets.all(6.0),
                 child: Column(
                   children: [
-                    Text(
-                      title,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    BigText(text: title,size:MyFonts.bodyLargeSize),
                      Text(
                       "(starting with)",
                       style: Theme.of(context).textTheme.displaySmall,
