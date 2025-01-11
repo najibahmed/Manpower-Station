@@ -90,9 +90,9 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                   top: screenHeight * 0.08,
                   left: screenWidth * 0.03,
                   child: Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.black26,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    decoration:  BoxDecoration(
+                       color: Colors.grey[600]!.withOpacity(.8),
+                        borderRadius: const BorderRadius.all(Radius.circular(10))),
                     child: Center(
                       child: IconButton(
                           onPressed: () {

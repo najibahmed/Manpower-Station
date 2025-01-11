@@ -16,8 +16,8 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
 
   late TabController tabController;
   TextEditingController reviewController = TextEditingController();
-  RxInt timeLimit = 3.obs;       //dropdown time
-  RxString selectedTimeKey = 'Hours'.obs;     //dropdown selected timekey
+  RxInt timeLimit = 1.obs;       //dropdown time
+  RxString? selectedTimeKey = ''.obs;     //dropdown selected timekey
   var tabIndex = 0.obs;          //service details tab index
   RxDouble userRating = 0.0.obs;
   RxInt cartSubtotal = 0.obs;       //cartSubtotal service booking page
@@ -26,7 +26,6 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
   late ServiceModel serviceModel;
   Rx<DateTime?> selectedDateTime = DateTime.now().obs;    //service selected date time
   RxList<CartModel> cartItems = <CartModel>[].obs;
-  var selectedValue = "Monthly".obs;
 
 
   // Get price
@@ -34,11 +33,11 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
     dynamic servicePrice;
     if (timeKey == ServiceType.Hours.name) {
       servicePrice = (price ~/ 3) * time;
-    } else if (timeKey == 'Days') {
+    } else if (timeKey == 'days') {
       servicePrice = price * time;
-    } else if (timeKey == 'Weeks') {
+    } else if (timeKey == 'weeks') {
       servicePrice = price * (time * 7);
-    } else if (timeKey == 'Months') {
+    } else if (timeKey == 'months') {
       servicePrice = price * (time * 30);
     }
     cartSubtotal.value = servicePrice;
@@ -70,7 +69,7 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
         discountModel: selectedService.serviceDiscount!,
         startingDate: selectedDateTime.value.toString(),
         servicePrice: cartSubtotal.value,
-        serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey.value}");
+        serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey?.value}");
     cartItems.add(cartModel);
   }
 

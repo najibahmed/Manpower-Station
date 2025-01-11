@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart' as Route;
 import 'package:get/get_utils/get_utils.dart';
 import 'package:logger/logger.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
@@ -11,6 +12,7 @@ import 'package:manpower_station/app/network/api_list.dart';
 import 'package:manpower_station/utils/appLoggerUtils.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import '../routes/app_pages.dart';
 import 'api_exceptions.dart';
 import '../../../config/translations/strings_enum.dart';
 import '../components/custom_snackbar.dart';
@@ -71,6 +73,9 @@ class BaseClient {
             return handler.resolve(response); // Retry the request
           } catch (e) {
             // Handle failure to refresh token (logout, etc.)
+            Route.Get.offAllNamed(AppPages.SignIn);
+             CustomSnackBar.showCustomErrorToast(message: "Session LogOut");
+
             return handler.reject(error);
           }
         } else {

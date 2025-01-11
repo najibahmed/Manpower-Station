@@ -216,7 +216,7 @@ Widget customWorkerTile(WorkerModel worker, double screenHeight,
                     fontWeight: FontWeight.normal, fontSize: 14),
               ),
               Text(
-                "Area:  ${worker.area!}",
+                "Area:  ${worker.area ?? "null"}",
                 style: const TextStyle(
                     fontWeight: FontWeight.normal, fontSize: 14),
               ),

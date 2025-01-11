@@ -4,9 +4,9 @@
 import 'package:intl/intl.dart';
 
 class Constants {
-  // static const String baseUrl = 'https://manpower-update-deploy.onrender.com';
+  static const String baseUrl = 'https://manpower-update-test.onrender.com';
   static const String logoAssetPath = 'assets/images/manpower_name_logo.png';
-  static const String baseUrl = 'http://172.16.154.3:8000';
+  // static const String baseUrl = 'http://172.16.154.4:8000';
   // static const String avatarImgUrl = 'http://172.16.154.11/images/avatars/';
   // static const String bannerImgUrl = 'http://172.16.154.11/images/banners/';
   // static const String serviceImgUrl = 'http://172.16.154.11/images/services/';
@@ -30,7 +30,7 @@ final List<String> optionTime=[
 'Weeks',
 'Months'
 ];
-final List <int> timeFrequency = [3, 4, 5, 6, 7, 8];
+final List <int> timeFrequency = [1,2,3, 4, 5, 6, 7, 8];
 final List categoryImage=[
   'assets/category/category_electronics.jpg',
   'assets/category/car_care.jpg',
