@@ -7,22 +7,21 @@ import '../../../components/custom_snackbar.dart';
 import '../../../network/api_client.dart';
 
 class WorkerController extends BaseController {
-  // var allWorkerList = <dynamic>[].obs;
   RxDouble userRating = 0.0.obs;
   RxList<WorkerModel> selectedWorkerList = <WorkerModel>[].obs;
   Debouncer deBouncer = Debouncer(delay: const Duration(milliseconds: 500));
-  TextEditingController workerSearchController = TextEditingController();
+  late TextEditingController workerSearchController;
   RxBool isLoading = true.obs;
   final findByWorker = <dynamic>[].obs;
 
 
   @override
   void onInit() {
+    workerSearchController = TextEditingController();
     findWorkers();
     Future.delayed(const Duration(seconds: 2), () {
       isLoading.value = false;
     });
-    // TODO: implement onInit
     super.onInit();
   }
 
@@ -49,28 +48,6 @@ class WorkerController extends BaseController {
     }
     return tag;
   }
-
-  // Future<void> getAllWorkerData() async {
-  //   try {
-  //     var url= "/api/workers/get/all";
-  //     await BaseClient.safeApiCall(
-  //         url,
-  //         RequestType.get,
-  //         onSuccess: (response) {
-  //           if (response.statusCode == 201) {
-  //             var jsonData = response.data['workers'];
-  //             var workerList = jsonData.map((e) => WorkerModel.fromJson(e))
-  //                 .toList();
-  //             allWorkerList.assignAll(workerList);// Update the RxList with new data
-  //           } else {
-  //             print('Failed to load Workers: ${response.statusMessage}');
-  //           }
-  //         }
-  //     );
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
   Future<void> findWorkers() async {
     try {

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/home/views/horizontal_service_card.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
@@ -143,17 +144,16 @@ class HomeView extends BaseView<HomeController> {
                     childAspectRatio: 0.9,
                   ),
                   delegate: SliverChildBuilderDelegate(
-                    childCount: controller.allCategoryData.isEmpty
+                    childCount: controller.allCatData.isEmpty
                         ? 6
-                        : controller.allCategoryData.length,
+                        : controller.allCatData.length,
                     (context, index) {
-                      if (controller.allCategoryData.isEmpty) {
+                      if (controller.allCatData.isEmpty) {
                         return HelperFunction.instance
                             .buildServiceCardShimmer();
                       } else {
                         var image = categoryImage[index];
-                        CategoryModel category =
-                            controller.allCategoryData[index];
+                        CategoryModel category = controller.allCatData[index];
                         var id = category.id.toString();
                         String catTitle = category.categoryName!;
 
@@ -289,10 +289,11 @@ class HomeView extends BaseView<HomeController> {
   }
 
   Future<void> _handleRefresh() async {
-    controller.getAllServiceData();
-    controller.getAllServiceCategories();
-    controller.getActiveBanners();
-    return Future.delayed(const Duration(seconds: 3));
+    await Get.find<UserController>().getUserInformation();
+    await controller.getAllServiceData();
+    await controller.getAllServiceCategories();
+    await controller.getActiveBanners();
+    // return Future.delayed(const Duration(seconds: 2));
   }
 
   Widget _buildPopularService(Size size) {

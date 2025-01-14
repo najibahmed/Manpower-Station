@@ -7,6 +7,7 @@ import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
 import 'package:manpower_station/app/modules/category/bindings/category_bindings.dart';
 import 'package:manpower_station/app/modules/category/views/single_category_services.dart';
 import 'package:manpower_station/app/modules/checkOut/bindings/checkout_binding.dart';
+import 'package:manpower_station/app/modules/checkOut/views/amar_pay_payment.dart';
 import 'package:manpower_station/app/modules/checkOut/views/checkout_screen.dart';
 import 'package:manpower_station/app/modules/help_support/binding/help_binding.dart';
 import 'package:manpower_station/app/modules/help_support/view/help_view.dart';
@@ -37,6 +38,7 @@ import '../modules/authentication/views/registration/registration_view.dart';
 import '../modules/bookings/view/booking_history_details.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -55,6 +57,7 @@ class AppPages {
   static const ServiceDetails = Routes.serviceDetailsScreen;
   static const DashboardView = Routes.dashBoard;
   static const CheckoutScreen = Routes.checkOutScreen;
+  static const PaymentScreen = Routes.paymentPage;
   static const SingleCateServicesScreen = Routes.singleCatServices;
   static const UpdateProfile = Routes.updateProfile;
   static const WorkerListView = Routes.workerList;
@@ -72,120 +75,129 @@ class AppPages {
       name: _Paths.OnBoarding,
       page: () => const OnBoardingScreen(),
       binding: OnBoardingBindings(),
-    ),GetPage(
+    ),
+    GetPage(
       name: _Paths.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
       name: _Paths.Registration,
-      page: () =>  RegistrationView(),
+      page: () => RegistrationView(),
       binding: AuthenticationBinding(),
       // transition: Transition.rightToLeft
     ),
     GetPage(
       name: _Paths.SignIn,
-      page: () =>  SignInScreen(),
+      page: () => SignInScreen(),
       binding: AuthenticationBinding(),
       // transition: Transition.rightToLeft
     ),
     GetPage(
-      name: _Paths.OtpScreen,
-      page: () =>   OtpView(),
-      binding: AuthenticationBinding(),
-        transition: Transition.rightToLeft
+        name: _Paths.OtpScreen,
+        page: () => OtpView(),
+        binding: AuthenticationBinding(),
+        transition: Transition.rightToLeft),
+    GetPage(
+        name: _Paths.WelcomePage,
+        page: () => WelcomeScreen(),
+        transition: Transition.rightToLeft),
+    GetPage(
+        name: _Paths.UserProfile,
+        page: () => UserProfileScreen(),
+        binding: UserBinding(),
+        transition: Transition.native),
+    GetPage(
+        name: _Paths.BookingHistory,
+        page: () => const BookingHistoryView(),
+        binding: BookingsBinding(),
+        transition: Transition.rightToLeft),
+    GetPage(
+        name: _Paths.DashBoard,
+        page: () => const DashboardScreen(),
+        binding: DashboardBinding(),
+        transition: Transition.rightToLeft),
+    GetPage(
+        name: _Paths.MenusPage,
+        page: () => const MenuView(),
+        binding: MenuBinding(),
+        transition: Transition.rightToLeft),
+    GetPage(
+        name: _Paths.FaqScreen,
+        page: () => FaqView(),
+        binding: HelpBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.ReportPage,
+        page: () => ReportPage(),
+        binding: HelpBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.ServiceBooking,
+        page: () => ServiceBookingScreen(),
+        binding: ServiceBinding(),
+        transition: Transition.rightToLeft),
+    GetPage(
+      name: _Paths.BookingHistoryDetails,
+      page: () => const BookingHistoryDetails(),
+      binding: BookingsBinding(),
     ),
     GetPage(
-      name: _Paths.WelcomePage,
-      page: () =>  WelcomeScreen(),
-        transition: Transition.rightToLeft
-    ),GetPage(
-      name: _Paths.UserProfile,
-      page: () =>  UserProfileScreen(),
-      binding: UserBinding(),
-      transition: Transition.native
-    ),GetPage(
-      name: _Paths.BookingHistory,
-      page: () => const BookingHistoryView(),
-        binding: BookingsBinding(),
-      transition: Transition.rightToLeft
-    ),GetPage(
-      name: _Paths.DashBoard,
-      page: () =>  const DashboardScreen(),
-        binding: DashboardBinding(),
-      transition: Transition.rightToLeft
-    ),GetPage(
-      name: _Paths.MenusPage,
-      page: () =>  const MenuView(),
-        binding: MenuBinding(),
-      transition: Transition.rightToLeft
-    ),GetPage(
-      name: _Paths.FaqScreen,
-      page: () =>   FaqView(),
-        binding: HelpBinding(),
-      transition: Transition.fadeIn
-    ),GetPage(
-      name: _Paths.ReportPage,
-      page: () =>  ReportPage(),
-        binding: HelpBinding(),
-      transition: Transition.fadeIn
-    ),GetPage(
-      name: _Paths.ServiceBooking,
-      page: () =>   ServiceBookingScreen(),
+        name: _Paths.ServiceDetailsScreen,
+        page: () => const ServiceDetailsScreen(),
         binding: ServiceBinding(),
-      transition: Transition.rightToLeft
-    ),GetPage(
-      name: _Paths.BookingHistoryDetails,
-      page: () =>   const BookingHistoryDetails(),
-        binding: BookingsBinding(),
-    ),GetPage(
-      name: _Paths.ServiceDetailsScreen,
-      page: () => const ServiceDetailsScreen(),
-        binding: ServiceBinding(),
-      transition: Transition.fadeIn
-    ),GetPage(
+        transition: Transition.fadeIn),
+    GetPage(
       name: _Paths.RedirectScreen,
       page: () => const RedirectScreen(),
-        // binding: ServiceBinding(),
+      // binding: ServiceBinding(),
       // transition: Transition.rightToLeft
-    ),GetPage(
-      name: _Paths.CheckOutScreen,
-      page: () =>  CheckOutScreen(),
+    ),
+    GetPage(
+        name: _Paths.CheckOutScreen,
+        page: () => CheckOutScreen(),
         binding: CheckoutBinding(),
-      // transition: Transition.rightToLeft
-    ),GetPage(
-      name: _Paths.SingleCatServices,
-      page: () =>  const SingleCategoryServices(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.PaymentPage,
+        page: () => MyPay(),
+        binding: CheckoutBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.SingleCatServices,
+        page: () => const SingleCategoryServices(),
         binding: CategoryBindings(),
-      transition: Transition.fadeIn
-    ),GetPage(
-      name: _Paths.UpdateProfile,
-      page: () =>  UpdateProfileScreen(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: _Paths.UpdateProfile,
+        page: () => UpdateProfileScreen(),
         binding: UserBinding(),
-      transition: Transition.fadeIn
-    ),GetPage(
+        transition: Transition.fadeIn),
+    GetPage(
       name: _Paths.WorkerList,
-      page: () =>   WorkerListScreen(),
-        binding: WorkerBinding(),
+      page: () => WorkerListScreen(),
+      binding: WorkerBinding(),
       // transition: Transition.rightToLeftWithFade
-    ),GetPage(
-      name: _Paths.WorkerDetails,
-      page: () =>   const WorkerDetailsScreen(),
+    ),
+    GetPage(
+        name: _Paths.WorkerDetails,
+        page: () => const WorkerDetailsScreen(),
         binding: WorkerBinding(),
-      transition: Transition.rightToLeftWithFade
-    ),GetPage(
-      name: _Paths.SupportView,
-      page: () =>   const HelpView(),
+        transition: Transition.rightToLeftWithFade),
+    GetPage(
+        name: _Paths.SupportView,
+        page: () => const HelpView(),
         binding: HelpBinding(),
-      transition: Transition.fadeIn
-    ),GetPage(
+        transition: Transition.fadeIn),
+    GetPage(
       name: _Paths.UpdateEmailPhone,
-      page: () =>  UpdatePhoneEmail(),
-        binding: UserBinding(),
-    ),GetPage(
+      page: () => UpdatePhoneEmail(),
+      binding: UserBinding(),
+    ),
+    GetPage(
       name: _Paths.UpdateOtp,
-      page: () =>   UpdatePhoneOtpView(),
-        binding: UserBinding(),
+      page: () => UpdatePhoneOtpView(),
+      binding: UserBinding(),
     ),
   ];
 }

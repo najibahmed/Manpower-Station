@@ -28,19 +28,21 @@ class MenuView extends BaseView<HomeController>{
 
   @override
   Widget body(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     final userController=Get.put(UserController());
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-           SizedBox(height: 40.h),
+           SizedBox(height: 10.h),
            controller.allServiceData.isEmpty? _menuProfileShimmer(): ClipRRect(
             borderRadius: BorderRadius.circular(100),
             child: Material(
               child: SizedBox(
-                height: 80,
-                width: 80,
+                height: screenHeight * 0.14,
+                width: screenWidth * 0.3,
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.grey.withOpacity(.30),
@@ -65,7 +67,7 @@ class MenuView extends BaseView<HomeController>{
             userController.userData!.value.phoneOrEmail.toString(),
             style:  Theme.of(context).textTheme.displayMedium,
           ),
-          SizedBox(height: 30.h),
+          SizedBox(height: 20.h),
           MenuItem(icon: Icons.person, text: 'Profile', onTap: () { Get.toNamed(AppPages.UserProfile); },),
           // MenuItem(icon: Icons.payment, text: 'Digital payment', onTap: () {  },),
           MenuItem(icon: Icons.language, text: Strings.changeLanguage.tr, onTap: () {  },),

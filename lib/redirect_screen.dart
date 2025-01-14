@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
+import 'package:manpower_station/app/modules/home/controllers/home_controller.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/app_Images.dart';
@@ -41,7 +43,7 @@ class _RedirectScreenState extends State<RedirectScreen> with SingleTickerProvid
   }
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3),() async {
+    Future.delayed(const Duration(seconds: 2),() async {
       final isUserLoggedIn =await MySharedPref.getLoginStatus();
       if(isUserLoggedIn){
         Get.offNamed(AppPages.DashboardView);

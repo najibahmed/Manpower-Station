@@ -25,7 +25,8 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
   late ServiceModel selectedService;
   late ServiceModel serviceModel;
   Rx<DateTime?> selectedDateTime = DateTime.now().obs;    //service selected date time
-  RxList<CartModel> cartItems = <CartModel>[].obs;
+  final RxList<CartModel> _cartItems = <CartModel>[].obs;
+  List<CartModel> get getCartItems=> _cartItems;
 
 
   // Get price
@@ -70,7 +71,8 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
         startingDate: selectedDateTime.value.toString(),
         servicePrice: cartSubtotal.value,
         serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey?.value}");
-    cartItems.add(cartModel);
+    _cartItems.value=[];
+    _cartItems.add(cartModel);
   }
 
 

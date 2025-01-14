@@ -104,7 +104,7 @@ class ReviewCard extends StatelessWidget {
                   minRating: 0.0,
                   direction: Axis.horizontal,
                   allowHalfRating: true,
-                  ignoreGestures: false,
+                  ignoreGestures: true,
                   itemCount: 5,
                   itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
                   itemBuilder: (context, _) => const Icon(

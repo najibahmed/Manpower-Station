@@ -179,6 +179,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     BigText(
                         text: 'Select Package Duration',
                         size: MyFonts.bodyLargeSize),
+                    controller.selectedTimeKey!.isNotEmpty?SizedBox():Text("*Required",style: TextStyle(fontSize: 11,color: Colors.red.shade200),),
                     SizedBox(height: screenHeight * .01),
                     packageDurationChoiceChip(options,context),
                     // durationSegmentedButton(options),
@@ -187,6 +188,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     BigText(
                         text: 'Choose a start time to begin with.',
                         size: MyFonts.bodyLargeSize),
+                    // Text("*Required",style: TextStyle(fontSize: 11,color: Colors.red.shade200),),
                     SizedBox(height: screenHeight * .01),
                     Card(
                       color: Theme.of(context)
@@ -219,7 +221,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         ),
                       ),
                     ),
-                    SizedBox(height: screenHeight * .01),
+                    SizedBox(height: screenHeight * .03),
 
                     /// Calender dialogue
                     ScheduleButton(screenHeight, screenWidth, context),

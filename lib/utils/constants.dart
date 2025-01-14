@@ -2,17 +2,17 @@
 
 
 import 'package:intl/intl.dart';
+import 'package:manpower_station/app/network/api_list.dart';
 
 class Constants {
-  static const String baseUrl = 'https://manpower-update-test.onrender.com';
   static const String logoAssetPath = 'assets/images/manpower_name_logo.png';
   // static const String baseUrl = 'http://172.16.154.4:8000';
   // static const String avatarImgUrl = 'http://172.16.154.11/images/avatars/';
   // static const String bannerImgUrl = 'http://172.16.154.11/images/banners/';
   // static const String serviceImgUrl = 'http://172.16.154.11/images/services/';
-  static const String avatarImgUrl = '${baseUrl}/images/avatars/';
-  static const String bannerImgUrl = '${baseUrl}/images/banners/';
-  static const String serviceImgUrl = '${baseUrl}/images/services/';
+  static const String avatarImgUrl = '${ApiList.baseUrl}/images/avatars/';
+  static const String bannerImgUrl = '${ApiList.baseUrl}/images/banners/';
+  static const String serviceImgUrl = '${ApiList.baseUrl}/images/services/';
   static const String appSplashUrl = "assets/images/splash_screen.png";
   static const String banglaCurrency = '৳';
   static const String starSymbol = '⭐';

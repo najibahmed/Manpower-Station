@@ -341,7 +341,7 @@ class NoAccountText extends StatelessWidget {
             Get.toNamed(AppPages.Registration);
           },
           child: const Text(
-            "Sign Up",
+            "Sign In",
             style: TextStyle(
               color: Color(0xFFFF7643),
             ),

@@ -328,7 +328,7 @@ Future<Map<String, String>> _refreshToken() async {
   }
   Dio dio = Dio(
     BaseOptions(
-      baseUrl: Constants.baseUrl,
+      baseUrl: ApiList.baseUrl,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

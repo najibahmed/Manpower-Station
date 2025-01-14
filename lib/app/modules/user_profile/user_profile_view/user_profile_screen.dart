@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -63,6 +65,7 @@ class UserProfileScreen extends BaseView<UserController> {
   @override
   Widget body(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     // TODO: implement body
     return controller.isLoading.value
         ? const Center(child: CircularProgressIndicator())
@@ -79,8 +82,8 @@ class UserProfileScreen extends BaseView<UserController> {
                     borderRadius: BorderRadius.circular(100),
                     child: Material(
                       child: SizedBox(
-                        height: 110,
-                        width: 110,
+                        height: screenHeight * 0.14,
+                        width: screenWidth* 0.3,
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.grey.withOpacity(.30),
@@ -101,20 +104,26 @@ class UserProfileScreen extends BaseView<UserController> {
                   SizedBox(
                     height: screenHeight * 0.03,
                   ),
-                  ListTile(
-                      tileColor:  Theme.of(context).cardColor,
-                      onTap: () {
-                        Get.toNamed(AppPages.UpdateEmailPhone);
-                      },
-                      leading: const Icon(Icons.perm_device_information),
-                      title:  Text(
-                        "Change Email or Phone Number Here!",
-                        style: Theme.of(context).textTheme.displaySmall,
-                      ),
-                      trailing:  Icon(
-                        Icons.compare_arrows,
-                        color:  Theme.of(context).iconTheme.color,
-                      )),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.grey)
+                    ),
+                    child: ListTile(
+                        tileColor:  Theme.of(context).cardColor,
+                        onTap: () {
+                          Get.toNamed(AppPages.UpdateEmailPhone);
+                        },
+                        leading: const Icon(Icons.perm_device_information),
+                        title:  Text(
+                          "Change Email or Phone Number Here!",
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                        trailing:  Icon(
+                          Icons.compare_arrows,
+                          color:  Theme.of(context).iconTheme.color,
+                        )),
+                  ),
                   SizedBox(
                     height: screenHeight * 0.01,
                   ),
@@ -171,7 +180,7 @@ class UserProfileScreen extends BaseView<UserController> {
               Icon(
                 icon,
                 size: 32,
-                color: Colors.grey,
+                color: Colors.green,
               ),
               SizedBox(
                 width: 18.h,

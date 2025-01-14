@@ -1,3 +1,4 @@
+import 'package:aamarpay/aamarpay.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,9 +9,13 @@ import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/app/modules/checkOut/views/shipping_form.dart';
+import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
+import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
+
+import '../../../components/custom_snackbar.dart';
 
 class CheckOutScreen extends BaseView<CheckoutController> {
   CheckOutScreen({super.key});
@@ -37,6 +42,12 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             color: Colors.white,
           )),
       // backgroundColor: LightThemeColors.primaryColor,
+      actions: [
+        IconButton(onPressed: (){
+          Get.offNamedUntil(AppPages.DashboardView,(Route<dynamic> route) => route.isFirst);
+        },
+            icon: const Icon(Icons.home_outlined))
+      ],
     );
   }
 
@@ -74,11 +85,12 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             SizedBox(height: screenHeight * 0.01),
 
             /// PaymentMethod(),
-            // buildPaymentMethodSection(controller: controller),
+            buildPaymentMethodSection(controller: controller),
             SizedBox(height: screenHeight * 0.05),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+              child:
+              ElevatedButton(
                 onPressed: controller.saveOrder,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 15),

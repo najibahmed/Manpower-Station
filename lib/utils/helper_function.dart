@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -63,11 +64,17 @@ class HelperFunction {
             child: const Center(child: CircularProgressIndicator())),
       ); // It's an SVG file
     }
-
     // Check for .jpg or .jpeg extension
     if (imageUrl.toLowerCase().endsWith('.jpg') ||
         imageUrl.toLowerCase().endsWith('.jpeg') ||
         imageUrl.toLowerCase().endsWith('.png')) {
+      return CachedNetworkImage(
+        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+        imageUrl: '${Constants.avatarImgUrl}$imageUrl',
+        // height: 120,
+        // width: double.infinity,
+        fit: BoxFit.cover,
+      );
       return Image.network(
         '${Constants.avatarImgUrl}$imageUrl',
         height: 120,

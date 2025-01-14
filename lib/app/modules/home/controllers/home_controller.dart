@@ -10,9 +10,9 @@ import '../../../network/api_client.dart';
 
 class HomeController extends BaseController {
   var allServiceData = <dynamic>[].obs;
-  var allCategoryData = <dynamic>[].obs;
+  var _allCategoryData = <dynamic>[].obs;
 
-  List get allCatData => allCategoryData;
+  List get allCatData => _allCategoryData;
 
 /// Get all service
   Future<List> getAllServiceData() async {
@@ -60,7 +60,7 @@ class HomeController extends BaseController {
               var jsonData = response.data['categories'];
               var categoryList = jsonData.map((e) => CategoryModel.fromJson(e))
                   .toList();
-              allCategoryData.assignAll(categoryList);// Update the RxList with new data
+              _allCategoryData.assignAll(categoryList);// Update the RxList with new data
             } else {
               CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load Categories:',message: '${response.statusMessage}');
             }
