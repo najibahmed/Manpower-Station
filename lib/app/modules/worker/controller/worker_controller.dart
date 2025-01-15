@@ -11,7 +11,7 @@ class WorkerController extends BaseController {
   RxList<WorkerModel> selectedWorkerList = <WorkerModel>[].obs;
   Debouncer deBouncer = Debouncer(delay: const Duration(milliseconds: 500));
   late TextEditingController workerSearchController;
-  RxBool isLoading = true.obs;
+  // RxBool isLoading = true.obs;
   final findByWorker = <dynamic>[].obs;
 
 
@@ -19,9 +19,9 @@ class WorkerController extends BaseController {
   void onInit() {
     workerSearchController = TextEditingController();
     findWorkers();
-    Future.delayed(const Duration(seconds: 2), () {
-      isLoading.value = false;
-    });
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   isLoading.value = false;
+    // });
     super.onInit();
   }
 
@@ -52,7 +52,7 @@ class WorkerController extends BaseController {
   Future<void> findWorkers() async {
     try {
       late String url;
-      if (findByWorker.isEmpty) {
+      if (workerSearchController.text.isEmpty) {
         url = "/api/workers/get/all";
       } else if (workerSearchController.text.isNotEmpty) {
         url = "/api/workers/get/all?keyword=${workerSearchController.text}";

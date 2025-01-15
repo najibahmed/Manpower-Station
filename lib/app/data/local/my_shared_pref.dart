@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../config/translations/localization_service.dart';
+import '../../modules/user_profile/model/user_model.dart';
 
 class MySharedPref {
   // prevent making instance
@@ -18,6 +21,7 @@ class MySharedPref {
   static const String isLoggedIn = 'isLoggedIn';
   static const String isOnBoardingChecked = 'isOnBoardingChecked';
   static const String userId = 'adminId';
+  static const String userData = 'user-data';
 
   /// init get storage services
   static Future<void> init() async {
@@ -63,43 +67,53 @@ class MySharedPref {
 
   /// check onBoarding status
   static Future<bool> setOnBoardingStatus(bool status) async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.setBool(isOnBoardingChecked, status);
+    return _sharedPreferences.setBool(isOnBoardingChecked, status);
   }
   static Future<bool> getOnBoardingStatus() async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.getBool(isOnBoardingChecked) ?? false;
+    return _sharedPreferences.getBool(isOnBoardingChecked) ?? false;
   }
 
   /// check user login status
   static Future<bool> setLoginStatus(bool status) async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.setBool(isLoggedIn, status);
+    return _sharedPreferences.setBool(isLoggedIn, status);
   }
 
   static Future<bool> getLoginStatus() async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.getBool(isLoggedIn) ?? false;
+    return _sharedPreferences.getBool(isLoggedIn) ?? false;
   }
 
   /// set and get user ID
   static Future<bool> setUserId(String id) async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.setString(userId, id);
+    return _sharedPreferences.setString(userId, id);
   }
 
   static Future<String?> getUserId() async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.getString(userId);
+    return _sharedPreferences.getString(userId);
   }
 
 ///saved jwt
 static Future<bool> setRefreshToken(String value) async {
-  final localBD=await SharedPreferences.getInstance();
-  return localBD.setString(refreshTokenKey, value);
+  return _sharedPreferences.setString(refreshTokenKey, value);
 }
 static Future<String?> getRefreshToken() async {
-  final localBD=await SharedPreferences.getInstance();
-  return localBD.getString(refreshTokenKey);
+  return _sharedPreferences.getString(refreshTokenKey);
 }
+
+/// user data UserModel
+  // Save UserData to SharedPreferences
+  static Future<void> saveUser(UserModel user) async {
+    String userJson = jsonEncode(user.toJson()); // Convert UserModel to JSON string
+    await _sharedPreferences.setString(userData, userJson);
+  }
+  // Retrieve UserModel from SharedPreferences
+  static Future<UserModel?> getUser() async {
+    String? userJson = _sharedPreferences.getString(userData); // Retrieve JSON string
+    if (userJson == null) return null; // Return null if no data found
+    return UserModel.fromJson(jsonDecode(userJson)); // Convert JSON string back to UserModel
+  }
+  // Remove UserModel from SharedPreferences
+  static Future<void> clearUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(userData);
+  }
 }

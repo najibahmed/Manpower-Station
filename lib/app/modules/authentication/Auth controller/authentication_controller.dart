@@ -30,7 +30,7 @@ class AuthenticationController extends BaseController {
       'email': signUpEmailController.text.trim(),
       'password': passwordController.text.trim(),
     };
-   var response =  await AuthRepository.postData(requestData, ApiList.userRegistrationUrl);
+   var response =  await ApiRepository.postData(requestData, ApiList.userRegistrationUrl);
    if(response.statusCode==201){
      Get.snackbar(' Registration Success','${response.data['message']}');
      if(response.data['success']==true){
@@ -46,7 +46,7 @@ class AuthenticationController extends BaseController {
     Map<String, dynamic> requestData = {
       'otp': otpController.text.trim(),
     };
-    var response =  await AuthRepository.putData(requestData, ApiList.userOtpVerificationUrl);
+    var response =  await ApiRepository.putData(requestData, ApiList.userOtpVerificationUrl);
     if(response.statusCode==200){
       Map<String, dynamic> responseData = response.data;
       OtpModel otpData = OtpModel.fromJson(responseData);
@@ -70,7 +70,7 @@ class AuthenticationController extends BaseController {
       'phone_or_email': signInEmailController.text.trim(),
       'password': signInPasswordController.text.trim(),
     };
-    var response =  await AuthRepository.postData(requestData, ApiList.userLoginUrl);
+    var response =  await ApiRepository.postData(requestData, ApiList.userLoginUrl);
     if(response.statusCode==200){
       Map<String, dynamic> responseData = response.data;
       OtpModel otpData = OtpModel.fromJson(responseData);

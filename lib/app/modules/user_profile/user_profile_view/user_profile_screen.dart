@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/big_text.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -15,6 +16,7 @@ import 'package:manpower_station/utils/helper_function.dart';
 class UserProfileScreen extends BaseView<UserController> {
   TextStyle myTextStyle = TextStyle(
       color: LightThemeColors.primaryColor, fontSize: MyFonts.appBarTittleSize);
+
   UserProfileScreen({super.key});
 
   @override
@@ -75,23 +77,28 @@ class UserProfileScreen extends BaseView<UserController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: screenHeight * 0.02,
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Material(
-                      child: SizedBox(
-                        height: screenHeight * 0.14,
-                        width: screenWidth* 0.3,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(.30),
-                          ),
+                  Hero(
+                    tag: controller.userData!.value.id!,
+                    child: SizedBox(
+                      height: screenHeight * 0.14,
+                      width: screenWidth * 0.3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.grey.withOpacity(.30),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                color: Colors.grey.withOpacity(0.4),
+                                offset: Offset(1, 4))
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
                           child: controller.userData?.value.avatar != null
                               ? HelperFunction.instance.isSvgOrJpg(
-                                  "${controller.userData?.value.avatar}",
-                                  context)
+                                  "${controller.userData?.value.avatar}", context)
                               : const Icon(
                                   Icons.person,
                                   color: LightThemeColors.primaryColor,
@@ -102,26 +109,48 @@ class UserProfileScreen extends BaseView<UserController> {
                     ),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.03,
+                    height: screenHeight * 0.01,
+                  ),
+                  BigText(text: "${controller.userData!.value.username}"),
+                  Container(
+                      height: screenHeight * .035,
+                      width: screenWidth * 0.6,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.grey.withOpacity(.30),
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                              color: Colors.grey.withOpacity(0.2),
+                              offset: Offset(1, 3))
+                        ],
+                      ),
+                      child: Center(
+                        child: BigText(
+                          text: "${controller.userData!.value.user!.email}",size: 14,),
+                      )),
+
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey)
-                    ),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey)),
                     child: ListTile(
-                        tileColor:  Theme.of(context).cardColor,
+                        tileColor: Theme.of(context).cardColor,
                         onTap: () {
                           Get.toNamed(AppPages.UpdateEmailPhone);
                         },
                         leading: const Icon(Icons.perm_device_information),
-                        title:  Text(
+                        title: Text(
                           "Change Email or Phone Number Here!",
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
-                        trailing:  Icon(
+                        trailing: Icon(
                           Icons.compare_arrows,
-                          color:  Theme.of(context).iconTheme.color,
+                          color: Theme.of(context).iconTheme.color,
                         )),
                   ),
                   SizedBox(
@@ -136,19 +165,23 @@ class UserProfileScreen extends BaseView<UserController> {
                       'Account',
                       Icons.phone_android_outlined,
                       controller.userData?.value.phoneOrEmail ??
-                          "Login Email or phone number here.",context),
+                          "Login Email or phone number here.",
+                      context),
                   SizedBox(
                     height: screenHeight * 0.002,
                   ),
-                  _buildUserFieldCard('Description', Icons.info_outline,
-                      "${controller.userData?.value.profileDescription}",context),
+                  _buildUserFieldCard(
+                      'Description',
+                      Icons.info_outline,
+                      "${controller.userData?.value.profileDescription}",
+                      context),
                   SizedBox(
                     height: screenHeight * 0.005,
                   ),
                   _buildUserFieldCard('Address', Icons.home_outlined,
-                      "${controller.userData?.value.address}",context),
+                      "${controller.userData?.value.address}", context),
                   _buildUserFieldCard('Area', Icons.signpost_outlined,
-                      "${controller.userData?.value.area}",context),
+                      "${controller.userData?.value.area}", context),
                   SizedBox(
                     height: screenHeight * 0.005,
                   ),
@@ -200,7 +233,7 @@ class UserProfileScreen extends BaseView<UserController> {
                 Text(
                   textAlign: TextAlign.justify,
                   subTitle,
-                  style:  Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Divider(
                   thickness: 1,

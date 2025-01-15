@@ -7,10 +7,11 @@ import 'package:manpower_station/app/network/api_list.dart';
 import '../../../components/custom_snackbar.dart';
 import '../../../core/base/base_controller.dart';
 import '../../../network/api_client.dart';
+import '../../authentication/auth_repository/auth_repo.dart';
 
 class HomeController extends BaseController {
   var allServiceData = <dynamic>[].obs;
-  var _allCategoryData = <dynamic>[].obs;
+  final _allCategoryData = <dynamic>[].obs;
 
   List get allCatData => _allCategoryData;
 
@@ -100,33 +101,42 @@ class HomeController extends BaseController {
 
   /// Get active banners for dashboard
   late Rx<ActiveBanner> activeBanners=ActiveBanner().obs;
-  Future<void> getActiveBanners() async {
-    try {
-      var url= ApiList.activeAppBannersUrl; //"/api/banners/get/active";
-      await BaseClient.safeApiCall(
-          url,
-          RequestType.get,
-          onSuccess: (response) {
-            // if (kDebugMode) {
-            //   print(response.data);
-            // }
-            if (response.statusCode == 200) {
-              var jsonData = response.data['banner'];
-              activeBanners.value = ActiveBanner.fromJson(jsonData);
-            } else {
-              CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load banners:',message:  '${response.statusMessage}');
-            }
-          }
-      );
-    } catch (e) {
-      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get banner:',message: '$e');
-
+  // Future<void> getActiveBanners() async {
+  //   try {
+  //     var url= ApiList.activeAppBannersUrl; //"/api/banners/get/active";
+  //     await BaseClient.safeApiCall(
+  //         url,
+  //         RequestType.get,
+  //         onSuccess: (response) {
+  //           // if (kDebugMode) {
+  //           //   print(response.data);
+  //           // }
+  //           if (response.statusCode == 200) {
+  //             var jsonData = response.data['banner'];
+  //             activeBanners.value = ActiveBanner.fromJson(jsonData);
+  //           } else {
+  //             CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load banners:',message:  '${response.statusMessage}');
+  //           }
+  //         }
+  //     );
+  //   } catch (e) {
+  //     CustomSnackBar.showCustomErrorSnackBar(title:'Error try get banner:',message: '$e');
+  //
+  //   }
+  // }
+  Future<void> getBanners()async {
+    var response =  await ApiRepository.getData(ApiList.activeAppBannersUrl);
+    if (response.statusCode == 200) {
+      var jsonData = response.data['banner'];
+      activeBanners.value = ActiveBanner.fromJson(jsonData);
+    } else {
+      CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load banners:',message:  '${response.statusMessage}');
     }
   }
 
   @override
   void onInit() {
-    getActiveBanners();
+    getBanners();
     getAllServiceData();
     getAllServiceCategories();
     super.onInit();

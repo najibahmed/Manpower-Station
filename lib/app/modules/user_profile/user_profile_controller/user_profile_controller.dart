@@ -94,6 +94,11 @@ class UserController extends BaseController {
           }
         },
       );
+      //save user to local storage
+      await MySharedPref.saveUser(userData!.value);
+
+
+
       /// for pre-fill to update email initializing controller;
       updateDescriptionController=TextEditingController(text: userData?.value.profileDescription?? 'null');
       updateNameController=TextEditingController(text: userData?.value.username??"null");
@@ -235,8 +240,15 @@ class UserController extends BaseController {
     } finally {
     }
   }
+  void _loadUserData()async{
+    UserModel? user = await MySharedPref.getUser();
+    if(user != null){
+      userData!.value= user;
+    }
+  }
   @override
   void onInit() {
+    _loadUserData();
     getUserInformation();
     oldEmailPhoneController=TextEditingController();
     newEmailPhoneController=TextEditingController();

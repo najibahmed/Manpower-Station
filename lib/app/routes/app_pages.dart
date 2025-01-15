@@ -9,6 +9,7 @@ import 'package:manpower_station/app/modules/category/views/single_category_serv
 import 'package:manpower_station/app/modules/checkOut/bindings/checkout_binding.dart';
 import 'package:manpower_station/app/modules/checkOut/views/amar_pay_payment.dart';
 import 'package:manpower_station/app/modules/checkOut/views/checkout_screen.dart';
+import 'package:manpower_station/app/modules/checkOut/views/payment_done.dart';
 import 'package:manpower_station/app/modules/help_support/binding/help_binding.dart';
 import 'package:manpower_station/app/modules/help_support/view/help_view.dart';
 import 'package:manpower_station/app/modules/help_support/view/report_page.dart';
@@ -44,14 +45,14 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const Home = Routes.homeScreen;
+  static const INITIAL = Routes.redirectScreen;
   static const Registration = Routes.registrationScreen;
   static const SignIn = Routes.signInScreen;
   static const OtpScreen = Routes.otpScreen;
   static const UserProfile = Routes.userProfile;
   static const OrderHistory = Routes.orderHistory;
+  static const Home = Routes.homeScreen;
   static const MenusPage = Routes.menusPage;
-  static const INITIAL = Routes.redirectScreen;
   static const FaqScreen = Routes.faqScreen;
   static const ServiceBooking = Routes.serviceBooking;
   static const ServiceDetails = Routes.serviceDetailsScreen;
@@ -69,17 +70,13 @@ class AppPages {
   static const ReportScreen = Routes.reportPage;
   static const OnBoardingView = Routes.onBoarding;
   static const WelcomeView = Routes.welcomePage;
+  static const PaymentSuccess = Routes.paymentDone;
 
   static final routes = [
     GetPage(
       name: _Paths.OnBoarding,
       page: () => const OnBoardingScreen(),
       binding: OnBoardingBindings(),
-    ),
-    GetPage(
-      name: _Paths.HOME,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
     ),
     GetPage(
       name: _Paths.Registration,
@@ -198,6 +195,16 @@ class AppPages {
       name: _Paths.UpdateOtp,
       page: () => UpdatePhoneOtpView(),
       binding: UserBinding(),
+    ),
+    GetPage(
+      name: _Paths.HOME,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.PaymentSuccess,
+      page: () => const PaymentDone(),
+      // binding: HomeBinding(),
     ),
   ];
 }

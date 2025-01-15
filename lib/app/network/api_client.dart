@@ -304,7 +304,7 @@ class BaseClient {
     if (kDebugMode) {
       LoggerUtil.instance
           .printLog(msg: "handle api error:$msg", logType: LogType.error);
-      print("handle api error:$msg");
+      CustomSnackBar.showCustomErrorSnackBar(title: "Error Occurred", message: "Request Timed Out!!");
     }
   }
 

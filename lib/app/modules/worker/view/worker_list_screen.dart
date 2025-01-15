@@ -63,14 +63,15 @@ class WorkerListScreen extends BaseView<WorkerController> {
               ),
               onChanged: (query) {
                 controller.deBouncer.call(() {
-                  controller.isLoading.value = true;
+                  // controller.isLoading.value = true;
+                  controller.findByWorker.value=[];
                   controller.findWorkers();
-                  Future.delayed(
-                      const Duration(
-                        seconds: 1,
-                      ), () {
-                    controller.isLoading.value = false;
-                  });
+                  // Future.delayed(
+                  //     const Duration(
+                  //       seconds: 1,
+                  //     ), () {
+                  //   controller.isLoading.value = false;
+                  // });
                 });
               },
             ),
@@ -98,11 +99,11 @@ class WorkerListScreen extends BaseView<WorkerController> {
                       0.75 // Adjust the aspect ratio based on your design
                   ),
               delegate: SliverChildBuilderDelegate(
-                childCount: controller.isLoading.value
+                childCount: controller.findByWorker.isEmpty
                     ? 4
                     : controller.findByWorker.length,
                 (context, index) {
-                  if (controller.isLoading.value) {
+                  if (controller.findByWorker.isEmpty) {
                     return _buildServiceCardShimmer();
                   } else {
                     WorkerModel worker = controller.findByWorker[index];

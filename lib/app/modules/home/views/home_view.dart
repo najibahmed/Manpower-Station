@@ -239,51 +239,49 @@ class HomeView extends BaseView<HomeController> {
   }
 
   Widget _buildBanner(Size size) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 3,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: controller.allServiceData.isEmpty
-              ? _buildBannerShimmer()
-              : CarouselSlider(
-                  options: CarouselOptions(
-                    height: size.height * 0.19,
-                    autoPlay: true,
-                    // enlargeCenterPage: true,
-                    aspectRatio: 16 / 9,
-                    autoPlayInterval: const Duration(seconds: 6),
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 300),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    pauseAutoPlayOnTouch: true,
-                    viewportFraction: 1.0,
-                  ),
-                  items: controller.activeBanners.value.images?.map((url) {
-                    var banner = url.image;
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            imageUrl: '${Constants.bannerImgUrl}$banner',
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                            progressIndicatorBuilder:
-                                (context, url, progress) => Center(
-                              child: CircularProgressIndicator(
-                                value: progress.progress,
-                              ),
+    return Card(
+      elevation: 3,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: controller.allServiceData.isEmpty
+            ? _buildBannerShimmer()
+            : CarouselSlider(
+                options: CarouselOptions(
+                  height: size.height * 0.19,
+                  autoPlay: true,
+                  // enlargeCenterPage: true,
+                  aspectRatio: 16 / 9,
+                  autoPlayInterval: const Duration(seconds: 6),
+                  autoPlayAnimationDuration:
+                      const Duration(milliseconds: 300),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  pauseAutoPlayOnTouch: true,
+                  viewportFraction: 1.0,
+                ),
+                items: controller.activeBanners.value.images !=null
+                    ? controller.activeBanners.value.images!.map((url) {
+                  var banner = url.image;
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl: '${Constants.bannerImgUrl}$banner',
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          progressIndicatorBuilder:
+                              (context, url, progress) => Center(
+                            child: CircularProgressIndicator(
+                              value: progress.progress,
                             ),
                           ),
-                        );
-                      },
-                    );
-                  }).toList(),
-                ),
-        ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(): [Container(color:Colors.green.withOpacity(.04),)],
+              ),
       ),
     );
   }
@@ -292,7 +290,7 @@ class HomeView extends BaseView<HomeController> {
     await Get.find<UserController>().getUserInformation();
     await controller.getAllServiceData();
     await controller.getAllServiceCategories();
-    await controller.getActiveBanners();
+    await controller.getBanners();
     // return Future.delayed(const Duration(seconds: 2));
   }
 
@@ -304,7 +302,7 @@ class HomeView extends BaseView<HomeController> {
           : CarouselSlider(
               options: CarouselOptions(
                 height: size.height * 0.2,
-                autoPlay: true,
+                autoPlay: false,
                 aspectRatio: 16 / 9,
                 autoPlayInterval: const Duration(seconds: 3),
                 autoPlayAnimationDuration: const Duration(milliseconds: 1000),
