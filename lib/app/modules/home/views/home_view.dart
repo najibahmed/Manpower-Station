@@ -30,6 +30,7 @@ class HomeView extends BaseView<HomeController> {
         color: Colors.green,
         onRefresh: _handleRefresh,
         child: CustomScrollView(
+          physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
           slivers: [
             SliverToBoxAdapter(
               child: Column(
@@ -100,18 +101,14 @@ class HomeView extends BaseView<HomeController> {
                           'Popular Services',
                           style: Theme.of(context).textTheme.displayLarge,
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        //   child: TextButton(
-                        //       onPressed: () {},
-                        //       child: Text(
-                        //         'see all',
-                        //         style: TextStyle(
-                        //             fontSize: MyFonts.bodyLargeSize,
-                        //             color: Colors.black.withOpacity(.65),
-                        //             fontWeight: FontWeight.normal),
-                        //       )),
-                        // ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'see all',
+                                style: Theme.of(context).textTheme.bodyMedium),
+                        ),)
                       ],
                     ),
                   ),

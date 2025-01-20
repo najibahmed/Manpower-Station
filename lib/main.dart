@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/utils/notification_helper.dart';
 import 'app/core/binding/initial_binding.dart';
 import 'app/data/local/my_shared_pref.dart';
 import 'app/routes/app_pages.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
   await MySharedPref.init();
   final onboardingComplete = await MySharedPref.getOnBoardingStatus();
   // initialize local notifications service
+  // await NotificationService.instance.initialize();
   // await AwesomeNotificationsHelper.init();
   runApp(
     ScreenUtilInit(

@@ -43,10 +43,10 @@ class PaymentDone extends StatelessWidget {
               ),
             ),
             SizedBox(height: screenHeight * 0.01),
-            const Text(
+             Text(
               "Payment Done Successfully",
               style: TextStyle(
-                color: Colors.black87,
+                color: Theme.of(context).textTheme.bodyLarge!.color,
                 fontWeight: FontWeight.w400,
                 fontSize: 17,
               ),

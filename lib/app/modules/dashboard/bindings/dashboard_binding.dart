@@ -8,6 +8,8 @@ import 'package:manpower_station/app/modules/search_view/controller/search_contr
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 
+import '../../user_profile/user_profile_controller/user_profile_controller.dart';
+
 class DashboardBinding extends Bindings {
   @override
   void dependencies() {
@@ -20,8 +22,8 @@ class DashboardBinding extends Bindings {
     Get.lazyPut<HomeController>(
       () => HomeController(),
     );
-    Get.lazyPut<HelpController>(
-      () => HelpController(),
+    Get.lazyPut<UserController>(
+          () => UserController(),
     );
     Get.lazyPut<MenusController>(
       () => MenusController(),
@@ -34,9 +36,9 @@ class DashboardBinding extends Bindings {
     );
     Get.lazyPut<SearchViewController>(
       () => SearchViewController(),
+    );Get.lazyPut<HelpController>(
+      () => HelpController(),
     );
-    // Get.lazyPut<UserController>(
-    //       () => UserController(),
-    // );
+
   }
 }

@@ -38,7 +38,7 @@ class FaqView extends BaseView<HelpController> {
       separatorBuilder: (context, index) {
         return  Divider(
           thickness: 2,
-          color: Theme.of(context).dividerColor,
+          color: Colors.grey.shade300,
         );
       },
       itemCount: controller.faqItems.length,

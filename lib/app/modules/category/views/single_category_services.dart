@@ -60,10 +60,13 @@ class SingleCategoryServices extends BaseView<CategoryController> {
           // );
         } else if (snapshot.hasError) {
           // If there's an error, display it
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(child: Text('Error: ${snapshot.error}',style: const TextStyle(color: Colors.black54)));
         } else if (snapshot.hasData) {
           // If data is available, build the list view
           List<dynamic>? data = snapshot.data;
+          if(data==null){
+            return  Center(child: Text('Error: ${snapshot.error}',style: const TextStyle(color: Colors.black54)));
+          }else{
           return CustomScrollView(
             slivers: [
               SliverPadding(
@@ -76,7 +79,7 @@ class SingleCategoryServices extends BaseView<CategoryController> {
                     childAspectRatio: 0.75,
                   ),
                   delegate: SliverChildBuilderDelegate(
-                    childCount: data!.length,
+                    childCount: data.length,
                     (context, index) {
                       ServiceModel service = data[index];
                       return InkWell(
@@ -95,7 +98,7 @@ class SingleCategoryServices extends BaseView<CategoryController> {
                 ),
               ),
             ],
-          );
+          );}
         } else {
           // If there's no data, display a message
           return const Center(child: Text('No data available'));

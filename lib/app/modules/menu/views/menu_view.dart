@@ -5,8 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/data/local/my_shared_pref.dart';
-import 'package:manpower_station/app/modules/home/controllers/home_controller.dart';
 import 'package:manpower_station/app/modules/menu/widgets/menu_item.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -14,11 +12,11 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/app_Images.dart';
 import 'package:manpower_station/utils/helper_function.dart';
-
 import '../../../components/big_text.dart';
 import '../../user_profile/model/user_model.dart';
+import '../controller/menu_controller.dart';
 
-class MenuView extends BaseView<HomeController> {
+class MenuView extends BaseView<MenusController> {
   const MenuView({super.key});
 
   @override
@@ -31,7 +29,8 @@ class MenuView extends BaseView<HomeController> {
   Widget body(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    final userController = Get.put(UserController());
+    // final userController = Get.put(UserController());
+    final userController = Get.find<UserController>();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -41,7 +40,7 @@ class MenuView extends BaseView<HomeController> {
           //     ? _menuProfileShimmer()
           //     :
           Hero(
-            tag: userController.userData!.value.id!,
+            tag: userController.userData!.value.id ??"null",
             child: SizedBox(
               height: screenHeight * 0.12,
               width: screenWidth * 0.25,
@@ -93,7 +92,7 @@ class MenuView extends BaseView<HomeController> {
               ),
               child: Center(
                 child: BigText(
-                  text: "${userController.userData!.value.user!.email}",size: 14,),
+                  text: "${userController.userData!.value.user?.email}",size: 14,),
               )),
           // Text(
           //   userController.userData!.value.user!.email.toString(),
@@ -108,11 +107,11 @@ class MenuView extends BaseView<HomeController> {
             },
           ),
           // MenuItem(icon: Icons.payment, text: 'Digital payment', onTap: () {  },),
-          MenuItem(
-            icon: Icons.language,
-            text: Strings.changeLanguage.tr,
-            onTap: () {},
-          ),
+          // MenuItem(
+          //   icon: Icons.language,
+          //   text: Strings.changeLanguage.tr,
+          //   onTap: () {},
+          // ),
           MenuItem(
             icon: Icons.support_agent_outlined,
             text: 'Customer Support',
@@ -164,17 +163,17 @@ class MenuView extends BaseView<HomeController> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('No', style: TextStyle(color: Colors.green)),
+              child: Text('No', style: TextStyle(color: LightThemeColors.primaryColor)),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
-                MySharedPref.setLoginStatus(false);
+                Get.find<MenusController>().clearSharedPrefData();
                 Get.offAllNamed(AppPages.SignIn);
               },
               child: Text(
                 'Yes',
-                style: TextStyle(color: Colors.green),
+                style: TextStyle(color: LightThemeColors.primaryColor),
               ),
             ),
           ],

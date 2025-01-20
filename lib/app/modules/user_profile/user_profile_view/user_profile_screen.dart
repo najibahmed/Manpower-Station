@@ -69,9 +69,11 @@ class UserProfileScreen extends BaseView<UserController> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     // TODO: implement body
-    return controller.isLoading.value
-        ? const Center(child: CircularProgressIndicator())
-        : SingleChildScrollView(
+    return
+      // controller.isLoading.value
+      //   ? const Center(child: CircularProgressIndicator())
+      //   :
+    SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 22, right: 22),
               child: Column(

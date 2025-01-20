@@ -27,4 +27,7 @@ class AppImages{
   String get noOrder => 'assets/images/no_order.png';
   String get noOrderHistory => 'assets/images/no_order_history.png';
   String get paymentDone => 'assets/images/payment_done.png';
+
+  ///Help support
+  String get support =>"assets/images/help_support.png";
 }

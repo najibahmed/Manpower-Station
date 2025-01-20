@@ -61,6 +61,9 @@ class MySharedPref {
   /// get authorization token
   static String? getAccessToken() =>
       _sharedPreferences.getString(_accessTokenKey);
+  /// remove access token
+  static Future<bool> clearAccessToken() =>
+      _sharedPreferences.remove(_accessTokenKey);
 
   /// clear all data from shared pref
   static Future<void> clear() async => await _sharedPreferences.clear();
@@ -86,10 +89,12 @@ class MySharedPref {
   static Future<bool> setUserId(String id) async {
     return _sharedPreferences.setString(userId, id);
   }
-
   static Future<String?> getUserId() async {
     return _sharedPreferences.getString(userId);
   }
+  /// remove userId token
+  static Future<bool> clearUserId() =>
+      _sharedPreferences.remove(userId);
 
 ///saved jwt
 static Future<bool> setRefreshToken(String value) async {
@@ -98,6 +103,10 @@ static Future<bool> setRefreshToken(String value) async {
 static Future<String?> getRefreshToken() async {
   return _sharedPreferences.getString(refreshTokenKey);
 }
+  /// remove refresh token
+  static Future<bool> clearRefreshToken() =>
+      _sharedPreferences.remove(refreshTokenKey);
+
 
 /// user data UserModel
   // Save UserData to SharedPreferences

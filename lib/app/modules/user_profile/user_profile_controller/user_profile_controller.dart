@@ -19,7 +19,7 @@ class UserController extends BaseController {
   final profilePic = Rx<File?>(null);
   RxString errorMessage=''.obs;
   late Rx<UserModel>? userData=UserModel().obs;
-  RxBool isLoading=true.obs;
+  // RxBool isLoading=true.obs;
   late TextEditingController oldEmailPhoneController;
   late TextEditingController newEmailPhoneController;
   late TextEditingController updateOtpController;
@@ -30,7 +30,7 @@ class UserController extends BaseController {
 
 
 
-
+/// pick user profile image
   Future<void> pickImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
 
@@ -74,8 +74,6 @@ class UserController extends BaseController {
   }
 
 
-
-
   /// Get user information
   Future<void> getUserInformation() async {
     try {
@@ -84,26 +82,26 @@ class UserController extends BaseController {
       await BaseClient.safeApiCall(
         url,
         RequestType.get,
-        onSuccess: (response) {
+        onSuccess: (response) async{
           if (response.statusCode == 201) {
             final responseData=response.data['client'];
             userData?.value= UserModel.fromJson(responseData);
             // Get.snackbar('Success', '${response.data['message']}');
+
+            //save user to local storage
+            await MySharedPref.saveUser(userData!.value);
+
+            /// for pre-fill to update email initializing controller;
+            updateDescriptionController=TextEditingController(text: userData?.value.profileDescription?? 'null');
+            updateNameController=TextEditingController(text: userData?.value.username??"null");
+            updateAddressController=TextEditingController(text: userData?.value.address??"null");
+            updateAreaController=TextEditingController(text: userData?.value.area??"null");
           } else {
             Get.snackbar('Error', 'Having problem to get user data!',);
           }
         },
       );
-      //save user to local storage
-      await MySharedPref.saveUser(userData!.value);
 
-
-
-      /// for pre-fill to update email initializing controller;
-      updateDescriptionController=TextEditingController(text: userData?.value.profileDescription?? 'null');
-      updateNameController=TextEditingController(text: userData?.value.username??"null");
-      updateAddressController=TextEditingController(text: userData?.value.address??"null");
-      updateAreaController=TextEditingController(text: userData?.value.area??"null");
     } catch (e) {
       CustomSnackBar.showCustomErrorSnackBar(title:'Error try get user :',message: '$e');
     }
@@ -240,12 +238,14 @@ class UserController extends BaseController {
     } finally {
     }
   }
+
   void _loadUserData()async{
     UserModel? user = await MySharedPref.getUser();
     if(user != null){
       userData!.value= user;
     }
   }
+   get loadUserData => _loadUserData();
   @override
   void onInit() {
     _loadUserData();
@@ -257,9 +257,9 @@ class UserController extends BaseController {
     updateNameController=TextEditingController();
     updateDescriptionController=TextEditingController();
     updateAreaController=TextEditingController();
-    Future.delayed(const Duration(seconds:3),(){
-      isLoading.value=false;
-    });
+    // Future.delayed(const Duration(seconds:3),(){
+    //   isLoading.value=false;
+    // });
     super.onInit();
   }
   @override
