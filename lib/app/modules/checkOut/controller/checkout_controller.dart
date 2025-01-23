@@ -72,11 +72,13 @@ class CheckoutController extends BaseController {
         //         print(response.data);
         //       }
         //       if (response.statusCode == 201) {
-        //           final String url=response.data['url'];
-        //           if (!await launchUrl(Uri.parse(url))) {
-        //             CustomSnackBar.showCustomErrorSnackBar(title:'Failed Payment',message: 'Could not launch $url');
-        //       // throw Exception('Could not launch $_url');
-        //       }
+        //
+        //
+        //       //     final String url=response.data['url'];
+        //       //     if (!await launchUrl(Uri.parse(url))) {
+        //       //       CustomSnackBar.showCustomErrorSnackBar(title:'Failed Payment',message: 'Could not launch $url');
+        //       // // throw Exception('Could not launch $_url');
+        //       // }
         //       } else {
         //         CustomSnackBar.showCustomErrorSnackBar(title:'Failed to Book Service:',message: '${response.statusMessage}');
         //       }

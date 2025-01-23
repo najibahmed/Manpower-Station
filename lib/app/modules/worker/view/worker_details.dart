@@ -2,12 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/small_text.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/modules/worker/view/worker_review_card.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
+import '../../../../utils/app_Images.dart';
 import '../../../models/worker_model.dart';
 
 class WorkerDetailsScreen extends BaseView<WorkerController> {
@@ -59,7 +61,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                           fit: BoxFit.cover,
                           imageUrl: '${Constants.avatarImgUrl}${worker.avatar}',
                           errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
+                              Image.asset(AppImages.instance.imgPerson,fit: BoxFit.cover,),
                           progressIndicatorBuilder: (context, url, progress) =>
                               Center(
                             child: CircularProgressIndicator(
@@ -71,7 +73,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                     ),
                     SizedBox(height: screenHeight * 0.01),
                     Text(
-                      "${worker.username}",
+                      "${worker.firstName} ${worker.lastName}",
                       style: const TextStyle(
                         fontSize: 26,
                         letterSpacing: 1,
@@ -122,79 +124,23 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Area:  ',
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.color,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text(
-                                '${worker.area}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(width: screenHeight * .01),
-                          Row(
-                            children: [
-                              Text(
-                                'Address:  ',
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.color,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text(
-                                '${worker.address}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Gender:  ',
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.color,
-                                    fontSize: 16),
-                              ),
-                              Text(
-                                '${worker.gender}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                          customInfoItem(context, title:"Address",value:'${worker.emergencyContract==null?"Empty":worker.emergencyContract!.address}'),
+                          customInfoItem(context, title:"Gender",value:worker.gender??"Empty"),
+                          customInfoItem(context, title:"Blood Group",value:worker.bloodGroup??"Empty"),
+                          customInfoItem(context, title:"BirthDate",value:worker.birthday??"Empty"),
+                          customInfoItem(context, title:"Meraital Status",value:worker.relationship??"Empty"),
+                          customInfoItem(context, title:"Religion",value:worker.religion??"Empty"),
+                          customInfoItem(context, title:"Nationality",value:worker.nationality??"Empty"),
                           SizedBox(width: screenHeight * .01),
                           const SizedBox(height: 10),
                           const Text(
-                            'Profile Description  ',
+                            'NID Number  ',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           Text(
                             textAlign: TextAlign.justify,
-                            '${worker.profileDescription}',
+                            '${worker.nidNumber}',
                             style: const TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 10),
@@ -250,8 +196,8 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.01),
-                    worker.services!.isEmpty
-                        ? const Text("There is no review")
+                    worker.services!.first.service!.reviews!.isEmpty
+                        ?  SmallText(text: "There is no review")
                         : Column(
                             children: List.generate(
                             worker.services!.first.service!.reviews!.length,
@@ -306,6 +252,27 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget customInfoItem(BuildContext context,{required String value,required String title}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '${title}:  ',
+          style: TextStyle(
+              color: Theme.of(context).textTheme.bodySmall?.color,
+              fontSize: 16),
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

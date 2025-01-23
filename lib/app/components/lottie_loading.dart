@@ -7,14 +7,12 @@ class LottieLoading extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-     body: Center(
-       child: LottieBuilder.asset(
-         'assets/manpower_logo_animi.json',
-         width: 400,
-         height: 400,
-         fit: BoxFit.fill,
-       ),
+   return Center(
+     child: LottieBuilder.asset(
+       'assets/manpower_logo_animi.json',
+       width: 400,
+       height: 400,
+       fit: BoxFit.fill,
      ),
    );
   }

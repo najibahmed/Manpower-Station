@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/models/category_model.dart';
+import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
 import 'package:manpower_station/app/modules/home/views/horizontal_service_card.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -285,6 +286,7 @@ class HomeView extends BaseView<HomeController> {
 
   Future<void> _handleRefresh() async {
     await Get.find<UserController>().getUserInformation();
+    await Get.find<BookingsController>().getAllBookingsByUid();
     await controller.getAllServiceData();
     await controller.getAllServiceCategories();
     await controller.getBanners();

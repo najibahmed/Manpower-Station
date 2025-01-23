@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/big_text.dart';
 import 'package:manpower_station/app/components/dash_divider.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/models/cart_model.dart';
@@ -15,6 +16,7 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 
+import '../../../../utils/app_Images.dart';
 import '../../../components/custom_snackbar.dart';
 
 class CheckOutScreen extends BaseView<CheckoutController> {
@@ -85,8 +87,8 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             SizedBox(height: screenHeight * 0.01),
 
             /// PaymentMethod(),
-            buildPaymentMethodSection(controller: controller),
-            SizedBox(height: screenHeight * 0.05),
+            // buildPaymentMethodSection(controller: controller),
+            SizedBox(height: screenHeight * 0.03),
             SizedBox(
               width: double.infinity,
               child:
@@ -97,11 +99,12 @@ class CheckOutScreen extends BaseView<CheckoutController> {
                   backgroundColor: LightThemeColors.primaryColor,
                 ),
                 child: const Text(
-                  'CONFIRM ORDER',
+                  'Place ORDER',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
+            SizedBox(height: screenHeight * 0.05),
           ],
         ),
       ),
@@ -197,7 +200,7 @@ Widget customWorkerTile(WorkerModel worker, double screenHeight,
             child: CachedNetworkImage(
               fit: BoxFit.cover,
               imageUrl: '${Constants.avatarImgUrl}${worker.avatar}',
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) =>  Image.asset(AppImages.instance.imgPerson,fit: BoxFit.cover,),
               progressIndicatorBuilder: (context, url, progress) => Center(
                 child: CircularProgressIndicator(
                   value: progress.progress,
@@ -217,25 +220,25 @@ Widget customWorkerTile(WorkerModel worker, double screenHeight,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                worker.username!,
+               "${worker.firstName!+" "+worker.lastName!}",
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               SizedBox(height: screenHeight * 0.01),
               Text(
-                "Gender:  ${worker.gender!}",
+                "Gender:  ${worker.gender??"Empty"}",
                 style: const TextStyle(
                     fontWeight: FontWeight.normal, fontSize: 14),
               ),
-              Text(
-                "Area:  ${worker.area ?? "null"}",
-                style: const TextStyle(
-                    fontWeight: FontWeight.normal, fontSize: 14),
-              ),
+              // Text(
+              //   "Area:  ${worker.area ?? "Empty"}",
+              //   style: const TextStyle(
+              //       fontWeight: FontWeight.normal, fontSize: 14),
+              // ),
               Row(
                 children: [
                   Text(
-                    "Rating:  ${worker.ratings!} ",
+                    "Rating:  ${worker.ratings??'0'} ",
                     style: const TextStyle(
                         fontWeight: FontWeight.normal, fontSize: 14),
                   ),
@@ -263,108 +266,111 @@ Widget customServiceTile(CartModel item, double screenHeight,
     // shape: RoundedRectangleBorder(
     //   borderRadius: BorderRadius.circular(15),
     // ),
-    child: Row(
-      children: [
-        ClipRRect(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
-          child: SizedBox(
-            height: screenHeight * 0.188,
-            width: screenWidth * 0.34,
-            child: CachedNetworkImage(
-              fit: BoxFit.cover,
-              imageUrl: '${Constants.serviceImgUrl}${item.serviceImageUrl}',
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              progressIndicatorBuilder: (context, url, progress) => Center(
-                child: CircularProgressIndicator(
-                  value: progress.progress,
+    child: SizedBox(
+      height: screenHeight * 0.188,
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+            child: SizedBox(
+              height: screenHeight * 0.188,
+              width: screenWidth * 0.34,
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: '${Constants.serviceImgUrl}${item.serviceImageUrl}',
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: CircularProgressIndicator(
+                    value: progress.progress,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        Expanded(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                item.serviceName,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              // const Divider(color: Colors.black26,),
-              const MySeparator(),
-              SizedBox(height: screenHeight * 0.01),
-              RichText(
-                text: TextSpan(
-                    text: 'Duration:    ',
-                    style: TextStyle(
-                        fontSize: MyFonts.bodyMediumSize,
-                        fontWeight: FontWeight.normal,
-                        color:
-                            Theme.of(context).textTheme.displayMedium?.color),
-                    children: [
-                      TextSpan(
-                        text: item.serviceTimeSchedule,
-                        style: TextStyle(
-                            fontSize: MyFonts.bodyMediumSize,
-                            fontWeight: FontWeight.bold,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color),
-                      ),
-                    ]),
-              ),
-              const SizedBox(width: 5),
-              RichText(
-                text: TextSpan(
-                    text: 'Starting Date :  ',
-                    style: TextStyle(
-                        fontSize: MyFonts.bodyMediumSize,
-                        fontWeight: FontWeight.normal,
-                        color:
-                            Theme.of(context).textTheme.displayMedium?.color),
-                    children: [
-                      TextSpan(
-                        text: Constants.formatDate
-                            .format(DateTime.parse(item.startingDate)),
-                        style: TextStyle(
-                            fontSize: MyFonts.bodyMediumSize,
-                            fontWeight: FontWeight.bold,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color),
-                      ),
-                    ]),
-              ),
-              RichText(
-                text: TextSpan(
-                    text: 'Time at:   ',
-                    style: TextStyle(
-                        fontSize: MyFonts.bodyMediumSize,
-                        fontWeight: FontWeight.normal,
-                        color:
-                            Theme.of(context).textTheme.displayMedium?.color),
-                    children: [
-                      TextSpan(
-                        text: Constants.formatTime
-                            .format(DateTime.parse(item.startingDate)),
-                        style: TextStyle(
-                            fontSize: MyFonts.bodyMediumSize,
-                            fontWeight: FontWeight.bold,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color),
-                      ),
-                    ]),
-              ),
-              const SizedBox(height: 5),
-            ],
-          ),
-        ))
-      ],
+          Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                ),
+                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                BigText(text: item.serviceName,size:Theme.of(context).textTheme.displayLarge!.fontSize!,),
+                                // Text(
+                                //   item.serviceName,
+                                //   style:
+                                //       const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                // ),
+                                // const Divider(color: Colors.black26,),
+                                const MySeparator(),
+                                // SizedBox(height: screenHeight * 0.01),
+                                RichText(
+                                  text: TextSpan(
+                                                  text: 'Duration:    ',
+                                                  style: TextStyle(
+                                                      fontSize: MyFonts.bodyMediumSize,
+                                                      fontWeight: FontWeight.normal,
+                                                      color:
+                                                          Theme.of(context).textTheme.displayMedium?.color),
+                                                  children: [
+                                                    TextSpan(
+                                                      text: item.serviceTimeSchedule,
+                                                      style: TextStyle(
+                                                          fontSize: MyFonts.bodyMediumSize,
+                                                          fontWeight: FontWeight.bold,
+                                                          color:
+                                                              Theme.of(context).textTheme.bodyMedium?.color),
+                                                    ),
+                                                  ]),
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                                  text: 'Starting Date :  ',
+                                                  style: TextStyle(
+                                                      fontSize: MyFonts.bodyMediumSize,
+                                                      fontWeight: FontWeight.normal,
+                                                      color:
+                                                          Theme.of(context).textTheme.displayMedium?.color),
+                                                  children: [
+                                                    TextSpan(
+                                                      text: Constants.formatDate
+                                                          .format(DateTime.parse(item.startingDate)),
+                                                      style: TextStyle(
+                                                          fontSize: MyFonts.bodyMediumSize,
+                                                          fontWeight: FontWeight.bold,
+                                                          color:
+                                                              Theme.of(context).textTheme.bodyMedium?.color),
+                                                    ),
+                                                  ]),
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                                  text: 'Time at:   ',
+                                                  style: TextStyle(
+                                                      fontSize: MyFonts.bodyMediumSize,
+                                                      fontWeight: FontWeight.normal,
+                                                      color:
+                                                          Theme.of(context).textTheme.displayMedium?.color),
+                                                  children: [
+                                                    TextSpan(
+                                                      text: Constants.formatTime
+                                                          .format(DateTime.parse(item.startingDate)),
+                                                      style: TextStyle(
+                                                          fontSize: MyFonts.bodyMediumSize,
+                                                          fontWeight: FontWeight.bold,
+                                                          color:
+                                                              Theme.of(context).textTheme.bodyMedium?.color),
+                                                    ),
+                                                  ]),
+                                ),
+                                const SizedBox(height: 5),
+                              ],
+                ),
+              ))
+        ],
+      ),
     ),
   );
 }

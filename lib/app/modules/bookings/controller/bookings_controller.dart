@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
-import 'package:manpower_station/app/models/worker_model.dart';
+import 'package:manpower_station/app/models/single_worler_model.dart';
 import 'package:manpower_station/app/network/api_list.dart';
 import '../../../data/local/my_shared_pref.dart';
 import '../../../network/api_client.dart';
@@ -15,14 +15,15 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
   RxList bookingsList = <dynamic>[].obs;
   RxDouble userRating = 1.0.obs;
   TextEditingController reviewController = TextEditingController();
-  Rx<WorkerModel?> workersData = WorkerModel().obs;
+  Rx<SingleWorkerModel?> workersData = SingleWorkerModel().obs;
   RxBool isLoading = true.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   FocusNode focusNode = FocusNode();
 
-  void getWorkerInformation(String id) async {
+  Future<void> getWorkerInformation(String id) async {
     var worker = await ApiServices.getSingleWorker(id);
     workersData.value = worker;
+
   }
 
   Future<void> giveUserReview(serviceId, String? bookingId) async {
@@ -41,7 +42,7 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
 
   @override
   void onInit() {
-    // getAllBookingsByUid();
+    getAllBookingsByUid();
     tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     super.onInit();
   }

@@ -30,4 +30,6 @@ class AppImages{
 
   ///Help support
   String get support =>"assets/images/help_support.png";
+  String get imgPerson =>"assets/images/img_person.jpg";
+  String get onlinePayment =>"assets/images/online_payment.png";
 }

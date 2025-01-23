@@ -12,6 +12,7 @@ import 'package:manpower_station/utils/constants.dart';
 
 class BookingHistoryView extends BaseView<BookingsController> {
   const BookingHistoryView({super.key});
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
@@ -36,8 +37,8 @@ class BookingHistoryView extends BaseView<BookingsController> {
                   indicatorWeight: 6,
                   dividerColor: Colors.grey,
                   indicatorColor: Colors.orangeAccent,
-                  labelStyle: const TextStyle(
-                      color: Colors.white), //TextStyle(color: Colors.green),
+                  labelStyle: const TextStyle(color: Colors.white),
+                  //TextStyle(color: Colors.green),
                   controller: controller.tabController,
                   tabs: const [
                     Tab(text: 'Active Order'),
@@ -94,7 +95,7 @@ class ActiveOrder extends StatelessWidget {
       padding: const EdgeInsets.only(top: 12.0, left: 16, right: 16),
       child: GetX<BookingsController>(builder: (bController) {
         final bookings = bController.bookingsList;
-        if(bookings.isEmpty){
+        if (bookings.isEmpty) {
           return Padding(
             padding: const EdgeInsets.only(top: 8.0, left: 22, right: 22),
             child: Column(
@@ -114,80 +115,81 @@ class ActiveOrder extends StatelessWidget {
                 ),
                 Center(
                     child: Text(
-                      Strings.noActiveHistory.tr,
-                      style: TextStyle(
-                        fontSize: MyFonts.displayMediumSize,
-                      ),
-                    ))
+                  Strings.noActiveHistory.tr,
+                  style: TextStyle(
+                    fontSize: MyFonts.displayMediumSize,
+                  ),
+                ))
               ],
             ),
           );
-        }else{
-        return Column(
-            children: List.generate(
-              bookings.length,
-                  (index) {
-                BookingsModel booking = bookings[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: cardWidth,
-                    padding: EdgeInsets.all(cardPadding),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.green.withOpacity(0.1),
-                          spreadRadius: 5,
-                          blurRadius: 6,
-                          offset: const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ///Booking info Button & Status
-                        _buildButtonRow(context, booking, bController),
-
-                        /// Service Title
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).highlightColor,
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10))),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 6.0, vertical: 4),
-                            child: Text(
-                              booking.services!.first.service!.name!,
-                              style: Theme.of(context).textTheme.displayLarge,
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.01),
-
-                        /// Service Details
-                        _buildServiceDetails(booking),
-                        SizedBox(height: size.height * 0.02),
-
-                        /// Bottom Action Buttons (Cancel Booking & Payment)
-                        booking.isPaymentStatus == 'Completed'
-                            ? const SizedBox()
-                            :
-                        _buildActionButtons(context, bController),
-                      ],
-                    ),
+        } else {
+          return Column(
+              children: List.generate(
+            bookings.length,
+            (index) {
+              BookingsModel booking = bookings[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: cardWidth,
+                  padding: EdgeInsets.all(cardPadding),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black12),
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.green.withOpacity(0.1),
+                        spreadRadius: 5,
+                        blurRadius: 6,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                   ),
-                );
-              },
-            ).toList());
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ///Booking info Button & Status
+                      _buildButtonRow(context, booking, bController),
+
+                      /// Service Title
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).highlightColor,
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10))),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6.0, vertical: 4),
+                          // child: Text(
+                          //   overflow: TextOverflow.ellipsis,
+                          //   booking.services!.first.service==null? "Service Name Empty":"${booking.services!.first.service!.name}",
+                          //   style: Theme.of(context).textTheme.displayLarge,
+                          //   textAlign: TextAlign.start,
+                          // ),
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.01),
+
+                      /// Service Details
+                      _buildServiceDetails(booking),
+                      SizedBox(height: size.height * 0.02),
+
+                      /// Bottom Action Buttons (Cancel Booking & Payment)
+                      booking.isPaymentStatus == 'Completed'
+                          ? const SizedBox()
+                          : _buildActionButtons(context, bController),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ).toList());
         }
       }),
     ));
@@ -209,7 +211,7 @@ class ActiveOrder extends StatelessWidget {
               bookingController.isLoading.value = true;
               bookingController
                   .getWorkerInformation("${booking.workers!.first.user}");
-              Future.delayed(const Duration(seconds: 2), () {
+               Future.delayed(const Duration(seconds: 3), () {
                 bookingController.isLoading.value = false;
               });
               Get.toNamed(AppPages.OrderHistoryDetails,
@@ -217,7 +219,7 @@ class ActiveOrder extends StatelessWidget {
             },
             style: OutlinedButton.styleFrom(
               backgroundColor: Theme.of(context).dialogBackgroundColor,
-              side:  BorderSide(width: 1.0, color: Theme.of(context).focusColor),
+              side: BorderSide(width: 1.0, color: Theme.of(context).focusColor),
             ),
             child: const Text(
               "Booking Details",

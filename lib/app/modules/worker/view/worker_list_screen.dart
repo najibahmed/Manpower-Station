@@ -8,6 +8,7 @@ import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
+import 'package:manpower_station/utils/app_Images.dart';
 import 'package:manpower_station/utils/constants.dart';
 
 class WorkerListScreen extends BaseView<WorkerController> {
@@ -17,7 +18,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
     return AppBar(
       centerTitle: true,
       title: Image.asset(
-        'assets/images/manpower_name_logo.png',
+        AppImages.instance.manpower_Logo,
         fit: BoxFit.cover,
         color: Colors.white,
       ),
@@ -135,7 +136,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                           imageUrl:
                                               '${Constants.avatarImgUrl}${worker.avatar}',
                                           errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
+                                               Image.asset(AppImages.instance.imgPerson,fit: BoxFit.cover,),
                                           progressIndicatorBuilder:
                                               (context, url, progress) =>
                                                   Center(
@@ -166,7 +167,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                           style: TextStyle(color: Colors.grey),
                                         ),
                                         Text(
-                                          '${worker.gender}',
+                                          '${worker.gender??"Empty"}',
                                           style: const TextStyle(
                                               color: Colors.black54,
                                               fontWeight: FontWeight.bold),

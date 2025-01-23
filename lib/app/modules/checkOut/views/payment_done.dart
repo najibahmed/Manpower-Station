@@ -51,6 +51,15 @@ class PaymentDone extends StatelessWidget {
                 fontSize: 17,
               ),
             ),
+            SizedBox(height: screenHeight * 0.1),
+            Text(
+              "Order Confirmed",
+              style: TextStyle(
+                color: Theme.of(context).textTheme.displayLarge!.color,
+                fontWeight: FontWeight.w600,
+                fontSize: 36,
+              ),
+            ),
             SizedBox(height: screenHeight * 0.05),
             // Text(
             //   "You will be redirected to the home page shortly\nor click here to return to home page",

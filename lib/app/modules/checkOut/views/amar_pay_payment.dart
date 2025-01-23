@@ -2,47 +2,153 @@ import 'package:aamarpay/aamarpay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
+import 'package:manpower_station/app/components/small_text.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
+import '../../../../config/theme/my_fonts.dart';
+import '../../../../config/translations/strings_enum.dart';
+import '../../../../utils/app_Images.dart';
+import '../../../components/big_text.dart';
+import '../../../components/link_button.dart';
 import '../../../routes/app_pages.dart';
-
 
 class MyPay extends GetView<CheckoutController> {
   const MyPay({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-
+    final size=MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(onPressed: (){
-              Get.offNamedUntil(AppPages.DashboardView,(Route<dynamic> route) => route.isFirst);
-            },
-                icon: const Icon(Icons.home_outlined)),
-            const SizedBox(
-              height: 20,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: const Icon(Icons.arrow_back)),
+                    IconButton(
+                        onPressed: () {
+                          Get.offNamedUntil(AppPages.DashboardView,
+                              (Route<dynamic> route) => route.isFirst);
+                        },
+                        icon: const Icon(Icons.home_outlined)),
+                  ],
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Container(
+                    color: Theme.of(context).focusColor,
+                    width: HelperFunction.instance.getScreenWidth(context) * 1,
+                    height:
+                        HelperFunction.instance.getScreenHeight(context) * 0.05,
+                    child:
+                        Center(child: BigText(text: "Confirmation Service"))),
+                Card(
+                  color: Colors.blue.shade50,
+                  margin: EdgeInsets.all(8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 8),
+                    child: RichText(
+                      textAlign: TextAlign.justify,
+                      text: TextSpan(
+                        text:
+                        'Pay Only ',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        children: <InlineSpan>[
+                          WidgetSpan(
+                              alignment: PlaceholderAlignment.baseline,
+                              baseline: TextBaseline.alphabetic,
+                              child: BigText(
+                                text: "99",
+                                size: 24,
+                                color: Colors.orangeAccent,
+                              )),
+                          TextSpan(
+                            text: '  Tk',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                 SizedBox(
+                  height: size*.04,
+                ),
+                Container(
+                  height: size*.25,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Image.asset(
+                    AppImages.instance.onlinePayment,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                 SizedBox(
+                  height: size*.02,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: RichText(
+                          textAlign: TextAlign.justify,
+                          text: TextSpan(
+                            text:
+                                'To get confirmation of the selected service you have to pay online only ',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                            children: <InlineSpan>[
+                              WidgetSpan(
+                                  alignment: PlaceholderAlignment.baseline,
+                                  baseline: TextBaseline.alphabetic,
+                                  child: BigText(
+                                    text: "99 Tk",
+                                    size: 24,
+                                    color: Colors.orangeAccent,
+                                  )),
+                              TextSpan(
+                                text: '  advance.',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Spacer(),
+                amarPaymentButton(),
+                 SizedBox(
+                  height: size*.15,
+                ),
+              ],
             ),
-            Container(
-                color: Theme.of(context).cardColor,
-                width: HelperFunction.instance.getScreenWidth(context) * 1,
-                height: HelperFunction.instance.getScreenHeight(context) * 0.05,
-                child: const Center(child: Text("Pay Advance "))),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-                "You have to pay advance 99 TK to confirm this service."),
-            const SizedBox(
-              height: 40,
-            ),
-      Aamarpay(
+          ),
+        ),
+      ),
+    );
+  }
+
+  SizedBox amarPaymentButton() {
+    return SizedBox(
+      height: 50,
+      width: 300,
+      child: Aamarpay(
         // This will return a payment url based on failUrl,cancelUrl,successUrl
         returnUrl: (String url) {
           print('Return Url---->$url');
@@ -50,15 +156,13 @@ class MyPay extends GetView<CheckoutController> {
         // This will return the payment loading status
         isLoading: (bool loading) {
           controller.isLoading.value = loading;
-
         },
         // This will return the payment event with a message
         status: (EventState event, String message) {
           if (event == EventState.backButtonPressed ||
               event == EventState.cancel ||
               event == EventState.error) {
-
-            controller.isLoading.value= false;
+            controller.isLoading.value = false;
             CustomSnackBar.showCustomErrorToast(message: message);
           }
           print('---->this is the payment event message $message');
@@ -69,7 +173,8 @@ class MyPay extends GetView<CheckoutController> {
           if (event == EventState.success) {
             controller.isLoading.value = false;
             // Get.offNamedUntil(AppPages.DashboardView,(Route<dynamic> route) => false);
-            CustomSnackBar.showCustomSnackBar(title: "Order Confirmed", message: message);
+            CustomSnackBar.showCustomSnackBar(
+                title: "Order Confirmed", message: message);
           }
         },
 
@@ -99,31 +204,25 @@ class MyPay extends GetView<CheckoutController> {
         description: "test",
         // When the application goes to the production the isSandbox must be false
         isSandBox: true,
-        child:  controller.isLoading.value
+        child: controller.isLoading.value
             ? const Center(
-          child: CircularProgressIndicator(),
-        )
+                child: CircularProgressIndicator(),
+              )
             : Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.orange,
-          ),
-          height: 50,
-          child: const Center(
-            child: Text(
-              "Payment",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-          ),
-        ),
-
-      ),
-          ],
-        ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: LightThemeColors.primaryColor,
+                ),
+                height: 50,
+                child: const Center(
+                  child: Text(
+                    "Payment",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
       ),
     );
   }
 }
-
-
