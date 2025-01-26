@@ -75,14 +75,7 @@ class HelperFunction {
         // width: double.infinity,
         fit: BoxFit.cover,
       );
-      return Image.network(
-        '${Constants.avatarImgUrl}$imageUrl',
-        height: 120,
-        width: double.infinity,
-        fit: BoxFit.cover,
-      ); // It's a JPG/JPEG file
     }
-
     // You can handle other cases or return false if it doesn't match SVG or JPG
     return const SizedBox(
       child: Center(
@@ -123,7 +116,7 @@ class HelperFunction {
   }
 
   /// Shimmmer Widget for booking details
-  Widget _buildCardShimmer(double screenHeight, double screenWidth) {
+  Widget buildCardShimmer(double screenHeight, double screenWidth) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

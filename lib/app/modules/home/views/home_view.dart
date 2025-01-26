@@ -12,6 +12,7 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
+import '../../../components/custom_snackbar.dart';
 import '../../../core/base/base_view.dart';
 import '../controllers/home_controller.dart';
 
@@ -171,11 +172,15 @@ class HomeView extends BaseView<HomeController> {
   InkWell _buildCategoryCard(
       String id, String catTitle, image, Size size, CategoryModel category) {
     return InkWell(
-        onTap: () {
-          controller.oneCategoryServicesData.clear();
-          controller.getOneCategoryServices(id);
-          Get.toNamed(AppPages.SingleCateServicesScreen,
-              arguments: [catTitle, id]);
+        onTap: ()async {
+          if(await HelperFunction.instance.isInternetConnected()){
+            controller.oneCategoryServicesData.clear();
+            controller.getOneCategoryServices(id);
+            Get.toNamed(AppPages.SingleCateServicesScreen,
+                          arguments: [catTitle, id]);
+          } else {
+            CustomSnackBar.showCustomErrorToast(title: "No Internet!!", message: "Please check internet connection.");
+          }
         },
         child: Card(
           shape: RoundedRectangleBorder(

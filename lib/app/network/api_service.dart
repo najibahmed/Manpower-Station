@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/models/single_worler_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/network/api_client.dart';
@@ -60,13 +61,22 @@ class ApiServices {
   }
 
   /// User review
-  static Future<void> changeBookingStatus(bookingId, String status) async {
+  static Future<void> changeBookingStatus(String bookingId,Map<String, dynamic> status) async {
     try {
+        List<BookingsModel> _bookingsList=[];
       var url = ApiList.changeBookingStatus(bookingId);
-      await BaseClient.safeApiCall(url, RequestType.put, data: status,
+      await BaseClient.safeApiCall(url, RequestType.put,
+          data: status,
           onSuccess: (response) {
-        CustomSnackBar.showCustomErrorToast(
-            message: 'Error:', duration: const Duration(seconds: 1));
+         if (response.statusCode == 201) {
+          var jsonData = response.data['bookings'];
+          var bookings = jsonData.map((e) => BookingsModel.fromJson(e)).toList();
+          _bookingsList.assignAll(bookings); // Update the RxList with new data
+        } else {
+          CustomSnackBar.showCustomErrorSnackBar(
+              title: 'Failed to Change Order Status!',
+              message: '${response.statusMessage}');
+        }
       });
     } catch (e) {
       CustomSnackBar.showCustomErrorToast(

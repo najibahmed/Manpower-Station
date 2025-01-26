@@ -10,8 +10,8 @@ import '../../../network/api_client.dart';
 import '../../../network/api_service.dart';
 
 class BookingsController extends BaseController with GetTickerProviderStateMixin {
-  late TabController tabController;
-  RxInt tabIndex = 0.obs;
+  // late TabController tabController;
+  // RxInt tabIndex = 0.obs;
   RxList bookingsList = <dynamic>[].obs;
   RxDouble userRating = 1.0.obs;
   TextEditingController reviewController = TextEditingController();
@@ -38,26 +38,31 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
 
   /// change order status
   Future<void> changeOrderStatus(String? bookingId,String status) async {
-    await ApiServices.changeBookingStatus(bookingId, status);
+    Map<String, dynamic> statusData = {
+      "paymentStatus": status,
+    };
+    await ApiServices.changeBookingStatus(bookingId!, statusData);
   }
 
-  void changeTabIndex(int index) {
-    tabIndex.value = index;
-  }
+  // void changeTabIndex(int index) {
+  //   tabIndex.value = index;
+  // }
 
   @override
   void onInit() {
     getAllBookingsByUid();
-    tabController = TabController(length: 2, initialIndex: 0, vsync: this);
+    // tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     super.onInit();
   }
 
   @override
   void onClose() {
-    tabController.dispose();
+    // tabController.dispose();
     reviewController.dispose();
     super.onClose();
   }
+
+
 
   /// get all bookings for particular userId
   Future<void> getAllBookingsByUid() async {
@@ -73,8 +78,7 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
       }, onSuccess: (response) {
         if (response.statusCode == 201) {
           var jsonData = response.data['bookings'];
-          var bookings =
-              jsonData.map((e) => BookingsModel.fromJson(e)).toList();
+          var bookings = jsonData.map((e) => BookingsModel.fromJson(e)).toList();
           bookingsList.assignAll(bookings); // Update the RxList with new data
         } else {
           CustomSnackBar.showCustomErrorSnackBar(
@@ -87,4 +91,8 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
           title: 'Error bookings :', message: e.toString());
     }
   }
+}
+enum ServiceStatus {
+  Confirmed,
+  Cancelled
 }

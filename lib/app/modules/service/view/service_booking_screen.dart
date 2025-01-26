@@ -12,6 +12,7 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
+import 'package:manpower_station/utils/helper_function.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class ServiceBookingScreen extends BaseView<ServiceController> {
@@ -51,11 +52,16 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                   ),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async{
                 if (controller.selectedTimeKey!.isNotEmpty) {
-                  controller.selectedService = controller.serviceModel;
-                  controller.addToCartList();
-                  Get.toNamed(AppPages.WorkerListView);
+                 if(await HelperFunction.instance.isInternetConnected()) {
+                    controller.selectedService = controller.serviceModel;
+                    controller.addToCartList();
+                    Get.toNamed(AppPages.WorkerListView);
+                  }else{
+                   CustomSnackBar.showCustomErrorToast(
+                       title: "No Internet!!", message: "Please check internet connection.");
+                 }
                 } else {
                   CustomSnackBar.showCustomErrorToast(
                       title: "Field Empty", message: "Please select all field");

@@ -123,7 +123,6 @@ class MenuView extends BaseView<MenusController> {
             icon: Icons.privacy_tip,
             text: 'Privacy policy',
             onTap: () {
-              Get.toNamed(AppPages.PaymentSuccess);
             },
           ),
           // MenuItem(icon: Icons.document_scanner, text: 'Terms & Conditions', onTap: () {  },),

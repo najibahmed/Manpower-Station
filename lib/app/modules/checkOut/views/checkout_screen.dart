@@ -1,4 +1,4 @@
-import 'package:aamarpay/aamarpay.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,14 +10,12 @@ import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/app/modules/checkOut/views/shipping_form.dart';
-import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
-
 import '../../../../utils/app_Images.dart';
-import '../../../components/custom_snackbar.dart';
+
 
 class CheckOutScreen extends BaseView<CheckoutController> {
   CheckOutScreen({super.key});
@@ -99,7 +97,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
                   backgroundColor: LightThemeColors.primaryColor,
                 ),
                 child: const Text(
-                  'Place ORDER',
+                  'PLACE ORDER',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

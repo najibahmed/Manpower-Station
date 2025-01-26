@@ -171,6 +171,7 @@ class MyPay extends GetView<CheckoutController> {
             CustomSnackBar.showCustomErrorToast(message: message);
           }
           if (event == EventState.success) {
+            Get.toNamed(AppPages.PaymentSuccess);
             controller.isLoading.value = false;
             // Get.offNamedUntil(AppPages.DashboardView,(Route<dynamic> route) => false);
             CustomSnackBar.showCustomSnackBar(

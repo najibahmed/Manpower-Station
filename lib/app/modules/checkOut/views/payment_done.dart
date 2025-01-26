@@ -3,10 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
+import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/utils/app_Images.dart';
 
-class PaymentDone extends StatelessWidget {
+class PaymentDone extends GetView<CheckoutController> {
   const PaymentDone({super.key});
 
   @override
@@ -53,6 +54,13 @@ class PaymentDone extends StatelessWidget {
             ),
             SizedBox(height: screenHeight * 0.1),
             Text(
+              controller.cartItem.first.serviceName,
+              style: TextStyle(
+                color: Theme.of(context).textTheme.displayLarge!.color,
+                fontWeight: FontWeight.w600,
+                fontSize: 36,
+              ),
+            ),Text(
               "Order Confirmed",
               style: TextStyle(
                 color: Theme.of(context).textTheme.displayLarge!.color,

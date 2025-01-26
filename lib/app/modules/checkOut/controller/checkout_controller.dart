@@ -11,6 +11,7 @@ import 'package:manpower_station/app/modules/worker/controller/worker_controller
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
+import '../../../../utils/helper_function.dart';
 import '../../../components/custom_snackbar.dart';
 import '../../../data/local/my_shared_pref.dart';
 import '../../../network/api_client.dart';
@@ -34,59 +35,63 @@ class CheckoutController extends BaseController {
 
  /// Save order or create bookings & payment
   Future<void> saveOrder() async{
-
     if(formKey.currentState!.validate()){
-      try {
+      if(await HelperFunction.instance.isInternetConnected()) {
+        try {
 
-           Get.toNamed(AppPages.PaymentScreen);
-        // var amount=99;
-        // var transId =const Uuid();
-        // Map<String, dynamic> requestData = {
-        //   'amount': amount,
-        //   'workersItems': [worker.first.toJson()],
-        //   'cartItems': [
-        //     cartItem.first.toMap()
-        //   ],
-        //   'addressInfo': {
-        //     'name':  nameController.text.trim(),
-        //     'phone': phoneNumberController.text.trim(),
-        //     'area':  areaController.text.trim(),
-        //     'state': stateController.text.trim(),
-        //     'city':  cityController.text.trim(),
-        //     'address': addressLine1Controller.text.trim(),
-        //   },
-        // };
-        // // print("request data----->${requestData}");
-        // var url="/api/payments/ammerpay/create";
-        // await BaseClient.safeApiCall(
-        //     url,
-        //     RequestType.post,
-        //     data: requestData,
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //       'Accept': 'application/json',
-        //       'Authorization': MySharedPref.getAccessToken()        //MySharedPref.getAccessToken()
-        //     },
-        //     onSuccess: (response) async {
-        //       if (kDebugMode) {
-        //         print(response.data);
-        //       }
-        //       if (response.statusCode == 201) {
-        //
-        //
-        //       //     final String url=response.data['url'];
-        //       //     if (!await launchUrl(Uri.parse(url))) {
-        //       //       CustomSnackBar.showCustomErrorSnackBar(title:'Failed Payment',message: 'Could not launch $url');
-        //       // // throw Exception('Could not launch $_url');
-        //       // }
-        //       } else {
-        //         CustomSnackBar.showCustomErrorSnackBar(title:'Failed to Book Service:',message: '${response.statusMessage}');
-        //       }
-        //     }
-        // );
+                   Get.toNamed(AppPages.PaymentScreen);
+                // var amount=99;
+                // var transId =const Uuid();
+                // Map<String, dynamic> requestData = {
+                //   'amount': amount,
+                //   'workersItems': [worker.first.toJson()],
+                //   'cartItems': [
+                //     cartItem.first.toMap()
+                //   ],
+                //   'addressInfo': {
+                //     'name':  nameController.text.trim(),
+                //     'phone': phoneNumberController.text.trim(),
+                //     'area':  areaController.text.trim(),
+                //     'state': stateController.text.trim(),
+                //     'city':  cityController.text.trim(),
+                //     'address': addressLine1Controller.text.trim(),
+                //   },
+                // };
+                // // print("request data----->${requestData}");
+                // var url="/api/payments/ammerpay/create";
+                // await BaseClient.safeApiCall(
+                //     url,
+                //     RequestType.post,
+                //     data: requestData,
+                //     headers: {
+                //       'Content-Type': 'application/json',
+                //       'Accept': 'application/json',
+                //       'Authorization': MySharedPref.getAccessToken()        //MySharedPref.getAccessToken()
+                //     },
+                //     onSuccess: (response) async {
+                //       if (kDebugMode) {
+                //         print(response.data);
+                //       }
+                //       if (response.statusCode == 201) {
+                //
+                //
+                //       //     final String url=response.data['url'];
+                //       //     if (!await launchUrl(Uri.parse(url))) {
+                //       //       CustomSnackBar.showCustomErrorSnackBar(title:'Failed Payment',message: 'Could not launch $url');
+                //       // // throw Exception('Could not launch $_url');
+                //       // }
+                //       } else {
+                //         CustomSnackBar.showCustomErrorSnackBar(title:'Failed to Book Service:',message: '${response.statusMessage}');
+                //       }
+                //     }
+                // );
 
-      } catch (error) {
-        rethrow;
+              } catch (error) {
+                rethrow;
+              }
+      } else {
+        CustomSnackBar.showCustomErrorToast(
+            title: "No Internet!!", message: "Please check internet connection.");
       }
     }
 

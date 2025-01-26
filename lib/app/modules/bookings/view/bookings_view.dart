@@ -88,15 +88,12 @@ class BookingHistoryView extends BaseView<BookingsController> {
                           childCount: controller.bookingsList.length,
                           (context, index) {
                     final size = MediaQuery.of(context).size;
-                    final double cardWidth =
-                        size.width * 1; // 100% of screen width
-                    final double cardPadding = size.width * 0.03;
                     final booking = controller.bookingsList[index];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        width: cardWidth,
-                        padding: EdgeInsets.all(cardPadding),
+                        width: size.width * 1,
+                        padding: EdgeInsets.all(size.width * 0.03),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black12),
                           color: Theme.of(context).cardColor,
@@ -209,17 +206,20 @@ class BookingHistoryView extends BaseView<BookingsController> {
             child: OutlinedButton(
               onPressed: () {
                 /// Handle cancel booking
-                controller.changeOrderStatus(booking.id, "Cancelled");
+                controller.changeOrderStatus(
+                    booking.id,
+                    booking.isPaymentStatus == ServiceStatus.Cancelled.name ? ServiceStatus.Confirmed.name :ServiceStatus.Cancelled.name
+                );
               },
               style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Colors.red),
+                side:  BorderSide(color: booking.isPaymentStatus == ServiceStatus.Cancelled.name ?Colors.green:Colors.red),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text(
-                'Cancel Booking',
-                style: TextStyle(color: Colors.red, fontSize: 12),
+              child:  Text(
+                booking.isPaymentStatus == ServiceStatus.Cancelled.name ?"Re-Confirm":'Cancel Booking',
+                style: TextStyle(color: booking.isPaymentStatus == ServiceStatus.Cancelled.name ?Colors.green:Colors.red, fontSize: 12),
               ),
             ),
           ),

@@ -10,6 +10,7 @@ import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
 import '../../../components/custom_loading_overlay.dart';
+import '../../../components/custom_snackbar.dart';
 
 // ignore: must_be_immutable
 class UpdateProfileScreen extends BaseView<UserController> {
@@ -41,8 +42,13 @@ class UpdateProfileScreen extends BaseView<UserController> {
       ),
       actions: [
         TextButton(
-          onPressed: () {
-            _updateUser();
+          onPressed: () async{
+            if(await HelperFunction.instance.isInternetConnected()){
+              _updateUser();
+            } else {
+              CustomSnackBar.showCustomErrorToast(
+                  title: "No Internet!!", message: "Please check internet connection.");
+            }
           },
           child: const Padding(
             padding: EdgeInsets.all(8.0),
