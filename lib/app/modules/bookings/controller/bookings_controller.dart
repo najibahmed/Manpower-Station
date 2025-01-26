@@ -61,6 +61,7 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
 
   /// get all bookings for particular userId
   Future<void> getAllBookingsByUid() async {
+    bookingsList.clear();
     String? userId = await MySharedPref.getUserId();
     try {
       var url = ApiList.getBookingsByUidUrl(userId!);

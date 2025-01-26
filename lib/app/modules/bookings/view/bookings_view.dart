@@ -48,118 +48,112 @@ class BookingHistoryView extends BaseView<BookingsController> {
           //     ),
           //   ),
           // ),
-          SliverPadding(
-              padding: const EdgeInsets.all(8),
-              sliver: SliverList(delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final bookings = controller.bookingsList;
-                  if (bookings.isEmpty) {
+          controller.bookingsList.isEmpty
+              ? SliverPadding(
+                  padding: EdgeInsets.all(9),
+                  sliver: SliverToBoxAdapter(
+                      child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 8.0, left: 22, right: 22),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                        ),
+                        Center(
+                          child: Image.asset(
+                            AppImages.instance.noOrderHistory,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * .04,
+                        ),
+                        Center(
+                            child: Text(
+                          Strings.noActiveHistory.tr,
+                          style: TextStyle(
+                            fontSize: MyFonts.displayMediumSize,
+                          ),
+                        ))
+                      ],
+                    ),
+                  )),
+                )
+              : SliverPadding(
+                  padding: const EdgeInsets.all(8),
+                  sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                          childCount: controller.bookingsList.length,
+                          (context, index) {
+                    final size = MediaQuery.of(context).size;
+                    final double cardWidth =
+                        size.width * 1; // 100% of screen width
+                    final double cardPadding = size.width * 0.03;
+                    final booking = controller.bookingsList[index];
                     return Padding(
-                      padding:
-                          const EdgeInsets.only(top: 8.0, left: 22, right: 22),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.2,
-                          ),
-                          Center(
-                            child: Image.asset(
-                              AppImages.instance.noOrderHistory,
-                              fit: BoxFit.cover,
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: cardWidth,
+                        padding: EdgeInsets.all(cardPadding),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black12),
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.green.withOpacity(0.1),
+                              spreadRadius: 5,
+                              blurRadius: 6,
+                              offset: const Offset(0, 3), // changes position of shadow
                             ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * .04,
-                          ),
-                          Center(
-                              child: Text(
-                            Strings.noActiveHistory.tr,
-                            style: TextStyle(
-                              fontSize: MyFonts.displayMediumSize,
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ///Booking info Button & Status
+                            _buildButtonRow(context, booking, controller),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.01,
                             ),
-                          ))
-                        ],
+
+                            /// Service Title
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).highlightColor,
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10))),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 6.0, vertical: 4),
+                                // child: Text(
+                                //   overflow: TextOverflow.ellipsis,
+                                //   booking.services!.first.service==null? "Service Name Empty":"${booking.services!.first.service!.name}",
+                                //   style: Theme.of(context).textTheme.displayLarge,
+                                //   textAlign: TextAlign.start,
+                                // ),
+                              ),
+                            ),
+                            SizedBox(height: size.height * 0.01),
+
+                            /// Service Details
+                            _buildServiceDetails(booking),
+                            SizedBox(height: size.height * 0.02),
+
+                            /// Bottom Action Buttons (Cancel Booking & Payment)
+                            booking.isPaymentStatus == 'Completed'
+                                ? const SizedBox()
+                                : _buildActionButtons(context, booking),
+                          ],
+                        ),
                       ),
                     );
-                  } else {
-                    return Column(
-                        children: List.generate(
-                      bookings.length,
-                      (index) {
-                        final size = MediaQuery.of(context).size;
-                        final double cardWidth =
-                            size.width * 1; // 100% of screen width
-                        final double cardPadding = size.width * 0.03;
-                        BookingsModel booking = bookings[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: cardWidth,
-                            padding: EdgeInsets.all(cardPadding),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black12),
-                              color: Theme.of(context).cardColor,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.green.withOpacity(0.1),
-                                  spreadRadius: 5,
-                                  blurRadius: 6,
-                                  offset: const Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ///Booking info Button & Status
-                                _buildButtonRow(context, booking, controller),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.01,
-                                ),
-
-                                /// Service Title
-                                Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context).highlightColor,
-                                      borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10))),
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 6.0, vertical: 4),
-                                    // child: Text(
-                                    //   overflow: TextOverflow.ellipsis,
-                                    //   booking.services!.first.service==null? "Service Name Empty":"${booking.services!.first.service!.name}",
-                                    //   style: Theme.of(context).textTheme.displayLarge,
-                                    //   textAlign: TextAlign.start,
-                                    // ),
-                                  ),
-                                ),
-                                SizedBox(height: size.height * 0.01),
-
-                                /// Service Details
-                                _buildServiceDetails(booking),
-                                SizedBox(height: size.height * 0.02),
-
-                                /// Bottom Action Buttons (Cancel Booking & Payment)
-                                booking.isPaymentStatus == 'Completed'
-                                    ? const SizedBox()
-                                    : _buildActionButtons(context, booking),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ).toList());
-                  }
-                },
-              ))),
+                  }))),
           // SliverToBoxAdapter(
           //   child: SizedBox(
           //     child: Column(
@@ -180,6 +174,7 @@ class BookingHistoryView extends BaseView<BookingsController> {
       ),
     );
   }
+
   /// Service Details Section
   Widget _buildServiceDetails(BookingsModel booking) {
     return Column(
@@ -193,15 +188,15 @@ class BookingHistoryView extends BaseView<BookingsController> {
             'Due Payment:', "${booking.weWillGetPayment.toString()}.00Tk"),
         _buildDetailRow(
             'Starting Date:',
-            Constants.formatDateTime.format(
-                DateTime.parse(booking.services!.first.workStartDate!))),
+            Constants.formatDateTime.format(DateTime.parse(
+                booking.services!.first.workStartDate ??
+                    "2024-12-12T06:09:00.000Z"))),
       ],
     );
   }
 
   /// Action Buttons (Cancel Booking & Payment)
-  Widget _buildActionButtons(
-      BuildContext context, BookingsModel booking) {
+  Widget _buildActionButtons(BuildContext context, BookingsModel booking) {
     final double buttonWidth = MediaQuery.of(context).size.width * 0.35;
     return Center(
       child: Row(
@@ -274,62 +269,61 @@ class BookingHistoryView extends BaseView<BookingsController> {
     );
   }
 }
-  /// Button Row (Booking Info Button)
-  Widget _buildButtonRow(BuildContext context, BookingsModel booking,
-      BookingsController bookingController) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          height: screenHeight * 0.04,
-          width: screenWidth * 0.35,
-          child: OutlinedButton(
-            onPressed: () {
-              bookingController.isLoading.value = true;
-              bookingController
-                  .getWorkerInformation("${booking.workers!.first.user}");
-              Future.delayed(const Duration(seconds: 3), () {
-                bookingController.isLoading.value = false;
-              });
-              Get.toNamed(AppPages.OrderHistoryDetails,
-                  arguments: [booking, booking.isPaymentStatus]);
-            },
-            style: OutlinedButton.styleFrom(
-              backgroundColor: Theme.of(context).dialogBackgroundColor,
-              side: BorderSide(width: 1.0, color: Theme.of(context).focusColor),
-            ),
-            child: const Text(
-              "Booking Details",
-              style:
-              TextStyle(fontSize: 14, color: LightThemeColors.primaryColor),
-            ),
+
+/// Button Row (Booking Info Button)
+Widget _buildButtonRow(BuildContext context, BookingsModel booking,
+    BookingsController bookingController) {
+  final screenHeight = MediaQuery.of(context).size.height;
+  final screenWidth = MediaQuery.of(context).size.width;
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      SizedBox(
+        height: screenHeight * 0.04,
+        width: screenWidth * 0.35,
+        child: OutlinedButton(
+          onPressed: () {
+            bookingController.isLoading.value = true;
+            bookingController
+                .getWorkerInformation("${booking.workers!.first.user}");
+            Future.delayed(const Duration(seconds: 3), () {
+              bookingController.isLoading.value = false;
+            });
+            Get.toNamed(AppPages.OrderHistoryDetails,
+                arguments: [booking, booking.isPaymentStatus]);
+          },
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Theme.of(context).dialogBackgroundColor,
+            side: BorderSide(width: 1.0, color: Theme.of(context).focusColor),
+          ),
+          child: const Text(
+            "Booking Details",
+            style:
+                TextStyle(fontSize: 14, color: LightThemeColors.primaryColor),
           ),
         ),
-        Row(
-          children: [
-            const Text('Status:',
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(width: screenWidth * 0.02),
-            Text(
-              '${booking.isPaymentStatus}',
-              style: TextStyle(
-                  fontSize: 14,
-                  color: booking.isPaymentStatus == "Pending"
-                      ? Colors.amber[600]
-                      : booking.isPaymentStatus == "Confirmed"
-                      ? Colors.blue
-                      : Colors.green,
-                  letterSpacing: 1,
-                  fontWeight: FontWeight.w600),
-            ),
-          ],
-        )
-      ],
-    );
-  }
-
+      ),
+      Row(
+        children: [
+          const Text('Status:', style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(width: screenWidth * 0.02),
+          Text(
+            '${booking.isPaymentStatus}',
+            style: TextStyle(
+                fontSize: 14,
+                color: booking.isPaymentStatus == "Pending"
+                    ? Colors.amber[600]
+                    : booking.isPaymentStatus == "Confirmed"
+                        ? Colors.blue
+                        : Colors.green,
+                letterSpacing: 1,
+                fontWeight: FontWeight.w600),
+          ),
+        ],
+      )
+    ],
+  );
+}
 
 // Widget _getTabAtIndex(int index) {
 //   var list = [
