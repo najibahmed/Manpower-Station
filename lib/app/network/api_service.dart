@@ -11,11 +11,9 @@ import '../modules/service/model/service_list_model.dart';
 import '../routes/app_pages.dart';
 
 class ApiServices {
-
-
   /// Get one category service
   static Future<List<dynamic>> getOneCategoryServices(String id) async {
-    var serviceList=[];
+    var serviceList = [];
     try {
       var url = ApiList.singleCategoryServiceUrl(id);
       await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
@@ -39,7 +37,7 @@ class ApiServices {
     return serviceList;
   }
 
-/// Get Single worker information
+  /// Get Single worker information
   static Future<SingleWorkerModel> getSingleWorker(id) async {
     late SingleWorkerModel workerModel;
     try {
@@ -62,12 +60,27 @@ class ApiServices {
   }
 
   /// User review
+  static Future<void> changeBookingStatus(bookingId, String status) async {
+    try {
+      var url = ApiList.changeBookingStatus(bookingId);
+      await BaseClient.safeApiCall(url, RequestType.put, data: status,
+          onSuccess: (response) {
+        CustomSnackBar.showCustomErrorToast(
+            message: 'Error:', duration: const Duration(seconds: 1));
+      });
+    } catch (e) {
+      CustomSnackBar.showCustomErrorToast(
+          message: 'Error: $e', duration: const Duration(seconds: 1));
+    }
+  }
+
+  /// User review
   static Future<void> userReview(
       bookingId, Map<String, dynamic> reviewData) async {
     try {
       var url = ApiList.userReviewUrl(bookingId);
-      await BaseClient.safeApiCall(url, RequestType.put,
-          data: reviewData, onSuccess: (response) {
+      await BaseClient.safeApiCall(url, RequestType.put, data: reviewData,
+          onSuccess: (response) {
         if (response.statusCode == 200) {
           var flag = response.data["flag"];
           if (flag) {
@@ -85,7 +98,8 @@ class ApiServices {
           message: 'Error: $e', duration: const Duration(seconds: 1));
     }
   }
-/// user report
+
+  /// user report
   static Future<void> userReport(
       userId, Map<String, dynamic> reviewData) async {
     try {

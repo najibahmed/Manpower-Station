@@ -30,6 +30,9 @@ class ApiList {
    static String userReviewUrl(String bookingId) =>
        '/api/reviews/create/review/$bookingId';
 
+   static String changeBookingStatus(String bookingId) =>
+       '/api/bookings/update/payment_status/$bookingId';
+
    static String userReportUrl(String userId) =>
        '/api/contracts/client/send/$userId';
 

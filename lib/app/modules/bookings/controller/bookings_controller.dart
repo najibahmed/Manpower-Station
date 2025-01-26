@@ -36,6 +36,11 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
     await ApiServices.userReview(bookingId, requestData);
   }
 
+  /// change order status
+  Future<void> changeOrderStatus(String? bookingId,String status) async {
+    await ApiServices.changeBookingStatus(bookingId, status);
+  }
+
   void changeTabIndex(int index) {
     tabIndex.value = index;
   }

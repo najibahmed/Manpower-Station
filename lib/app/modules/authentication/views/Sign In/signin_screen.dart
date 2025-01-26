@@ -211,7 +211,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
   TextFormField emailTextField(context) {
     return TextFormField(
       onFieldSubmitted: (value){
-        FocusScope.of(context).requestFocus(_passwordFocusNode);
+        // FocusScope.of(context).requestFocus(_passwordFocusNode);
       },
       focusNode: _emailFocusNode,
       keyboardType: TextInputType.text,
@@ -256,8 +256,9 @@ class SignInScreen extends BaseView<AuthenticationController> {
 
   void _sendOtp() async {
     if (_formKey.currentState!.validate()) {
+      _passwordFocusNode.unfocus();
       showLoadingOverLay(asyncFunction: controller.loginUser(), msg: "Loading");
-      // await controller.loginWithPhoneOrEmail();
+      // await controller.loginUser();
     }
   }
 }

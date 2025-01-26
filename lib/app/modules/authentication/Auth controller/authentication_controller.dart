@@ -70,7 +70,8 @@ class AuthenticationController extends BaseController {
       'phone_or_email': signInEmailController.text.trim(),
       'password': signInPasswordController.text.trim(),
     };
-    var response =  await ApiRepository.postData(requestData, ApiList.userLoginUrl);
+    var response =  await ApiRepository.postLogin(requestData, ApiList.userLoginUrl);
+
     if(response.statusCode==200){
       Map<String, dynamic> responseData = response.data;
       OtpModel otpData = OtpModel.fromJson(responseData);
@@ -84,8 +85,10 @@ class AuthenticationController extends BaseController {
       // Success handling (for example, navigate to another screen)
       Get.snackbar('Successfully Logged In', '${otpData.message}');
       Get.offAllNamed(AppPages.DashboardView);
-    }else{
+    }else if(response.statusCode==400){
       CustomSnackBar.showCustomErrorSnackBar(title: 'Error Registration ',message: '${response.data['message']}!',color: Colors.redAccent);
+    }else{
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Error Registration ',message: 'Bad Request',color: Colors.redAccent);
     }
   }
 

@@ -47,8 +47,8 @@ class BaseClient {
         // "interceptor for refreshToken error: ${error.response?.statusCode}");
         // Check if the error is due to expired access token (400)
         if (error.response?.statusCode == 400) {
-          print(
-              "interceptor for refreshToken error: ${error.response?.statusCode}");
+          // print(
+              // "interceptor for refreshToken error: ${error.response?.statusCode}");
           // Attempt to refresh the token
           try {
             print('inside try refresh token');
