@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
@@ -9,6 +11,8 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/app_Images.dart';
 import 'package:manpower_station/utils/constants.dart';
+
+import '../../../components/custom_loading_overlay.dart';
 
 class BookingHistoryView extends BaseView<BookingsController> {
   const BookingHistoryView({super.key});
@@ -48,7 +52,7 @@ class BookingHistoryView extends BaseView<BookingsController> {
           //     ),
           //   ),
           // ),
-          controller.bookingsList.isEmpty
+          controller.getBookingList.isEmpty
               ? SliverPadding(
                   padding: EdgeInsets.all(9),
                   sliver: SliverToBoxAdapter(
@@ -85,10 +89,10 @@ class BookingHistoryView extends BaseView<BookingsController> {
                   padding: const EdgeInsets.all(8),
                   sliver: SliverList(
                       delegate: SliverChildBuilderDelegate(
-                          childCount: controller.bookingsList.length,
+                          childCount: controller.getBookingList.length,
                           (context, index) {
                     final size = MediaQuery.of(context).size;
-                    final booking = controller.bookingsList[index];
+                    final booking = controller.getBookingList[index];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -103,7 +107,8 @@ class BookingHistoryView extends BaseView<BookingsController> {
                               color: Colors.green.withOpacity(0.1),
                               spreadRadius: 5,
                               blurRadius: 6,
-                              offset: const Offset(0, 3), // changes position of shadow
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
                             ),
                           ],
                         ),
@@ -206,20 +211,38 @@ class BookingHistoryView extends BaseView<BookingsController> {
             child: OutlinedButton(
               onPressed: () {
                 /// Handle cancel booking
-                controller.changeOrderStatus(
-                    booking.id,
-                    booking.isPaymentStatus == ServiceStatus.Cancelled.name ? ServiceStatus.Confirmed.name :ServiceStatus.Cancelled.name
-                );
+                showLoadingOverLay(
+                    asyncFunction: controller.changeOrderStatus(
+                        booking.id,
+                        booking.isPaymentStatus == ServiceStatus.Cancelled.name
+                            ? ServiceStatus.Confirmed.name
+                            : ServiceStatus.Cancelled.name),
+                    msg: "Updating Status");
+                // controller.changeOrderStatus(
+                //     booking.id,
+                //     booking.isPaymentStatus == ServiceStatus.Cancelled.name ? ServiceStatus.Confirmed.name :ServiceStatus.Cancelled.name
+                // );
               },
               style: OutlinedButton.styleFrom(
-                side:  BorderSide(color: booking.isPaymentStatus == ServiceStatus.Cancelled.name ?Colors.green:Colors.red),
+                side: BorderSide(
+                    color:
+                        booking.isPaymentStatus == ServiceStatus.Cancelled.name
+                            ? Colors.green
+                            : Colors.red),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child:  Text(
-                booking.isPaymentStatus == ServiceStatus.Cancelled.name ?"Re-Confirm":'Cancel Booking',
-                style: TextStyle(color: booking.isPaymentStatus == ServiceStatus.Cancelled.name ?Colors.green:Colors.red, fontSize: 12),
+              child: Text(
+                booking.isPaymentStatus == ServiceStatus.Cancelled.name
+                    ? "Re-Confirm"
+                    : 'Cancel Booking',
+                style: TextStyle(
+                    color:
+                        booking.isPaymentStatus == ServiceStatus.Cancelled.name
+                            ? Colors.green
+                            : Colors.red,
+                    fontSize: 12),
               ),
             ),
           ),
@@ -280,7 +303,7 @@ Widget _buildButtonRow(BuildContext context, BookingsModel booking,
     children: [
       SizedBox(
         height: screenHeight * 0.04,
-        width: screenWidth * 0.35,
+        // width: screenWidth * 0.35,
         child: OutlinedButton(
           onPressed: () {
             bookingController.isLoading.value = true;
@@ -293,13 +316,15 @@ Widget _buildButtonRow(BuildContext context, BookingsModel booking,
                 arguments: [booking, booking.isPaymentStatus]);
           },
           style: OutlinedButton.styleFrom(
-            backgroundColor: Theme.of(context).dialogBackgroundColor,
+            backgroundColor: Theme.of(context).focusColor,
             side: BorderSide(width: 1.0, color: Theme.of(context).focusColor),
           ),
-          child: const Text(
+          child:  Text(
             "Booking Details",
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
             style:
-                TextStyle(fontSize: 14, color: LightThemeColors.primaryColor),
+                TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodyMedium!.color,),
           ),
         ),
       ),
@@ -314,7 +339,7 @@ Widget _buildButtonRow(BuildContext context, BookingsModel booking,
                 color: booking.isPaymentStatus == "Pending"
                     ? Colors.amber[600]
                     : booking.isPaymentStatus == "Confirmed"
-                        ? Colors.blue
+                        ? Colors.blue : booking.isPaymentStatus=="Cancelled"? Colors.redAccent
                         : Colors.green,
                 letterSpacing: 1,
                 fontWeight: FontWeight.w600),

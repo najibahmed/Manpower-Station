@@ -2,17 +2,12 @@ import 'package:aamarpay/aamarpay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
-import 'package:manpower_station/app/components/small_text.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
-import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
-import '../../../../config/theme/my_fonts.dart';
-import '../../../../config/translations/strings_enum.dart';
 import '../../../../utils/app_Images.dart';
 import '../../../components/big_text.dart';
-import '../../../components/link_button.dart';
 import '../../../routes/app_pages.dart';
 
 class MyPay extends GetView<CheckoutController> {
@@ -58,7 +53,7 @@ class MyPay extends GetView<CheckoutController> {
                         Center(child: BigText(text: "Confirmation Service"))),
                 Card(
                   color: Colors.blue.shade50,
-                  margin: EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(8),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 8),
                     child: RichText(
@@ -76,7 +71,7 @@ class MyPay extends GetView<CheckoutController> {
                                 size: 24,
                                 color: Colors.orangeAccent,
                               )),
-                          TextSpan(
+                          const TextSpan(
                             text: '  Tk',
                           ),
                         ],
@@ -121,7 +116,7 @@ class MyPay extends GetView<CheckoutController> {
                                     size: 24,
                                     color: Colors.orangeAccent,
                                   )),
-                              TextSpan(
+                              const TextSpan(
                                 text: '  advance.',
                               ),
                             ],
@@ -131,7 +126,7 @@ class MyPay extends GetView<CheckoutController> {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 amarPaymentButton(),
                  SizedBox(
                   height: size*.15,

@@ -32,7 +32,6 @@ class HomeView extends BaseView<HomeController> {
         color: Colors.green,
         onRefresh: _handleRefresh,
         child: CustomScrollView(
-          physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
           slivers: [
             SliverToBoxAdapter(
               child: Column(

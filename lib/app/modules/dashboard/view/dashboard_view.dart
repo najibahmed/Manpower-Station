@@ -8,12 +8,10 @@ import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
 import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:manpower_station/app/modules/home/views/home_view.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
-import 'package:manpower_station/app/modules/checkOut/views/amar_pay_payment.dart';
 import 'package:manpower_station/app/modules/search_view/view/search_screen.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_theme.dart';
 import 'package:manpower_station/config/translations/localization_service.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class DashboardScreen extends GetView<DashBoardController> {
   const DashboardScreen({super.key});

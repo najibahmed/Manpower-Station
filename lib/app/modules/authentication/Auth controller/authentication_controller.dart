@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,8 +8,6 @@ import 'package:manpower_station/app/modules/authentication/auth_repository/auth
 import 'package:manpower_station/app/network/api_list.dart';
 import '../../../core/base/base_controller.dart';
 import '../../../data/local/my_shared_pref.dart';
-import '../../../network/api_client.dart';
-import '../../../network/api_service.dart';
 import '../../../routes/app_pages.dart';
 import '../views/otp/otp_model.dart';
 

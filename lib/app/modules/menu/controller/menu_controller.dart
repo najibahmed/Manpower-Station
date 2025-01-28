@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import
+
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:manpower_station/app/components/big_text.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';

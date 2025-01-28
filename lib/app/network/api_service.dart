@@ -1,15 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/models/single_worler_model.dart';
-import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/network/api_client.dart';
 import 'package:manpower_station/app/network/api_list.dart';
 import '../components/custom_snackbar.dart';
-import '../data/local/my_shared_pref.dart';
-import '../modules/authentication/views/otp/otp_model.dart';
 import '../modules/service/model/service_list_model.dart';
-import '../routes/app_pages.dart';
 
 class ApiServices {
   /// Get one category service
@@ -61,17 +56,20 @@ class ApiServices {
   }
 
   /// User review
-  static Future<void> changeBookingStatus(String bookingId,Map<String, dynamic> status) async {
-    try {
+  static Future<List<BookingsModel>> changeBookingStatus(String bookingId,Map<String, dynamic> status) async {
         List<BookingsModel> _bookingsList=[];
+    try {
       var url = ApiList.changeBookingStatus(bookingId);
       await BaseClient.safeApiCall(url, RequestType.put,
           data: status,
           onSuccess: (response) {
          if (response.statusCode == 201) {
-          var jsonData = response.data['bookings'];
-          var bookings = jsonData.map((e) => BookingsModel.fromJson(e)).toList();
-          _bookingsList.assignAll(bookings); // Update the RxList with new data
+           CustomSnackBar.showCustomSnackBar(
+               title: 'Success!',
+               message: '${response.data["message"]}');
+          // var jsonData = response.data['bookings'];
+          // var bookings = jsonData.map((e) => BookingsModel.fromJson(e)).toList();
+          // _bookingsList.assignAll(bookings); // Update the RxList with new data
         } else {
           CustomSnackBar.showCustomErrorSnackBar(
               title: 'Failed to Change Order Status!',
@@ -82,6 +80,7 @@ class ApiServices {
       CustomSnackBar.showCustomErrorToast(
           message: 'Error: $e', duration: const Duration(seconds: 1));
     }
+    return _bookingsList;
   }
 
   /// User review

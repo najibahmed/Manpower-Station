@@ -9,8 +9,6 @@ import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_model.dart';
 import 'package:manpower_station/app/modules/user_profile/model/user_model.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../../../components/custom_snackbar.dart';
 import '../../../network/api_client.dart';
 import '../../../network/api_list.dart';

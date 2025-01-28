@@ -1,20 +1,14 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:uuid/uuid.dart';
 import '../../../../utils/helper_function.dart';
 import '../../../components/custom_snackbar.dart';
-import '../../../data/local/my_shared_pref.dart';
-import '../../../network/api_client.dart';
 import '../views/checkout_screen.dart';
 
 class CheckoutController extends BaseController {

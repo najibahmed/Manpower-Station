@@ -55,9 +55,9 @@ class WorkerListScreen extends BaseView<WorkerController> {
                   borderRadius: BorderRadius.all(Radius.circular(50)),
                   borderSide: BorderSide(color: Colors.black87, width: 2.0),
                 ),
-                contentPadding: const EdgeInsets.symmetric(
+                contentPadding: EdgeInsets.symmetric(
                     horizontal: 14.0 * 1.5, vertical: 12.0),
-                border: const OutlineInputBorder(
+                border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.all(Radius.circular(50)),
                 ),
@@ -109,7 +109,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                   } else {
                     WorkerModel worker = controller.findByWorker[index];
                     return controller.findByWorker.isEmpty
-                        ? Center(
+                        ? const Center(
                             child: Text("No worker found!"),
                           )
                         : InkWell(

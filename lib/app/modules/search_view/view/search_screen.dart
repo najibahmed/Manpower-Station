@@ -94,12 +94,18 @@ class SearchScreen extends BaseView<SearchViewController> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               child: TextField(
+                onTapOutside: (_){
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
                 controller: controller.searchController,
                 keyboardType: TextInputType.text,
                 cursorColor: Colors.green,
                 style: const TextStyle(fontWeight: FontWeight.normal),
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                   hintText: 'Search Service',
+                  hintStyle: TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(.7)
+                  ),
                   filled: true,
                   isDense: true,
                   prefixIcon: Icon(Icons.search_outlined),
