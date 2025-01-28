@@ -361,7 +361,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
               const Text('Service Price Starting:',
                   style: TextStyle(fontWeight: FontWeight.bold)),
               Text(
-                  '${Constants.banglaCurrency} ${booking.services?.first.service?.servicePrice}.00'),
+                  '${Constants.banglaCurrency} ${booking.services?.first.service?.servicePrice??"00"}.00'),
             ],
           ),
           Row(

@@ -20,9 +20,9 @@ import 'package:manpower_station/app/modules/service/bindings/service_binding.da
 import 'package:manpower_station/app/modules/service/view/service_booking_screen.dart';
 import 'package:manpower_station/app/modules/service/view/service_details.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_bindings/user_binding.dart';
-import 'package:manpower_station/app/modules/user_profile/user_profile_view/updatePhone_otp_view.dart';
-import 'package:manpower_station/app/modules/user_profile/user_profile_view/update_phoneOrEmail_view.dart';
-import 'package:manpower_station/app/modules/user_profile/user_profile_view/update_profile.dart';
+import 'package:manpower_station/app/modules/user_profile/update_profile/updatePhone_otp_view.dart';
+import 'package:manpower_station/app/modules/user_profile/update_profile/update_phoneOrEmail_view.dart';
+import 'package:manpower_station/app/modules/user_profile/update_profile/update_profile.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_view/user_profile_screen.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_view.dart';
 import 'package:manpower_station/app/modules/dashboard/bindings/dashboard_binding.dart';

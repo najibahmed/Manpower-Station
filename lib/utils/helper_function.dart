@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/utils/constants.dart';
 
+import 'app_Images.dart';
+
 class HelperFunction {
   static HelperFunction instance = HelperFunction();
 
@@ -69,6 +71,8 @@ class HelperFunction {
         imageUrl.toLowerCase().endsWith('.jpeg') ||
         imageUrl.toLowerCase().endsWith('.png')) {
       return CachedNetworkImage(
+        errorWidget: (context, url, error) =>
+            Image.asset(AppImages.instance.imgPerson,fit: BoxFit.cover,),
         placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
         imageUrl: '${Constants.avatarImgUrl}$imageUrl',
         // height: 120,

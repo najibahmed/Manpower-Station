@@ -6,7 +6,6 @@ import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/app_Images.dart';
@@ -26,153 +25,156 @@ class BookingHistoryView extends BaseView<BookingsController> {
   @override
   Widget body(BuildContext context) {
     return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          // SliverAppBar(
-          //   floating: false,
-          //   bottom: PreferredSize(
-          //     preferredSize: const Size.fromHeight(0),
-          //     child: SizedBox(
-          //       // height: 40,
-          //       child: TabBar(
-          //         onTap: (index) {
-          //           controller.changeTabIndex(index);
-          //         },
-          //         indicatorWeight: 6,
-          //         dividerColor: Colors.grey,
-          //         indicatorColor: Colors.orangeAccent,
-          //         labelStyle: const TextStyle(color: Colors.white),
-          //         //TextStyle(color: Colors.green),
-          //         controller: controller.tabController,
-          //         tabs: const [
-          //           Tab(text: 'Active Order'),
-          //           Tab(text: 'Order History'),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          controller.getBookingList.isEmpty
-              ? SliverPadding(
-                  padding: EdgeInsets.all(9),
-                  sliver: SliverToBoxAdapter(
-                      child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 8.0, left: 22, right: 22),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                        ),
-                        Center(
-                          child: Image.asset(
-                            AppImages.instance.noOrderHistory,
-                            fit: BoxFit.cover,
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: CustomScrollView(
+          slivers: [
+            // SliverAppBar(
+            //   floating: false,
+            //   bottom: PreferredSize(
+            //     preferredSize: const Size.fromHeight(0),
+            //     child: SizedBox(
+            //       // height: 40,
+            //       child: TabBar(
+            //         onTap: (index) {
+            //           controller.changeTabIndex(index);
+            //         },
+            //         indicatorWeight: 6,
+            //         dividerColor: Colors.grey,
+            //         indicatorColor: Colors.orangeAccent,
+            //         labelStyle: const TextStyle(color: Colors.white),
+            //         //TextStyle(color: Colors.green),
+            //         controller: controller.tabController,
+            //         tabs: const [
+            //           Tab(text: 'Active Order'),
+            //           Tab(text: 'Order History'),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            controller.getBookingList.isEmpty
+                ? SliverPadding(
+                    padding: EdgeInsets.all(9),
+                    sliver: SliverToBoxAdapter(
+                        child: Padding(
+                      padding:
+                          const EdgeInsets.only(top: 8.0, left: 22, right: 22),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.2,
                           ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * .04,
-                        ),
-                        Center(
-                            child: Text(
-                          Strings.noActiveHistory.tr,
-                          style: TextStyle(
-                            fontSize: MyFonts.displayMediumSize,
+                          Center(
+                            child: Image.asset(
+                              AppImages.instance.noOrderHistory,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ))
-                      ],
-                    ),
-                  )),
-                )
-              : SliverPadding(
-                  padding: const EdgeInsets.all(8),
-                  sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          childCount: controller.getBookingList.length,
-                          (context, index) {
-                    final size = MediaQuery.of(context).size;
-                    final booking = controller.getBookingList[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: size.width * 1,
-                        padding: EdgeInsets.all(size.width * 0.03),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black12),
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.green.withOpacity(0.1),
-                              spreadRadius: 5,
-                              blurRadius: 6,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * .04,
+                          ),
+                          Center(
+                              child: Text(
+                            Strings.noActiveHistory.tr,
+                            style: TextStyle(
+                              fontSize: MyFonts.displayMediumSize,
                             ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ///Booking info Button & Status
-                            _buildButtonRow(context, booking, controller),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.01,
-                            ),
-
-                            /// Service Title
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).highlightColor,
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10))),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 6.0, vertical: 4),
-                                // child: Text(
-                                //   overflow: TextOverflow.ellipsis,
-                                //   booking.services!.first.service==null? "Service Name Empty":"${booking.services!.first.service!.name}",
-                                //   style: Theme.of(context).textTheme.displayLarge,
-                                //   textAlign: TextAlign.start,
-                                // ),
-                              ),
-                            ),
-                            SizedBox(height: size.height * 0.01),
-
-                            /// Service Details
-                            _buildServiceDetails(booking),
-                            SizedBox(height: size.height * 0.02),
-
-                            /// Bottom Action Buttons (Cancel Booking & Payment)
-                            booking.isPaymentStatus == 'Completed'
-                                ? const SizedBox()
-                                : _buildActionButtons(context, booking),
-                          ],
-                        ),
+                          ))
+                        ],
                       ),
-                    );
-                  }))),
-          // SliverToBoxAdapter(
-          //   child: SizedBox(
-          //     child: Column(
-          //       children: [
-          //         _getTabAtIndex(controller.tabIndex.value),
-          //         // TabBarView(
-          //         //   controller: controller.tabController,
-          //         //   children: const [
-          //         //     ActiveOrder(),
-          //         //     OrderHistory(),
-          //         //   ],
-          //         // ),
-          //       ],
-          //     ),
-          //   ),
-          // )
-        ],
+                    )),
+                  )
+                : SliverPadding(
+                    padding: const EdgeInsets.all(8),
+                    sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                            childCount: controller.getBookingList.length,
+                            (context, index) {
+                      final size = MediaQuery.of(context).size;
+                      final booking = controller.getBookingList[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: size.width * 1,
+                          padding: EdgeInsets.all(size.width * 0.03),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black12),
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.green.withOpacity(0.1),
+                                spreadRadius: 5,
+                                blurRadius: 6,
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ///Booking info Button & Status
+                              _buildButtonRow(context, booking, controller),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.01,
+                              ),
+
+                              /// Service Title
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).highlightColor,
+                                    borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10))),
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 6.0, vertical: 4),
+                                  // child: Text(
+                                  //   overflow: TextOverflow.ellipsis,
+                                  //   booking.services!.first.service==null? "Service Name Empty":"${booking.services!.first.service!.name}",
+                                  //   style: Theme.of(context).textTheme.displayLarge,
+                                  //   textAlign: TextAlign.start,
+                                  // ),
+                                ),
+                              ),
+                              SizedBox(height: size.height * 0.01),
+
+                              /// Service Details
+                              _buildServiceDetails(booking),
+                              SizedBox(height: size.height * 0.02),
+
+                              /// Bottom Action Buttons (Cancel Booking & Payment)
+                              booking.isPaymentStatus == 'Completed'
+                                  ? const SizedBox()
+                                  : _buildActionButtons(context, booking),
+                            ],
+                          ),
+                        ),
+                      );
+                    }))),
+            // SliverToBoxAdapter(
+            //   child: SizedBox(
+            //     child: Column(
+            //       children: [
+            //         _getTabAtIndex(controller.tabIndex.value),
+            //         // TabBarView(
+            //         //   controller: controller.tabController,
+            //         //   children: const [
+            //         //     ActiveOrder(),
+            //         //     OrderHistory(),
+            //         //   ],
+            //         // ),
+            //       ],
+            //     ),
+            //   ),
+            // )
+          ],
+        ),
       ),
     );
   }
@@ -319,12 +321,14 @@ Widget _buildButtonRow(BuildContext context, BookingsModel booking,
             backgroundColor: Theme.of(context).focusColor,
             side: BorderSide(width: 1.0, color: Theme.of(context).focusColor),
           ),
-          child:  Text(
+          child: Text(
             "Booking Details",
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
-            style:
-                TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodyMedium!.color,),
+            style: TextStyle(
+              fontSize: 12,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
+            ),
           ),
         ),
       ),
@@ -339,8 +343,10 @@ Widget _buildButtonRow(BuildContext context, BookingsModel booking,
                 color: booking.isPaymentStatus == "Pending"
                     ? Colors.amber[600]
                     : booking.isPaymentStatus == "Confirmed"
-                        ? Colors.blue : booking.isPaymentStatus=="Cancelled"? Colors.redAccent
-                        : Colors.green,
+                        ? Colors.blue
+                        : booking.isPaymentStatus == "Cancelled"
+                            ? Colors.redAccent
+                            : Colors.green,
                 letterSpacing: 1,
                 fontWeight: FontWeight.w600),
           ),

@@ -5,6 +5,7 @@ import 'package:manpower_station/utils/helper_function.dart';
 
 import '../../../../config/theme/light_theme_colors.dart';
 import '../../../../config/theme/my_fonts.dart';
+import '../../../../utils/app_Images.dart';
 import '../../../../utils/constants.dart';
 import '../../../components/big_text.dart';
 
@@ -40,7 +41,7 @@ class HorizontalServiceCard extends StatelessWidget {
                     imageUrl:
                     '${Constants.serviceImgUrl}$image',
                     errorWidget: (context, url, error) =>
-                    const Icon(Icons.error),
+                        Image.asset(AppImages.instance.servicePlaceHolder,fit: BoxFit.cover,),
                     progressIndicatorBuilder:
                         (context, url, progress) => Center(
                       child: CircularProgressIndicator(

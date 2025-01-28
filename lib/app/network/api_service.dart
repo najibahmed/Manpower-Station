@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/models/single_worler_model.dart';
 import 'package:manpower_station/app/network/api_client.dart';

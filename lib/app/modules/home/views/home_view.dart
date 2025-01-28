@@ -174,7 +174,7 @@ class HomeView extends BaseView<HomeController> {
         onTap: ()async {
           if(await HelperFunction.instance.isInternetConnected()){
             controller.oneCategoryServicesData.clear();
-            controller.getOneCategoryServices(id);
+            controller.fetchSingleCatServices(id);
             Get.toNamed(AppPages.SingleCateServicesScreen,
                           arguments: [catTitle, id]);
           } else {
@@ -222,7 +222,7 @@ class HomeView extends BaseView<HomeController> {
                         width: size.width * 0.25,
                         child: OutlinedButton(
                             onPressed: () {
-                              controller.getOneCategoryServices(id);
+                              controller.fetchSingleCatServices(id);
                               Get.toNamed(AppPages.SingleCateServicesScreen,
                                   arguments: [catTitle, id]);
                             },
@@ -291,8 +291,10 @@ class HomeView extends BaseView<HomeController> {
   Future<void> _handleRefresh() async {
     await Get.find<UserController>().getUserInformation();
     await Get.find<BookingsController>().getAllBookingsByUid();
-    await controller.getAllServiceData();
-    await controller.getAllServiceCategories();
+    await controller.fetchAllService();
+    await controller.fetchAllCategories();
+    // await controller.getAllServiceData();
+    // await controller.getAllServiceCategories();
     await controller.getBanners();
     // return Future.delayed(const Duration(seconds: 2));
   }

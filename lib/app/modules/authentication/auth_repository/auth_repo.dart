@@ -3,20 +3,7 @@ import 'package:manpower_station/utils/appLoggerUtils.dart';
 import '../../../network/api_client.dart';
 import '../../../network/api_list.dart';
 
-class ApiRepository {
-
-  // final response = await _dio.post(
-  // '/api/users/refresh/token',
-  // );
-  // if (response.statusCode == 200) {
-  // LoggerUtil.instance.printLog(msg: response.data);
-  // return {
-  // 'access_token': response.data['access_token'],
-  // 'refresh_token': response.data['refresh_token'],
-  // };
-  // } else {
-  // throw Exception('Failed to refresh token');
-  // }
+class AuthRepository {
 
   static Future<Response<dynamic>> postLogin(requestData,String appUrl) async {
     Dio _dio=Dio(
