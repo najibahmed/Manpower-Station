@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
@@ -12,6 +13,7 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
+import '../../../../utils/app_Images.dart';
 import '../../../components/custom_snackbar.dart';
 import '../../../core/base/base_view.dart';
 import '../controllers/home_controller.dart';
@@ -150,14 +152,9 @@ class HomeView extends BaseView<HomeController> {
                         return HelperFunction.instance
                             .buildServiceCardShimmer();
                       } else {
-                        var image = categoryImage[index];
                         CategoryModel category = controller.allCatData[index];
-                        var id = category.id.toString();
-                        String catTitle = category.categoryName!;
-
                         ///build single Category card
-                        return _buildCategoryCard(
-                            id, catTitle, image, size, category);
+                        return _buildCategoryCard(size, category);
                       }
                     },
                   )),
@@ -168,15 +165,12 @@ class HomeView extends BaseView<HomeController> {
     );
   }
 
-  InkWell _buildCategoryCard(
-      String id, String catTitle, image, Size size, CategoryModel category) {
+  InkWell _buildCategoryCard(Size size, CategoryModel category) {
     return InkWell(
         onTap: ()async {
           if(await HelperFunction.instance.isInternetConnected()){
-            controller.oneCategoryServicesData.clear();
-            controller.fetchSingleCatServices(id);
             Get.toNamed(AppPages.SingleCateServicesScreen,
-                          arguments: [catTitle, id]);
+                          arguments: [category.categoryName, category.id.toString()]);
           } else {
             CustomSnackBar.showCustomErrorToast(title: "No Internet!!", message: "Please check internet connection.");
           }
@@ -191,11 +185,20 @@ class HomeView extends BaseView<HomeController> {
               ClipRRect(
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(15)),
-                child: Image.asset(
-                  image,
-                  height: size.height * 0.14,
+                child: CachedNetworkImage(
+                  height: size.height*.13,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  imageUrl:
+                  '${Constants.serviceImgUrl}${category.image}',
+                  errorWidget: (context, url, error) =>
+                      Image.asset(AppImages.instance.categoryPlaceHolder,fit: BoxFit.cover,),
+                  progressIndicatorBuilder:
+                      (context, url, progress) => Center(
+                    child: CircularProgressIndicator(
+                      value: progress.progress,
+                    ),
+                  ),
                 ),
               ),
               Padding(
@@ -210,21 +213,18 @@ class HomeView extends BaseView<HomeController> {
                   ),
                 ),
               ),
-              const Spacer(),
-              // Divider(color: Colors.black26,),
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: size.height * 0.035,
+                        // height: size.height * 0.035,
                         width: size.width * 0.25,
                         child: OutlinedButton(
                             onPressed: () {
-                              controller.fetchSingleCatServices(id);
                               Get.toNamed(AppPages.SingleCateServicesScreen,
-                                  arguments: [catTitle, id]);
+                                  arguments: [category.categoryName, category.id.toString()]);
                             },
                             child: const Text(
                               'View All',
@@ -234,7 +234,7 @@ class HomeView extends BaseView<HomeController> {
                       ),
                     ],
                   )),
-              SizedBox(height: size.height * 0.01),
+              // SizedBox(height: size.height * 0.01),
             ],
           ),
         ));

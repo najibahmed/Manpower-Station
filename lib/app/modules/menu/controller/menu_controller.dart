@@ -15,6 +15,7 @@ class MenusController extends BaseController{
     MySharedPref.clearAccessToken();
     MySharedPref.clearRefreshToken();
     MySharedPref.clearUser();
+    MySharedPref.clearBookingList();
     return true;
   }
 

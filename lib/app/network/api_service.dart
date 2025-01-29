@@ -3,34 +3,10 @@ import 'package:manpower_station/app/models/single_worler_model.dart';
 import 'package:manpower_station/app/network/api_client.dart';
 import 'package:manpower_station/app/network/api_list.dart';
 import '../components/custom_snackbar.dart';
-import '../modules/service/model/service_list_model.dart';
+
 
 class ApiServices {
-  /// Get one category service
-  static Future<List<dynamic>> getOneCategoryServices(String id) async {
-    var serviceList = [];
-    try {
-      var url = ApiList.singleCategoryServiceUrl(id);
-      await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
-        // if (kDebugMode) {
-        //   print(response.data);
-        // }
-        if (response.statusCode == 200) {
-          var jsonData = response.data['servicesLists'];
-          serviceList =
-              jsonData.map((item) => ServiceModel.fromJson(item)).toList();
-        } else {
-          CustomSnackBar.showCustomErrorSnackBar(
-              title: 'Failed to load services by one category:',
-              message: ' ${response.statusMessage}');
-        }
-      });
-    } catch (e) {
-      CustomSnackBar.showCustomErrorSnackBar(
-          title: 'Error try get all service cat:', message: '$e');
-    }
-    return serviceList;
-  }
+
 
   /// Get Single worker information
   static Future<SingleWorkerModel> getSingleWorker(id) async {

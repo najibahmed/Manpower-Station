@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/big_text.dart';
+import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/dash_divider.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/models/cart_model.dart';
@@ -18,7 +19,7 @@ import '../../../../utils/app_Images.dart';
 
 
 class CheckOutScreen extends BaseView<CheckoutController> {
-  CheckOutScreen({super.key});
+  const CheckOutScreen({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
@@ -91,7 +92,10 @@ class CheckOutScreen extends BaseView<CheckoutController> {
               width: double.infinity,
               child:
               ElevatedButton(
-                onPressed: controller.saveOrder,
+                onPressed: ()async{
+                  showLoadingOverLay(asyncFunction: controller.saveOrder(),msg: "Loading" );
+                // controller.saveOrder();
+                },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   backgroundColor: LightThemeColors.primaryColor,
@@ -218,7 +222,7 @@ Widget customWorkerTile(WorkerModel worker, double screenHeight,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-               "${worker.firstName!+" "+worker.lastName!}",
+               "${worker.firstName!} ${worker.lastName!}",
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),

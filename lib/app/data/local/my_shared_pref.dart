@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../config/translations/localization_service.dart';
+import '../../models/bookings_model.dart';
 import '../../modules/user_profile/model/user_model.dart';
 
 class MySharedPref {
@@ -22,6 +23,7 @@ class MySharedPref {
   static const String isOnBoardingChecked = 'isOnBoardingChecked';
   static const String userId = 'adminId';
   static const String userData = 'user-data';
+  static const String userBookings = 'user-bookings';
 
   /// init get storage services
   static Future<void> init() async {
@@ -122,7 +124,28 @@ static Future<String?> getRefreshToken() async {
   }
   // Remove UserModel from SharedPreferences
   static Future<void> clearUser() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove(userData);
+    await _sharedPreferences.remove(userData);
   }
+  /// save user bookings
+  static Future<void> saveUserBookings(List<dynamic> bookingList) async {
+    List<String> bookings = [];
+    bookingList.forEach((element) => bookings.add(jsonEncode(element)));
+    await _sharedPreferences.setStringList(userBookings, bookings);
+  }
+
+  /// get user bookings
+  static Future<List<BookingsModel>> getUserBookings() async {
+    List<String> bookings = [];
+    if (_sharedPreferences.containsKey(userBookings)) {
+      bookings = _sharedPreferences.getStringList(userBookings)!;
+    }
+    List<BookingsModel> bookingList = [];
+    bookings.map((element) => bookingList.add(BookingsModel.fromJson(jsonDecode(element)))).toList();
+    return bookingList;
+  }
+  // Remove UserModel from SharedPreferences
+  static Future<void> clearBookingList() async {
+    await _sharedPreferences.remove(userBookings);
+  }
+
 }

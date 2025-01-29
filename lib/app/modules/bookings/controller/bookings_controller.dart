@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
@@ -44,20 +43,28 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
     Map<String, dynamic> statusData = {
       "paymentStatus": status,
     };
-    var updatedBookings=await ApiServices.changeBookingStatus(bookingId!, statusData);
+    await ApiServices.changeBookingStatus(bookingId!, statusData);
     await getAllBookingsByUid();
+    _loadUserBookings();
     // _bookingsList.clear();
     // _bookingsList.assignAll(updatedBookings);
 
   }
-
   // void changeTabIndex(int index) {
   //   tabIndex.value = index;
   // }
 
+  void _loadUserBookings()async{
+    List<BookingsModel>? bookings = await MySharedPref.getUserBookings();
+    if(bookings.isNotEmpty){
+      _bookingsList.assignAll(bookings);
+    }
+  }
+
   @override
-  void onInit() {
-    getAllBookingsByUid();
+  void onInit() async{
+    await getAllBookingsByUid();
+    _loadUserBookings();
     // tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     super.onInit();
   }
@@ -82,11 +89,14 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
         'Accept': 'application/json',
         'Authorization': MySharedPref.getAccessToken()
         //Constants.accessToken         //MySharedPref.getAccessToken()
-      }, onSuccess: (response) {
+      }, onSuccess: (response) async{
         if (response.statusCode == 201) {
           var jsonData = response.data['bookings'];
           var bookings = jsonData.map((e) => BookingsModel.fromJson(e)).toList();
-          _bookingsList.assignAll(bookings); // Update the RxList with new data
+
+          //save user bookings to local storage
+          await MySharedPref.saveUserBookings(bookings);
+          // _bookingsList.assignAll(bookings); // Update the RxList with new data
         } else {
           CustomSnackBar.showCustomErrorSnackBar(
               title: 'Failed to load Workers:',

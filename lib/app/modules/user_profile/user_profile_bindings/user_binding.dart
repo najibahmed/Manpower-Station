@@ -8,6 +8,6 @@ class UserBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<UserController>(() => UserController(userRepository:Get.find<UserRepository>()));
-    Get.lazyPut<UpdateProfileController>(() => UpdateProfileController(userRepository:Get.find<UserRepository>()));
+    // Get.lazyPut<UpdateProfileController>(() => UpdateProfileController(userRepository:Get.find<UserRepository>()));
   }
 }

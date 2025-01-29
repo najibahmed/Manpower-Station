@@ -86,6 +86,7 @@ class UserController extends BaseController {
       userData?.value= UserModel.fromJson(responseData);
       //save user to local storage
       await MySharedPref.saveUser(userData!.value);
+      _loadUserData();
       /// for pre-fill to update email initializing controller;
       updateDescriptionController=TextEditingController(text: userData?.value.profileDescription?? 'null');
       updateNameController=TextEditingController(text: userData?.value.username??"null");

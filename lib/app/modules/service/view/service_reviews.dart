@@ -49,34 +49,34 @@ class ReviewsScreen extends StatelessWidget {
   }
 
   // Rating bars to visualize rating breakdown
-  Widget _buildRatingBars() {
-    return Column(
-      children: [
-        _buildRatingBar(5, 0.8),
-        _buildRatingBar(4, 0.6),
-        _buildRatingBar(3, 0.2),
-        _buildRatingBar(2, 0.1),
-        _buildRatingBar(1, 0.1),
-      ],
-    );
-  }
-
-  // Rating bar widget
-  Widget _buildRatingBar(int stars, double percentage) {
-    return Row(
-      children: [
-        Text(stars.toString(), style: const TextStyle(fontSize: 18)),
-        const SizedBox(width: 8),
-        Expanded(
-          child: LinearProgressIndicator(
-            value: percentage,
-            backgroundColor: Colors.grey[300],
-            color: Colors.amber,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildRatingBars() {
+  //   return Column(
+  //     children: [
+  //       _buildRatingBar(5, 0.8),
+  //       _buildRatingBar(4, 0.6),
+  //       _buildRatingBar(3, 0.2),
+  //       _buildRatingBar(2, 0.1),
+  //       _buildRatingBar(1, 0.1),
+  //     ],
+  //   );
+  // }
+  //
+  // // Rating bar widget
+  // Widget _buildRatingBar(int stars, double percentage) {
+  //   return Row(
+  //     children: [
+  //       Text(stars.toString(), style: const TextStyle(fontSize: 18)),
+  //       const SizedBox(width: 8),
+  //       Expanded(
+  //         child: LinearProgressIndicator(
+  //           value: percentage,
+  //           backgroundColor: Colors.grey[300],
+  //           color: Colors.amber,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }
 
 // Custom widget for a review card

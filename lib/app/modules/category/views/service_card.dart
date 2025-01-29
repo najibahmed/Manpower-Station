@@ -5,22 +5,25 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
+import '../../../../utils/app_Images.dart';
 import '../../../../utils/helper_function.dart';
-import '../model/service_list_model.dart';
+import '../../service/model/service_list_model.dart';
 
 class ServiceCard extends StatelessWidget {
   final String title;
   final String image;
   final ServiceModel service;
-  const ServiceCard(
-      {super.key,
-      required this.title,
-      required this.image,
-      required this.service});
+
+  const ServiceCard({super.key,
+    required this.title,
+    required this.image,
+    required this.service});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery
+        .of(context)
+        .size;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -31,32 +34,27 @@ class ServiceCard extends StatelessWidget {
           Column(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                child:Hero(
-                  tag: title,
-                  child: CachedNetworkImage(
-                    height: size.height*.13,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    imageUrl:
-                    '${Constants.serviceImgUrl}$image',
-                    errorWidget: (context, url, error) =>
-                    const Icon(Icons.error),
-                    progressIndicatorBuilder:
-                        (context, url, progress) => Center(
-                      child: CircularProgressIndicator(
-                        value: progress.progress,
-                      ),
-                    ),
-                  ),
-                ),
+                borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(15)),
+                child: CachedNetworkImage(
+                  height: size.height * .13,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  imageUrl:
+                  '${Constants.serviceImgUrl}$image',
+                  errorWidget: (context, url, error) {
+                    print("Category Image error:$error");
+                    return Image.asset(AppImages.instance.servicePlaceHolder, fit: BoxFit.cover,);
 
-                // Image.network(
-                //   '${Constants.serviceImgUrl}$image',
-                //   height: 120,
-                //   width: double.infinity,
-                //   fit: BoxFit.cover,
-                // ),
+                  },
+                  progressIndicatorBuilder:
+                      (context, url, progress) =>
+                      Center(
+                        child: CircularProgressIndicator(
+                          value: progress.progress,
+                        ),
+                      ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -71,9 +69,12 @@ class ServiceCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                     Text(
+                    Text(
                       "(starting with)",
-                      style: Theme.of(context).textTheme.displaySmall,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .displaySmall,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -82,15 +83,24 @@ class ServiceCard extends StatelessWidget {
                         children: [
                           Text(
                             "${Constants.banglaCurrency}"
-                                 "${HelperFunction.instance.getDiscountAmount(service.serviceDiscount,service.servicePrice!)} ",
+                                "${HelperFunction.instance.getDiscountAmount(
+                                service.serviceDiscount,
+                                service.servicePrice!)} ",
                             style: const TextStyle(
                                 fontSize: 18,
                                 color: LightThemeColors.primaryColor,
                                 fontWeight: FontWeight.bold),
                           ),
-                          service.serviceDiscount?.discount==0 ?  const SizedBox():Text(
+                          service.serviceDiscount?.discount == 0
+                              ? const SizedBox()
+                              : Text(
                             "${service.servicePrice} ",
-                            style: Theme.of(context).textTheme.displaySmall?.copyWith(decoration: TextDecoration.lineThrough),
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(
+                                decoration: TextDecoration.lineThrough),
                           ),
                         ],
                       ),
@@ -117,7 +127,8 @@ class ServiceCard extends StatelessWidget {
                             ),
                             child: const Text(
                               'Reserve Service',
-                              style: TextStyle(fontSize: 12, color: Colors.white),
+                              style: TextStyle(fontSize: 12, color: Colors
+                                  .white),
                             )),
                       )
                       // ,SizedBox(
@@ -130,29 +141,33 @@ class ServiceCard extends StatelessWidget {
                       // ),
                     ],
                   )),
-               SizedBox(height: 10.h),
+              SizedBox(height: 10.h),
             ],
           ),
-          service.serviceDiscount!.discount.toString()!='0'?
+          service.serviceDiscount!.discount.toString() != '0' ?
           Positioned(
               top: 10,
               right: 1,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(.85),
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(5),bottomLeft: Radius.circular(5))
+                    color: Colors.green.withOpacity(.85),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        bottomLeft: Radius.circular(5))
                 ),
                 height: 20,
                 width: 80,
                 child: Text(
                   textAlign: TextAlign.center,
-                    '${service.serviceDiscount!.discount}'
-                        '${service.serviceDiscount!.discountType == "Percentage Discount" ? '%' : Constants.banglaCurrency} OFF',
+                  '${service.serviceDiscount!.discount}'
+                      '${service.serviceDiscount!.discountType ==
+                      "Percentage Discount" ? '%' : Constants
+                      .banglaCurrency} OFF',
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
                   ),),
-              )):const SizedBox()
+              )) : const SizedBox()
         ],
       ),
     );

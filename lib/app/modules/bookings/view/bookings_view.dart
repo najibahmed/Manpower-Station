@@ -93,7 +93,7 @@ class BookingHistoryView extends BaseView<BookingsController> {
                             childCount: controller.getBookingList.length,
                             (context, index) {
                       final size = MediaQuery.of(context).size;
-                      final booking = controller.getBookingList[index];
+                      BookingsModel booking = controller.getBookingList[index];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -125,21 +125,19 @@ class BookingHistoryView extends BaseView<BookingsController> {
 
                               /// Service Title
                               Container(
+                               padding:  EdgeInsets.symmetric(
+                                    horizontal: 10.0, vertical: 4),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                     color: Theme.of(context).highlightColor,
                                     borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(10),
                                         topRight: Radius.circular(10))),
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 6.0, vertical: 4),
-                                  // child: Text(
-                                  //   overflow: TextOverflow.ellipsis,
-                                  //   booking.services!.first.service==null? "Service Name Empty":"${booking.services!.first.service!.name}",
-                                  //   style: Theme.of(context).textTheme.displayLarge,
-                                  //   textAlign: TextAlign.start,
-                                  // ),
+                                child:  Text(
+                                  overflow: TextOverflow.ellipsis,
+                                  booking.services!.first.service==null? "Service Name Empty":"${booking.services!.first.service!.name}",
+                                  style: Theme.of(context).textTheme.displayMedium,
+                                  textAlign: TextAlign.start,
                                 ),
                               ),
                               SizedBox(height: size.height * 0.01),

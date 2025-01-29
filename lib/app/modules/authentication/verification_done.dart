@@ -12,6 +12,8 @@ import '../../components/custom_button.dart';
 import '../../routes/app_pages.dart';
 
 class VerificationCompleted extends BaseView<AuthenticationController>{
+  const VerificationCompleted({super.key});
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
@@ -52,7 +54,7 @@ class VerificationCompleted extends BaseView<AuthenticationController>{
                   color: LightThemeColors.listTileTitleColor,
                   fontWeight: FontWeight.bold),
             children: [
-              TextSpan(text: "${Strings.accountCreated.tr}",
+              TextSpan(text: Strings.accountCreated.tr,
              style: TextStyle(
               fontSize: MyFonts.bodyMediumSize,
               color: LightThemeColors.opacityTextColor,
@@ -68,7 +70,7 @@ class VerificationCompleted extends BaseView<AuthenticationController>{
 
           Center(
               child: CustomButton(
-                title: "${Strings.okay.tr}",
+                title: Strings.okay.tr,
                 height: 44.h,
                 width: 298.w,
                 onTap: () {

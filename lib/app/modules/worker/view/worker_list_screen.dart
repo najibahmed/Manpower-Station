@@ -167,7 +167,7 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                           style: TextStyle(color: Colors.grey),
                                         ),
                                         Text(
-                                          '${worker.gender??"Empty"}',
+                                          worker.gender??"Empty",
                                           style: const TextStyle(
                                               color: Colors.black54,
                                               fontWeight: FontWeight.bold),

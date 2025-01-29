@@ -1,9 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/search_view/controller/search_controller.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
-import 'package:manpower_station/app/modules/service/view/service_card.dart';
+import 'package:manpower_station/app/modules/category/views/service_card.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/helper_function.dart';

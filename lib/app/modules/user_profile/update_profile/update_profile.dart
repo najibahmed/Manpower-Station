@@ -54,7 +54,7 @@ class UpdateProfileScreen extends BaseView<UserController> {
             padding: EdgeInsets.all(8.0),
             child: Text(
               "Save",
-              style: const TextStyle(color: Colors.green),
+              style:  TextStyle(color: Colors.green),
             ),
           ),
         )
@@ -172,7 +172,7 @@ class UpdateProfileScreen extends BaseView<UserController> {
                             labelStyle: myTextStyle.copyWith(
                                 fontWeight: FontWeight.normal,
                                 fontSize: MyFonts.bodyMediumSize),
-                            labelText: "${Strings.name.tr}",
+                            labelText: Strings.name.tr,
                             hintStyle: const TextStyle(
                                 color: LightThemeColors.hintTextColor)),
                         // validator: (String? value) {

@@ -11,7 +11,7 @@ class HomeBinding extends Bindings {
     Get.lazyPut<HomeController>(
       () => HomeController(repository:Get.find<ServiceRepository>()),
     );Get.lazyPut<CategoryController>(
-      () => CategoryController(),
+      () => CategoryController(serviceRepository: Get.find<ServiceRepository>()),
     );Get.lazyPut<BookingsController>(
       () => BookingsController(),
     );Get.lazyPut<SearchViewController>(

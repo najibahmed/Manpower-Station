@@ -1,9 +1,7 @@
-// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/menu/widgets/menu_item.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
@@ -52,7 +50,7 @@ class MenuView extends BaseView<MenusController> {
                         spreadRadius: 2,
                           blurRadius: 5,
                           color: Colors.grey.withOpacity(0.4),
-                          offset: Offset(1, 4))
+                          offset: const Offset(1, 4))
                     ],
                     color: Colors.grey.withOpacity(.30),
                   ),
@@ -87,7 +85,7 @@ class MenuView extends BaseView<MenusController> {
                         spreadRadius: 1,
                         blurRadius: 3,
                         color: Colors.grey.withOpacity(0.2),
-                        offset: Offset(1, 3))
+                        offset: const Offset(1, 3))
                   ],
                 ),
                 child: Center(
@@ -152,18 +150,18 @@ class MenuView extends BaseView<MenusController> {
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Logout'),
-              Spacer(),
+              const Text('Logout'),
+              const Spacer(),
               Image.asset(AppImages.instance.manpower_Logo),
             ],
           ),
-          content: Text('Are you sure you want to log out?'),
+          content: const Text('Are you sure you want to log out?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('No', style: TextStyle(color: LightThemeColors.primaryColor)),
+              child: const Text('No', style: TextStyle(color: LightThemeColors.primaryColor)),
             ),
             TextButton(
               onPressed: () {
@@ -171,7 +169,7 @@ class MenuView extends BaseView<MenusController> {
                 Get.find<MenusController>().clearSharedPrefData();
                 Get.offAllNamed(AppPages.SignIn);
               },
-              child: Text(
+              child: const Text(
                 'Yes',
                 style: TextStyle(color: LightThemeColors.primaryColor),
               ),
@@ -183,9 +181,4 @@ class MenuView extends BaseView<MenusController> {
   }
 }
 
-Widget _menuProfileShimmer() {
-  return const ShimmerWidget.circular(
-    height: 80,
-    width: 80,
-  );
-}
+

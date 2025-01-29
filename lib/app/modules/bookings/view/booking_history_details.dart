@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
@@ -348,7 +347,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
           SizedBox(height: screenHeight * 0.01),
           Center(
             child: Text(
-                '${booking.services?.first.service?.name ?? "Empty Service Name"}',
+                booking.services?.first.service?.name ?? "Empty Service Name",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: LightThemeColors.primaryColor,
@@ -475,7 +474,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                           const Text('Address:   ',
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           Text(
-                              '${controller.workersData.value?.emergencyContract?.address ?? "Empty"}'),
+                              controller.workersData.value?.emergencyContract?.address ?? "Empty"),
                         ],
                       ),
                     ],

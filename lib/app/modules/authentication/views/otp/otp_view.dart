@@ -85,7 +85,7 @@ class OtpView extends BaseView<AuthenticationController> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.07,
                 ),
-                Text("${Strings.verifyNumMsg.tr}",
+                Text(Strings.verifyNumMsg.tr,
                     style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
                 const SizedBox(
                   height: 2,

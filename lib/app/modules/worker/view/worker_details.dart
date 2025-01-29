@@ -260,7 +260,7 @@ class WorkerDetailsScreen extends BaseView<WorkerController> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '${title}:  ',
+          '$title:  ',
           style: TextStyle(
               color: Theme.of(context).textTheme.bodySmall?.color,
               fontSize: 16),

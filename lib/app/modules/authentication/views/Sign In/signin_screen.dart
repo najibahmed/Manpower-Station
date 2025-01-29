@@ -119,7 +119,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
                               borderRadius: BorderRadius.circular(50)),
                           backgroundColor: LightThemeColors.primaryColor),
                       child: Text(
-                        "${Strings.signUp.tr}",
+                        Strings.signUp.tr,
                         style: Theme.of(context)
                             .textTheme
                             .displayMedium

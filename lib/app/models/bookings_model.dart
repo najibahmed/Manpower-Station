@@ -1,24 +1,24 @@
-/// _id : "6767ae19a0bb0f48c3d3e5d4"
+/// _id : "677dfcf6e15dedad988d34d5"
 /// user : {"_id":"67542d43ba32c9e9cd427a48","username":"user","email":"user@gmail.com","userType":"client","is_phone_verified":true,"createdAt":"2024-12-07T11:10:59.436Z","updatedAt":"2024-12-10T11:16:53.207Z","__v":0,"is_otp":"1E07","otp_expiresIn":"2024-12-11T11:16:53.200Z"}
-/// workers : [{"user":"678211ad8c763ba1b530e398","_id":"67874e459e7b6b11f19db48d"}]
-/// services : [{"service":null,"work_start_date":"2024-12-12T06:09:00.000Z","time_schedule":"3months","price":124200,"_id":"6767ae19a0bb0f48c3d3e5d5"}]
-/// username : "asadul-islam"
+/// workers : []
+/// services : [{"service":{"service_discount":{"discount":50,"discount_type":"Percentage Discount"},"_id":"677dfb9ce15dedad988d3204","service_category_id":"676a80e1b817e0e7ebdb198f","name":"Room Cleaning","description":"home cleaning is the best service in my office","service_overview":"","service_price":300,"image":"GlYoi9N6P-462567654_896952099172260_7180434212789286274_n.jpg","ratings":0,"schedules":["months","days","weeks"],"minimum_advance_paid":99,"reviews":[],"createdAt":"2025-01-08T04:14:21.217Z","updatedAt":"2025-01-14T05:14:06.954Z","__v":2},"work_start_date":"2025-01-10T04:19:00.000Z","time_schedule":"10months","price":360000,"_id":"677dfcf6e15dedad988d34d6"}]
+/// username : "islam"
 /// ratings : 0
-/// area : "sds"
+/// area : "etrer"
 /// address : "fg"
 /// state : "Bangladesh"
 /// city : "dfg"
-/// phone : "545"
-/// advance_amount : 124200
-/// total_amount : 124200
-/// we_will_get_payment : 0
-/// paymentid : {"_id":"6767ae19a0bb0f48c3d3e5d2","user":"67542d43ba32c9e9cd427a48","tran_id":"00739197-67c9-487e-a1cf-39cbacfbd687","amount":124200,"paidStatus":false,"createdAt":"2024-12-22T06:13:45.243Z","updatedAt":"2024-12-22T06:13:45.243Z","__v":0}
-/// is_payment_status : "Completed"
-/// end_date : "2025-01-15T05:59:04.821Z"
+/// phone : "234234"
+/// advance_amount : 99
+/// total_amount : 360000
+/// we_will_get_payment : 359901
+/// paymentid : {"_id":"677dfcf6e15dedad988d34d3","user":"67542d43ba32c9e9cd427a48","tran_id":"6e5675d7-a1fe-4ccd-a656-3b386d773fb7","amount":99,"paidStatus":true,"createdAt":"2025-01-08T04:20:06.846Z","updatedAt":"2025-01-08T04:20:18.630Z","__v":0}
+/// is_payment_status : "Confirmed"
+/// end_date : null
 /// reviews : []
-/// createdAt : "2024-12-22T06:13:45.359Z"
-/// updatedAt : "2025-01-15T05:59:04.821Z"
-/// __v : 1
+/// createdAt : "2025-01-08T04:20:06.962Z"
+/// updatedAt : "2025-01-27T10:02:09.278Z"
+/// __v : 0
 
 class BookingsModel {
   BookingsModel({
@@ -95,9 +95,7 @@ class BookingsModel {
     _isPaymentStatus = json['is_payment_status'];
     _endDate = json['end_date'];
     if (json['reviews'] != null) {
-      _reviews =List<dynamic>.from(json["reviews"].map((x) => x),
-      );
-
+      _reviews =List<dynamic>.from(json["reviews"].map((x) => x),);
     }
     _createdAt = json['createdAt'];
     _updatedAt = json['updatedAt'];
@@ -169,7 +167,7 @@ class BookingsModel {
   );
   String? get id => _id;
   User? get user => _user;
-  List<Workers>? get workers => _workers;
+  List<dynamic>? get workers => _workers;
   List<Services>? get services => _services;
   String? get username => _username;
   num? get ratings => _ratings;
@@ -183,7 +181,7 @@ class BookingsModel {
   num? get weWillGetPayment => _weWillGetPayment;
   Paymentid? get paymentid => _paymentid;
   String? get isPaymentStatus => _isPaymentStatus;
-  String? get endDate => _endDate;
+  dynamic get endDate => _endDate;
   List<dynamic>? get reviews => _reviews;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
@@ -227,13 +225,13 @@ class BookingsModel {
 
 }
 
-/// _id : "6767ae19a0bb0f48c3d3e5d2"
+/// _id : "677dfcf6e15dedad988d34d3"
 /// user : "67542d43ba32c9e9cd427a48"
-/// tran_id : "00739197-67c9-487e-a1cf-39cbacfbd687"
-/// amount : 124200
-/// paidStatus : false
-/// createdAt : "2024-12-22T06:13:45.243Z"
-/// updatedAt : "2024-12-22T06:13:45.243Z"
+/// tran_id : "6e5675d7-a1fe-4ccd-a656-3b386d773fb7"
+/// amount : 99
+/// paidStatus : true
+/// createdAt : "2025-01-08T04:20:06.846Z"
+/// updatedAt : "2025-01-08T04:20:18.630Z"
 /// __v : 0
 
 class Paymentid {
@@ -315,15 +313,15 @@ class Paymentid {
 
 }
 
-/// service : null
-/// work_start_date : "2024-12-12T06:09:00.000Z"
-/// time_schedule : "3months"
-/// price : 124200
-/// _id : "6767ae19a0bb0f48c3d3e5d5"
+/// service : {"service_discount":{"discount":50,"discount_type":"Percentage Discount"},"_id":"677dfb9ce15dedad988d3204","service_category_id":"676a80e1b817e0e7ebdb198f","name":"Room Cleaning","description":"home cleaning is the best service in my office","service_overview":"","service_price":300,"image":"GlYoi9N6P-462567654_896952099172260_7180434212789286274_n.jpg","ratings":0,"schedules":["months","days","weeks"],"minimum_advance_paid":99,"reviews":[],"createdAt":"2025-01-08T04:14:21.217Z","updatedAt":"2025-01-14T05:14:06.954Z","__v":2}
+/// work_start_date : "2025-01-10T04:19:00.000Z"
+/// time_schedule : "10months"
+/// price : 360000
+/// _id : "677dfcf6e15dedad988d34d6"
 
 class Services {
   Services({
-    dynamic service,
+    Service? service,
     String? workStartDate,
     String? timeSchedule,
     num? price,
@@ -336,18 +334,18 @@ class Services {
   }
 
   Services.fromJson(dynamic json) {
-    _service = json['service'];
+    _service = json['service'] != null ? Service.fromJson(json['service']) : null;
     _workStartDate = json['work_start_date'];
     _timeSchedule = json['time_schedule'];
     _price = json['price'];
     _id = json['_id'];
   }
-  dynamic _service;
+  Service? _service;
   String? _workStartDate;
   String? _timeSchedule;
   num? _price;
   String? _id;
-  Services copyWith({  dynamic service,
+  Services copyWith({  Service? service,
     String? workStartDate,
     String? timeSchedule,
     num? price,
@@ -358,7 +356,7 @@ class Services {
     price: price ?? _price,
     id: id ?? _id,
   );
-  dynamic get service => _service;
+  Service? get service => _service;
   String? get workStartDate => _workStartDate;
   String? get timeSchedule => _timeSchedule;
   num? get price => _price;
@@ -366,11 +364,204 @@ class Services {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['service'] = _service;
+    if (_service != null) {
+      map['service'] = _service?.toJson();
+    }
     map['work_start_date'] = _workStartDate;
     map['time_schedule'] = _timeSchedule;
     map['price'] = _price;
     map['_id'] = _id;
+    return map;
+  }
+
+}
+
+/// service_discount : {"discount":50,"discount_type":"Percentage Discount"}
+/// _id : "677dfb9ce15dedad988d3204"
+/// service_category_id : "676a80e1b817e0e7ebdb198f"
+/// name : "Room Cleaning"
+/// description : "home cleaning is the best service in my office"
+/// service_overview : ""
+/// service_price : 300
+/// image : "GlYoi9N6P-462567654_896952099172260_7180434212789286274_n.jpg"
+/// ratings : 0
+/// schedules : ["months","days","weeks"]
+/// minimum_advance_paid : 99
+/// reviews : []
+/// createdAt : "2025-01-08T04:14:21.217Z"
+/// updatedAt : "2025-01-14T05:14:06.954Z"
+/// __v : 2
+
+class Service {
+  Service({
+    ServiceDiscount? serviceDiscount,
+    String? id,
+    String? serviceCategoryId,
+    String? name,
+    String? description,
+    String? serviceOverview,
+    num? servicePrice,
+    String? image,
+    num? ratings,
+    List<String>? schedules,
+    num? minimumAdvancePaid,
+    List<dynamic>? reviews,
+    String? createdAt,
+    String? updatedAt,
+    num? v,}){
+    _serviceDiscount = serviceDiscount;
+    _id = id;
+    _serviceCategoryId = serviceCategoryId;
+    _name = name;
+    _description = description;
+    _serviceOverview = serviceOverview;
+    _servicePrice = servicePrice;
+    _image = image;
+    _ratings = ratings;
+    _schedules = schedules;
+    _minimumAdvancePaid = minimumAdvancePaid;
+    _reviews = reviews;
+    _createdAt = createdAt;
+    _updatedAt = updatedAt;
+    _v = v;
+  }
+
+  Service.fromJson(dynamic json) {
+    _serviceDiscount = json['service_discount'] != null ? ServiceDiscount.fromJson(json['service_discount']) : null;
+    _id = json['_id'];
+    _serviceCategoryId = json['service_category_id'];
+    _name = json['name'];
+    _description = json['description'];
+    _serviceOverview = json['service_overview'];
+    _servicePrice = json['service_price'];
+    _image = json['image'];
+    _ratings = json['ratings'];
+    _schedules = json['schedules'] != null ? json['schedules'].cast<String>() : [];
+    _minimumAdvancePaid = json['minimum_advance_paid'];
+    if (json['reviews'] != null) {
+      _reviews =List<dynamic>.from(json["reviews"].map((x) => x),);
+    }
+    _createdAt = json['createdAt'];
+    _updatedAt = json['updatedAt'];
+    _v = json['__v'];
+  }
+  ServiceDiscount? _serviceDiscount;
+  String? _id;
+  String? _serviceCategoryId;
+  String? _name;
+  String? _description;
+  String? _serviceOverview;
+  num? _servicePrice;
+  String? _image;
+  num? _ratings;
+  List<String>? _schedules;
+  num? _minimumAdvancePaid;
+  List<dynamic>? _reviews;
+  String? _createdAt;
+  String? _updatedAt;
+  num? _v;
+  Service copyWith({  ServiceDiscount? serviceDiscount,
+    String? id,
+    String? serviceCategoryId,
+    String? name,
+    String? description,
+    String? serviceOverview,
+    num? servicePrice,
+    String? image,
+    num? ratings,
+    List<String>? schedules,
+    num? minimumAdvancePaid,
+    List<dynamic>? reviews,
+    String? createdAt,
+    String? updatedAt,
+    num? v,
+  }) => Service(  serviceDiscount: serviceDiscount ?? _serviceDiscount,
+    id: id ?? _id,
+    serviceCategoryId: serviceCategoryId ?? _serviceCategoryId,
+    name: name ?? _name,
+    description: description ?? _description,
+    serviceOverview: serviceOverview ?? _serviceOverview,
+    servicePrice: servicePrice ?? _servicePrice,
+    image: image ?? _image,
+    ratings: ratings ?? _ratings,
+    schedules: schedules ?? _schedules,
+    minimumAdvancePaid: minimumAdvancePaid ?? _minimumAdvancePaid,
+    reviews: reviews ?? _reviews,
+    createdAt: createdAt ?? _createdAt,
+    updatedAt: updatedAt ?? _updatedAt,
+    v: v ?? _v,
+  );
+  ServiceDiscount? get serviceDiscount => _serviceDiscount;
+  String? get id => _id;
+  String? get serviceCategoryId => _serviceCategoryId;
+  String? get name => _name;
+  String? get description => _description;
+  String? get serviceOverview => _serviceOverview;
+  num? get servicePrice => _servicePrice;
+  String? get image => _image;
+  num? get ratings => _ratings;
+  List<String>? get schedules => _schedules;
+  num? get minimumAdvancePaid => _minimumAdvancePaid;
+  List<dynamic>? get reviews => _reviews;
+  String? get createdAt => _createdAt;
+  String? get updatedAt => _updatedAt;
+  num? get v => _v;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (_serviceDiscount != null) {
+      map['service_discount'] = _serviceDiscount?.toJson();
+    }
+    map['_id'] = _id;
+    map['service_category_id'] = _serviceCategoryId;
+    map['name'] = _name;
+    map['description'] = _description;
+    map['service_overview'] = _serviceOverview;
+    map['service_price'] = _servicePrice;
+    map['image'] = _image;
+    map['ratings'] = _ratings;
+    map['schedules'] = _schedules;
+    map['minimum_advance_paid'] = _minimumAdvancePaid;
+    if (_reviews != null) {
+      map['reviews'] = _reviews?.map((v) => v.toJson()).toList();
+    }
+    map['createdAt'] = _createdAt;
+    map['updatedAt'] = _updatedAt;
+    map['__v'] = _v;
+    return map;
+  }
+
+}
+
+/// discount : 50
+/// discount_type : "Percentage Discount"
+
+class ServiceDiscount {
+  ServiceDiscount({
+    num? discount,
+    String? discountType,}){
+    _discount = discount;
+    _discountType = discountType;
+  }
+
+  ServiceDiscount.fromJson(dynamic json) {
+    _discount = json['discount'];
+    _discountType = json['discount_type'];
+  }
+  num? _discount;
+  String? _discountType;
+  ServiceDiscount copyWith({  num? discount,
+    String? discountType,
+  }) => ServiceDiscount(  discount: discount ?? _discount,
+    discountType: discountType ?? _discountType,
+  );
+  num? get discount => _discount;
+  String? get discountType => _discountType;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['discount'] = _discount;
+    map['discount_type'] = _discountType;
     return map;
   }
 

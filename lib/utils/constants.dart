@@ -25,18 +25,5 @@ class Constants {
 
 }
 
-final List<String> optionTime=[
-'Hours',
-'Days',
-'Weeks',
-'Months'
-];
+
 final List <int> timeFrequency = [1,2,3, 4, 5, 6, 7, 8];
-final List categoryImage=[
-  'assets/category/category_electronics.jpg',
-  'assets/category/car_care.jpg',
-  'assets/category/shifting.jpg',
-  'assets/category/painting.jpg',
-  'assets/category/washing.jpg',
-  'assets/category/category_cleaning.jpg',
-];

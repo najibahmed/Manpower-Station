@@ -51,7 +51,7 @@ class _ResendSmsTileState extends State<ResendSmsTile> {
         _isTileActive ? _resendSms : null;
       },
       leading: Icon(Icons.sms, color: _isTileActive ? LightThemeColors.primaryColor :LightThemeColors.opacityTextColor),
-      title: Text('${Strings.resendSms.tr}'),
+      title: Text(Strings.resendSms.tr),
       trailing:  _isTileActive ? const Text(''):Text('Wait $_start s',
         style: TextStyle(
           fontSize: MyFonts.bodySmallTextSize,

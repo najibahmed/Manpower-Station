@@ -24,6 +24,10 @@ class ApiList {
    // String updateUserProfileField = "/api/clients/update/client/profile/:userId"; //put method, userId required
    // String searchServices = "/api/services/get/all?keyword='keywordText' "; //get method, keywordText is Dynamic came from textField
 
+   static String getPaymentSuccessUrl(String tranId,String appStatus) => "/api/payments/ammerpay/success/$tranId/$appStatus";
+   static String getPaymentFailsUrl(String tranId,String appStatus) => "/api/payments/ammerpay/cancel/$tranId/$appStatus";
+
+
    static String getBookingsByUidUrl(String userId) =>
        "/api/bookings/get/unique/user/booking/$userId";
 

@@ -138,7 +138,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         left: 0,
                         right: 0,
                         child: Container(
-                          padding: EdgeInsets.only(left: 8),
+                          padding: const EdgeInsets.only(left: 8),
                           color: Colors.black.withOpacity(.3),
                           child: Text(
                             '${controller.serviceModel.name}',
@@ -185,7 +185,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     BigText(
                         text: 'Select Package Duration',
                         size: MyFonts.bodyLargeSize),
-                    controller.selectedTimeKey!.isNotEmpty?SizedBox():Text("*Required",style: TextStyle(fontSize: 11,color: Colors.red.shade200),),
+                    controller.selectedTimeKey!.isNotEmpty?const SizedBox():Text("*Required",style: TextStyle(fontSize: 11,color: Colors.red.shade200),),
                     SizedBox(height: screenHeight * .01),
                     packageDurationChoiceChip(options,context),
                     // durationSegmentedButton(options),
@@ -251,7 +251,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     children: options.map((option) {
                       final bool isDisabled = !controller.serviceModel.schedules!.contains(option);
                       final bool isSelected = controller.selectedTimeKey!.value == option;
-                      return ChoiceChip(side: BorderSide( color: Colors.green,),
+                      return ChoiceChip(side: const BorderSide( color: Colors.green,),
                         label: Text(
                           option.toUpperCase(),
                           style: TextStyle(

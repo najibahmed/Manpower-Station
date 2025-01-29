@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:get/get.dart';
 import 'package:manpower_station/app/models/active_banner.dart';
 import 'package:manpower_station/app/models/category_model.dart';
@@ -12,12 +14,11 @@ class HomeController extends BaseController {
   final ServiceRepository repository;
   HomeController({required this.repository});
 
-  final _allServiceData = <dynamic>[].obs;
+  RxList _allServiceData = <dynamic>[].obs;
   List get allServiceData => _allServiceData;
   final _allCategoryData = <dynamic>[].obs;
   List get allCatData => _allCategoryData;
-  final RxList _oneCategoryServicesData = <dynamic>[].obs;
-  List get oneCategoryServicesData => _oneCategoryServicesData;
+
 
 
 
@@ -78,71 +79,6 @@ class HomeController extends BaseController {
     }
   }
 
-  // /// Get all service categories
-  // Future<void> getAllServiceCategories() async {
-  //   try {
-  //     var url = ApiList.getAllServicesCategoriesUrl;
-  //     await BaseClient.safeApiCall(
-  //         url,
-  //         RequestType.get,
-  //         onSuccess: (response) {
-  //           // if (kDebugMode) {
-  //           //   print(response.data);
-  //           // }
-  //           if (response.statusCode == 200) {
-  //             var jsonData = response.data['categories'];
-  //             var categoryList = jsonData.map((e) => CategoryModel.fromJson(e))
-  //                 .toList();
-  //             _allCategoryData.assignAll(categoryList);// Update the RxList with new data
-  //           } else {
-  //             CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load Categories:',message: '${response.statusMessage}');
-  //           }
-  //         }
-  //     );
-  //   } catch (e) {
-  //     CustomSnackBar.showCustomErrorSnackBar(title:'Error try get category:',message: '$e');
-  //   }
-  // }
-
-  /// Get all Categories from server
-  Future<void> fetchSingleCatServices(String id)async{
-    var response =  await repository.getData(ApiList.singleCategoryServiceUrl(id));
-    if (response.statusCode == 200) {
-      var jsonData = response.data['servicesLists'];
-      var serviceList = jsonData.map((item) => ServiceModel.fromJson(item))
-          .toList();
-      _oneCategoryServicesData.assignAll(serviceList);// Update the RxList with new data
-    } else {
-      CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services by one category:',message: ' ${response.statusMessage}');
-    }
-  }
-
-
-  // /// Get one category service
-  // Future<void> getOneCategoryServices(String id) async {
-  //   try {
-  //     var url= ApiList.singleCategoryServiceUrl(id);   //"/api/services/categories/services/$id";
-  //     await BaseClient.safeApiCall(
-  //         url,
-  //         RequestType.get,
-  //         onSuccess: (response) {
-  //           // if (kDebugMode) {
-  //           //   print(response.data);
-  //           // }
-  //           if (response.statusCode == 200) {
-  //             var jsonData = response.data['servicesLists'];
-  //             var serviceList = jsonData.map((item) => ServiceModel.fromJson(item))
-  //                 .toList();
-  //             _oneCategoryServicesData.assignAll(serviceList);// Update the RxList with new data
-  //           } else {
-  //             CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services by one category:',message: ' ${response.statusMessage}');
-  //           }
-  //         }
-  //     );
-  //   } catch (e) {
-  //     CustomSnackBar.showCustomErrorSnackBar(title:'Error try get all service cat:',message: '$e');
-  //   }
-  // }
 
   /// Get active banners for dashboard
   late Rx<ActiveBanner> activeBanners=ActiveBanner().obs;

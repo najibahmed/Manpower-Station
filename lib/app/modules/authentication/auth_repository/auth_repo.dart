@@ -6,7 +6,7 @@ import '../../../network/api_list.dart';
 class AuthRepository {
 
   static Future<Response<dynamic>> postLogin(requestData,String appUrl) async {
-    Dio _dio=Dio(
+    Dio dio=Dio(
       BaseOptions(
         baseUrl: ApiList.baseUrl,
         headers: {
@@ -17,31 +17,13 @@ class AuthRepository {
     );
     late Response<dynamic> apiResponse;
     try {
-      final response = await _dio.post(
+      final response = await dio.post(
       appUrl,
         data: requestData
       );
       apiResponse=response;
-
-      // await BaseClient.safeApiCall(
-      //     appUrl,
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //       'Accept': 'application/json',
-      //     },
-      //     RequestType.post,
-      //     data: requestData,
-      //     onError: (err){
-      //       apiResponse= err.response!;
-      //     },
-      //     onSuccess: (response) {
-      //       apiResponse = response;
-      //     });
-
     } on DioException catch (err) {
-      print("error response ---:${err.response!.data}");
       apiResponse=err.response!;
-      // LoggerUtil.instance.printLog(msg: 'Error Login : ${err.response.toString()}');
     }
     return apiResponse;
   }

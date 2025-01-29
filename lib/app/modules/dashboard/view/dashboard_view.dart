@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
 import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:manpower_station/app/modules/home/views/home_view.dart';
@@ -78,12 +77,12 @@ class DashboardScreen extends GetView<DashBoardController> {
                 IconButton(
                     onPressed: () async {
                       // Get.to(const MyPay());
-                      print(
-                          'access token----${MySharedPref.getAccessToken()}');
-                      print(
-                          "refresh token---${await MySharedPref.getRefreshToken()}");
-                      print(
-                          "userId----${await MySharedPref.getUserId()}");
+                      // print(
+                      //     'access token----${MySharedPref.getAccessToken()}');
+                      // print(
+                      //     "refresh token---${await MySharedPref.getRefreshToken()}");
+                      // print(
+                      //     "userId----${await MySharedPref.getUserId()}");
                     },
                     icon:  Icon(
                       Icons.notifications_active_outlined,

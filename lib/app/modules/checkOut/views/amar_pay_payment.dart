@@ -143,81 +143,84 @@ class MyPay extends GetView<CheckoutController> {
     return SizedBox(
       height: 50,
       width: 300,
-      child: Aamarpay(
-        // This will return a payment url based on failUrl,cancelUrl,successUrl
-        returnUrl: (String url) {
-          print('Return Url---->$url');
-        },
-        // This will return the payment loading status
-        isLoading: (bool loading) {
-          controller.isLoading.value = loading;
-        },
-        // This will return the payment event with a message
-        status: (EventState event, String message) {
-          if (event == EventState.backButtonPressed ||
-              event == EventState.cancel ||
-              event == EventState.error) {
-            controller.isLoading.value = false;
-            CustomSnackBar.showCustomErrorToast(message: message);
-          }
-          print('---->this is the payment event message $message');
-          if (event == EventState.fail) {
-            controller.isLoading.value = false;
-            CustomSnackBar.showCustomErrorToast(message: message);
-          }
-          if (event == EventState.success) {
-            Get.toNamed(AppPages.PaymentSuccess);
-            controller.isLoading.value = false;
-            // Get.offNamedUntil(AppPages.DashboardView,(Route<dynamic> route) => false);
-            CustomSnackBar.showCustomSnackBar(
-                title: "Order Confirmed", message: message);
-          }
-        },
+      child: Obx(()=>Aamarpay(
+          // This will return a payment url based on failUrl,cancelUrl,successUrl
+          returnUrl: (String url) {
+          },
+          // This will return the payment loading status
+          isLoading: (bool loading) {
+            controller.isLoading.value = loading;
+          },
+          // This will return the payment event with a message
+          status: (EventState event, String message) {
+            if (event == EventState.backButtonPressed ||
+                event == EventState.cancel ||
+                event == EventState.error) {
+              controller.isLoading.value = false;
+              controller.setPaymentCancle();
+              CustomSnackBar.showCustomErrorToast(message: message);
+            }
+            print('---->this is the payment event message $message');
+            if (event == EventState.fail) {
+              controller.setPaymentCancle();
+              controller.isLoading.value = false;
+              CustomSnackBar.showCustomErrorToast(message: message);
+            }
+            if (event == EventState.success) {
+              Get.toNamed(AppPages.PaymentSuccess);
+              controller.isLoading.value = false;
+              controller.setPaymentSuccess();
+              // Get.offNamedUntil(AppPages.DashboardView,(Route<dynamic> route) => false);
+              CustomSnackBar.showCustomSnackBar(
+                  title: "Order Confirmed", message: message);
+            }
+          },
 
-        // When you use your own url, you must have the
-        // keywords:cancel,confirm,fail otherwise the callback function will not work properly
+          // When you use your own url, you must have the
+          // keywords:cancel,confirm,fail otherwise the callback function will not work properly
 
-        cancelUrl: "example.com/payment/cancel",
-        successUrl: "example.com/payment/confirm",
-        failUrl: "manpower/demo/fail",
-        customerEmail: "demo@gmail.com",
-        customerMobile: "${controller.phoneNumberController.text.trim()}",
-        customerName: "${controller.nameController.text.trim()}",
-        customerAddress1: "${controller.addressLine1Controller.text.trim()}",
-        customerCity: "${controller.cityController.text.trim()}",
-        customerState: "${controller.stateController.text.trim()}",
-        // That is the test signature key. But when you go to the production you must use your own signature key
-        signature: "dbb74894e82415a2f7ff0ec3a97e4183",
-        // That is the test storeID. But when you go to the production you must use your own storeID
-        storeID: "aamarpaytest",
-        // Use transactionAmountFromTextField when you pass amount with TextEditingController
-        // transactionAmountFromTextField: amountTextEditingController,
-        transactionAmount: "99",
-        //The transactionID must be unique for every payment
-        transactionID: "${DateTime.now().millisecondsSinceEpoch}",
-        //The transactionID must be unique for every payment
-        /// transactionID: "transactionID",
-        description: "test",
-        // When the application goes to the production the isSandbox must be false
-        isSandBox: true,
-        child: controller.isLoading.value
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: LightThemeColors.primaryColor,
-                ),
-                height: 50,
-                child: const Center(
-                  child: Text(
-                    "Payment",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+          cancelUrl: "example.com/payment/cancel",
+          successUrl: "example.com/payment/confirm",
+          failUrl: "manpower/demo/fail",
+          customerEmail: "demo@gmail.com",
+          customerMobile: controller.phoneNumberController.text.trim(),
+          customerName: controller.nameController.text.trim(),
+          customerAddress1: controller.addressLine1Controller.text.trim(),
+          customerCity: controller.cityController.text.trim(),
+          customerState: controller.stateController.text.trim(),
+          // That is the test signature key. But when you go to the production you must use your own signature key
+          signature: "dbb74894e82415a2f7ff0ec3a97e4183",
+          // That is the test storeID. But when you go to the production you must use your own storeID
+          storeID: "aamarpaytest",
+          // Use transactionAmountFromTextField when you pass amount with TextEditingController
+          // transactionAmountFromTextField: amountTextEditingController,
+          transactionAmount: "99",
+          //The transactionID must be unique for every payment
+          transactionID: "${DateTime.now().millisecondsSinceEpoch}",
+          //The transactionID must be unique for every payment
+          /// transactionID: "transactionID",
+          description: "test",
+          // When the application goes to the production the isSandbox must be false
+          isSandBox: true,
+          child: controller.isLoading.value
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: LightThemeColors.primaryColor,
+                  ),
+                  height: 50,
+                  child: const Center(
+                    child: Text(
+                      "Payment",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }

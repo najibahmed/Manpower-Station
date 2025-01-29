@@ -411,8 +411,8 @@ class SocialCard extends StatelessWidget {
 
 class AlreadyAccountText extends StatelessWidget {
   const AlreadyAccountText({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
