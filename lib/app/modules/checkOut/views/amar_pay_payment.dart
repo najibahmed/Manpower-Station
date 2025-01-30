@@ -152,27 +152,29 @@ class MyPay extends GetView<CheckoutController> {
             controller.isLoading.value = loading;
           },
           // This will return the payment event with a message
-          status: (EventState event, String message) {
-            if (event == EventState.backButtonPressed ||
-                event == EventState.cancel ||
-                event == EventState.error) {
-              controller.isLoading.value = false;
-              controller.setPaymentCancle();
-              CustomSnackBar.showCustomErrorToast(message: message);
-            }
+          status: (EventState event, String message)async {
             print('---->this is the payment event message $message');
-            if (event == EventState.fail) {
-              controller.setPaymentCancle();
-              controller.isLoading.value = false;
-              CustomSnackBar.showCustomErrorToast(message: message);
-            }
             if (event == EventState.success) {
-              Get.toNamed(AppPages.PaymentSuccess);
+              Get.offNamed(AppPages.PaymentSuccess);
               controller.isLoading.value = false;
-              controller.setPaymentSuccess();
-              // Get.offNamedUntil(AppPages.DashboardView,(Route<dynamic> route) => false);
+              await controller.setPaymentSuccess();
               CustomSnackBar.showCustomSnackBar(
                   title: "Order Confirmed", message: message);
+            }
+            else if (event == EventState.cancel) {
+              print('---->Cancel State');
+              controller.isLoading.value = false;
+             await controller.setPaymentCancel();
+              CustomSnackBar.showCustomErrorToast(message: message);
+            }
+            else if (event == EventState.fail||event == EventState.backButtonPressed) {
+              print('---->Fail State');
+              await controller.setPaymentCancel();
+              controller.isLoading.value = false;
+              CustomSnackBar.showCustomErrorToast(message: message);
+            }else if(event == EventState.error){
+              print('---->Error State');
+              CustomSnackBar.showCustomErrorToast(message: message);
             }
           },
 

@@ -1,9 +1,7 @@
-// ignore_for_file: unused_import
 
 import 'package:dio/dio.dart';
 import 'package:manpower_station/utils/appLoggerUtils.dart';
 import '../../../network/api_client.dart';
-import '../../../network/api_list.dart';
 
 class ServiceRepository {
 
@@ -14,6 +12,7 @@ class ServiceRepository {
           appUrl,
           headers: {
             'Content-Type': 'application/json',
+            "Bypass-Auth": "true",
             'Accept': 'application/json',
           },
           RequestType.get,

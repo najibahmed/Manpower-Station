@@ -7,6 +7,8 @@ import 'package:manpower_station/app/modules/user_profile/user_profile_controlle
 import '../../../network/api_service.dart';
 
 class HelpController extends BaseController {
+  final ApiServices apiService;
+  HelpController({required this.apiService});
 
   var faqItems = <FAQItem>[].obs;
   TextEditingController userEmailController=TextEditingController();
@@ -20,7 +22,7 @@ class HelpController extends BaseController {
       "email_or_phone":"${userEmailController.text.trim()}",
       "username":"${userData?.value.username}",
     };
-    await ApiServices.userReport(userData?.value.user?.id, requestData);
+    await apiService.userReport(userData?.value.user?.id, requestData);
 
   }
 

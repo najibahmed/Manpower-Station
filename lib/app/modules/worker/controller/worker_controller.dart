@@ -59,7 +59,15 @@ class WorkerController extends BaseController {
       } else {
         url = "/api/workers/get/all";
       }
-      await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
+      await BaseClient.safeApiCall(
+          url,
+          RequestType.get,
+          headers: {
+            'Content-Type': 'application/json',
+            "Bypass-Auth": "true",
+            'Accept': 'application/json',
+          },
+          onSuccess: (response) {
         if (response.statusCode == 201) {
           var jsonData = response.data['workers'];
           var workerList =

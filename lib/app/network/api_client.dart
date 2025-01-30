@@ -36,7 +36,12 @@ class BaseClient {
     connectTimeout: const Duration(seconds: 30),
   ))
     ..interceptors.add(InterceptorsWrapper(
+
       onRequest: (options, handler) async {
+        // Check if the request has a "Bypass-Auth" header
+        if (options.headers["Bypass-Auth"] == "true") {
+          return handler.next(options); // Skip authentication
+        }
         // Attach the access token to every request
         String? accessToken = MySharedPref.getAccessToken();
         if (accessToken != null) {
@@ -44,12 +49,16 @@ class BaseClient {
         }
         return handler.next(options); // Continue
       },
+
       onError: (DioException error, handler) async {
-        // "interceptor for refreshToken error: ${error.response?.statusCode}");
+
+        // Skip token refresh if the request had "Bypass-Auth"
+        if (error.requestOptions.headers["Bypass-Auth"] == "true") {
+          return handler.next(error);
+        }
+
         // Check if the error is due to expired access token (400)
-        if (error.response?.statusCode == 400) {
-          // print(
-              // "interceptor for refreshToken error: ${error.response?.statusCode}");
+        if (error.response?.statusCode == 401) {
           // Attempt to refresh the token
           try {
             print('inside try refresh token');
@@ -57,26 +66,18 @@ class BaseClient {
             // Save the new tokens
             await MySharedPref.setAccessToken(newTokens['access_token']!);
             await MySharedPref.setRefreshToken(newTokens['refresh_token']!);
+
             // Retry the original request with new access token
             RequestOptions requestOptions = error.requestOptions;
             requestOptions.headers['Authorization'] =
                 '${newTokens['access_token']}';
 
-            final response = await _dio.request(
-              requestOptions.path,
-              options: Options(
-                method: requestOptions.method,
-                headers: requestOptions.headers,
-              ),
-              data: requestOptions.data,
-              queryParameters: requestOptions.queryParameters,
-            );
+            final response = await _dio.fetch(requestOptions);
             return handler.resolve(response); // Retry the request
           } catch (e) {
             // Handle failure to refresh token (logout, etc.)
-            route.Get.offAllNamed(AppPages.SignIn);
+            // route.Get.offAllNamed(AppPages.SignIn);
              CustomSnackBar.showCustomErrorToast(message: "Session LogOut");
-
             return handler.reject(error);
           }
         } else {
@@ -318,16 +319,15 @@ class BaseClient {
 }
 
 Future<Map<String, String>> _refreshToken() async {
-  // print('inside refresh token');
+
   String? refreshToken = await MySharedPref.getRefreshToken();
-  // print("refresh token:${refreshToken}");
   if (refreshToken == null) {
     LoggerUtil.instance.printLog(
         msg: "Refresh token null : ${MySharedPref.getRefreshToken()}",
         logType: LogType.warning);
     throw Exception('No Access token available');
   }
-  Dio dio = Dio(
+  Dio _dio = Dio(
     BaseOptions(
       baseUrl: ApiList.baseUrl,
       headers: {
@@ -337,7 +337,7 @@ Future<Map<String, String>> _refreshToken() async {
       },
     ),
   );
-  final response = await dio.post(
+  final response = await _dio.post(
     '/api/users/refresh/token',
   );
   if (response.statusCode == 200) {

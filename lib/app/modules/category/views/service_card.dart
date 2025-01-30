@@ -43,7 +43,7 @@ class ServiceCard extends StatelessWidget {
                   imageUrl:
                   '${Constants.serviceImgUrl}$image',
                   errorWidget: (context, url, error) {
-                    print("Category Image error:$error");
+                    print("Category service Image error:$error");
                     return Image.asset(AppImages.instance.servicePlaceHolder, fit: BoxFit.cover,);
 
                   },

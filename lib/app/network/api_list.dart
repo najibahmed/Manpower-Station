@@ -31,6 +31,9 @@ class ApiList {
    static String getBookingsByUidUrl(String userId) =>
        "/api/bookings/get/unique/user/booking/$userId";
 
+   static String deleteUserBooking(String bookingId) =>
+       "/api/bookings/delete/user/personal/booking/$bookingId";
+
    static String userReviewUrl(String bookingId) =>
        '/api/reviews/create/review/$bookingId';
 

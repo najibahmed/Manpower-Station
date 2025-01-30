@@ -10,6 +10,7 @@ import 'package:manpower_station/app/modules/search_view/controller/search_contr
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/modules/user_profile/user_repo/user_repository.dart';
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
+import 'package:manpower_station/app/network/api_service.dart';
 
 import '../../user_profile/user_profile_controller/user_profile_controller.dart';
 
@@ -19,6 +20,9 @@ class DashboardBinding extends Bindings {
     /// Repository
     Get.lazyPut<ServiceRepository>(
       () => ServiceRepository(),
+    );
+    Get.lazyPut<ApiServices>(
+      () => ApiServices(),
     );
     Get.lazyPut<UserRepository>(
       () => UserRepository(),
@@ -32,7 +36,7 @@ class DashboardBinding extends Bindings {
       DashBoardController(),
     );
     Get.lazyPut<BookingsController>(
-      () => BookingsController(),
+      () => BookingsController(apiService: Get.find<ApiServices>()),
     );
     Get.lazyPut<HomeController>(
       () => HomeController(repository:Get.find<ServiceRepository>()),
@@ -53,7 +57,7 @@ class DashboardBinding extends Bindings {
       () => SearchViewController(repository:Get.find<ServiceRepository>()),
     );
     Get.lazyPut<HelpController>(
-      () => HelpController(),
+      () => HelpController(apiService: Get.find<ApiServices>()),
     );
   }
 }

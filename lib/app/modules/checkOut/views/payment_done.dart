@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_button.dart';
+import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/utils/app_Images.dart';
@@ -81,6 +82,7 @@ class PaymentDone extends GetView<CheckoutController> {
               child: CustomButton(
                 title: 'Home',
                 onTap: () {
+                  Get.find<BookingsController>().getAllBookingsByUid();
                   Get.offNamedUntil(AppPages.DashboardView, (route)=>route.isFirst);
                 }, height: 60, width: 300,
               ),

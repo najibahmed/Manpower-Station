@@ -86,7 +86,7 @@ class CheckoutController extends BaseController {
   Future<void> setPaymentSuccess()async{
       const appStatus= 'ammerpay-app';
     var response = await checkOutRepo.postWithOutData(ApiList.getPaymentSuccessUrl(_transactionId.value, appStatus));
-      print("Success response:${response.statusCode}");
+
       if(response.statusCode==200){
 
       }else{
@@ -95,15 +95,11 @@ class CheckoutController extends BaseController {
 
   }
 /// Booking payment cancel/fail
-  Future<void> setPaymentCancle()async{
+  Future<void> setPaymentCancel()async{
       const appStatus= 'ammerpay-app';
     var response = await checkOutRepo.postWithOutData(ApiList.getPaymentFailsUrl(_transactionId.value, appStatus));
       print("Fail response:${response.statusCode}");
-      if(response.statusCode==200){
-
-      }else{
-
-      }
+      // CustomSnackBar.showCustomErrorToast(message: response.data["message"]);
 
   }
 

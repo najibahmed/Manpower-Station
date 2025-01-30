@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:manpower_station/app/models/active_banner.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
@@ -13,7 +14,7 @@ import '../service_repo/service_repository.dart';
 class HomeController extends BaseController {
   final ServiceRepository repository;
   HomeController({required this.repository});
-
+ RxBool refreshLoading=false.obs;
   RxList _allServiceData = <dynamic>[].obs;
   List get allServiceData => _allServiceData;
   final _allCategoryData = <dynamic>[].obs;

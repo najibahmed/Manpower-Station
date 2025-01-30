@@ -9,24 +9,58 @@ import '../../../data/local/my_shared_pref.dart';
 import '../../../network/api_client.dart';
 import '../../../network/api_service.dart';
 
-class BookingsController extends BaseController with GetTickerProviderStateMixin {
+class BookingsController extends BaseController
+    with GetTickerProviderStateMixin {
+  final ApiServices apiService;
+
+  BookingsController({required this.apiService});
+
   // late TabController tabController;
   // RxInt tabIndex = 0.obs;
   final RxList _bookingsList = <dynamic>[].obs;
-  List get getBookingList=>_bookingsList;
+
+  List get getBookingList => _bookingsList;
   RxDouble userRating = 1.0.obs;
+  RxBool isLoading = true.obs;
+  FocusNode focusNode = FocusNode();
+  RxBool refreshLoading = false.obs;
   TextEditingController reviewController = TextEditingController();
   Rx<SingleWorkerModel?> workersData = SingleWorkerModel().obs;
-  RxBool isLoading = true.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  FocusNode focusNode = FocusNode();
 
   Future<void> getWorkerInformation(String id) async {
-    var worker = await ApiServices.getSingleWorker(id);
-    workersData.value = worker;
-
+    var url = ApiList.singleWorkerInfoUrl(id);
+    var response = await apiService.getData(url);
+    if (response.statusCode == 201) {
+      var jsonData = response.data['workerDetailsList']["worker"];
+      SingleWorkerModel workerModel = SingleWorkerModel.fromJson(jsonData);
+      workersData.value = workerModel;
+    } else {
+      CustomSnackBar.showCustomErrorToast(
+          message: 'Failed to load Worker: ${response.statusMessage}',
+          duration: const Duration(seconds: 1));
+    }
   }
 
+  Future<void> deleteBookingService(String bookingId) async {
+    List<BookingsModel>? bookings = await MySharedPref.getUserBookings();
+    var temp = bookings.where((booking) => booking.id != bookingId).toList();
+    await MySharedPref.saveUserBookings(temp);
+    var url = ApiList.deleteUserBooking(bookingId);
+    var response = await apiService.deleteData(url);
+    if (response.statusCode == 200) {
+      CustomSnackBar.showCustomSnackBar(
+          title: "Successful", message: "${response.data["message"]}");
+    } else {
+      CustomSnackBar.showCustomErrorToast(
+          message: 'Failed to Delete Service: ${response.statusMessage}',
+          duration: const Duration(seconds: 1));
+    }
+    _loadUserBookings();
+    Get.back();
+  }
+
+  /// Give user review
   Future<void> giveUserReview(serviceId, String? bookingId) async {
     Map<String, dynamic> requestData = {
       "comment": "${reviewController.text.trim()}",
@@ -34,35 +68,46 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
       "serviceId": ["$serviceId"],
       "workerId": ["${workersData.value!.user!.id}"],
     };
-    await ApiServices.userReview(bookingId, requestData);
+    var url = ApiList.userReviewUrl(bookingId!);
+    var response = await apiService.putData(requestData, url);
+    if (response.statusCode == 200) {
+      var flag = response.data["flag"];
+      if (flag) {
+        CustomSnackBar.showCustomSnackBar(
+            title: "Successful", message: "${response.data["message"]}");
+      }
+    } else {
+      CustomSnackBar.showCustomErrorToast(
+          message: 'Failed to give review: ${response.statusMessage}',
+          duration: const Duration(seconds: 1));
+    }
   }
 
   /// change order status
-  Future<void> changeOrderStatus(String? bookingId,String status) async {
-
+  Future<void> changeOrderStatus(String? bookingId, String status) async {
     Map<String, dynamic> statusData = {
       "paymentStatus": status,
     };
-    await ApiServices.changeBookingStatus(bookingId!, statusData);
+    await apiService.changeBookingStatus(bookingId!, statusData);
     await getAllBookingsByUid();
     _loadUserBookings();
     // _bookingsList.clear();
     // _bookingsList.assignAll(updatedBookings);
-
   }
+
   // void changeTabIndex(int index) {
   //   tabIndex.value = index;
   // }
 
-  void _loadUserBookings()async{
+  void _loadUserBookings() async {
     List<BookingsModel>? bookings = await MySharedPref.getUserBookings();
-    if(bookings.isNotEmpty){
+    if (bookings.isNotEmpty) {
       _bookingsList.assignAll(bookings);
     }
   }
 
   @override
-  void onInit() async{
+  void onInit() async {
     await getAllBookingsByUid();
     _loadUserBookings();
     // tabController = TabController(length: 2, initialIndex: 0, vsync: this);
@@ -76,27 +121,22 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
     super.onClose();
   }
 
-
-
   /// get all bookings for particular userId
   Future<void> getAllBookingsByUid() async {
-    // _bookingsList.clear();
     String? userId = await MySharedPref.getUserId();
     try {
       var url = ApiList.getBookingsByUidUrl(userId!);
       await BaseClient.safeApiCall(url, RequestType.get, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': MySharedPref.getAccessToken()
-        //Constants.accessToken         //MySharedPref.getAccessToken()
-      }, onSuccess: (response) async{
+        // 'Authorization': MySharedPref.getAccessToken()
+      }, onSuccess: (response) async {
         if (response.statusCode == 201) {
           var jsonData = response.data['bookings'];
-          var bookings = jsonData.map((e) => BookingsModel.fromJson(e)).toList();
-
+          var bookings =
+              jsonData.map((e) => BookingsModel.fromJson(e)).toList();
           //save user bookings to local storage
           await MySharedPref.saveUserBookings(bookings);
-          // _bookingsList.assignAll(bookings); // Update the RxList with new data
         } else {
           CustomSnackBar.showCustomErrorSnackBar(
               title: 'Failed to load Workers:',
@@ -104,12 +144,9 @@ class BookingsController extends BaseController with GetTickerProviderStateMixin
         }
       });
     } catch (e) {
-      CustomSnackBar.showCustomErrorSnackBar(
-          title: 'Error bookings :', message: e.toString());
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Error bookings :', message: e.toString());
     }
   }
 }
-enum ServiceStatus {
-  Confirmed,
-  Cancelled
-}
+
+enum ServiceStatus { Confirmed, Cancelled }

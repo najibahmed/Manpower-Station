@@ -289,14 +289,18 @@ class HomeView extends BaseView<HomeController> {
   }
 
   Future<void> _handleRefresh() async {
-    await Get.find<UserController>().getUserInformation();
-    await Get.find<BookingsController>().getAllBookingsByUid();
-    await controller.fetchAllService();
-    await controller.fetchAllCategories();
-    // await controller.getAllServiceData();
-    // await controller.getAllServiceCategories();
-    await controller.getBanners();
-    // return Future.delayed(const Duration(seconds: 2));
+    if(!controller.refreshLoading.value){
+      controller.refreshLoading.value=true;
+      await Get.find<UserController>().getUserInformation();
+      await Get.find<BookingsController>().getAllBookingsByUid();
+      await controller.fetchAllService();
+      await controller.fetchAllCategories();
+      // await controller.getAllServiceData();
+      // await controller.getAllServiceCategories();
+      await controller.getBanners();
+      controller.refreshLoading.value=false;
+
+      }
   }
 
   Widget _buildPopularService(Size size) {
