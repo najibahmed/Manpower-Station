@@ -636,7 +636,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Booking!'),
+          title:  Text('Delete $serviceName Booking!',maxLines: 1,overflow: TextOverflow.ellipsis,),
           content:
               Text('Are you sure you want to delete $serviceName service?'),
           actions: [

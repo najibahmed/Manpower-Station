@@ -49,6 +49,8 @@ class BookingsController extends BaseController
     var url = ApiList.deleteUserBooking(bookingId);
     var response = await apiService.deleteData(url);
     if (response.statusCode == 200) {
+      Get.back();
+      _loadUserBookings();
       CustomSnackBar.showCustomSnackBar(
           title: "Successful", message: "${response.data["message"]}");
     } else {
@@ -56,8 +58,7 @@ class BookingsController extends BaseController
           message: 'Failed to Delete Service: ${response.statusMessage}',
           duration: const Duration(seconds: 1));
     }
-    _loadUserBookings();
-    Get.back();
+
   }
 
   /// Give user review
@@ -137,6 +138,7 @@ class BookingsController extends BaseController
               jsonData.map((e) => BookingsModel.fromJson(e)).toList();
           //save user bookings to local storage
           await MySharedPref.saveUserBookings(bookings);
+          _loadUserBookings();
         } else {
           CustomSnackBar.showCustomErrorSnackBar(
               title: 'Failed to load Workers:',
