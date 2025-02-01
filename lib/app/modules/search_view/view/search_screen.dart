@@ -87,7 +87,15 @@ class SearchScreen extends BaseView<SearchViewController> {
   Container serviceSearchBar(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.075,
-      color: LightThemeColors.primaryColor,
+      // color: LightThemeColors.primaryColor,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: const [
+            LightThemeColors.primaryColor,LightThemeColors.secondaryColor], // Gradient colors
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
         child: TextField(

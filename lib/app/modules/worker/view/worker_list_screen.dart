@@ -15,71 +15,91 @@ class WorkerListScreen extends BaseView<WorkerController> {
   const WorkerListScreen({super.key});
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      centerTitle: true,
-      title: Image.asset(
-        AppImages.instance.manpower_Logo,
-        fit: BoxFit.cover,
-        color: Colors.white,
-      ),
-      leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          )),
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: Container(
-          decoration: const BoxDecoration(
-              color: LightThemeColors.primaryColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10), topRight: Radius.circular(10))),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
-            child: TextField(
-              controller: controller.workerSearchController,
-              keyboardType: TextInputType.text,
-              cursorColor: Colors.green,
-              style: const TextStyle(fontWeight: FontWeight.normal),
-              decoration: const InputDecoration(
-                // fillColor: Colors.grey[300],
-                hintText: 'Search Worker',
-                filled: true,
-                fillColor: Color(0xFFF5FCF9),
-                isDense: true,
-                prefixIcon: Icon(Icons.search_outlined),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                  borderSide: BorderSide(color: Colors.black87, width: 2.0),
+    final size=MediaQuery.of(context).size;
+    return PreferredSize(
+        preferredSize:  Size.fromHeight(kToolbarHeight+ size.height*.06), // Standard AppBar height
+    child: Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    LightThemeColors.primaryColor,LightThemeColors.secondaryColor], // Gradient colors
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    ),
+    ),
+    child: AppBar(
+      backgroundColor: Colors.transparent,
+        centerTitle: true,
+        title: Image.asset(
+          AppImages.instance.manpower_Logo,
+          fit: BoxFit.cover,
+          color: Colors.white,
+        ),
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            )),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: Container(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    LightThemeColors.primaryColor,LightThemeColors.secondaryColor], // Gradient colors
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: 14.0 * 1.5, vertical: 12.0),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                color: LightThemeColors.primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
+              child: TextField(
+                controller: controller.workerSearchController,
+                keyboardType: TextInputType.text,
+                cursorColor: Colors.green,
+                style: const TextStyle(fontWeight: FontWeight.normal),
+                decoration: const InputDecoration(
+                  // fillColor: Colors.grey[300],
+                  hintText: 'Search Worker',
+                  filled: true,
+                  fillColor: Color(0xFFF5FCF9),
+                  isDense: true,
+                  prefixIcon: Icon(Icons.search_outlined),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    borderSide: BorderSide(color: Colors.black87, width: 2.0),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: 14.0 * 1.5, vertical: 12.0),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                  ),
                 ),
+                onChanged: (query) {
+                  controller.deBouncer.call(() {
+                    // controller.isLoading.value = true;
+                    controller.findByWorker.value=[];
+                    controller.findWorkers();
+                    // Future.delayed(
+                    //     const Duration(
+                    //       seconds: 1,
+                    //     ), () {
+                    //   controller.isLoading.value = false;
+                    // });
+                  });
+                },
               ),
-              onChanged: (query) {
-                controller.deBouncer.call(() {
-                  // controller.isLoading.value = true;
-                  controller.findByWorker.value=[];
-                  controller.findWorkers();
-                  // Future.delayed(
-                  //     const Duration(
-                  //       seconds: 1,
-                  //     ), () {
-                  //   controller.isLoading.value = false;
-                  // });
-                });
-              },
             ),
           ),
         ),
       ),
-    );
+    ));
   }
 
   @override
@@ -217,14 +237,14 @@ class WorkerListScreen extends BaseView<WorkerController> {
                                                   worker.user!.id!);
                                           return SizedBox(
                                             height: size.height * 0.035,
-                                            width: size.width * 0.29,
+                                            // width: size.width * 0.29,
                                             child: OutlinedButton.icon(
                                                 onPressed: () {
                                                   if (!isSelected) {
                                                     controller.selectedWorkerList.clear();
                                                     if (controller.selectedWorkerList.isEmpty) {
-                                                      Get.toNamed(AppPages.CheckoutScreen);
                                                       controller.addWorker(worker);
+                                                      Get.toNamed(AppPages.CheckoutScreen);
                                                     }
                                                   } else {
                                                     controller.removeWorker(worker.user!.id);

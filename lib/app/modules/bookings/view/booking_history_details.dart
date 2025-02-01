@@ -11,7 +11,6 @@ import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
-
 import '../../../../utils/app_Images.dart';
 import '../../../components/custom_loading_overlay.dart';
 
@@ -23,38 +22,39 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
     BookingsModel booking = Get.arguments[0];
-    String title = Get.arguments[1];
+    // String title = Get.arguments[1];
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
             /// AppBar
-            SliverAppBar(
-                floating: false,
-                // leading: IconButton(
-                //     onPressed: () {
-                //       Get.back();
-                //       controller.isLoading.value=true;
-                //     },
-                //     icon: const Icon(
-                //       Icons.arrow_back,
-                //       color: Colors.white,
-                //     )),
-                title: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.check_circle,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(title),
-                  ],
-                ),
-                backgroundColor: Theme.of(context).appBarTheme.backgroundColor),
-                controller.workersData.value?.lastName == null
+            // SliverAppBar(
+            //     floating: false,
+            //
+            //     // leading: IconButton(
+            //     //     onPressed: () {
+            //     //       Get.back();
+            //     //       controller.isLoading.value=true;
+            //     //     },
+            //     //     icon: const Icon(
+            //     //       Icons.arrow_back,
+            //     //       color: Colors.white,
+            //     //     )),
+            //     // title: Row(
+            //     //   mainAxisSize: MainAxisSize.min,
+            //     //   children: [
+            //     //     const Icon(
+            //     //       Icons.check_circle,
+            //     //       color: Colors.white,
+            //     //     ),
+            //     //     const SizedBox(
+            //     //       width: 5,
+            //     //     ),
+            //     //     Text(title),
+            //     //   ],
+            //     // ),
+            //     backgroundColor: Theme.of(context).appBarTheme.backgroundColor),
+            controller.workersData.value?.username == null
                 ? SliverToBoxAdapter(
                     child: Center(
                       child: Column(
@@ -76,11 +76,12 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ///Payment Summary
-                          _paymentSummary(context,screenWidth, screenHeight, booking),
+                          _paymentSummary(
+                              context, screenWidth, screenHeight, booking),
                           SizedBox(height: screenHeight * 0.02),
 
                           ///Action Buttons
-                          _buildActionButtons(context),
+                          _buildActionButtons(context, booking),
                           SizedBox(height: screenHeight * 0.01),
 
                           ///Cancel booking card
@@ -220,27 +221,22 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
   }
 
   /// Payment summary section
-  Widget _paymentSummary(BuildContext context,
-      double screenWidth, double screenHeight, BookingsModel booking) {
+  Widget _paymentSummary(BuildContext context, double screenWidth,
+      double screenHeight, BookingsModel booking) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 10),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey.shade500,
-              offset: const Offset(2.0,2.0),
-              blurRadius: 12,
-              spreadRadius: 1.0
-          ),
-          BoxShadow(
-              color: Colors.white,
-              offset: const Offset(-1.0,-1.0),
-              blurRadius: 5,
-              spreadRadius: 1.0
-          )
-        ]
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
+      decoration: BoxDecoration(color: Theme.of(context).cardColor, boxShadow: [
+        BoxShadow(
+            color: Colors.grey.shade500,
+            offset: const Offset(2.0, 2.0),
+            blurRadius: 12,
+            spreadRadius: 1.0),
+        BoxShadow(
+            color: Colors.white,
+            offset: const Offset(-1.0, -1.0),
+            blurRadius: 5,
+            spreadRadius: 1.0)
+      ]),
       child: Column(
         children: [
           Text(
@@ -254,7 +250,8 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Price:', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text('Price:',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               Text('${Constants.banglaCurrency} ${booking.totalAmount}.00'),
             ],
           ),
@@ -271,7 +268,8 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
             children: [
               const Text('Due Amount:',
                   style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('${Constants.banglaCurrency} ${booking.weWillGetPayment}.00'),
+              Text(
+                  '${Constants.banglaCurrency} ${booking.weWillGetPayment}.00'),
             ],
           ),
         ],
@@ -346,7 +344,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
             ),
             SizedBox(height: screenHeight * 0.01),
             SmallText(
-              color: Theme.of(context).textTheme.bodyMedium!.color,
+                color: Theme.of(context).textTheme.bodyMedium!.color,
                 text:
                     'Note: If you remove your service permanently there is no refund will be given from the initial fee.'),
           ],
@@ -375,7 +373,10 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
             //       color: Colors.green),
             // ),
             // SizedBox(height: screenHeight * 0.01),
-            BigText(text:'Your service  is ${booking.isPaymentStatus}',color: LightThemeColors.primaryColor,),
+            BigText(
+              text: 'Your service  is ${booking.isPaymentStatus}',
+              color: LightThemeColors.primaryColor,
+            ),
             SizedBox(height: screenHeight * 0.01),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -570,7 +571,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
   }
 
   /// Action Button on payment summary
-  Widget _buildActionButtons(BuildContext context) {
+  Widget _buildActionButtons(BuildContext context, BookingsModel booking) {
     final double buttonWidth = MediaQuery.of(context).size.width * 0.8;
     return Center(
       child: Row(
@@ -604,7 +605,17 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
             width: buttonWidth,
             child: ElevatedButton(
               onPressed: () {
-                // Handle cancel booking
+                controller.payDueAmount(
+                  amount:
+                      "${booking.totalAmount!.round() - booking.advanceAmount!.round()}",
+                  bookingId: booking.id!,
+                  clientName: booking.username!,
+                  clientPhone: booking.phone!,
+                  clientArea: booking.area!,
+                  clientState: booking.state!,
+                  clientCity: booking.city!,
+                  clientAddress: booking.address!,
+                );
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -627,7 +638,36 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return null;
+    return PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        // Standard AppBar height
+        child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  LightThemeColors.primaryColor,
+                  LightThemeColors.secondaryColor
+                ], // Gradient colors
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: AppBar(
+                backgroundColor: Colors.transparent,
+                centerTitle: true,
+                title: Image.asset(
+                  AppImages.instance.manpower_Logo,
+                  fit: BoxFit.cover,
+                  color: Colors.white,
+                ),
+                leading: IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    )))));
   }
 
   Future<dynamic> showDeleteDialog(
@@ -636,7 +676,11 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title:  Text('Delete $serviceName Booking!',maxLines: 1,overflow: TextOverflow.ellipsis,),
+          title: Text(
+            'Delete $serviceName Booking!',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
           content:
               Text('Are you sure you want to delete $serviceName service?'),
           actions: [

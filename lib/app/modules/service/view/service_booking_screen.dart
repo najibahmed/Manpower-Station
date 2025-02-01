@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/big_text.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
+import 'package:manpower_station/app/components/gradientBar_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -52,16 +53,17 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                   ),
                 ),
               ),
-              onPressed: () async{
+              onPressed: () async {
                 if (controller.selectedTimeKey!.isNotEmpty) {
-                 if(await HelperFunction.instance.isInternetConnected()) {
+                  if (await HelperFunction.instance.isInternetConnected()) {
                     controller.selectedService = controller.serviceModel;
                     controller.addToCartList();
                     Get.toNamed(AppPages.WorkerListView);
-                  }else{
-                   CustomSnackBar.showCustomErrorToast(
-                       title: "No Internet!!", message: "Please check internet connection.");
-                 }
+                  } else {
+                    CustomSnackBar.showCustomErrorToast(
+                        title: "No Internet!!",
+                        message: "Please check internet connection.");
+                  }
                 } else {
                   CustomSnackBar.showCustomErrorToast(
                       title: "Field Empty", message: "Please select all field");
@@ -82,22 +84,41 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          )),
-      title: Text(
-        '${controller.serviceModel.name} Service',
-        overflow: TextOverflow.clip,
-        style: const TextStyle(
-            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-      ),
-    );
+    return PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        // Standard AppBar height
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                LightThemeColors.primaryColor,
+                LightThemeColors.secondaryColor
+              ],
+              // Gradient colors
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            leading: IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                )),
+            title: Text(
+              '${controller.serviceModel.name} Service',
+              overflow: TextOverflow.clip,
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+          ),
+        ));
   }
 
   @override
@@ -185,9 +206,15 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     BigText(
                         text: 'Select Package Duration',
                         size: MyFonts.bodyLargeSize),
-                    controller.selectedTimeKey!.isNotEmpty?const SizedBox():Text("*Required",style: TextStyle(fontSize: 11,color: Colors.red.shade200),),
+                    controller.selectedTimeKey!.isNotEmpty
+                        ? const SizedBox()
+                        : Text(
+                            "*Required",
+                            style: TextStyle(
+                                fontSize: 11, color: Colors.red.shade200),
+                          ),
                     SizedBox(height: screenHeight * .01),
-                    packageDurationChoiceChip(options,context),
+                    packageDurationChoiceChip(options, context),
                     // durationSegmentedButton(options),
                     durationPeriodDropDown(screenHeight, screenWidth),
                     SizedBox(height: screenHeight * .01),
@@ -245,33 +272,46 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
     );
   }
 
-  Wrap packageDurationChoiceChip(List<String> options,BuildContext context) {
+  Wrap packageDurationChoiceChip(List<String> options, BuildContext context) {
     return Wrap(
-                    spacing: 10.0,
-                    children: options.map((option) {
-                      final bool isDisabled = !controller.serviceModel.schedules!.contains(option);
-                      final bool isSelected = controller.selectedTimeKey!.value == option;
-                      return ChoiceChip(side: const BorderSide( color: Colors.green,),
-                        label: Text(
-                          option.toUpperCase(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: isDisabled ? Theme.of(context).textTheme.bodyMedium?.color : isSelected?Colors.white: Theme.of(context).textTheme.bodyMedium?.color, // Text color
-                          ),
-                        ),
-                        selected: isSelected,
-                        onSelected: isDisabled
-                            ? null // Disable interaction for disabled options
-                            : (bool selected) {
-                          controller.selectedTimeKey!.value = selected ? option :"";
-
-                        },
-                        backgroundColor: Theme.of(context).cardColor, // Default background color
-                        selectedColor: LightThemeColors.primaryColor, // Background color when selected
-                        disabledColor: Theme.of(context).hintColor, // Background color when disabled
-                      );
-                    }).toList(),
-                  );
+      spacing: 10.0,
+      children: options.map((option) {
+        final bool isDisabled =
+            !controller.serviceModel.schedules!.contains(option);
+        final bool isSelected = controller.selectedTimeKey!.value == option;
+        return ChoiceChip(
+          side: const BorderSide(
+            color: Colors.green,
+          ),
+          label: Text(
+            option.toUpperCase(),
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: isDisabled
+                  ? Theme.of(context).textTheme.bodyMedium?.color
+                  : isSelected
+                      ? Colors.white
+                      : Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.color, // Text color
+            ),
+          ),
+          selected: isSelected,
+          onSelected: isDisabled
+              ? null // Disable interaction for disabled options
+              : (bool selected) {
+                  controller.selectedTimeKey!.value = selected ? option : "";
+                },
+          backgroundColor: Theme.of(context).cardColor,
+          // Default background color
+          selectedColor: LightThemeColors.primaryColor,
+          // Background color when selected
+          disabledColor:
+              Theme.of(context).hintColor, // Background color when disabled
+        );
+      }).toList(),
+    );
   }
 
   Center ScheduleButton(

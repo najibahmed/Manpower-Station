@@ -23,45 +23,57 @@ class UserProfileScreen extends BaseView<UserController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
-    return AppBar(
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: LightThemeColors.primaryColor,
-          )),
-      backgroundColor:
-          Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
-      centerTitle: true,
-      title: Text(
-        "User Profile",
-        style: myTextStyle.copyWith(
-            color: LightThemeColors.primaryColor, fontWeight: FontWeight.bold),
-      ),
-      actions: [
-        controller.userData != null
-            ? IconButton(
-                onPressed: () {
-                  Get.toNamed(AppPages.UpdateProfile);
-                },
-                icon: const Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: Icon(
-                    Icons.edit,
-                    color: Colors.green,
+    return PreferredSize(
+      preferredSize: Size.fromHeight(kToolbarHeight),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              LightThemeColors.primaryColor,LightThemeColors.secondaryColor], // Gradient colors
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              )),
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+          title: Text(
+            "User Profile",
+            style: myTextStyle.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            controller.userData != null
+                ? IconButton(
+                    onPressed: () {
+                      Get.toNamed(AppPages.UpdateProfile);
+                    },
+                    icon: const Padding(
+                      padding: EdgeInsets.only(right: 20.0),
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.green,
+                      ),
+                    ))
+                : const Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: Icon(
+                      Icons.edit,
+                      color: Colors.green,
+                    ),
                   ),
-                ))
-            : const Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: Icon(
-                  Icons.edit,
-                  color: Colors.green,
-                ),
-              ),
-      ],
+          ],
+        ),
+      ),
     );
   }
 
@@ -214,7 +226,7 @@ class UserProfileScreen extends BaseView<UserController> {
               Icon(
                 icon,
                 size: 32,
-                color: Colors.green,
+                color: LightThemeColors.primaryColor,
               ),
               SizedBox(
                 width: 18.h,

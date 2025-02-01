@@ -59,7 +59,7 @@ class CheckoutController extends BaseController {
           };
           var response = await checkOutRepo.postData(
               requestData, ApiList.userOrderCreateUrl);
-          print("1. ammarpay response:${response.statusCode}");
+          // print("1. ammarpay response:${response.statusCode}");
           if (response.statusCode == 200) {
             var tranId=response.data['formData']["tran_id"];
             print("2. Transaction Id:$tranId");

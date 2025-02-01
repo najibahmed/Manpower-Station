@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 
 class MenuItem extends StatelessWidget {
   final IconData icon;
@@ -22,7 +23,7 @@ class MenuItem extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(15)),
         elevation: 4,
         child: ListTile(
-            leading: Icon(icon, color: Colors.green),
+            leading: Icon(icon, color: LightThemeColors.primaryColor),
             title: Text(
               text,
               style: Theme.of(context).textTheme.bodyMedium,

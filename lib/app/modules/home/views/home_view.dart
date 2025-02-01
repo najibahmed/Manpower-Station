@@ -10,6 +10,7 @@ import 'package:manpower_station/app/modules/bookings/controller/bookings_contro
 import 'package:manpower_station/app/modules/home/views/horizontal_service_card.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
+import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
@@ -87,9 +88,9 @@ class HomeView extends BaseView<HomeController> {
                   //   ],
                   // ),
                   // SizedBox(height: 10.h),
-                  // SizedBox(
-                  //   height: 8.h,
-                  // ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
                   /// Application Banner
                   _buildBanner(size),
 
@@ -229,7 +230,7 @@ class HomeView extends BaseView<HomeController> {
                             child: const Text(
                               'View All',
                               style:
-                                  TextStyle(fontSize: 12, color: Colors.green),
+                                  TextStyle(fontSize: 12, color: LightThemeColors.primaryColor),
                             )),
                       ),
                     ],

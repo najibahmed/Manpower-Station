@@ -20,45 +20,59 @@ class UpdateProfileScreen extends BaseView<UserController> {
   UpdateProfileScreen({super.key});
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    // TODO: implement appBar
-    return AppBar(
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-          onPressed: () {
-            controller.profilePic.value=null;
-            Get.back();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: LightThemeColors.primaryColor,
-          )),
-      backgroundColor:
-          Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
-      centerTitle: true,
-      title: Text(
-        "Edit Profile",
-        style: myTextStyle.copyWith(
-            color: LightThemeColors.primaryColor, fontWeight: FontWeight.bold),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () async{
-            if(await HelperFunction.instance.isInternetConnected()){
-              _updateUser();
-            } else {
-              CustomSnackBar.showCustomErrorToast(
-                  title: "No Internet!!", message: "Please check internet connection.");
-            }
-          },
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              "Save",
-              style:  TextStyle(color: Colors.green),
-            ),
+
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(kToolbarHeight),
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              LightThemeColors.primaryColor,LightThemeColors.secondaryColor], // Gradient colors
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-        )
-      ],
+        ),
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () {
+                controller.profilePic.value=null;
+                Get.back();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              )),
+          // backgroundColor:
+          //     Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
+          centerTitle: true,
+          title: Text(
+            "Edit Profile",
+            style: myTextStyle.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async{
+                if(await HelperFunction.instance.isInternetConnected()){
+                  _updateUser();
+                } else {
+                  CustomSnackBar.showCustomErrorToast(
+                      title: "No Internet!!", message: "Please check internet connection.");
+                }
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "Save",
+                  style:  TextStyle(color: Colors.green),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 

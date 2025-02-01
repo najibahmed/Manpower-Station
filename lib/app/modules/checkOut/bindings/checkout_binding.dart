@@ -8,5 +8,8 @@ class CheckoutBinding extends Bindings {
     Get.lazyPut<CheckoutController>(
           () => CheckoutController(checkOutRepo: Get.find<CheckoutRepo>()),
     );
+    Get.lazyPut<CheckoutRepo>(
+          () => CheckoutRepo(),
+    );
   }
 }

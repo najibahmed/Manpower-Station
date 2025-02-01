@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,39 +16,57 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 import '../../../../utils/app_Images.dart';
 
-
 class CheckOutScreen extends BaseView<CheckoutController> {
   const CheckOutScreen({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      centerTitle: true,
-      title: const Text(
-        "Checkout",
-        style: TextStyle(
-            fontSize: 22,
-            letterSpacing: 1,
-            fontWeight: FontWeight.bold,
-            color: Colors.white),
-      ),
-      leading: IconButton(
-          onPressed: () {
-            Get.back();
-            // controller.worker.clear();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          )),
-      // backgroundColor: LightThemeColors.primaryColor,
-      actions: [
-        IconButton(onPressed: (){
-          Get.offNamedUntil(AppPages.DashboardView,(Route<dynamic> route) => route.isFirst);
-        },
-            icon: const Icon(Icons.home_outlined))
-      ],
-    );
+    return PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        // Standard AppBar height
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                LightThemeColors.primaryColor,
+                LightThemeColors.secondaryColor
+              ],
+              // Gradient colors
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            centerTitle: true,
+            title: const Text(
+              "Checkout",
+              style: TextStyle(
+                  fontSize: 22,
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+            leading: IconButton(
+                onPressed: () {
+                  Get.back();
+                  // controller.worker.clear();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                )),
+            // backgroundColor: LightThemeColors.primaryColor,
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Get.offNamedUntil(AppPages.DashboardView,
+                        (Route<dynamic> route) => route.isFirst);
+                  },
+                  icon: const Icon(Icons.home_outlined))
+            ],
+          ),
+        ));
   }
 
   @override
@@ -90,11 +107,11 @@ class CheckOutScreen extends BaseView<CheckoutController> {
             SizedBox(height: screenHeight * 0.03),
             SizedBox(
               width: double.infinity,
-              child:
-              ElevatedButton(
-                onPressed: ()async{
-                  showLoadingOverLay(asyncFunction: controller.saveOrder(),msg: "Loading" );
-                // controller.saveOrder();
+              child: ElevatedButton(
+                onPressed: () async {
+                  showLoadingOverLay(
+                      asyncFunction: controller.saveOrder(), msg: "Loading");
+                  // controller.saveOrder();
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 15),
@@ -202,7 +219,10 @@ Widget customWorkerTile(WorkerModel worker, double screenHeight,
             child: CachedNetworkImage(
               fit: BoxFit.cover,
               imageUrl: '${Constants.avatarImgUrl}${worker.avatar}',
-              errorWidget: (context, url, error) =>  Image.asset(AppImages.instance.imgPerson,fit: BoxFit.cover,),
+              errorWidget: (context, url, error) => Image.asset(
+                AppImages.instance.imgPerson,
+                fit: BoxFit.cover,
+              ),
               progressIndicatorBuilder: (context, url, progress) => Center(
                 child: CircularProgressIndicator(
                   value: progress.progress,
@@ -222,13 +242,13 @@ Widget customWorkerTile(WorkerModel worker, double screenHeight,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-               "${worker.firstName!} ${worker.lastName!}",
+                "${worker.firstName ?? "Empty"} ${worker.lastName ?? "empty"}",
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               SizedBox(height: screenHeight * 0.01),
               Text(
-                "Gender:  ${worker.gender??"Empty"}",
+                "Gender:  ${worker.gender ?? "Empty"}",
                 style: const TextStyle(
                     fontWeight: FontWeight.normal, fontSize: 14),
               ),
@@ -240,7 +260,7 @@ Widget customWorkerTile(WorkerModel worker, double screenHeight,
               Row(
                 children: [
                   Text(
-                    "Rating:  ${worker.ratings??'0'} ",
+                    "Rating:  ${worker.ratings ?? '0'} ",
                     style: const TextStyle(
                         fontWeight: FontWeight.normal, fontSize: 14),
                   ),
@@ -292,85 +312,94 @@ Widget customServiceTile(CartModel item, double screenHeight,
           ),
           Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                BigText(
+                  text: item.serviceName,
+                  size: Theme.of(context).textTheme.displayLarge!.fontSize!,
                 ),
-                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                BigText(text: item.serviceName,size:Theme.of(context).textTheme.displayLarge!.fontSize!,),
-                                // Text(
-                                //   item.serviceName,
-                                //   style:
-                                //       const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                // ),
-                                // const Divider(color: Colors.black26,),
-                                const MySeparator(),
-                                // SizedBox(height: screenHeight * 0.01),
-                                RichText(
-                                  text: TextSpan(
-                                                  text: 'Duration:    ',
-                                                  style: TextStyle(
-                                                      fontSize: MyFonts.bodyMediumSize,
-                                                      fontWeight: FontWeight.normal,
-                                                      color:
-                                                          Theme.of(context).textTheme.displayMedium?.color),
-                                                  children: [
-                                                    TextSpan(
-                                                      text: item.serviceTimeSchedule,
-                                                      style: TextStyle(
-                                                          fontSize: MyFonts.bodyMediumSize,
-                                                          fontWeight: FontWeight.bold,
-                                                          color:
-                                                              Theme.of(context).textTheme.bodyMedium?.color),
-                                                    ),
-                                                  ]),
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                                  text: 'Starting Date :  ',
-                                                  style: TextStyle(
-                                                      fontSize: MyFonts.bodyMediumSize,
-                                                      fontWeight: FontWeight.normal,
-                                                      color:
-                                                          Theme.of(context).textTheme.displayMedium?.color),
-                                                  children: [
-                                                    TextSpan(
-                                                      text: Constants.formatDate
-                                                          .format(DateTime.parse(item.startingDate)),
-                                                      style: TextStyle(
-                                                          fontSize: MyFonts.bodyMediumSize,
-                                                          fontWeight: FontWeight.bold,
-                                                          color:
-                                                              Theme.of(context).textTheme.bodyMedium?.color),
-                                                    ),
-                                                  ]),
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                                  text: 'Time at:   ',
-                                                  style: TextStyle(
-                                                      fontSize: MyFonts.bodyMediumSize,
-                                                      fontWeight: FontWeight.normal,
-                                                      color:
-                                                          Theme.of(context).textTheme.displayMedium?.color),
-                                                  children: [
-                                                    TextSpan(
-                                                      text: Constants.formatTime
-                                                          .format(DateTime.parse(item.startingDate)),
-                                                      style: TextStyle(
-                                                          fontSize: MyFonts.bodyMediumSize,
-                                                          fontWeight: FontWeight.bold,
-                                                          color:
-                                                              Theme.of(context).textTheme.bodyMedium?.color),
-                                                    ),
-                                                  ]),
-                                ),
-                                const SizedBox(height: 5),
-                              ],
+                // Text(
+                //   item.serviceName,
+                //   style:
+                //       const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                // ),
+                // const Divider(color: Colors.black26,),
+                const MySeparator(),
+                // SizedBox(height: screenHeight * 0.01),
+                RichText(
+                  text: TextSpan(
+                      text: 'Duration:    ',
+                      style: TextStyle(
+                          fontSize: MyFonts.bodyMediumSize,
+                          fontWeight: FontWeight.normal,
+                          color:
+                              Theme.of(context).textTheme.displayMedium?.color),
+                      children: [
+                        TextSpan(
+                          text: item.serviceTimeSchedule,
+                          style: TextStyle(
+                              fontSize: MyFonts.bodyMediumSize,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.color),
+                        ),
+                      ]),
                 ),
-              ))
+                RichText(
+                  text: TextSpan(
+                      text: 'Starting Date :  ',
+                      style: TextStyle(
+                          fontSize: MyFonts.bodyMediumSize,
+                          fontWeight: FontWeight.normal,
+                          color:
+                              Theme.of(context).textTheme.displayMedium?.color),
+                      children: [
+                        TextSpan(
+                          text: Constants.formatDate
+                              .format(DateTime.parse(item.startingDate)),
+                          style: TextStyle(
+                              fontSize: MyFonts.bodyMediumSize,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.color),
+                        ),
+                      ]),
+                ),
+                RichText(
+                  text: TextSpan(
+                      text: 'Time at:   ',
+                      style: TextStyle(
+                          fontSize: MyFonts.bodyMediumSize,
+                          fontWeight: FontWeight.normal,
+                          color:
+                              Theme.of(context).textTheme.displayMedium?.color),
+                      children: [
+                        TextSpan(
+                          text: Constants.formatTime
+                              .format(DateTime.parse(item.startingDate)),
+                          style: TextStyle(
+                              fontSize: MyFonts.bodyMediumSize,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.color),
+                        ),
+                      ]),
+                ),
+                const SizedBox(height: 5),
+              ],
+            ),
+          ))
         ],
       ),
     ),

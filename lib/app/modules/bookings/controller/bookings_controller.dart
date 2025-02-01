@@ -3,11 +3,14 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
+import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/single_worler_model.dart';
+import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/network/api_list.dart';
 import '../../../data/local/my_shared_pref.dart';
 import '../../../network/api_client.dart';
 import '../../../network/api_service.dart';
+import '../../service/model/service_list_model.dart';
 
 class BookingsController extends BaseController
     with GetTickerProviderStateMixin {
@@ -44,13 +47,13 @@ class BookingsController extends BaseController
 
   Future<void> deleteBookingService(String bookingId) async {
     List<BookingsModel>? bookings = await MySharedPref.getUserBookings();
-    var temp = bookings.where((booking) => booking.id != bookingId).toList();
-    await MySharedPref.saveUserBookings(temp);
     var url = ApiList.deleteUserBooking(bookingId);
     var response = await apiService.deleteData(url);
     if (response.statusCode == 200) {
-      Get.back();
+      var temp = bookings.where((booking) => booking.id != bookingId).toList();
+      await MySharedPref.saveUserBookings(temp);
       _loadUserBookings();
+      Get.back();
       CustomSnackBar.showCustomSnackBar(
           title: "Successful", message: "${response.data["message"]}");
     } else {
@@ -84,7 +87,44 @@ class BookingsController extends BaseController
     }
   }
 
-  /// change order status
+  /// pay due  amount
+  Future<void> payDueAmount({
+   required String amount,
+   required String bookingId,
+   required String clientName,
+   required String clientPhone,
+   required String clientArea,
+   required String clientState,
+   required String clientCity,
+   required String clientAddress,
+  }
+      ) async {
+    Map<String, dynamic> requestData = {
+      'amount': amount,
+      'BookingId': bookingId,
+      'addressInfo': {
+        'name': clientName,
+        'phone': clientPhone,
+        'area': clientArea,
+        'state': clientState,
+        'city': clientCity,
+        'address': clientAddress,
+      },
+      'app': 'ammerpay-app'
+    };
+    print(requestData);
+    // var response= await apiService.postData(requestData, ApiList.userOrderCreateUrl);
+    // if (response.statusCode == 200) {
+    //       print("pay due  response data----->${response.data}");
+    //
+    // } else {
+    //   CustomSnackBar.showCustomErrorSnackBar(
+    //       title: 'Failed to payment Order',
+    //       message: '${response.statusMessage}');
+    // }
+  }
+
+ /// Change order status
   Future<void> changeOrderStatus(String? bookingId, String status) async {
     Map<String, dynamic> statusData = {
       "paymentStatus": status,
@@ -92,8 +132,6 @@ class BookingsController extends BaseController
     await apiService.changeBookingStatus(bookingId!, statusData);
     await getAllBookingsByUid();
     _loadUserBookings();
-    // _bookingsList.clear();
-    // _bookingsList.assignAll(updatedBookings);
   }
 
   // void changeTabIndex(int index) {
