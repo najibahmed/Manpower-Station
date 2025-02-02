@@ -19,22 +19,31 @@ class UpdatePhoneEmail extends BaseView<UserController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
-    return AppBar(
-      leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: LightThemeColors.primaryColor,
-          )),
-      centerTitle: true,
-      // titleSpacing: -30.0,
-      backgroundColor:
-          Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
-      title: Image.asset(
-        AppImages.instance.manpower_Logo,
-        fit: BoxFit.cover,
+    return PreferredSize(
+      preferredSize: Size.fromHeight(kToolbarHeight),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors:const [
+            LightThemeColors.primaryColor,LightThemeColors.secondaryColor])
+        ),
+        child: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              )),
+          centerTitle: true,
+          // titleSpacing: -30.0,
+          backgroundColor:Colors.transparent,
+              // Get.isDarkMode ? DarkThemeColors.backgroundColor : Colors.white,
+          title: Image.asset(
+            AppImages.instance.manpower_Logo,
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }

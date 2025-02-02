@@ -24,9 +24,18 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
     return Container(
       height: 80,
       padding: const EdgeInsets.only(top: 14, bottom: 14, right: 22, left: 22),
-      decoration: BoxDecoration(
-          color: Colors.green.withOpacity(.25),
-          borderRadius: const BorderRadius.only(
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              LightThemeColors.primaryColor,
+              LightThemeColors.secondaryColor
+            ],
+            // Gradient colors
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          // color: Colors.green.withOpacity(.25),
+          borderRadius: BorderRadius.only(
               topRight: Radius.circular(40), topLeft: Radius.circular(40))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,11 +44,11 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BigText(text: 'Price', size: MyFonts.bodyMediumSize),
+              BigText(text: 'Price', size: MyFonts.bodyMediumSize,color: Colors.white,),
               BigText(
                   text:
                       '${Constants.banglaCurrency} ${controller.selectedTimeKey!.isEmpty ? "00" : controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}.00',
-                  size: MyFonts.bodyLargeSize),
+                  size: MyFonts.bodyLargeSize,color: Colors.white,),
             ],
           ),
           TextButton(

@@ -35,7 +35,7 @@ class SingleCategoryServices extends BaseView<CategoryController> {
   Widget body(BuildContext context) {
     return CustomScrollView(
         slivers: [
-          SliverPadding(
+          controller.getLoading? SliverPadding(
             padding: const EdgeInsets.all(8.0),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -45,14 +45,34 @@ class SingleCategoryServices extends BaseView<CategoryController> {
                 childAspectRatio: 0.75,
               ),
               delegate: SliverChildBuilderDelegate(
-                childCount: controller.oneCategoryServicesData.isNotEmpty
-                    ? controller.oneCategoryServicesData.length
-                    : 4,
+                childCount:4,
                     (context, index) {
-                  if(controller.oneCategoryServicesData.isEmpty){
                     return HelperFunction.instance.buildServiceCardShimmer();
-                  }
-                  else{
+
+                },
+              ),
+            ),
+          ): controller.oneCategoryServicesData.isEmpty? SliverToBoxAdapter(
+            child: Center(
+              child:  Column(
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height*.4),
+                  const Text("No Service Avaiable!!"),
+                ],
+              ),
+            ),
+          ):SliverPadding(
+            padding: const EdgeInsets.all(8.0),
+            sliver: SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 0.75,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                childCount: controller.oneCategoryServicesData.length,
+                    (context, index) {
                   ServiceModel service = controller.oneCategoryServicesData[index];
                   return InkWell(
                     onTap: () {
@@ -65,7 +85,6 @@ class SingleCategoryServices extends BaseView<CategoryController> {
                       service: service,
                     ),
                   );}
-                },
               ),
             ),
           ),

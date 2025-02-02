@@ -41,7 +41,7 @@ class DashboardScreen extends GetView<DashBoardController> {
                 backgroundColor: LightThemeColors.primaryColor),
             BottomNavigationBarItem(
                 icon: Icon(Icons.task_outlined),
-                label: 'Order',
+                label: 'Bookings',
                 backgroundColor: LightThemeColors.primaryColor),
             BottomNavigationBarItem(
                 icon: Icon(Icons.search_outlined),

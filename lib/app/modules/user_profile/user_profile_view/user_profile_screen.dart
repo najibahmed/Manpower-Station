@@ -28,7 +28,7 @@ class UserProfileScreen extends BaseView<UserController> {
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
+            colors: const [
               LightThemeColors.primaryColor,LightThemeColors.secondaryColor], // Gradient colors
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

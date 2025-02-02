@@ -48,13 +48,13 @@ class SearchScreen extends BaseView<SearchViewController> {
                 return HelperFunction.instance.buildServiceCardShimmer();
               }))
           : SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               sliver: SliverGrid(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 0.71,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                    childAspectRatio: 0.76,
                   ),
                   delegate: SliverChildBuilderDelegate(
                     childCount: controller.isLoading.value

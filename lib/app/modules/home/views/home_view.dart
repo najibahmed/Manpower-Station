@@ -140,8 +140,8 @@ class HomeView extends BaseView<HomeController> {
               sliver: SliverGrid(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
                     childAspectRatio: 0.9,
                   ),
                   delegate: SliverChildBuilderDelegate(

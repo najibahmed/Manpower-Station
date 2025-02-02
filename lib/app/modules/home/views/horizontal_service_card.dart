@@ -39,7 +39,8 @@ class HorizontalServiceCard extends StatelessWidget {
                       const BorderRadius.vertical(top: Radius.circular(15)),
                   child: Hero(
                     tag: service.name!,
-                    child: CachedNetworkImage(
+                    child:
+                    CachedNetworkImage(
                       // height: size.height*.13,
                       width: double.infinity,
                       fit: BoxFit.cover,

@@ -12,6 +12,7 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
+import '../../../../utils/app_Images.dart';
 import '../../../components/big_text.dart';
 
 class ServiceDetailsScreen extends GetView<ServiceController> {
@@ -41,24 +42,27 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Stack(
-              clipBehavior: Clip.none,
-              // fit: StackFit.expand,
               children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      bottomRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20)),
-                  child: Hero(
-                    tag: service.name!,
+                Hero(
+                  tag: service.name!,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20)),
                     child: CachedNetworkImage(
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
                       height: screenHeight * .4,
                       width: double.infinity,
                       imageUrl: '${Constants.serviceImgUrl}${service.image}',
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      errorWidget: (context, url, error) {
+                        return Image.asset(
+                          AppImages.instance.servicePlaceHolder,
+                          fit: BoxFit.cover,
+                        );
+                      },
                       progressIndicatorBuilder: (context, url, progress) =>
                           Center(
                         child: CircularProgressIndicator(
@@ -68,7 +72,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                     ),
                   ),
                 ),
-
+        
                 /// Stack curve corner
                 // Positioned(
                 //   top: screenHeight * 0.31,
@@ -109,10 +113,10 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                 ),
               ],
             ),
-
+        
             /// Service price discount and discount price
             _buildHeader(service, context),
-
+        
             /// Tab Bar items
             TabBar(
               labelPadding: const EdgeInsets.all(4),
@@ -131,7 +135,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                 Tab(text: "FAQ"),
               ],
             ),
-
+        
             ///Tab bar page according to tab index
             Obx(() => _getTabAtIndex(controller.tabIndex.value, service)),
           ],
