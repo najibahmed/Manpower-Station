@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "951210801349",
+    "project_id": "manpower-station",
+    "storage_bucket": "manpower-station.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951210801349:android:6e26b98db2237f70ee18ac",
+        "android_client_info": {
+          "package_name": "com.example.manpower_station"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB62Nx0ZbshxrpOVBbXscDHdysLh0xEkuI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -191,7 +191,7 @@ class HomeView extends BaseView<HomeController> {
                   width: double.infinity,
                   fit: BoxFit.cover,
                   imageUrl:
-                  '${Constants.serviceImgUrl}${category.image}',
+                  '${Constants.categoryImgUrl}${category.frontImage}',
                   errorWidget: (context, url, error) =>
                       Image.asset(AppImages.instance.categoryPlaceHolder,fit: BoxFit.cover,),
                   progressIndicatorBuilder:

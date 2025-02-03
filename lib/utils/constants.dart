@@ -13,6 +13,7 @@ class Constants {
   static const String avatarImgUrl = '${ApiList.baseUrl}/images/avatars/';
   static const String bannerImgUrl = '${ApiList.baseUrl}/images/banners/';
   static const String serviceImgUrl = '${ApiList.baseUrl}/images/services/';
+  static const String categoryImgUrl = '${ApiList.baseUrl}/images/services_categories/';
   static const String appSplashUrl = "assets/images/splash_screen.png";
   // static const String banglaCurrency = '৳';
   static const String banglaCurrency = 'Tk ';

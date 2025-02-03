@@ -134,7 +134,6 @@ class DashboardScreen extends GetView<DashBoardController> {
               statusBarIconBrightness: Brightness.light,
               statusBarBrightness: Brightness.light,
               statusBarColor: Colors.black26,
-
             ),
           ),
         ),),
