@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/small_text.dart';
 import '../../../../utils/constants.dart';
+import '../../../../utils/helper_function.dart';
 import '../../../components/custom_loading_overlay.dart';
 import '../../../models/bookings_model.dart';
 import '../../../routes/app_pages.dart';
@@ -65,18 +66,24 @@ class BookingItemCard extends StatelessWidget {
                           textAlign: TextAlign.start,
                         ),
                         IconButton(
-                            onPressed: () {
-                              showLoadingOverLay(
-                                  asyncFunction: controller.deleteBookingService(booking.id!),
-                                  msg: "Deleting");
+                            onPressed: () async {
+                              if (await HelperFunction.instance.isInternetConnected()) {
+                                showLoadingOverLay(
+                                    asyncFunction: controller.deleteBookingService(booking.id!),
+                                    msg: "Deleting");
+                              } else {}
                             },
-                            icon: const Icon(Icons.delete,color: Colors.red,))
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ))
                       ],
                     ),
                   ),
-                  const SizedBox(height: 5,),
-                  buildDetailRow(
-                      'Service Price:',
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  buildDetailRow('Service Price:',
                       "${booking.services!.first.service!.servicePrice!}.00 Tk"),
                   const Row(
                     children: [
@@ -97,7 +104,7 @@ class BookingItemCard extends StatelessWidget {
                       const Text('Payment Status:',
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(
-                        ' ${booking.paymentid?.paidStatus??"null"}',
+                        ' ${booking.paymentid?.paidStatus ?? "null"}',
                         style: const TextStyle(
                             fontSize: 14,
                             color: Colors.red,
@@ -106,7 +113,9 @@ class BookingItemCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   SmallText(
                     text:
                         "Note: Please re-order the service and ensure the minimum advance payment to confirm the service.",
@@ -209,15 +218,19 @@ Widget buildActionButtons(BuildContext context, BookingsModel booking,
           height: 35,
           width: buttonWidth,
           child: OutlinedButton(
-            onPressed: () {
+            onPressed: () async{
               /// Handle cancel booking
-              showLoadingOverLay(
-                  asyncFunction: controller.changeOrderStatus(
-                      booking.id,
-                      booking.isPaymentStatus == ServiceStatus.Cancelled.name
-                          ? ServiceStatus.Confirmed.name
-                          : ServiceStatus.Cancelled.name),
-                  msg: "Updating Status");
+              if (await HelperFunction.instance.isInternetConnected()) {
+                showLoadingOverLay(
+                    asyncFunction: controller.changeOrderStatus(
+                        booking.id,
+                        booking.isPaymentStatus == ServiceStatus.Cancelled.name
+                            ? ServiceStatus.Confirmed.name
+                            : ServiceStatus.Cancelled.name),
+                    msg: "Updating Status");
+              }else{
+
+              }
               // controller.changeOrderStatus(
               //     booking.id,
               //     booking.isPaymentStatus == ServiceStatus.Cancelled.name ? ServiceStatus.Confirmed.name :ServiceStatus.Cancelled.name
@@ -253,7 +266,8 @@ Widget buildActionButtons(BuildContext context, BookingsModel booking,
           child: ElevatedButton(
             onPressed: () {
               controller.payDueAmount(
-                amount: "${booking.totalAmount!.round() - booking.advanceAmount!.round()}",
+                amount:
+                    "${booking.totalAmount!.round() - booking.advanceAmount!.round()}",
                 bookingId: booking.id!,
                 clientName: booking.username!,
                 clientPhone: booking.phone!,
@@ -261,7 +275,6 @@ Widget buildActionButtons(BuildContext context, BookingsModel booking,
                 clientState: booking.state!,
                 clientCity: booking.city!,
                 clientAddress: booking.address!,
-
               );
             },
             style: ElevatedButton.styleFrom(
@@ -352,10 +365,10 @@ Widget buildButtonRow(BuildContext context, BookingsModel booking,
                 style: TextStyle(
                     fontSize: 14,
                     color: booking.isPaymentStatus == "Confirmed"
-                            ? Colors.blue
-                            : booking.isPaymentStatus == "Cancelled"
-                                ? Colors.redAccent
-                                : Colors.green,
+                        ? Colors.blue
+                        : booking.isPaymentStatus == "Cancelled"
+                            ? Colors.redAccent
+                            : Colors.green,
                     letterSpacing: 1,
                     fontWeight: FontWeight.w600),
               ),

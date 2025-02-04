@@ -3,15 +3,11 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
-import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/single_worler_model.dart';
-import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/network/api_list.dart';
 import '../../../data/local/my_shared_pref.dart';
 import '../../../network/api_client.dart';
 import '../../../network/api_service.dart';
-import '../../service/model/service_list_model.dart';
-
 class BookingsController extends BaseController
     with GetTickerProviderStateMixin {
   final ApiServices apiService;

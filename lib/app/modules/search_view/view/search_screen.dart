@@ -26,13 +26,13 @@ class SearchScreen extends BaseView<SearchViewController> {
           SliverToBoxAdapter(
             child: serviceSearchBar(context),
           ),
-          serviceSearchGridList()
+          serviceSearchGridList(context)
         ],
       ),
     );
   }
 
-  SliverPadding serviceSearchGridList() {
+  SliverPadding serviceSearchGridList(context) {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       sliver: controller.isLoading.value
@@ -47,7 +47,16 @@ class SearchScreen extends BaseView<SearchViewController> {
                   SliverChildBuilderDelegate(childCount: 5, (context, index) {
                 return HelperFunction.instance.buildServiceCardShimmer();
               }))
-          : SliverPadding(
+          : controller.findByServiceList.isEmpty? SliverToBoxAdapter(
+        child: Center(
+          child:  Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height*.4),
+              const Text("No Service Found!!"),
+            ],
+          ),
+        ),
+      ):SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               sliver: SliverGrid(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -59,13 +68,13 @@ class SearchScreen extends BaseView<SearchViewController> {
                   delegate: SliverChildBuilderDelegate(
                     childCount: controller.isLoading.value
                         ? 6
-                        : controller.findByService.length,
+                        : controller.findByServiceList.length,
                     (context, index) {
                       if (controller.isLoading.value) {
                         return HelperFunction.instance
                             .buildServiceCardShimmer();
                       } else {
-                        ServiceModel service = controller.findByService[index];
+                        ServiceModel service = controller.findByServiceList[index];
                         return InkWell(
                           onTap: () {
                             Get.toNamed(AppPages.ServiceDetails,
