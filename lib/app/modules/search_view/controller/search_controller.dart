@@ -9,10 +9,11 @@ import '../../../core/base/base_controller.dart';
 
 
 class SearchViewController extends BaseController {
+
   final ServiceRepository repository;
   SearchViewController({required this.repository});
   Debouncer deBouncer = Debouncer(delay: const Duration(milliseconds: 500));
-  var findByService = <dynamic>[].obs;
+  var findByServiceList = <dynamic>[].obs;
   TextEditingController searchController = TextEditingController();
   RxBool isLoading = false.obs;
 
@@ -32,7 +33,7 @@ class SearchViewController extends BaseController {
       var jsonData = response.data['services'];
       var serviceList =
       jsonData.map((e) => ServiceModel.fromJson(e)).toList();
-      findByService
+      findByServiceList
           .assignAll(serviceList); // Update the RxList with new data
     } else {
       CustomSnackBar.showCustomErrorSnackBar(

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
+import 'helper_function.dart';
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // await NotificationService.instance.setupFlutterNotification();
@@ -30,8 +32,27 @@ class NotificationService {
     // Setup message handler
     await setupMessageHandlers();
 
-    String? token = await _messaging.getToken();
-    print("fcm token-------:  $token");
+    if(await HelperFunction.instance.isInternetConnected()){
+      String? token = await _messaging.getToken();
+      print("fcm token-------:  $token");
+    }
+
+    // Subscribe to a topic when initializing
+    await subscribeToTopic("general_updates");
+  }
+  /// Subscribe to an FCM topic
+  Future<void> subscribeToTopic(String topic) async {
+    if(await HelperFunction.instance.isInternetConnected()){
+      try {
+        await _messaging.subscribeToTopic(topic);
+        print("Subscribed to topic: $topic");
+      } catch (e) {
+        print("Error subscribing to topic: $e");
+      }
+    }
+    else{
+      print("No internet can't Subscribed to topic: $topic");
+    }
   }
 
   Future<void> requestPermission() async {
@@ -148,7 +169,7 @@ class NotificationService {
 
   void _handleBackgroundMsg(RemoteMessage message) {
     print("handle background message");
-    if (message.data["type"] == 'chat') {
+    if (message.data["Offer"] == 'productId') {
       // open chat
     }
   }

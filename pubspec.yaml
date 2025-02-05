@@ -53,11 +53,14 @@ dependencies:
   firebase_messaging: ^15.2.0 # fcm services
   firebase_core: ^3.7.0
   firebase_analytics: ^11.3.4
+  cloud_firestore: ^5.4.5
+
   permission_handler: ^11.0.0 # handle permission dart pub add intl
   flutter_local_notifications: ^18.0.1
   connectivity_plus: ^5.0.2 # check internet connection
 
   flutter_easyloading: ^3.0.5 # loading indicator
+
   shimmer: ^3.0.0 # for shimmer effect
   aamarpay: ^1.0.13
   google_fonts: ^6.1.0 # for using google fonts
