@@ -42,6 +42,7 @@ class NotificationService {
   }
   /// Subscribe to an FCM topic
   Future<void> subscribeToTopic(String topic) async {
+
     if(await HelperFunction.instance.isInternetConnected()){
       try {
         await _messaging.subscribeToTopic(topic);
