@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
+import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/app/modules/checkOut/respository/checkout_repo.dart';
 import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:manpower_station/app/modules/help_support/controller/help_controller.dart';
@@ -46,6 +47,9 @@ class DashboardBinding extends Bindings {
     );
     Get.lazyPut<MenusController>(
       () => MenusController(),
+    ); 
+    Get.lazyPut<CheckoutController>(
+      () => CheckoutController(checkOutRepo: CheckoutRepo()),
     );
     Get.lazyPut<ServiceController>(
       () => ServiceController(),

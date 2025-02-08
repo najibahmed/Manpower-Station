@@ -1,9 +1,11 @@
 // ignore_for_file: constant_identifier_names, prefer_const_constructors
 
 import 'package:get/get.dart';
+import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/modules/authentication/views/Sign%20In/signin_screen.dart';
 import 'package:manpower_station/app/modules/bookings/binding/bookings_binding.dart';
 import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
+import 'package:manpower_station/app/modules/bookings/view/due_payment_page.dart';
 import 'package:manpower_station/app/modules/category/bindings/category_bindings.dart';
 import 'package:manpower_station/app/modules/category/views/single_category_services.dart';
 import 'package:manpower_station/app/modules/checkOut/bindings/checkout_binding.dart';
@@ -71,6 +73,8 @@ class AppPages {
   static const OnBoardingView = Routes.onBoarding;
   static const WelcomeView = Routes.welcomePage;
   static const PaymentSuccess = Routes.paymentDone;
+  static const PaymentDue = Routes.paymentDue;
+
 
   static final routes = [
     GetPage(
@@ -204,6 +208,11 @@ class AppPages {
     GetPage(
       name: _Paths.PaymentSuccess,
       page: () => const PaymentDone(),
+      // binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.PaymentDue,
+      page: () => const PayDue(),
       // binding: HomeBinding(),
     ),
   ];

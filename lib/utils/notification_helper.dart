@@ -32,14 +32,71 @@ class NotificationService {
     // Setup message handler
     await setupMessageHandlers();
 
-    if(await HelperFunction.instance.isInternetConnected()){
-      String? token = await _messaging.getToken();
-      print("fcm token-------:  $token");
-    }
+    // if(await HelperFunction.instance.isInternetConnected()){
+    //   String? token = await _messaging.getToken();
+    //   print("fcm token-------:  $token");
+    // }
 
-    // Subscribe to a topic when initializing
-    await subscribeToTopic("general_updates");
+    // Get initial FCM token
+    await getToken();
+
+    // Listen for token refresh
+    isTokenRefresh();
   }
+
+  Future<bool> requestPermission() async {
+    final settings = await _messaging.requestPermission(
+        provisional: true,
+        alert: true,
+        announcement: false,
+        criticalAlert: false,
+        badge: true,
+        carPlay: false,
+        sound: true);
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      if(kDebugMode){
+        print("user granted permission");
+      }
+      // Subscribe to a topic when initializing
+      await subscribeToTopic("general_updates");
+      return true;
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      if (kDebugMode) {
+        print('user granted provisional permission');
+      }
+      return false;
+    } else {
+      if (kDebugMode) {
+        print('user denied permission');
+      }
+      return false;
+    }
+    print('User granted permission: ${settings.authorizationStatus}');
+  }
+
+  /// Fetch the current FCM token
+  Future<void> getToken() async {
+    try {
+      String? token = await _messaging.getToken();
+      if (token != null) {
+        print("FCM Token: $token");
+        // TODO: Send token to your server if necessary
+      }
+    } catch (e) {
+      print("Error getting FCM token: $e");
+    }
+  }
+
+  void isTokenRefresh()  {
+    _messaging.onTokenRefresh.listen((newToken) {
+      print("FCM Token Refreshed: $newToken");
+      // TODO: Send the updated token to your server if necessary
+    }).onError((error) {
+      print("Error getting refreshed FCM token: $error");
+    });
+  }
+
   /// Subscribe to an FCM topic
   Future<void> subscribeToTopic(String topic) async {
 
@@ -54,36 +111,6 @@ class NotificationService {
     else{
       print("No internet can't Subscribed to topic: $topic");
     }
-  }
-
-  Future<void> requestPermission() async {
-    final settings = await _messaging.requestPermission(
-        provisional: true,
-        alert: true,
-        announcement: false,
-        criticalAlert: false,
-        badge: true,
-        carPlay: false,
-        sound: true);
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print("user granted permission");
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      if (kDebugMode) {
-        print('user granted provisional permission');
-      }
-    } else {
-      if (kDebugMode) {
-        print('user denied permission');
-      }
-    }
-    print('User granted permission: ${settings.authorizationStatus}');
-  }
-
-  void isTokenRefresh() async {
-    _messaging.onTokenRefresh.listen((event) {
-     print("is refreshed token"+event.toString());
-    });
   }
 
   void handleMessage() {
@@ -143,28 +170,32 @@ class NotificationService {
 
   Future<void> setupMessageHandlers() async {
     // foreground message
-    FirebaseMessaging.onMessage.listen((message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification!.android;
+    try {
+      FirebaseMessaging.onMessage.listen((message) {
+            RemoteNotification? notification = message.notification;
+            AndroidNotification? android = message.notification!.android;
 
-      if (Platform.isIOS) {
-        showNotification(message);
-        _showDialogNotification(message);
-      }
+            if (Platform.isIOS) {
+              showNotification(message);
+              _showDialogNotification(message);
+            }
 
-      if (Platform.isAndroid) {
-        showNotification(message);
-        _showDialogNotification(message);
-      }
-    });
+            if (Platform.isAndroid) {
+              showNotification(message);
+              _showDialogNotification(message);
+            }
+          });
 
-    // background message
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleBackgroundMsg);
+      // background message
+      FirebaseMessaging.onMessageOpenedApp.listen(_handleBackgroundMsg);
 
-    // opened app
-    final initialMsg = await _messaging.getInitialMessage();
-    if (initialMsg != null) {
-      _handleBackgroundMsg(initialMsg);
+      // opened app
+      final initialMsg = await _messaging.getInitialMessage();
+      if (initialMsg != null) {
+            _handleBackgroundMsg(initialMsg);
+          }
+    } catch (e) {
+      print("setup Message Handlers error:$e");
     }
   }
 

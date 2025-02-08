@@ -16,7 +16,7 @@ abstract class BaseView<Controller extends BaseController>
       child: Obx(() {
         return Scaffold(
           backgroundColor:
-              Get.isDarkMode ? const Color(0xff2D2D2D) : const Color(0xFFF5FCF9),
+          Get.isDarkMode ? const Color(0xff2D2D2D) : const Color(0xFFF5FCF9),
           //sets ios status bar color
           // TODO: backgroundColor: add your screen bg color here,
           // key: controller.globalKey,

@@ -31,6 +31,7 @@ abstract class Routes {
   static const onBoarding = _Paths.OnBoarding;
   static const welcomePage = _Paths.WelcomePage;
   static const paymentDone = _Paths.PaymentSuccess;
+  static const paymentDue = _Paths.PaymentDue;
 
 
 }
@@ -63,5 +64,6 @@ abstract class _Paths {
   static const OnBoarding = '/on_boarding';
   static const WelcomePage = '/welcome_page';
   static const PaymentSuccess = '/payment-done';
+  static const PaymentDue = '/payment-due';
 
 }

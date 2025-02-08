@@ -19,7 +19,7 @@ class CartModel {
   String serviceImageUrl;
   ServiceDiscount discountModel;
   String startingDate;
-  num totalPrice;
+  num advanceAmount;
   num servicePrice;
   String serviceTimeSchedule;
 
@@ -29,7 +29,7 @@ class CartModel {
         required this.serviceImageUrl,
         required this.discountModel,
         required this.startingDate,
-        this.totalPrice = 99,
+        required this.advanceAmount ,
         required this.servicePrice,
         required this.serviceTimeSchedule});
 
@@ -40,7 +40,7 @@ class CartModel {
       cartFieldServiceImageUrl: serviceImageUrl,
       cartFieldServiceDiscountModel: discountModel.toJson(),
       cartFieldServiceStartingDate: startingDate,
-      cartFieldServiceTotalPrice: totalPrice,
+      cartFieldServiceTotalPrice: advanceAmount,
       cartFieldServicePrice: servicePrice,
       cartFieldServiceSchedule: serviceTimeSchedule,
 
@@ -53,7 +53,7 @@ class CartModel {
     serviceName: map[cartFieldServiceName],
     discountModel: ServiceDiscount.fromJson(map[cartFieldServiceDiscountModel]),
     startingDate: map[cartFieldServiceStartingDate],
-    totalPrice: map[cartFieldServiceTotalPrice],
+    advanceAmount: map[cartFieldServiceTotalPrice],
     servicePrice: map[cartFieldServicePrice],
     serviceTimeSchedule: map[cartFieldServiceSchedule],
     serviceImageUrl: map[cartFieldServiceImageUrl],

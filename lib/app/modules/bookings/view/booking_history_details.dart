@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/big_text.dart';
@@ -7,21 +8,57 @@ import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/components/lottie_loading.dart';
 import 'package:manpower_station/app/components/small_text.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
-import 'package:manpower_station/app/models/bookings_model.dart';
-import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
+import 'package:manpower_station/app/models/bookings_model.dart'; 
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/constants.dart';
 import '../../../../utils/app_Images.dart';
 import '../../../components/custom_loading_overlay.dart';
+import '../controller/booking_details_controller.dart';
 
-class BookingHistoryDetails extends BaseView<BookingsController> {
+class BookingHistoryDetails extends BaseView<BookingDetailsController> {
   const BookingHistoryDetails({super.key});
+
+  @override
+  PreferredSizeWidget? appBar(BuildContext context) {
+    return PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        // Standard AppBar height
+        child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  LightThemeColors.primaryColor,
+                  LightThemeColors.secondaryColor
+                ], // Gradient colors
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: AppBar(
+                backgroundColor: Colors.transparent,
+                centerTitle: true,
+                title: Image.asset(
+                  AppImages.instance.manpower_Logo,
+                  fit: BoxFit.cover,
+                  color: Colors.white,
+                ),
+                leading: IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    )))));
+  }
+
 
   @override
   Widget body(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
-    BookingsModel booking = Get.arguments[0];
+    // BookingsModel booking = Get.arguments[0];
+    BookingsModel booking = controller.booking;
     // String title = Get.arguments[1];
     return Scaffold(
       body: SafeArea(
@@ -54,7 +91,9 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
             //     //   ],
             //     // ),
             //     backgroundColor: Theme.of(context).appBarTheme.backgroundColor),
-            controller.workersData.value?.username == null
+            ///end
+
+            controller.workersData.isEmpty
                 ? SliverToBoxAdapter(
                     child: Center(
                       child: Column(
@@ -90,7 +129,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                           SizedBox(height: screenHeight * 0.01),
 
                           /// Message and booking information
-                          _messageCard(screenWidth, screenHeight, booking),
+                          _messageCard(screenWidth, screenHeight, booking,context),
                           SizedBox(height: screenHeight * 0.01),
 
                           ///Service Card
@@ -119,6 +158,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
       ),
     );
   }
+
 
   Card reviewCard(
       double screenWidth, double screenHeight, BookingsModel booking) {
@@ -353,9 +393,14 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
     );
   }
 
+  void copyToClipboard(BuildContext context, String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    CustomSnackBar.showCustomToast( message: 'Copied to clipboard!');
+  }
+
   /// Message card with bookingId and booking date
   Card _messageCard(
-      double screenWidth, double screenHeight, BookingsModel booking) {
+      double screenWidth, double screenHeight, BookingsModel booking,BuildContext context) {
     return Card(
       // color: Colors.grey[100],
       elevation: 3,
@@ -385,7 +430,9 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                   'Booking ID:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text('${booking.id}'),
+                GestureDetector(
+                  onTap: ()=> copyToClipboard(context, '${booking.id}'),
+                    child: Text('${booking.id}')),
               ],
             ),
             SizedBox(height: screenHeight * 0.01),
@@ -498,7 +545,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                   width: screenWidth * 0.25,
                   child: CachedNetworkImage(
                     imageUrl:
-                        '${Constants.avatarImgUrl}${controller.workersData.value?.avatar}',
+                        '${Constants.avatarImgUrl}${controller.workersData.first!.avatar}',
                     errorWidget: (context, url, error) => Image.asset(
                       AppImages.instance.imgPerson,
                       fit: BoxFit.cover,
@@ -523,12 +570,12 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('${controller.workersData.value?.username}',
+                          Text('${controller.workersData.first!.username}',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: LightThemeColors.primaryColor,
                                   fontSize: screenWidth * 0.05)),
-                          Text('   ${controller.workersData.value?.ratings} ⭐',
+                          Text('   ${controller.workersData.first!.ratings} ⭐',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: screenWidth * 0.04)),
@@ -539,7 +586,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                         children: [
                           const Text('Gender:',
                               style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text('${controller.workersData.value?.gender}'),
+                          Text('${controller.workersData.first!.gender}'),
                         ],
                       ),
                       Row(
@@ -547,14 +594,14 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
                         children: [
                           const Text('Contact:',
                               style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text('${controller.workersData.value?.phoneOrEmail}'),
+                          Text('${controller.workersData.first!.phoneOrEmail}'),
                         ],
                       ),
                       Wrap(
                         children: [
                           const Text('Address:   ',
                               style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text(controller.workersData.value?.emergencyContract
+                          Text(controller.workersData.first!.emergencyContract
                                   ?.address ??
                               "Empty"),
                         ],
@@ -636,39 +683,7 @@ class BookingHistoryDetails extends BaseView<BookingsController> {
     );
   }
 
-  @override
-  PreferredSizeWidget? appBar(BuildContext context) {
-    return PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        // Standard AppBar height
-        child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  LightThemeColors.primaryColor,
-                  LightThemeColors.secondaryColor
-                ], // Gradient colors
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-            child: AppBar(
-                backgroundColor: Colors.transparent,
-                centerTitle: true,
-                title: Image.asset(
-                  AppImages.instance.manpower_Logo,
-                  fit: BoxFit.cover,
-                  color: Colors.white,
-                ),
-                leading: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    )))));
-  }
+
 
   Future<dynamic> showDeleteDialog(
       BuildContext context, String bookingId, String serviceName) {

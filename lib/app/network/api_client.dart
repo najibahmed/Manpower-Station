@@ -32,8 +32,8 @@ class BaseClient {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
-    receiveTimeout: const Duration(seconds: 30),
-    connectTimeout: const Duration(seconds: 30),
+    receiveTimeout: const Duration(seconds: 15),
+    connectTimeout: const Duration(seconds: 15),
   ))
     ..interceptors.add(InterceptorsWrapper(
 

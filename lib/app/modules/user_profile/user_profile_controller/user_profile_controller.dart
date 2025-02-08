@@ -35,6 +35,7 @@ class UserController extends BaseController {
   Future<void> pickImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
 
+
     // Show a bottom sheet with options to choose between camera and gallery
     final XFile? image = await showModalBottomSheet<XFile>(
       context: context,

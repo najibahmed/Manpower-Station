@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
 import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:manpower_station/app/modules/home/views/home_view.dart';

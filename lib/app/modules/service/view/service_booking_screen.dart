@@ -63,7 +63,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                 ),
               ),
               onPressed: () async {
-                if (controller.selectedTimeKey!.isNotEmpty) {
+                if (controller.selectedTimeKey!.isNotEmpty&&controller.selectedDateTime!=null) {
                   if (await HelperFunction.instance.isInternetConnected()) {
                     controller.selectedService = controller.serviceModel;
                     controller.addToCartList();
@@ -231,7 +231,13 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         text: 'Choose a start time to begin with.',
                         size: MyFonts.bodyLargeSize),
                     // Text("*Required",style: TextStyle(fontSize: 11,color: Colors.red.shade200),),
-                    SizedBox(height: screenHeight * .01),
+                    controller.selectedDateTime.value!=null
+                        ? const SizedBox()
+                        : Text(
+                      "*Required",
+                      style: TextStyle(
+                          fontSize: 11, color: Colors.red.shade200),
+                    ),
                     Card(
                       color: Theme.of(context)
                           .cardColor, // Background color of the card
@@ -244,15 +250,17 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                // Icon(Icons.calendar_month_outlined),
                                 Text(
                                   'Date-Time:',
                                   style:
                                       Theme.of(context).textTheme.displaySmall,
                                 ),
+                                SizedBox(width: screenWidth*.1,),
                                 Text(
-                                  Constants.formatDateTime.format(
+                                  controller.selectedDateTime.value==null? "Please select a date": Constants.formatDateTime.format(
                                       controller.selectedDateTime.value!),
                                   style:
                                       Theme.of(context).textTheme.displayMedium,

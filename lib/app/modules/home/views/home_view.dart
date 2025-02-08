@@ -30,6 +30,7 @@ class HomeView extends BaseView<HomeController> {
   @override
   Widget body(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: RefreshIndicator(
         color: Colors.green,
@@ -89,7 +90,7 @@ class HomeView extends BaseView<HomeController> {
                   // ),
                   // SizedBox(height: 10.h),
                   SizedBox(
-                    height: 5.h,
+                    height: 2.h,
                   ),
                   /// Application Banner
                   _buildBanner(size),
@@ -105,14 +106,14 @@ class HomeView extends BaseView<HomeController> {
                           'Popular Services',
                           style: Theme.of(context).textTheme.displayLarge,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                'see all',
-                                style: Theme.of(context).textTheme.bodyMedium),
-                        ),)
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        //   child: TextButton(
+                        //       onPressed: () {},
+                        //       child: Text(
+                        //         'see all',
+                        //         style: Theme.of(context).textTheme.bodyMedium),
+                        // ),)
                       ],
                     ),
                   ),
@@ -292,13 +293,13 @@ class HomeView extends BaseView<HomeController> {
   Future<void> _handleRefresh() async {
     if(!controller.refreshLoading.value){
       controller.refreshLoading.value=true;
-      await Get.find<UserController>().getUserInformation();
-      await Get.find<BookingsController>().getAllBookingsByUid();
-      await controller.fetchAllService();
-      await controller.fetchAllCategories();
+       Get.find<UserController>().getUserInformation();
+       Get.find<BookingsController>().getAllBookingsByUid();
+       controller.fetchAllService();
+       controller.fetchAllCategories();
       // await controller.getAllServiceData();
       // await controller.getAllServiceCategories();
-      await controller.getBanners();
+       controller.getBanners();
       controller.refreshLoading.value=false;
 
       }
@@ -338,8 +339,13 @@ class HomeView extends BaseView<HomeController> {
   }
 
   Widget _buildBannerShimmer() {
-    return const Card(
-        elevation: 5, child: ShimmerWidget.rectangular(height: 180));
+    return const Column(
+      children: [
+        Text("Pull down to refresh",style: TextStyle(color: Colors.grey),),
+        Card(
+            elevation: 5, child: ShimmerWidget.rectangular(height: 180)),
+      ],
+    );
   }
 
   Widget _buildPopularShimmer(Size size) {

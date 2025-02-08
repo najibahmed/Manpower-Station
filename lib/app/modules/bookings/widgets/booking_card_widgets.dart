@@ -1,11 +1,15 @@
+import 'package:aamarpay/aamarpay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/small_text.dart';
+import '../../../../config/theme/light_theme_colors.dart';
 import '../../../../utils/constants.dart';
 import '../../../../utils/helper_function.dart';
 import '../../../components/custom_loading_overlay.dart';
+import '../../../components/custom_snackbar.dart';
 import '../../../models/bookings_model.dart';
 import '../../../routes/app_pages.dart';
+import '../controller/booking_details_controller.dart';
 import '../controller/bookings_controller.dart';
 
 class BookingItemCard extends StatelessWidget {
@@ -59,7 +63,7 @@ class BookingItemCard extends StatelessWidget {
                       children: [
                         Text(
                           overflow: TextOverflow.ellipsis,
-                          booking.services!.first.service == null
+                          booking.services!.isEmpty
                               ? "Service Name Empty"
                               : "${booking.services!.first.service!.name}",
                           style: Theme.of(context).textTheme.displayMedium,
@@ -84,7 +88,8 @@ class BookingItemCard extends StatelessWidget {
                     height: 5,
                   ),
                   buildDetailRow('Service Price:',
-                      "${booking.services!.first.service!.servicePrice!}.00 Tk"),
+                      "${booking.services!.isEmpty
+                          ? "Service price Empty":booking.services!.first.service!.servicePrice!}.00 Tk"),
                   const Row(
                     children: [
                       Text('Booking Status:',
@@ -124,7 +129,7 @@ class BookingItemCard extends StatelessWidget {
                 ],
               ),
             )
-          : Container(
+          : booking.services==null?SizedBox():Container(
               width: size.width * 1,
               padding: EdgeInsets.all(size.width * 0.03),
               decoration: BoxDecoration(
@@ -162,9 +167,9 @@ class BookingItemCard extends StatelessWidget {
                             topRight: Radius.circular(10))),
                     child: Text(
                       overflow: TextOverflow.ellipsis,
-                      booking.services!.first.service == null
+                      booking.services==null
                           ? "Service Name Empty"
-                          : "${booking.services!.first.service!.name}",
+                          : "",//"${booking.services!.first.service!.name}",
                       style: Theme.of(context).textTheme.displayMedium,
                       textAlign: TextAlign.start,
                     ),
@@ -196,11 +201,11 @@ Widget buildServiceDetails(BookingsModel booking) {
           'Advance Payment:', "${booking.advanceAmount.toString()}.00Tk"),
       buildDetailRow(
           'Due Payment:', "${booking.weWillGetPayment.toString()}.00Tk"),
-      buildDetailRow(
-          'Starting Date:',
-          Constants.formatDateTime.format(DateTime.parse(
-              booking.services!.first.workStartDate ??
-                  "2024-12-12T06:09:00.000Z"))),
+      // buildDetailRow(
+      //     'Starting Date:',
+      //     Constants.formatDateTime.format(DateTime.parse(
+      //         booking.services!.first.workStartDate ??
+      //             "2024-12-12T06:09:00.000Z"))),
     ],
   );
 }
@@ -258,24 +263,27 @@ Widget buildActionButtons(BuildContext context, BookingsModel booking,
           ),
         ),
         const SizedBox(height: 10),
-
         /// Payment button
         SizedBox(
           height: 35,
           width: buttonWidth,
           child: ElevatedButton(
-            onPressed: () {
-              controller.payDueAmount(
-                amount:
-                    "${booking.totalAmount!.round() - booking.advanceAmount!.round()}",
-                bookingId: booking.id!,
-                clientName: booking.username!,
-                clientPhone: booking.phone!,
-                clientArea: booking.area!,
-                clientState: booking.state!,
-                clientCity: booking.city!,
-                clientAddress: booking.address!,
-              );
+            onPressed: () async{
+                 controller.bookings.value=booking;
+              // controller.payDueAmount(
+              //   amount: "${booking.totalAmount!.round() - booking.advanceAmount!.round()}",
+              //   bookingId: booking.id!,
+              //   clientName: booking.username!,
+              //   clientPhone: booking.phone!,
+              //   clientArea: booking.area!,
+              //   clientState: booking.state!,
+              //   clientCity: booking.city!,
+              //   clientAddress: booking.address!,
+              // );
+              //
+              if (await HelperFunction.instance.isInternetConnected())  {
+                showLoadingOverLay(asyncFunction: controller.payDueAmount(booking: booking),msg: 'Loading');
+              }
             },
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -295,6 +303,8 @@ Widget buildActionButtons(BuildContext context, BookingsModel booking,
     ),
   );
 }
+
+
 
 /// Utility function to create rows for price details
 Widget buildDetailRow(String label, String value) {
@@ -327,17 +337,18 @@ Widget buildButtonRow(BuildContext context, BookingsModel booking,
             height: screenHeight * 0.04,
             // width: screenWidth * 0.35,
             child: OutlinedButton(
-              onPressed: () {
-                bookingController.isLoading.value = true;
-                bookingController
-                    .getWorkerInformation("${booking.workers!.first.user}");
-                Future.delayed(const Duration(seconds: 3), () {
-                  bookingController.isLoading.value = false;
-                });
-                Get.toNamed(AppPages.OrderHistoryDetails, arguments: [
-                  booking,
-                  // booking.isPaymentStatus
-                ]);
+              onPressed: () async{
+                if(await HelperFunction.instance.isInternetConnected()){
+                  // bookingController.isLoading.value = true;
+                  // bookingController
+                  //     .getWorkerInformation("${booking.workers!.first.user}");
+                  // Future.delayed(const Duration(seconds: 3), () {
+                  //   bookingController.isLoading.value = false;
+                  // });
+                  Get.toNamed(AppPages.OrderHistoryDetails, arguments: [
+                    booking,booking.workers
+                  ]);
+                }
               },
               style: OutlinedButton.styleFrom(
                 backgroundColor: Theme.of(context).focusColor,

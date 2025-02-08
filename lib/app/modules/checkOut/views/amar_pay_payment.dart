@@ -8,6 +8,7 @@ import 'package:manpower_station/utils/helper_function.dart';
 
 import '../../../../utils/app_Images.dart';
 import '../../../components/big_text.dart';
+import '../../../components/custom_loading_overlay.dart';
 import '../../../routes/app_pages.dart';
 
 class MyPay extends GetView<CheckoutController> {
@@ -67,10 +68,11 @@ class MyPay extends GetView<CheckoutController> {
                               alignment: PlaceholderAlignment.baseline,
                               baseline: TextBaseline.alphabetic,
                               child: BigText(
-                                text: "99",
-                                size: 24,
-                                color: Colors.orangeAccent,
-                              )),
+                                  text: controller.amount,
+                                  size: 24,
+                                  color: Colors.orangeAccent,
+                                ),
+                              ),
                           const TextSpan(
                             text: '  Tk',
                           ),
@@ -112,10 +114,11 @@ class MyPay extends GetView<CheckoutController> {
                                   alignment: PlaceholderAlignment.baseline,
                                   baseline: TextBaseline.alphabetic,
                                   child: BigText(
-                                    text: "99 Tk",
-                                    size: 24,
-                                    color: Colors.orangeAccent,
-                                  )),
+                                      text: "${controller.amount} Tk",
+                                      size: 24,
+                                      color: Colors.orangeAccent,
+                                    ),
+                                  ),
                               const TextSpan(
                                 text: '  advance.',
                               ),
@@ -158,8 +161,9 @@ class MyPay extends GetView<CheckoutController> {
               Get.offNamed(AppPages.PaymentSuccess);
               controller.isLoading.value = false;
               await controller.setPaymentSuccess();
-              CustomSnackBar.showCustomSnackBar(
-                  title: "Order Confirmed", message: message);
+              showSuccessDialog(title:  "Order Confirmed",successMsg:"Your payment was processed successfully!");
+              // CustomSnackBar.showCustomSnackBar(
+              //     title: "Order Confirmed", message: message);
             }
             else if (event == EventState.cancel) {
               print('---->Cancel State');
@@ -196,7 +200,7 @@ class MyPay extends GetView<CheckoutController> {
           storeID: "aamarpaytest",
           // Use transactionAmountFromTextField when you pass amount with TextEditingController
           // transactionAmountFromTextField: amountTextEditingController,
-          transactionAmount: "99",
+          transactionAmount: controller.amount,
           //The transactionID must be unique for every payment
           transactionID: "${DateTime.now().millisecondsSinceEpoch}",
           //The transactionID must be unique for every payment
@@ -214,7 +218,7 @@ class MyPay extends GetView<CheckoutController> {
                     color: LightThemeColors.primaryColor,
                   ),
                   height: 50,
-                  child: const Center(
+                  child:  const Center(
                     child: Text(
                       "Payment",
                       style: TextStyle(

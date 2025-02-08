@@ -24,6 +24,8 @@ class CheckoutController extends BaseController {
   RxString paymentMethodGroupValue = PaymentMethod.cod.obs;
   RxString _transactionId=''.obs;
   String get transactionId =>_transactionId.value;
+  RxString _payAmount=''.obs;
+  String get amount =>_payAmount.value;
   final formKey = GlobalKey<FormState>();
   final List<WorkerModel> worker =
       Get.find<WorkerController>().selectedWorkerList;
@@ -41,7 +43,7 @@ class CheckoutController extends BaseController {
   Future<void> saveOrder() async {
     if (formKey.currentState!.validate()) {
       if (await HelperFunction.instance.isInternetConnected()) {
-          var amount = 99;
+          var amount = cartItem.first.advanceAmount;
           // var transId = const Uuid();
           Map<String, dynamic> requestData = {
             'amount': amount,
@@ -59,12 +61,11 @@ class CheckoutController extends BaseController {
           };
           var response = await checkOutRepo.postData(
               requestData, ApiList.userOrderCreateUrl);
-          // print("1. ammarpay response:${response.statusCode}");
           if (response.statusCode == 200) {
             var tranId=response.data['formData']["tran_id"];
-            print("2. Transaction Id:$tranId");
             if(tranId !=null){
-            _transactionId.value=response.data['formData']["tran_id"];
+            _transactionId.value=tranId;
+            _payAmount.value=response.data['formData']["amount"].toString();
             Get.toNamed(AppPages.PaymentScreen);
             }
           } else {

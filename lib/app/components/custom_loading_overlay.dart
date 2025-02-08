@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:manpower_station/utils/app_Images.dart';
 
 import '../../config/translations/strings_enum.dart';
 
@@ -47,5 +48,33 @@ Widget _getLoadingIndicator({String? msg}){
       SizedBox(width: 4.h,),
       Text(msg ?? Strings.loading.tr,style: Get.theme.textTheme.bodyLarge),
     ],),
+  );
+}
+
+void showSuccessDialog({ required String title,required String successMsg}) {
+  Get.defaultDialog(
+    title: "title",
+    titleStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    content: Column(
+      children: [
+        Image.asset(
+          AppImages.instance.paymentDone,
+          color: Colors.green,// Replace with your actual image path
+          width: 100,
+          height: 100,
+        ),
+        const SizedBox(height: 10),
+         Text(
+          successMsg,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 16),
+        ),
+      ],
+    ),
+    barrierDismissible: false,
+    confirm: ElevatedButton(
+      onPressed: () => Get.back(),
+      child: const Text("OK",style: TextStyle(color: Colors.white),),
+    ),
   );
 }
