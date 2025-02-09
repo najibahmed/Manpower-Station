@@ -49,7 +49,7 @@ class ApiServices {
             apiResponse = response;
           });
     } catch (e) {
-      LoggerUtil.instance.printLog(msg: 'Error Post Data : ${e.toString()}');
+      LoggerUtil.instance.printLog(msg: 'Error get Data : ${e.toString()}');
     }
     return apiResponse;
   }
@@ -82,6 +82,9 @@ class ApiServices {
           RequestType.delete,
           onError: (err) {
             apiResponse = err.response!;
+            CustomSnackBar.showCustomErrorToast(
+                message: "Failed to Delete Service: ${err.response!.data["message"]}",
+                duration: const Duration(seconds: 2));
           },
           onSuccess: (response) {
             apiResponse = response;

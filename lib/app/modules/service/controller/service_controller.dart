@@ -32,7 +32,7 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
 
   // Get price
   getServicePrice(time, timeKey, price) {
-    dynamic servicePrice;
+    dynamic servicePrice=0;
     if (timeKey == ServiceType.Hours.name) {
       servicePrice = (price ~/ 3) * time;
     } else if (timeKey == 'days') {
@@ -67,20 +67,34 @@ class ServiceController extends BaseController with GetSingleTickerProviderState
     final cartModel = CartModel(
         serviceId: selectedService.id!,
         serviceName: selectedService.name!,
+        minimumCost: selectedService.minimumAdvancePaid!,
         serviceImageUrl: selectedService.image!,
-        discountModel: selectedService.serviceDiscount!,
+        servicePrice: serviceModel.servicePrice!,
+        totalPrice: getGrandTotal(),
         startingDate: selectedDateTime.value.toString(),
-        servicePrice: cartSubtotal.value,
         serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey?.value}",
-        advanceAmount: serviceModel.minimumAdvancePaid!);
+    );
     _cartItems.value=[];
     _cartItems.add(cartModel);
   }
 
+    /// calculated discount amount on behalf of  price and percentage
+  num  getDiscountAmount(discount, num price) {
+    if (discount.discountType == "Percentage Discount") {
+      return ((price * discount.discount!) / 100).round();
+    } else {
+      return discount.discount!;
+    }
+  }
+  int getGrandTotal() {
+    return ((cartSubtotal.value -
+        getDiscountAmount(selectedService.serviceDiscount, cartSubtotal.value)).round());
+  }
 
   @override
   void onInit() {
     serviceModel = Get.arguments;
+    selectedService=serviceModel;
     tabController = TabController(length: 3, initialIndex: 0, vsync: this);
     super.onInit();
   }

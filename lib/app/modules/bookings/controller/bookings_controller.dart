@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+import 'dart:isolate';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
-
 import 'package:manpower_station/app/network/api_list.dart';
+
 import '../../../data/local/my_shared_pref.dart';
 import '../../../network/api_client.dart';
 import '../../../network/api_service.dart';
@@ -56,12 +56,12 @@ class BookingsController extends BaseController
       Get.back();
       CustomSnackBar.showCustomSnackBar(
           title: "Successful", message: "${response.data["message"]}");
-    } else {
-      CustomSnackBar.showCustomErrorToast(
-          message: 'Failed to Delete Service: ${response.statusMessage}',
-          duration: const Duration(seconds: 1));
     }
-
+    // else {
+    //   CustomSnackBar.showCustomErrorToast(
+    //       message: "Failed to Delete Service: ${response.data["message"]}",
+    //       duration: const Duration(seconds: 1));
+    // }
   }
 
   // /// Give user review
@@ -149,7 +149,6 @@ class BookingsController extends BaseController
     };
     await apiService.changeBookingStatus(bookingId!, statusData);
     await getAllBookingsByUid();
-    loadUserBookings();
   }
 
   // void changeTabIndex(int index) {
@@ -160,7 +159,8 @@ class BookingsController extends BaseController
   Future<bool> loadUserBookings() async {
     List<BookingsModel>? bookings = await MySharedPref.getUserBookings();
     if (bookings.isNotEmpty) {
-      _bookingsList.assignAll(bookings);
+      var reversedList= List<BookingsModel>.from(bookings.reversed);
+      _bookingsList.assignAll(reversedList);
     }
     return true;
   }
@@ -179,6 +179,29 @@ class BookingsController extends BaseController
     // reviewController.dispose();
     super.onClose();
   }
+  // Future<void> getAllBookingsByUid() async {
+  //   String? userId = await MySharedPref.getUserId();
+  //   print("userId----------->$userId");
+  //   if (userId == null) return;
+  //   final receivePort = ReceivePort();
+  //   await Isolate.spawn(_fetchBookingsInIsolate, [receivePort.sendPort, apiService,userId]);
+  //
+  //   // ✅ Receive JSON data (List<Map>)
+  //   final response = await receivePort.first;
+  //   if (response is List) {
+  //     var bookings = response.map((e) => BookingsModel.fromJson(e)).toList();
+  //     print(bookings);
+  //     await MySharedPref.saveUserBookings(response);
+  //     //save user bookings to local storage
+  //     await MySharedPref.saveUserBookings(bookings);
+  //     loadUserBookings();// ✅ Save to local storage
+  //   } else {
+  //     CustomSnackBar.showCustomErrorSnackBar(
+  //       title: 'Failed to load bookings',
+  //       message: '$response',
+  //     );
+  //   }
+  // }
 
   /// get all bookings for particular userId
   Future<void> getAllBookingsByUid() async {
@@ -207,6 +230,26 @@ class BookingsController extends BaseController
       CustomSnackBar.showCustomErrorSnackBar(title: 'Error bookings :', message: e.toString());
     }
   }
+
 }
+
+
+void _fetchBookingsInIsolate(List<dynamic> args) async {
+  SendPort sendPort = args[0];
+  ApiServices apiService= args[1];
+  String userId = args[2];
+  try {
+    var response = await apiService.getData(ApiList.getBookingsByUidUrl(userId));
+    if (response.statusCode == 201) {
+      var jsonList = List<Map<String, dynamic>>.from(response.data['bookings']);
+      sendPort.send(jsonList); //
+    } else {
+      sendPort.send("Error: ${response.statusMessage}");
+    }
+  } catch (e) {
+    sendPort.send("Error: $e");
+  }
+}
+
 
 enum ServiceStatus { Confirmed, Cancelled }

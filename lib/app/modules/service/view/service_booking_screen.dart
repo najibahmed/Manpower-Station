@@ -47,7 +47,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
               BigText(text: 'Price', size: MyFonts.bodyMediumSize,color: Colors.white,),
               BigText(
                   text:
-                      '${Constants.banglaCurrency} ${controller.selectedTimeKey!.isEmpty ? "00" : controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice)}.00',
+                      '${Constants.banglaCurrency} ${controller.selectedTimeKey!.isEmpty ? "00" : controller.getGrandTotal()}.00',
                   size: MyFonts.bodyLargeSize,color: Colors.white,),
             ],
           ),
@@ -220,7 +220,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                         : Text(
                             "*Required",
                             style: TextStyle(
-                                fontSize: 11, color: Colors.red.shade200),
+                                fontSize: 11, color: Colors.red.shade400),
                           ),
                     SizedBox(height: screenHeight * .01),
                     packageDurationChoiceChip(options, context),
@@ -230,14 +230,6 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     BigText(
                         text: 'Choose a start time to begin with.',
                         size: MyFonts.bodyLargeSize),
-                    // Text("*Required",style: TextStyle(fontSize: 11,color: Colors.red.shade200),),
-                    controller.selectedDateTime.value!=null
-                        ? const SizedBox()
-                        : Text(
-                      "*Required",
-                      style: TextStyle(
-                          fontSize: 11, color: Colors.red.shade200),
-                    ),
                     Card(
                       color: Theme.of(context)
                           .cardColor, // Background color of the card
@@ -270,6 +262,13 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                           ),
                         ),
                       ),
+                    ),
+                    controller.selectedDateTime.value!=null
+                        ? const SizedBox()
+                        : Text(
+                      "*Required",
+                      style: TextStyle(
+                          fontSize: 11, color: Colors.red.shade400),
                     ),
                     SizedBox(height: screenHeight * .03),
 
@@ -319,6 +318,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
               ? null // Disable interaction for disabled options
               : (bool selected) {
                   controller.selectedTimeKey!.value = selected ? option : "";
+                  controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice);
                 },
           backgroundColor: Theme.of(context).cardColor,
           // Default background color
@@ -413,6 +413,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
             textStyle: const TextStyle(color: LightThemeColors.primaryColor),
             onSelected: (value) {
               controller.timeLimit.value = value!;
+              controller.getServicePrice(controller.timeLimit.value, controller.selectedTimeKey, controller.serviceModel.servicePrice);
             },
             initialSelection: controller.timeLimit.value,
             dropdownMenuEntries: timeFrequency.map((time) {

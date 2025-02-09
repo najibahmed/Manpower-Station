@@ -43,7 +43,7 @@ class CheckoutController extends BaseController {
   Future<void> saveOrder() async {
     if (formKey.currentState!.validate()) {
       if (await HelperFunction.instance.isInternetConnected()) {
-          var amount = cartItem.first.advanceAmount;
+          var amount = cartItem.first.servicePrice;
           // var transId = const Uuid();
           Map<String, dynamic> requestData = {
             'amount': amount,
@@ -119,12 +119,13 @@ class CheckoutController extends BaseController {
   //   final priceAfterDiscount = cartSubTotal - getDiscountAmount(cartSubTotal);
   //   return ((priceAfterDiscount * orderConstantModel.vat) / 100).round();
   // }
-  int getGrandTotal() {
-    return ((serviceController.cartSubtotal.value -
-            getDiscountAmount(cartItem.first.discountModel,
-                serviceController.cartSubtotal.value))
-        .round());
-  }
+
+  // int getGrandTotal() {
+  //   return ((serviceController.cartSubtotal.value -
+  //           getDiscountAmount(cartItem.first.discountModel,
+  //               serviceController.cartSubtotal.value))
+  //       .round());
+  // }
 
   @override
   void onInit() {

@@ -166,6 +166,7 @@ class PayDue extends GetView<BookingsController> {
             await controller.setPaymentSuccess();
             // CustomSnackBar.showCustomSnackBar(
             //     title: "Order Confirmed", message: message);
+            await controller.getAllBookingsByUid();
             Get.offNamed(AppPages.DashboardView);
             showSuccessDialog(title:  "Payment Successful",successMsg:"Your payment was processed successfully!");
           }

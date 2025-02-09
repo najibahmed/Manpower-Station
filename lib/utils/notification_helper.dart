@@ -124,6 +124,8 @@ class NotificationService {
       description: "this channel is used for important notification",
       "High Importance Notification",
       importance: Importance.max,
+      enableVibration: true,
+      vibrationPattern: Int64List.fromList([0, 500, 1000, 500]),
     );
 
     var androidInitializationSettings =
@@ -134,7 +136,10 @@ class NotificationService {
             channel.id.toString(), channel.name.toString(),
             importance: Importance.high,
             priority: Priority.high,
-            ticker: "ticker");
+            enableVibration: true,
+            vibrationPattern: Int64List.fromList([0, 500, 1000, 500]),
+            ticker: "ticker"
+        );
 
     // #  IOS Setup
     var iosInitializationSettings = const DarwinInitializationSettings();
@@ -143,6 +148,7 @@ class NotificationService {
       presentBadge: true,
       presentAlert: true,
       presentSound: true,
+
     );
 
     // #2   initialize notification details

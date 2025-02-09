@@ -167,9 +167,9 @@ class BookingItemCard extends StatelessWidget {
                             topRight: Radius.circular(10))),
                     child: Text(
                       overflow: TextOverflow.ellipsis,
-                      booking.services==null
+                      booking.services!.first.service==null
                           ? "Service Name Empty"
-                          : "",//"${booking.services!.first.service!.name}",
+                          : "${booking.services!.first.service!.name}",
                       style: Theme.of(context).textTheme.displayMedium,
                       textAlign: TextAlign.start,
                     ),
@@ -201,11 +201,11 @@ Widget buildServiceDetails(BookingsModel booking) {
           'Advance Payment:', "${booking.advanceAmount.toString()}.00Tk"),
       buildDetailRow(
           'Due Payment:', "${booking.weWillGetPayment.toString()}.00Tk"),
-      // buildDetailRow(
-      //     'Starting Date:',
-      //     Constants.formatDateTime.format(DateTime.parse(
-      //         booking.services!.first.workStartDate ??
-      //             "2024-12-12T06:09:00.000Z"))),
+      buildDetailRow(
+          'Starting Date:',
+          Constants.formatDateTime.format(DateTime.parse(
+              booking.services!.first.workStartDate ??
+                  "2024-12-12T06:09:00.000Z"))),
     ],
   );
 }

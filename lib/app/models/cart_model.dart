@@ -7,7 +7,7 @@ import 'package:manpower_station/app/modules/service/model/service_list_model.da
 const String cartFieldServiceId = '_id';
 const String cartFieldServiceName = 'name';
 const String cartFieldServiceImageUrl = 'image';
-const String cartFieldServiceDiscountModel = 'service_discount';
+const String cartFieldServiceMinimumCost = 'minimum_paid_cost';
 const String cartFieldServicePrice = 'service_price';
 const String cartFieldServiceTotalPrice = 'totalPrice';
 const String cartFieldServiceStartingDate = 'startWork';
@@ -17,20 +17,20 @@ class CartModel {
   String serviceId;
   String serviceName;
   String serviceImageUrl;
-  ServiceDiscount discountModel;
-  String startingDate;
-  num advanceAmount;
+  num minimumCost;
   num servicePrice;
+  num totalPrice;
+  String startingDate;
   String serviceTimeSchedule;
 
   CartModel(
       {required this.serviceId,
         required this.serviceName,
         required this.serviceImageUrl,
-        required this.discountModel,
+        required this.minimumCost,
+        required this.servicePrice ,
+        required this.totalPrice,
         required this.startingDate,
-        required this.advanceAmount ,
-        required this.servicePrice,
         required this.serviceTimeSchedule});
 
   Map<String, dynamic> toMap() {
@@ -38,10 +38,10 @@ class CartModel {
       cartFieldServiceId:serviceId,
       cartFieldServiceName: serviceName,
       cartFieldServiceImageUrl: serviceImageUrl,
-      cartFieldServiceDiscountModel: discountModel.toJson(),
-      cartFieldServiceStartingDate: startingDate,
-      cartFieldServiceTotalPrice: advanceAmount,
+      cartFieldServiceMinimumCost: minimumCost,
       cartFieldServicePrice: servicePrice,
+      cartFieldServiceTotalPrice: totalPrice,
+      cartFieldServiceStartingDate: startingDate,
       cartFieldServiceSchedule: serviceTimeSchedule,
 
     };
@@ -51,11 +51,11 @@ class CartModel {
   factory CartModel.fromMap(Map<String, dynamic> map) => CartModel(
     serviceId: map[cartFieldServiceId],
     serviceName: map[cartFieldServiceName],
-    discountModel: ServiceDiscount.fromJson(map[cartFieldServiceDiscountModel]),
-    startingDate: map[cartFieldServiceStartingDate],
-    advanceAmount: map[cartFieldServiceTotalPrice],
-    servicePrice: map[cartFieldServicePrice],
-    serviceTimeSchedule: map[cartFieldServiceSchedule],
     serviceImageUrl: map[cartFieldServiceImageUrl],
+    minimumCost: map[cartFieldServiceMinimumCost],
+    servicePrice: map[cartFieldServicePrice],
+    totalPrice: map[cartFieldServiceTotalPrice],
+    startingDate: map[cartFieldServiceStartingDate],
+    serviceTimeSchedule: map[cartFieldServiceSchedule],
   );
 }

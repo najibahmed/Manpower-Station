@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import
 
+import 'dart:isolate';
+
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:manpower_station/app/models/active_banner.dart';
@@ -23,49 +25,39 @@ class HomeController extends BaseController {
 
 
 
-  /// Get all service from server
-  Future<void> fetchAllService()async{
-    var response =  await repository.getData(ApiList.getAllServiceUrl);
-    if (response.statusCode == 200) {
-      var jsonData = response.data['services'];
-      var serviceList = jsonData.map((e) => ServiceModel.fromJson(e))
-          .toList();
-      _allServiceData.assignAll(serviceList);// Update the RxList with new data
+  Future<void> fetchAllService() async {
+    final receivePort = ReceivePort();
+
+    // Spawn the isolate and pass the URL
+    await Isolate.spawn(_fetchDataInIsolate, [receivePort.sendPort, repository]);
+
+    // Receive data from the isolate
+    final response = await receivePort.first;
+
+    if (response is List) {
+      _allServiceData.assignAll(response.map((e) => ServiceModel.fromJson(e)).toList());
     } else {
-      CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services:',message: '${response.statusMessage}');
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Failed to load services', message: '$response');
     }
   }
 
-// /// Get all service
-//   Future<List> getAllServiceData() async {
-//     try {
-//       // Map<String, dynamic> requestData = {
-//       //   'phone_or_email': phoneNumberEmailController.text.trim(),
-//       // };
-//       var url= ApiList.getAllServiceUrl;
-//       await BaseClient.safeApiCall(
-//           url,
-//           RequestType.get,
-//           onSuccess: (response) {
-//             // if (kDebugMode) {
-//             //   print(response.data);
-//             // }
-//             if (response.statusCode == 200) {
-//               var jsonData = response.data['services'];
-//               var serviceList = jsonData.map((e) => ServiceModel.fromJson(e))
-//                   .toList();
-//               allServiceData.assignAll(serviceList);// Update the RxList with new data
-//               return allServiceData;
-//             } else {
-//               CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services:',message: '${response.statusMessage}');
-//             }
-//           }
-//       );
-//     } catch (e) {
-//       CustomSnackBar.showCustomErrorSnackBar(title:'Error try get service:',message: '$e');
-//     }
-//     return allServiceData;
-//   }
+
+
+
+
+  // /// Get all service from server
+  // Future<void> fetchAllService()async{
+  //   var response =  await repository.getData(ApiList.getAllServiceUrl);
+  //   if (response.statusCode == 200) {
+  //     var jsonData = response.data['services'];
+  //     var serviceList = jsonData.map((e) => ServiceModel.fromJson(e))
+  //         .toList();
+  //     _allServiceData.assignAll(serviceList);// Update the RxList with new data
+  //   } else {
+  //     CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services:',message: '${response.statusMessage}');
+  //   }
+  // }
+
 
   /// Get all Categories from server
   Future<void> fetchAllCategories()async{
@@ -99,9 +91,26 @@ class HomeController extends BaseController {
     getBanners();
     fetchAllService();
     fetchAllCategories();
-    // getAllServiceData();
-    // getAllServiceCategories();
+
     super.onInit();
   }
 
+}
+
+
+void _fetchDataInIsolate(List<dynamic> args) async {
+  SendPort sendPort = args[0];
+  ServiceRepository repository = args[1];
+
+  try {
+    var response =  await repository.getData(ApiList.getAllServiceUrl); // Using Dio directly inside isolate
+
+    if (response.statusCode == 200) {
+      sendPort.send(response.data['services']); // Send JSON back
+    } else {
+      sendPort.send("Error: ${response.statusMessage}");
+    }
+  } catch (e) {
+    sendPort.send("Error: $e");
+  }
 }

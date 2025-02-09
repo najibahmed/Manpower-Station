@@ -53,7 +53,7 @@ Widget _getLoadingIndicator({String? msg}){
 
 void showSuccessDialog({ required String title,required String successMsg}) {
   Get.defaultDialog(
-    title: "title",
+    title: title,
     titleStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     content: Column(
       children: [

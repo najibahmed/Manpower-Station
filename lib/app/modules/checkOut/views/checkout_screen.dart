@@ -148,22 +148,22 @@ class CheckOutScreen extends BaseView<CheckoutController> {
                     '${Constants.banglaCurrency} ${controller.serviceController.cartSubtotal}.00'),
               ],
             ),
-            SizedBox(height: 10.h),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Tax:'),
-                Text('${Constants.banglaCurrency} +6.70'),
-              ],
-            ),
+            // SizedBox(height: 10.h),
+            // const Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text('Tax:'),
+            //     Text('${Constants.banglaCurrency} +6.70'),
+            //   ],
+            // ),
             SizedBox(height: 10.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                    'Discount: ${item.discountModel.discount}${item.discountModel.discountType == "Percentage Discount" ? '%' : Constants.banglaCurrency}'),
+                    'Discount: ${controller.serviceController.selectedService.serviceDiscount!.discount}${controller.serviceController.selectedService.serviceDiscount!.discountType == "Percentage Discount" ? '%' : Constants.banglaCurrency}'),
                 Text(
-                    '- ${Constants.banglaCurrency} ${controller.getDiscountAmount(item.discountModel, controller.serviceController.cartSubtotal.value)}'),
+                    ' ${Constants.banglaCurrency} - ${controller.getDiscountAmount(controller.serviceController.selectedService.serviceDiscount!, controller.serviceController.cartSubtotal.value)}'),
               ],
             ),
             const Divider(
@@ -176,7 +176,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
                 const Text('Grand Total:',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 Text(
-                    '${Constants.banglaCurrency} ${controller.getGrandTotal()}.00',
+                    '${Constants.banglaCurrency} ${controller.cartItem.first.totalPrice}.00',
                     style: const TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
