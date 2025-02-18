@@ -1,7 +1,7 @@
 class ApiList {
    /// Base Url
-   static const String baseUrl = 'http://172.16.154.2:8000';
-   // static const String baseUrl = 'https://manpower-update-test.onrender.com';
+   // static const String baseUrl = 'http://172.16.154.2:8000';
+   static const String baseUrl = 'https://manpower-update-test.onrender.com';
 
 
    static String userLoginUrl = '/api/users/user/sign-in'; //post method

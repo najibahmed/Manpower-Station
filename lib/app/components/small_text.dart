@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 // ignore: must_be_immutable
 class SmallText extends StatelessWidget {
@@ -14,7 +16,7 @@ class SmallText extends StatelessWidget {
       text,
       style: TextStyle(
         fontFamily: "Roboto", //GoogleFonts.acme().fontFamily,
-        fontSize: size,
+        fontSize: size.sp,
         color: color ?? Theme.of(context).textTheme.bodySmall!.color,
       ),
     );

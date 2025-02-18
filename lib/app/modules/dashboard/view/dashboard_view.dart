@@ -14,6 +14,8 @@ import 'package:manpower_station/config/theme/my_theme.dart';
 import 'package:manpower_station/config/translations/localization_service.dart';
 import 'package:manpower_station/utils/app_Images.dart';
 
+import '../../../components/custom_snackbar.dart';
+
 class DashboardScreen extends GetView<DashBoardController> {
   const DashboardScreen({super.key});
 
@@ -69,24 +71,24 @@ class DashboardScreen extends GetView<DashBoardController> {
           child: AppBar(
             backgroundColor: Colors.transparent,
             centerTitle: true,
-            leading: InkWell(
-              onTap: () => LocalizationService.updateLanguage(
-                LocalizationService.getCurrentLocal().languageCode == 'bn'
-                    ? 'en'
-                    : 'bn',
-              ),
-              child: SizedBox(
-                height: 30.h,
-                width: 30.h,
-                child: SvgPicture.asset(
-                  'assets/vectors/language.svg',
-                  color: Colors.white,
-                  fit: BoxFit.none,
-                  height: 10,
-                  width: 10,
-                ),
-              ),
-            ),
+            // leading: InkWell(
+            //   onTap: () => LocalizationService.updateLanguage(
+            //     LocalizationService.getCurrentLocal().languageCode == 'bn'
+            //         ? 'en'
+            //         : 'bn',
+            //   ),
+            //   child: SizedBox(
+            //     height: 30.h,
+            //     width: 30.h,
+            //     child: SvgPicture.asset(
+            //       'assets/vectors/language.svg',
+            //       color: Colors.white,
+            //       fit: BoxFit.none,
+            //       height: 10,
+            //       width: 10,
+            //     ),
+            //   ),
+            // ),
             title: Image.asset(
               AppImages.instance.manpower_Logo,
               fit: BoxFit.cover,
@@ -99,6 +101,8 @@ class DashboardScreen extends GetView<DashBoardController> {
                 children: [
                   IconButton(
                       onPressed: () async {
+                        // CustomSnackBar.showCustomSnackBar(title: 'Authenticated', message: 'Successfully Logged In');
+                        //     CustomSnackBar.showCustomToast(message: 'Successfully Logged In');
                         // Get.to(const MyPay());
                         // print(
                         //     'access token----${MySharedPref.getAccessToken()}');
@@ -111,23 +115,23 @@ class DashboardScreen extends GetView<DashBoardController> {
                         Icons.notifications_active_outlined,
                         color: controller.isLightMode.value ?  Colors.white: LightThemeColors.primaryColor,
                       )),
-                  InkWell(
-                    onTap: ()  {
-                      controller.isLightMode.value=  Get.isDarkMode;
-                      MyTheme.changeTheme();
-                    },
-                    child: SizedBox(
-                      height: 39.h,
-                      width: 39.h,
-                      child: SvgPicture.asset(
-                        controller.isLightMode.value ? 'assets/vectors/moon.svg' : 'assets/vectors/sun.svg',
-                        fit: BoxFit.none,
-                        color: Colors.white,
-                        height: 10,
-                        width: 10,
-                      ),
-                    ),
-                  ),
+                  // InkWell(
+                  //   onTap: ()  {
+                  //     controller.isLightMode.value=  Get.isDarkMode;
+                  //     MyTheme.changeTheme();
+                  //   },
+                  //   child: SizedBox(
+                  //     height: 39.h,
+                  //     width: 39.h,
+                  //     child: SvgPicture.asset(
+                  //       controller.isLightMode.value ? 'assets/vectors/moon.svg' : 'assets/vectors/sun.svg',
+                  //       fit: BoxFit.none,
+                  //       color: Colors.white,
+                  //       height: 10,
+                  //       width: 10,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ],

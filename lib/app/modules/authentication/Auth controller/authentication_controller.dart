@@ -34,7 +34,7 @@ class AuthenticationController extends BaseController {
     };
    var response =  await authRepo.postData(requestData, ApiList.userRegistrationUrl);
    if(response.statusCode==201){
-     Get.snackbar(' Registration Success','${response.data['message']}');
+     CustomSnackBar.showCustomSnackBar(title: 'Registration Success', message: '${response.data['message']}');
      if(response.data['success']==true){
        Get.toNamed(AppPages.OtpScreen);
      }
@@ -60,7 +60,7 @@ class AuthenticationController extends BaseController {
       MySharedPref.setUserId(userId);
       MySharedPref.setLoginStatus(true);
       // Success handling (for example, navigate to another screen)
-      Get.snackbar('Success', '${otpData.message}');
+      CustomSnackBar.showCustomSnackBar(title: 'Success', message: '${otpData.message}');
       Get.offAllNamed(AppPages.DashboardView);
     }else{
       CustomSnackBar.showCustomErrorSnackBar(title: 'Error Otp ',message: 'Check!',color: Colors.redAccent);
@@ -80,7 +80,7 @@ class AuthenticationController extends BaseController {
       // Set User Data to local storage
        setUserInfo(otpData);
       // Success handling
-      Get.snackbar('Successfully Logged In', '${otpData.message}');
+      CustomSnackBar.showCustomSnackBar(title: 'Successfully Logged In', message: '${otpData.message}');
       Get.offAllNamed(AppPages.DashboardView);
     }else if(response.statusCode==400){
       CustomSnackBar.showCustomErrorSnackBar(title: 'Error Registration ',message: '${response.data['message']}!',color: Colors.redAccent);

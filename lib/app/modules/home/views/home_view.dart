@@ -156,7 +156,7 @@ class HomeView extends BaseView<HomeController> {
                       } else {
                         CategoryModel category = controller.allCatData[index];
                         ///build single Category card
-                        return _buildCategoryCard(size, category);
+                        return _buildCategoryCard(size, category,context);
                       }
                     },
                   )),
@@ -167,7 +167,7 @@ class HomeView extends BaseView<HomeController> {
     );
   }
 
-  InkWell _buildCategoryCard(Size size, CategoryModel category) {
+  InkWell _buildCategoryCard(Size size, CategoryModel category,BuildContext context) {
     return InkWell(
         onTap: ()async {
           if(await HelperFunction.instance.isInternetConnected()){
@@ -228,10 +228,10 @@ class HomeView extends BaseView<HomeController> {
                               Get.toNamed(AppPages.SingleCateServicesScreen,
                                   arguments: [category.categoryName, category.id.toString()]);
                             },
-                            child: const Text(
+                            child:  Text(
                               'View All',
                               style:
-                                  TextStyle(fontSize: 12, color: LightThemeColors.primaryColor),
+                                  TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodyMedium!.color),
                             )),
                       ),
                     ],

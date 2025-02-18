@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class BigText extends StatelessWidget {
@@ -16,7 +17,7 @@ class BigText extends StatelessWidget {
       maxLines: 1,
       style: TextStyle(
         fontFamily:"Roboto" ,//GoogleFonts.acme().fontFamily,
-        fontSize: size,
+        fontSize: size.sp,
         color: color?? Theme.of(context).textTheme.bodyLarge!.color,
         fontWeight: FontWeight.w700,
       ),

@@ -9,9 +9,10 @@ class CustomSnackBar {
       title,
       message,
       duration: duration ?? const Duration(seconds: 3),
-      margin: const EdgeInsets.only(top: 10,left: 10,right: 10),
+      margin: const EdgeInsets.all(10),
       colorText: Colors.white,
-      backgroundColor: LightThemeColors.primaryColor,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.black87,
       icon: const Icon(Icons.check_circle, color: Colors.white,),
     );
   }
@@ -22,6 +23,7 @@ class CustomSnackBar {
     Get.snackbar(
       title,
       message,
+      snackPosition: SnackPosition.BOTTOM,
       duration: duration ?? const Duration(seconds: 2),
       margin: const EdgeInsets.only(top: 10,left: 10,right: 10),
       colorText: Colors.white,
@@ -29,7 +31,6 @@ class CustomSnackBar {
       icon: const Icon(Icons.error, color: Colors.white,),
     );
   }
-
 
 
   static showCustomToast({String? title, required String message,Color? color,Duration? duration}){

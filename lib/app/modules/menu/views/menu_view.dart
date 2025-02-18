@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/menu/widgets/menu_item.dart';
@@ -9,6 +9,9 @@ import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/app_Images.dart';
 import 'package:manpower_station/utils/helper_function.dart';
+import '../../../../config/theme/my_theme.dart';
+import '../../../../config/translations/localization_service.dart';
+import '../../../../config/translations/strings_enum.dart';
 import '../../../components/big_text.dart';
 import '../controller/menu_controller.dart';
 
@@ -27,7 +30,8 @@ class MenuView extends BaseView<MenusController> {
     final screenWidth = MediaQuery.of(context).size.width;
     // final userController = Get.put(UserController());
     final userController = Get.find<UserController>();
-    return Padding(
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,18 +39,20 @@ class MenuView extends BaseView<MenusController> {
           // controller.allServiceData.isEmpty
           //     ? _menuProfileShimmer()
           //     :
-          SizedBox(height: screenHeight * 0.05,),
+          SizedBox(
+            height: screenHeight * 0.02,
+          ),
           Hero(
-            tag: userController.userData!.value.id ??"null",
+            tag: userController.userData!.value.id ?? "null",
             child: SizedBox(
               height: screenHeight * 0.12,
               width: screenWidth * 0.25,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  boxShadow:  [
+                  boxShadow: [
                     BoxShadow(
-                      spreadRadius: 2,
+                        spreadRadius: 2,
                         blurRadius: 5,
                         color: Colors.grey.withOpacity(0.4),
                         offset: const Offset(1, 4))
@@ -89,52 +95,52 @@ class MenuView extends BaseView<MenusController> {
               ),
               child: Center(
                 child: BigText(
-                  text: "${userController.userData!.value.user?.email}",size: 14,),
+                  text: "${userController.userData!.value.user?.email}",
+                  size: 14,
+                ),
               )),
-          // Text(
-          //   userController.userData!.value.user!.email.toString(),
-          //   style: Theme.of(context).textTheme.displayMedium,
-          // ),
+
           SizedBox(height: 20.h),
-          MenuItem(
-            icon: Icons.person,
-            text: 'Profile',
-            onTap: () {
-              Get.toNamed(AppPages.UserProfile);
-            },
-          ),
-          // MenuItem(icon: Icons.payment, text: 'Digital payment', onTap: () {  },),
           // MenuItem(
-          //   icon: Icons.language,
-          //   text: Strings.changeLanguage.tr,
+          //   icon: Icons.person,
+          //   text: 'Profile',
+          //   onTap: () {
+          //     Get.toNamed(AppPages.UserProfile);
+          //   },
+          // ),
+          // // MenuItem(icon: Icons.payment, text: 'Digital payment', onTap: () {  },),
+          // // MenuItem(
+          // //   icon: Icons.language,
+          // //   text: Strings.changeLanguage.tr,
+          // //   onTap: () {},
+          // // ),
+          // MenuItem(
+          //   icon: Icons.support_agent_outlined,
+          //   text: 'Customer Support',
+          //   onTap: () {
+          //     Get.toNamed(AppPages.SupportScreen);
+          //   },
+          // ),
+          // MenuItem(
+          //   icon: Icons.privacy_tip,
+          //   text: 'Privacy policy',
+          //   onTap: () {
+          //   },
+          // ),
+          // // MenuItem(icon: Icons.document_scanner, text: 'Terms & Conditions', onTap: () {  },),
+          // MenuItem(
+          //   icon: Icons.info_outline,
+          //   text: 'About Us',
           //   onTap: () {},
           // ),
-          MenuItem(
-            icon: Icons.support_agent_outlined,
-            text: 'Customer Support',
-            onTap: () {
-              Get.toNamed(AppPages.SupportScreen);
-            },
-          ),
-          MenuItem(
-            icon: Icons.privacy_tip,
-            text: 'Privacy policy',
-            onTap: () {
-            },
-          ),
-          // MenuItem(icon: Icons.document_scanner, text: 'Terms & Conditions', onTap: () {  },),
-          MenuItem(
-            icon: Icons.info_outline,
-            text: 'About Us',
-            onTap: () {},
-          ),
-          MenuItem(
-            icon: Icons.exit_to_app_outlined,
-            text: 'Exit',
-            onTap: () {
-              showLogoutDialog(context);
-            },
-          ),
+          // MenuItem(
+          //   icon: Icons.exit_to_app_outlined,
+          //   text: 'Exit',
+          //   onTap: () {
+          //     showLogoutDialog(context);
+          //   },
+          // ),
+          _buildProfileSection(context)
         ],
       ),
     );
@@ -159,7 +165,8 @@ class MenuView extends BaseView<MenusController> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: const Text('No', style: TextStyle(color: LightThemeColors.primaryColor)),
+              child: const Text('No',
+                  style: TextStyle(color: LightThemeColors.primaryColor)),
             ),
             TextButton(
               onPressed: () {
@@ -177,6 +184,105 @@ class MenuView extends BaseView<MenusController> {
       },
     );
   }
+
+  Widget _buildProfileSection(BuildContext context) {
+    return Card(
+      elevation: 2,
+      child: Column(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: const Text('Profile'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Get.toNamed(AppPages.UserProfile);
+            },
+          ),
+          Divider(
+            height: 1,
+            color: Colors.grey.withOpacity(.2),
+          ),
+          ListTile(
+            leading: SvgPicture.asset(
+              controller.isLightMode.value
+                  ? 'assets/vectors/moon.svg'
+                  : 'assets/vectors/sun.svg',
+              fit: BoxFit.none,
+              color: controller.isLightMode.value
+                  ?Colors.black:Colors.white,
+              height: 26.h,
+              width: 26.h,
+            ),
+            title: Text(controller.isLightMode.value
+                ?"Switch to Dark Mood":"Switch to Light Mood"),
+            trailing: const Icon(Icons.change_circle_outlined),
+            onTap: () {
+              controller.isLightMode.value = Get.isDarkMode;
+              MyTheme.changeTheme();
+            },
+          ),
+          Divider(
+            height: 1,
+            color: Colors.grey.withOpacity(.2),
+          ),
+          ListTile(
+            leading: const Icon(Icons.language),
+            title: Text(Strings.changeLanguage.tr),
+            trailing: const Icon(Icons.change_circle_outlined),
+            onTap: () {
+              LocalizationService.updateLanguage(
+                LocalizationService.getCurrentLocal().languageCode == 'bn'
+                    ? 'en'
+                    : 'bn',
+              );
+            },
+          ),
+          Divider(
+            height: 1,
+            color: Colors.grey.withOpacity(.2),
+          ),
+          ListTile(
+            leading: const Icon(Icons.support_agent_outlined),
+            title: const Text('Customer Support'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Get.toNamed(AppPages.SupportScreen);
+            },
+          ),
+          Divider(
+            height: 1,
+            color: Colors.grey.withOpacity(.2),
+          ),
+          ListTile(
+            leading: const Icon(Icons.privacy_tip),
+            title: const Text('Privacy policy'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {},
+          ),
+          Divider(
+            height: 1,
+            color: Colors.grey.withOpacity(.2),
+          ),
+          ListTile(
+            leading: const Icon(Icons.info_outline),
+            title: const Text('About Us'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {},
+          ),
+          Divider(
+            height: 1,
+            color: Colors.grey.withOpacity(.2),
+          ),
+          ListTile(
+            leading: const Icon(Icons.exit_to_app_outlined),
+            title: const Text('Exit'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              showLogoutDialog(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }
-
-
