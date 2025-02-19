@@ -113,7 +113,8 @@ class DashboardScreen extends GetView<DashBoardController> {
                       },
                       icon:  Icon(
                         Icons.notifications_active_outlined,
-                        color: controller.isLightMode.value ?  Colors.white: LightThemeColors.primaryColor,
+                        color: !Get.isDarkMode
+                            ?  Colors.white: LightThemeColors.primaryColor,
                       )),
                   // InkWell(
                   //   onTap: ()  {

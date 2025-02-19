@@ -5,7 +5,7 @@ const Map<String, String> bnBD = {
   Strings.loading : 'লোড হচ্ছে',
 
   Strings.changeTheme : 'থিম পরিবর্তন করুন',
-  Strings.changeLanguage : 'ভাষা পরিবর্তন',
+  Strings.changeLanguage : 'ইংরেজি ভাষায় পরিবর্তন',
 
   Strings.noInternetConnection : 'ইন্টারনেট সংযোগ বিচ্ছিন্ন!',
   Strings.serverNotResponding : 'Server is not responding!',

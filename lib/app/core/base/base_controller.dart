@@ -11,7 +11,7 @@ abstract class BaseController extends GetxController {
 
 @override
   void onInit() {
-  isLightMode.value=true;
+  isLightMode.value=false;
     super.onInit();
   }
   //final logger = Logger();

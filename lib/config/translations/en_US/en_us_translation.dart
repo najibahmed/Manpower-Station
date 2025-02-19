@@ -5,7 +5,7 @@ const Map<String, String> enUs = {
   Strings.loading : 'Loading',
 
   Strings.changeTheme : 'Change theme',
-  Strings.changeLanguage : 'Change language',
+  Strings.changeLanguage : 'Change to Bangla language',
 
   Strings.noInternetConnection : 'No internet connection!',
   Strings.serverNotResponding : 'Server is not responding!',

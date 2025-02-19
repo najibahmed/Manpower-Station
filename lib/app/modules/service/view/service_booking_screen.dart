@@ -63,7 +63,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                 ),
               ),
               onPressed: () async {
-                if (controller.selectedTimeKey!.isNotEmpty&&controller.selectedDateTime!=null) {
+                if (controller.selectedTimeKey!.isNotEmpty&&controller.selectedDateTime.value!=null) {
                   if (await HelperFunction.instance.isInternetConnected()) {
                     controller.selectedService = controller.serviceModel;
                     controller.addToCartList();
@@ -151,7 +151,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                       CachedNetworkImage(
                         height: screenHeight * .22,
                         width: double.infinity,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                         imageUrl:
                             '${Constants.serviceImgUrl}${controller.serviceModel.image}',
                         errorWidget: (context, url, error) =>
@@ -230,11 +230,10 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     BigText(
                         text: 'Choose a start time to begin with.',
                         size: MyFonts.bodyLargeSize),
-                    Card(
+                    Container(
                       color: Theme.of(context)
                           .cardColor, // Background color of the card
                       // Colors.grey[100],
-                      elevation: 3,
                       child: SizedBox(
                         height: screenHeight * 0.06,
                         width: double.infinity,
@@ -254,8 +253,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                                 Text(
                                   controller.selectedDateTime.value==null? "Please select a date": Constants.formatDateTime.format(
                                       controller.selectedDateTime.value!),
-                                  style:
-                                      Theme.of(context).textTheme.displayMedium,
+                                  style: Theme.of(context).textTheme.displayMedium,
                                 ),
                               ],
                             ),

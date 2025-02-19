@@ -204,16 +204,16 @@ class MenuView extends BaseView<MenusController> {
           ),
           ListTile(
             leading: SvgPicture.asset(
-              controller.isLightMode.value
+              !Get.isDarkMode
                   ? 'assets/vectors/moon.svg'
                   : 'assets/vectors/sun.svg',
               fit: BoxFit.none,
-              color: controller.isLightMode.value
+              color: !Get.isDarkMode
                   ?Colors.black:Colors.white,
               height: 26.h,
               width: 26.h,
             ),
-            title: Text(controller.isLightMode.value
+            title: Text(!Get.isDarkMode
                 ?"Switch to Dark Mood":"Switch to Light Mood"),
             trailing: const Icon(Icons.change_circle_outlined),
             onTap: () {
