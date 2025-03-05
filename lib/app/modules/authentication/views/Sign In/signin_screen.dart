@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
+import 'package:manpower_station/app/components/small_text.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -36,6 +37,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
 
   @override
   Widget body(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 8.0, left: 22, right: 22),
@@ -54,7 +56,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
+                height: screenHeight * 0.04,
               ),
               Center(
                 child: Text("Sign In",
@@ -73,7 +75,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
               //   ),
               // ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.01,
+                height: screenHeight * 0.01,
               ),
               Center(
                 child: Text("Welcome Back",
@@ -90,15 +92,31 @@ class SignInScreen extends BaseView<AuthenticationController> {
                         color: LightThemeColors.opacityTextColor)),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.07,
+                height: screenHeight * 0.07,
               ),
               emailTextField(context),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
+                height: screenHeight * 0.02,
               ),
               passwordTextField(),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+                height: screenHeight * 0.002,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(AppPages.ForgetPassScreen);
+                      },
+                      child: SmallText(
+                        text: "Forget password?",
+                        color: LightThemeColors.primaryColor,
+                      ))
+                ],
+              ),
+              SizedBox(
+                height: screenHeight * 0.03,
               ),
               Center(
                 child: SizedBox(
@@ -119,7 +137,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
                               borderRadius: BorderRadius.circular(50)),
                           backgroundColor: LightThemeColors.primaryColor),
                       child: Text(
-                        Strings.signUp.tr,
+                        "Sign In",
                         style: Theme.of(context)
                             .textTheme
                             .displayMedium
@@ -128,7 +146,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.07,
+                height: screenHeight * 0.07,
               ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -153,11 +171,11 @@ class SignInScreen extends BaseView<AuthenticationController> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+                height: screenHeight * 0.05,
               ),
               const SocialCard(),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
+                height: screenHeight * 0.03,
               ),
               const NoAccountText()
             ],
@@ -210,7 +228,7 @@ class SignInScreen extends BaseView<AuthenticationController> {
 
   TextFormField emailTextField(context) {
     return TextFormField(
-      onFieldSubmitted: (value){
+      onFieldSubmitted: (value) {
         // FocusScope.of(context).requestFocus(_passwordFocusNode);
       },
       focusNode: _emailFocusNode,
@@ -238,18 +256,30 @@ class SignInScreen extends BaseView<AuthenticationController> {
         ),
       ),
       validator: (String? value) {
-        String emailPattern = r'^[a-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-        // Create the regex object.
-        RegExp regExpEmail = RegExp(emailPattern);
-        // Check if the input is null or empty.
         if (value == null || value.isEmpty) {
-          return 'Please enter your Email';
+          return 'Please enter your information';
         }
-        if (!regExpEmail.hasMatch(value)) {
-          // Validate the input using the regex.
-          return 'Please enter a valid Email Address';
+
+        // Phone Number Validation (Bangladesh)
+        String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
+        RegExp regExpPhone = RegExp(phonePattern);
+
+        // Email Validation
+        String emailPattern =
+            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+        RegExp regExpEmail = RegExp(emailPattern);
+
+        //  if value is a valid phone number
+        if (regExpPhone.hasMatch(value)) {
+          return null; // It's a valid phone number, no error
         }
-        return null;
+
+        //  if value is a valid email
+        if (regExpEmail.hasMatch(value)) {
+          return null; // It's a valid email, no error
+        }
+
+        return 'Please enter a valid phone number or email address.';
       },
     );
   }

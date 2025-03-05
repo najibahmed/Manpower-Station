@@ -25,7 +25,7 @@ class DashboardScreen extends GetView<DashBoardController> {
     return Obx(()=> Scaffold(
       bottomNavigationBar:ShaderMask(
         shaderCallback: (Rect bounds) {
-          return LinearGradient(
+          return const LinearGradient(
             colors: [LightThemeColors.primaryColor,
               LightThemeColors.secondaryColor],
           ).createShader(bounds);
@@ -58,9 +58,9 @@ class DashboardScreen extends GetView<DashBoardController> {
         ),
       ),
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight), // Standard AppBar height
+          preferredSize: const Size.fromHeight(kToolbarHeight), // Standard AppBar height
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
                   LightThemeColors.primaryColor,LightThemeColors.secondaryColor], // Gradient colors

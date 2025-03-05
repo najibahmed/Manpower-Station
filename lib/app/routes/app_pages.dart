@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names, prefer_const_constructors
 
 import 'package:get/get.dart';
-import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/modules/authentication/views/Sign%20In/signin_screen.dart';
 import 'package:manpower_station/app/modules/bookings/binding/bookings_binding.dart';
 import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
@@ -37,6 +36,9 @@ import 'package:manpower_station/app/modules/worker/view/worker_details.dart';
 import 'package:manpower_station/app/modules/worker/view/worker_list_screen.dart';
 import 'package:manpower_station/redirect_screen.dart';
 import '../modules/authentication/Auth Bindings/authentication_binding.dart';
+import '../modules/authentication/views/forget_password/change_pass.dart';
+import '../modules/authentication/views/forget_password/forgot_pass.dart';
+import '../modules/authentication/views/forget_password/otp_verification.dart';
 import '../modules/authentication/views/registration/registration_view.dart';
 import '../modules/bookings/view/booking_history_details.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -74,7 +76,9 @@ class AppPages {
   static const WelcomeView = Routes.welcomePage;
   static const PaymentSuccess = Routes.paymentDone;
   static const PaymentDue = Routes.paymentDue;
-
+  static const ForgetPassScreen = Routes.forgetPassword;
+  static const ForgetOtpView = Routes.otpForgetView;
+  static const ChangePassword = Routes.changePassword;
 
   static final routes = [
     GetPage(
@@ -93,6 +97,26 @@ class AppPages {
       page: () => SignInScreen(),
       binding: AuthenticationBinding(),
       // transition: Transition.rightToLeft
+    ),
+    GetPage(
+      name: _Paths.forgotPass,
+      page: () => ForgotPasswordScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.changePass,
+      page: () => ChangePasswordScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.otpForgetView,
+      page: () {
+        var userPhone = Get.arguments ?? "No data received";
+        return OtpVerificationScreen(
+          userPhone: userPhone,
+        );
+      },
+      transition: Transition.fadeIn,
     ),
     GetPage(
         name: _Paths.OtpScreen,

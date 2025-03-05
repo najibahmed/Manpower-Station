@@ -32,6 +32,9 @@ abstract class Routes {
   static const welcomePage = _Paths.WelcomePage;
   static const paymentDone = _Paths.PaymentSuccess;
   static const paymentDue = _Paths.PaymentDue;
+  static const forgetPassword = _Paths.forgotPass;
+  static const changePassword = _Paths.changePass;
+  static const otpForgetView = _Paths.otpForgetView;
 
 
 }
@@ -65,5 +68,8 @@ abstract class _Paths {
   static const WelcomePage = '/welcome_page';
   static const PaymentSuccess = '/payment-done';
   static const PaymentDue = '/payment-due';
+  static const String forgotPass = "/forgot-pass";
+  static const String changePass = "/change-pass";
+  static const String otpForgetView = "/otp-view";
 
 }

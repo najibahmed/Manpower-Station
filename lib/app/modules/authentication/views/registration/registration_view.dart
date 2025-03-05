@@ -248,11 +248,11 @@ class RegistrationView extends BaseView<AuthenticationController> {
                 ),
               ),
               validator: (String? value) {
-                // Define the regex pattern for the allowed prefixes and 11 digits.
+                // the regex pattern for the allowed prefixes and 11 digits.
                 String phonePattern = r'^(017|013|014|019|016|018|015)\d{8}$';
-                // Create the regex object.
+                //  the regex object.
                 RegExp regExp = RegExp(phonePattern);
-                // Check if the input is null or empty.
+                //  if the input is null or empty.
                 if (value == null || value.isEmpty) {
                   return 'Please enter your phone number';
                 }
@@ -293,9 +293,9 @@ class RegistrationView extends BaseView<AuthenticationController> {
               validator: (String? value) {
                 String emailPattern =
                     r'^[a-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-                // Create the regex object.
+                //  the regex object.
                 RegExp regExpEmail = RegExp(emailPattern);
-                // Check if the input is null or empty.
+                //  if the input is null or empty.
                 if (value == null || value.isEmpty) {
                   return 'Please enter your Email';
                 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomSnackBar {
   static showCustomSnackBar({required String title, required String message,Duration? duration})
@@ -47,6 +48,22 @@ class CustomSnackBar {
     );
   }
 
+  static void showFlutterToast({
+    required String message,
+    ToastGravity gravity = ToastGravity.BOTTOM,
+    Color backgroundColor = Colors.black,
+    Color textColor = Colors.white,
+    double fontSize = 16.0,
+  }) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: gravity,
+      backgroundColor: backgroundColor,
+      textColor: textColor,
+      fontSize: fontSize,
+    );
+  }
 
   static showCustomErrorToast({String? title, required String message,Color? color,Duration? duration}){
     Get.rawSnackbar(
