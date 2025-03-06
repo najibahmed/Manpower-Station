@@ -80,7 +80,8 @@ class AuthenticationController extends BaseController {
       // Set User Data to local storage
        setUserInfo(otpData);
       // Success handling
-      CustomSnackBar.showCustomSnackBar(title: 'Successfully Logged In', message: '${otpData.message}');
+      CustomSnackBar.showFlutterToast(message: "Successfully Logged In");
+      // CustomSnackBar.showCustomSnackBar(title: 'Successfully Logged In', message: '${otpData.message}');
       Get.offAllNamed(AppPages.DashboardView);
     }else if(response.statusCode==400){
       CustomSnackBar.showCustomErrorSnackBar(title: 'Error Registration ',message: '${response.data['message']}!',color: Colors.redAccent);

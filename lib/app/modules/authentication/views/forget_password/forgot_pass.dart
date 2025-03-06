@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/big_text.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/app_Images.dart';
+
+import '../../../../components/small_text.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -20,7 +23,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             "Forgot your password? No worries! Enter your email or phone number to reset it.",
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Form(
               key: _formKey,
               child: TextFormField(
@@ -30,13 +33,11 @@ class ForgotPasswordScreen extends StatelessWidget {
                 decoration: const InputDecoration(
                   hintText: 'Phone',
                   filled: true,
-                  fillColor: Color(0xFFF5FCF9),
                   contentPadding: EdgeInsets.symmetric(
-                      horizontal: 16.0 * 1.5, vertical: 16.0),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                  ),
+                      horizontal: 16.0 * 1.5, vertical: 8.0),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                      BorderSide(color: LightThemeColors.primaryColor)),
                 ),
                 keyboardType: TextInputType.phone,
                 onSaved: (phone) {
@@ -67,21 +68,33 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                Get.toNamed(AppPages.ForgetOtpView,arguments: userPhone);
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              backgroundColor: LightThemeColors.primaryColor,
-              foregroundColor: Colors.white,
-              minimumSize: const Size(double.infinity, 48),
-              shape: const StadiumBorder(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: 100,
+                  height: 40,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        Get.toNamed(AppPages.ForgetOtpView,arguments: userPhone);
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: LightThemeColors.primaryColor,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 48),
+                      shape: const StadiumBorder(),
+                    ),
+                    child: const Text("Next"),
+                  ),
+                ),
+              ],
             ),
-            child: const Text("Next"),
           ),
         ],
       ),
@@ -106,25 +119,36 @@ class LogoWithTitle extends StatelessWidget {
         return SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: const Icon(Icons.arrow_back))
+                  SizedBox(width:constraints.maxWidth *0.02 ,),
+                  SizedBox(
+                    child: Image.asset(
+                      AppImages.instance.manpower_Logo,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: constraints.maxHeight * 0.05),
-              Image.asset(
-                AppImages.instance.manpower_Logo,
-                height: 100,
-                width: 200,
-                fit: BoxFit.contain,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                        onTap: (){
+                          Get.back();
+                        },
+                        child: const Icon(Icons.arrow_back)),
+                    SizedBox(width:MediaQuery.of(context).size.width*0.02 ,),
+                    SmallText(text: "Sign in",size: 18,)
+                  ],
+                ),
               ),
               SizedBox(
-                height: constraints.maxHeight * 0.05,
+                height: constraints.maxHeight * 0.03,
                 width: double.infinity,
               ),
               Text(
@@ -135,10 +159,10 @@ class LogoWithTitle extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   subText,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.start,
                   style: TextStyle(
                     height: 1.5,
                     color: Theme.of(context)

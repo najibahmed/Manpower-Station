@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
@@ -38,147 +41,167 @@ class SignInScreen extends BaseView<AuthenticationController> {
   @override
   Widget body(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 8.0, left: 22, right: 22),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Image.asset(
-                    AppImages.instance.manpower_Logo,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: screenHeight * 0.04,
-              ),
-              Center(
-                child: Text("Sign In",
-                    style: TextStyle(
-                        fontSize: MyFonts.displayLargeSize,
-                        fontWeight: FontWeight.bold,
-                        color: LightThemeColors.primaryColor)),
-              ),
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height * 0.15,
-              //   child: Center(
-              //     child: Image.asset(
-              //       AppImages.instance.registrationVector,
-              //       fit: BoxFit.cover,
-              //     ),
-              //   ),
-              // ),
-              SizedBox(
-                height: screenHeight * 0.01,
-              ),
-              Center(
-                child: Text("Welcome Back",
-                    style: TextStyle(fontSize: MyFonts.displayLargeSize)),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Center(
-                child: Text("Sign in with your email and password",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: MyFonts.bodyMediumSize,
-                        color: LightThemeColors.opacityTextColor)),
-              ),
-              SizedBox(
-                height: screenHeight * 0.07,
-              ),
-              emailTextField(context),
-              SizedBox(
-                height: screenHeight * 0.02,
-              ),
-              passwordTextField(),
-              SizedBox(
-                height: screenHeight * 0.002,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        Get.toNamed(AppPages.ForgetPassScreen);
-                      },
-                      child: SmallText(
-                        text: "Forget password?",
-                        color: LightThemeColors.primaryColor,
-                      ))
-                ],
-              ),
-              SizedBox(
-                height: screenHeight * 0.03,
-              ),
-              Center(
-                child: SizedBox(
-                  height: 45,
-                  width: MediaQuery.of(context).size.width * 1,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        if (await HelperFunction.instance
-                            .isInternetConnected()) {
-                          _sendOtp();
-                        } else {
-                          CustomSnackBar.showCustomErrorToast(
-                              message: " No Internet Connection");
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)),
-                          backgroundColor: LightThemeColors.primaryColor),
-                      child: Text(
-                        "Sign In",
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium
-                            ?.copyWith(color: Colors.white),
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: screenHeight * 0.07,
-              ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: Divider(
-                    thickness: 1,
-                    color: Colors.grey,
-                  )),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18.0),
-                    child: Text(
-                      "Or Sign in With",
-                      style: TextStyle(color: Colors.black54),
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) return;
+        bool? exitApp = await Get.defaultDialog(
+          title: "Exit App",
+          middleText: "Are you sure you want to exit?",
+          textConfirm: "Yes",
+          textCancel: "No",
+          onConfirm: () {
+            Get.back(); // Close dialog
+            if (Platform.isAndroid) {
+              SystemNavigator.pop(); // Close app on Android
+            } else {
+              exit(0); // Close app on iOS & other platforms
+            }
+          },
+        );
+      },
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 22, right: 22),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Image.asset(
+                      AppImages.instance.manpower_Logo,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  Expanded(
-                      child: Divider(
-                    thickness: 1,
-                    color: Colors.grey,
-                  ))
-                ],
-              ),
-              SizedBox(
-                height: screenHeight * 0.05,
-              ),
-              const SocialCard(),
-              SizedBox(
-                height: screenHeight * 0.03,
-              ),
-              const NoAccountText()
-            ],
+                ),
+                SizedBox(
+                  height: screenHeight * 0.04,
+                ),
+                Center(
+                  child: Text("Sign In",
+                      style: TextStyle(
+                          fontSize: MyFonts.displayLargeSize,
+                          fontWeight: FontWeight.bold,
+                          color: LightThemeColors.primaryColor)),
+                ),
+                // SizedBox(
+                //   height: MediaQuery.of(context).size.height * 0.15,
+                //   child: Center(
+                //     child: Image.asset(
+                //       AppImages.instance.registrationVector,
+                //       fit: BoxFit.cover,
+                //     ),
+                //   ),
+                // ),
+                SizedBox(
+                  height: screenHeight * 0.01,
+                ),
+                Center(
+                  child: Text("Welcome Back",
+                      style: TextStyle(fontSize: MyFonts.displayLargeSize)),
+                ),
+                const SizedBox(
+                  height: 2,
+                ),
+                Center(
+                  child: Text("Sign in with your email and password",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: MyFonts.bodyMediumSize,
+                          color: LightThemeColors.opacityTextColor)),
+                ),
+                SizedBox(
+                  height: screenHeight * 0.07,
+                ),
+                emailTextField(context),
+                SizedBox(
+                  height: screenHeight * 0.02,
+                ),
+                passwordTextField(),
+                SizedBox(
+                  height: screenHeight * 0.002,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Get.toNamed(AppPages.ForgetPassScreen);
+                        },
+                        child: SmallText(
+                          text: "Forget password?",
+                          color: LightThemeColors.primaryColor,
+                        ))
+                  ],
+                ),
+                SizedBox(
+                  height: screenHeight * 0.03,
+                ),
+                Center(
+                  child: SizedBox(
+                    height: 45,
+                    width: MediaQuery.of(context).size.width * 1,
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          if (await HelperFunction.instance
+                              .isInternetConnected()) {
+                            _sendOtp();
+                          } else {
+                            CustomSnackBar.showCustomErrorToast(
+                                message: " No Internet Connection");
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50)),
+                            backgroundColor: LightThemeColors.primaryColor),
+                        child: Text(
+                          "Sign In",
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium
+                              ?.copyWith(color: Colors.white),
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  height: screenHeight * 0.07,
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    )),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Text(
+                        "Or Sign in With",
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    ),
+                    Expanded(
+                        child: Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ))
+                  ],
+                ),
+                SizedBox(
+                  height: screenHeight * 0.05,
+                ),
+                const SocialCard(),
+                SizedBox(
+                  height: screenHeight * 0.03,
+                ),
+                const NoAccountText()
+              ],
+            ),
           ),
         ),
       ),
@@ -314,7 +337,9 @@ class SocialCard extends StatelessWidget {
               AppImages.instance.appleLogo,
               height: 40,
             ),
-            onPressed: () {},
+            onPressed: () {
+              CustomSnackBar.showFlutterToast(message: "Successfully Logged In");
+            },
           ),
         ),
         Padding(
@@ -330,7 +355,9 @@ class SocialCard extends StatelessWidget {
                 AppImages.instance.googleLogo,
                 height: 30,
               ),
-              onPressed: () {},
+              onPressed: () {
+                CustomSnackBar.showCustomToast(message: "logged in");
+              },
             ),
           ),
         ),

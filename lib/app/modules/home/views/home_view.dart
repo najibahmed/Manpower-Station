@@ -272,8 +272,11 @@ class HomeView extends BaseView<HomeController> {
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl: '${Constants.bannerImgUrl}$banner',
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
+                          errorWidget: (context, url, error) {
+                            // print(url);
+                            return const Icon(Icons.error);
+                            },
+
                           progressIndicatorBuilder:
                               (context, url, progress) => Center(
                             child: CircularProgressIndicator(
