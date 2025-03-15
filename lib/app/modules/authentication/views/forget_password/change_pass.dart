@@ -112,17 +112,16 @@ class LogoWithTitle extends StatelessWidget {
   final List<Widget> children;
 
   const LogoWithTitle(
-      {Key? key,
+      {super.key,
       required this.title,
       this.subText = '',
-      required this.children})
-      : super(key: key);
+      required this.children});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: LayoutBuilder(builder: (context, constraints) {
         return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

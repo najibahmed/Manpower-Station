@@ -2,9 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/big_text.dart';
+import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
+import 'package:manpower_station/app/components/small_text.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
 import 'package:manpower_station/app/modules/home/views/horizontal_service_card.dart';
@@ -92,6 +96,7 @@ class HomeView extends BaseView<HomeController> {
                   SizedBox(
                     height: 2.h,
                   ),
+
                   /// Application Banner
                   _buildBanner(size),
 
@@ -147,7 +152,7 @@ class HomeView extends BaseView<HomeController> {
                   ),
                   delegate: SliverChildBuilderDelegate(
                     childCount: controller.allCatData.isEmpty
-                        ? 6
+                        ? 4
                         : controller.allCatData.length,
                     (context, index) {
                       if (controller.allCatData.isEmpty) {
@@ -155,8 +160,9 @@ class HomeView extends BaseView<HomeController> {
                             .buildServiceCardShimmer();
                       } else {
                         CategoryModel category = controller.allCatData[index];
+
                         ///build single Category card
-                        return _buildCategoryCard(size, category,context);
+                        return _buildCategoryCard(size, category, context);
                       }
                     },
                   )),
@@ -167,14 +173,17 @@ class HomeView extends BaseView<HomeController> {
     );
   }
 
-  InkWell _buildCategoryCard(Size size, CategoryModel category,BuildContext context) {
+  InkWell _buildCategoryCard(
+      Size size, CategoryModel category, BuildContext context) {
     return InkWell(
-        onTap: ()async {
-          if(await HelperFunction.instance.isInternetConnected()){
+        onTap: () async {
+          if (await HelperFunction.instance.isInternetConnected()) {
             Get.toNamed(AppPages.SingleCateServicesScreen,
-                          arguments: [category.categoryName, category.id.toString()]);
+                arguments: [category.categoryName, category.id.toString()]);
           } else {
-            CustomSnackBar.showCustomErrorToast(title: "No Internet!!", message: "Please check internet connection.");
+            CustomSnackBar.showCustomErrorToast(
+                title: "No Internet!!",
+                message: "Please check internet connection.");
           }
         },
         child: Card(
@@ -188,15 +197,15 @@ class HomeView extends BaseView<HomeController> {
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(15)),
                 child: CachedNetworkImage(
-                  height: size.height*.13,
+                  height: size.height * .13,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  imageUrl:
-                  '${Constants.categoryImgUrl}${category.frontImage}',
-                  errorWidget: (context, url, error) =>
-                      Image.asset(AppImages.instance.categoryPlaceHolder,fit: BoxFit.cover,),
-                  progressIndicatorBuilder:
-                      (context, url, progress) => Center(
+                  imageUrl: '${Constants.categoryImgUrl}${category.frontImage}',
+                  errorWidget: (context, url, error) => Image.asset(
+                    AppImages.instance.categoryPlaceHolder,
+                    fit: BoxFit.cover,
+                  ),
+                  progressIndicatorBuilder: (context, url, progress) => Center(
                     child: CircularProgressIndicator(
                       value: progress.progress,
                     ),
@@ -226,12 +235,19 @@ class HomeView extends BaseView<HomeController> {
                         child: OutlinedButton(
                             onPressed: () {
                               Get.toNamed(AppPages.SingleCateServicesScreen,
-                                  arguments: [category.categoryName, category.id.toString()]);
+                                  arguments: [
+                                    category.categoryName,
+                                    category.id.toString()
+                                  ]);
                             },
-                            child:  Text(
+                            child: Text(
                               'View All',
-                              style:
-                                  TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodyMedium!.color),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color),
                             )),
                       ),
                     ],
@@ -248,7 +264,7 @@ class HomeView extends BaseView<HomeController> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: controller.allServiceData.isEmpty
-            ? _buildBannerShimmer()
+              ? _buildBannerShimmer(size)
             : CarouselSlider(
                 options: CarouselOptions(
                   height: size.height * 0.19,
@@ -256,56 +272,102 @@ class HomeView extends BaseView<HomeController> {
                   // enlargeCenterPage: true,
                   aspectRatio: 16 / 9,
                   autoPlayInterval: const Duration(seconds: 6),
-                  autoPlayAnimationDuration:
-                      const Duration(milliseconds: 300),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 300),
                   autoPlayCurve: Curves.fastOutSlowIn,
                   pauseAutoPlayOnTouch: true,
                   viewportFraction: 1.0,
                 ),
-                items: controller.activeBanners.value.images !=null
+                items: controller.activeBanners.value.images != null
                     ? controller.activeBanners.value.images!.map((url) {
-                  var banner = url.image;
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          imageUrl: '${Constants.bannerImgUrl}$banner',
-                          errorWidget: (context, url, error) {
-                            // print(url);
-                            return const Icon(Icons.error);
-                            },
-
-                          progressIndicatorBuilder:
-                              (context, url, progress) => Center(
-                            child: CircularProgressIndicator(
-                              value: progress.progress,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(): [Container(color:Colors.green.withOpacity(.04),)],
+                        var banner = url.image;
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: '${Constants.bannerImgUrl}$banner',
+                                errorWidget: (context, url, error) {
+                                  // print(url);
+                                  return const Icon(Icons.error);
+                                },
+                                progressIndicatorBuilder:
+                                    (context, url, progress) => Center(
+                                  child: CircularProgressIndicator(
+                                    value: progress.progress,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }).toList()
+                    : [
+                        Container(
+                          color: Colors.green.withOpacity(.04),
+                        )
+                      ],
               ),
       ),
     );
   }
 
+  Center retryWidget(Size size) {
+    return Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    height: size.height * .15,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Icon(
+                          Icons
+                              .signal_wifi_statusbar_connected_no_internet_4_outlined,
+                          size: 60,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BigText(
+                              text: "No Internet Connection",
+                              size: 14,
+                            ),
+                            SmallText(
+                                text:
+                                    "Please check your internet and try again."),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  asyncFunction: _handleRefresh();
+                                },
+                                child: BigText(
+                                  text: "Retry",
+                                  color: Colors.white,
+                                  size: 12,
+                                ))
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+  }
+
   Future<void> _handleRefresh() async {
-    if(!controller.refreshLoading.value){
-      controller.refreshLoading.value=true;
-       Get.find<UserController>().getUserInformation();
-       Get.find<BookingsController>().getAllBookingsByUid();
-       controller.fetchAllService();
-       controller.fetchAllCategories();
+    if (!controller.refreshLoading.value) {
+      controller.refreshLoading.value = true;
+      Get.find<UserController>().getUserInformation();
+      Get.find<BookingsController>().getAllBookingsByUid();
+      controller.fetchAllService();
+      controller.fetchAllCategories();
       // await controller.getAllServiceData();
       // await controller.getAllServiceCategories();
-       controller.getBanners();
-      controller.refreshLoading.value=false;
-
-      }
+      controller.getBanners();
+      controller.refreshLoading.value = false;
+    }
   }
 
   Widget _buildPopularService(Size size) {
@@ -341,14 +403,21 @@ class HomeView extends BaseView<HomeController> {
     );
   }
 
-  Widget _buildBannerShimmer() {
-    return const Column(
-      children: [
-        Text("Pull down to refresh",style: TextStyle(color: Colors.grey),),
-        Card(
-            elevation: 5, child: ShimmerWidget.rectangular(height: 180)),
-      ],
-    );
+  Widget _buildBannerShimmer(Size size) {
+    if(!controller.connectionController.value.isInternetConnected.value){
+      controller.retryButtonShow=true;
+    }
+    if(controller.showRetryButton){
+      return retryWidget(size);
+    }else{
+      return Card(
+          elevation: 5,
+          child: SizedBox(
+              width: double.maxFinite,
+              child: ShimmerWidget.rectangular(
+                height: size.height * .18,
+              )));
+    }
   }
 
   Widget _buildPopularShimmer(Size size) {

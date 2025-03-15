@@ -34,7 +34,7 @@ abstract class Routes {
   static const paymentDue = _Paths.PaymentDue;
   static const forgetPassword = _Paths.forgotPass;
   static const changePassword = _Paths.changePass;
-  static const otpForgetView = _Paths.otpForgetView;
+  static const changePassView = _Paths.changePassView;
 
 
 }
@@ -70,6 +70,6 @@ abstract class _Paths {
   static const PaymentDue = '/payment-due';
   static const String forgotPass = "/forgot-pass";
   static const String changePass = "/change-pass";
-  static const String otpForgetView = "/otp-view";
+  static const String changePassView = "/change_password";
 
 }

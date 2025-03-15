@@ -167,7 +167,8 @@ class BaseClient {
     } on TimeoutException {
       // Api call went out of time
       _handleTimeoutException(url: url, onError: onError);
-    } catch (error, stackTrace) {
+    }
+    catch (error, stackTrace) {
       // print the line of code that throw unexpected exception
       Logger().e(stackTrace);
       // unexpected error for example (parsing json error)
@@ -306,14 +307,13 @@ class BaseClient {
     if (kDebugMode) {
       LoggerUtil.instance
           .printLog(msg: "handle api error:$msg", logType: LogType.error);
-      CustomSnackBar.showCustomErrorSnackBar(title: "Error Occurred", message: "Request Timed Out!!");
     }
   }
 
   /// handle errors without response (500, out of time, no internet,..etc)
   static _handleError(String msg) {
     if (kDebugMode) {
-      CustomSnackBar.showCustomErrorToast(message: "handle error:$msg");
+      LoggerUtil.instance.printLog(msg: "handle error:$msg",logType: LogType.warning);
     }
   }
 }

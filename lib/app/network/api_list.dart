@@ -6,6 +6,8 @@ class ApiList {
 
    static String userLoginUrl = '/api/users/user/sign-in'; //post method
    static String userRegistrationUrl = '/api/users/user/sign-up'; //post method
+   static String passChangeEmailRequestUrl = '/api/users/user/forget/password/request'; //put method
+   static String verifyOtpAndResetPass = '/api/users/user/forget/password/request/confirm'; //put method
    static String userLoginGmailUrl = '/api/users/google'; //get method
    static String userOtpVerificationUrl = "/api/users/signup/phone_email/verified"; //put method
    static String userOrderCreateUrl = "/api/payments/ammerpay/create"; //post method

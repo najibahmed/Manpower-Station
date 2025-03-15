@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/big_text.dart';
+import 'package:manpower_station/app/components/custom_loading_overlay.dart';
+import 'package:manpower_station/app/modules/authentication/Auth%20controller/authentication_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/utils/app_Images.dart';
 
 import '../../../../components/small_text.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
+class ForgotPasswordScreen extends GetView {
   final _formKey = GlobalKey<FormState>();
 
   ForgotPasswordScreen({super.key});
@@ -80,7 +81,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        Get.toNamed(AppPages.ForgetOtpView,arguments: userPhone);
+                        showLoadingOverLay(
+                            asyncFunction: Get.find<AuthenticationController>()
+                                .otpSendResetPassEmail(phoneOrEmail:userPhone!.trim(),isRoute: true));
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -117,14 +120,15 @@ class LogoWithTitle extends StatelessWidget {
     return SafeArea(
       child: LayoutBuilder(builder: (context, constraints) {
         return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 16
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(width:constraints.maxWidth *0.02 ,),
+                  SizedBox(width:constraints.maxWidth * 0.02),
                   SizedBox(
                     child: Image.asset(
                       AppImages.instance.manpower_Logo,
@@ -142,7 +146,7 @@ class LogoWithTitle extends StatelessWidget {
                           Get.back();
                         },
                         child: const Icon(Icons.arrow_back)),
-                    SizedBox(width:MediaQuery.of(context).size.width*0.02 ,),
+                    SizedBox(width:MediaQuery.of(context).size.width * 0.02 ),
                     SmallText(text: "Sign in",size: 18,)
                   ],
                 ),

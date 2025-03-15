@@ -38,7 +38,7 @@ import 'package:manpower_station/redirect_screen.dart';
 import '../modules/authentication/Auth Bindings/authentication_binding.dart';
 import '../modules/authentication/views/forget_password/change_pass.dart';
 import '../modules/authentication/views/forget_password/forgot_pass.dart';
-import '../modules/authentication/views/forget_password/otp_verification.dart';
+import '../modules/authentication/views/forget_password/change_pass_view.dart';
 import '../modules/authentication/views/registration/registration_view.dart';
 import '../modules/bookings/view/booking_history_details.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -77,7 +77,7 @@ class AppPages {
   static const PaymentSuccess = Routes.paymentDone;
   static const PaymentDue = Routes.paymentDue;
   static const ForgetPassScreen = Routes.forgetPassword;
-  static const ForgetOtpView = Routes.otpForgetView;
+  static const ChangePasswordView = Routes.changePassView;
   static const ChangePassword = Routes.changePassword;
 
   static final routes = [
@@ -109,10 +109,10 @@ class AppPages {
       transition: Transition.fadeIn,
     ),
     GetPage(
-      name: _Paths.otpForgetView,
+      name: _Paths.changePassView,
       page: () {
         var userPhone = Get.arguments ?? "No data received";
-        return OtpVerificationScreen(
+        return ChangePasswordAndVerify(
           userPhone: userPhone,
         );
       },

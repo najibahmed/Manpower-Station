@@ -57,6 +57,9 @@ class AuthRepository {
     try {
       await BaseClient.safeApiCall(
           appUrl,
+          onError: (error) {
+            apiResponse= error.response!;
+          },
           headers: {
             'Content-Type': 'application/json',
             "Bypass-Auth": "true",

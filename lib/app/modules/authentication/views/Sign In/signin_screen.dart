@@ -307,10 +307,10 @@ class SignInScreen extends BaseView<AuthenticationController> {
     );
   }
 
-  void _sendOtp() async {
+  void _sendOtp()  {
     if (_formKey.currentState!.validate()) {
       _passwordFocusNode.unfocus();
-      showLoadingOverLay(asyncFunction: controller.loginUser(), msg: "Loading");
+      showLoadingOverLay(asyncFunction: controller.loginUser() , msg: "Loading");
       // await controller.loginUser();
     }
   }
@@ -338,7 +338,6 @@ class SocialCard extends StatelessWidget {
               height: 40,
             ),
             onPressed: () {
-              CustomSnackBar.showFlutterToast(message: "Successfully Logged In");
             },
           ),
         ),
@@ -356,7 +355,6 @@ class SocialCard extends StatelessWidget {
                 height: 30,
               ),
               onPressed: () {
-                CustomSnackBar.showCustomToast(message: "logged in");
               },
             ),
           ),
@@ -382,8 +380,8 @@ class SocialCard extends StatelessWidget {
 
 class NoAccountText extends StatelessWidget {
   const NoAccountText({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

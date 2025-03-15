@@ -23,10 +23,10 @@ class CustomSnackBar {
   {
     Get.snackbar(
       title,
-      message,
+      message,animationDuration: Duration(seconds: 1),
       snackPosition: SnackPosition.BOTTOM,
       duration: duration ?? const Duration(seconds: 2),
-      margin: const EdgeInsets.only(top: 10,left: 10,right: 10),
+      margin: const EdgeInsets.only(top: 10,left: 10,right: 10,bottom: 10),
       colorText: Colors.white,
       backgroundColor: color ?? Colors.redAccent,
       icon: const Icon(Icons.error, color: Colors.white,),
@@ -51,7 +51,7 @@ class CustomSnackBar {
   static void showFlutterToast({
     required String message,
     ToastGravity gravity = ToastGravity.BOTTOM,
-    Color backgroundColor = Colors.black,
+    Color backgroundColor = LightThemeColors.primaryColor,
     Color textColor = Colors.white,
     double fontSize = 16.0,
   }) {

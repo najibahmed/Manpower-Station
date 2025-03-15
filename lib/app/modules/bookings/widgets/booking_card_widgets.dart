@@ -75,7 +75,7 @@ class BookingItemCard extends StatelessWidget {
                                 showLoadingOverLay(
                                     asyncFunction: controller.deleteBookingService(booking.id!),
                                     msg: "Deleting");
-                              } else {}
+                              }
                             },
                             icon: const Icon(
                               Icons.delete,

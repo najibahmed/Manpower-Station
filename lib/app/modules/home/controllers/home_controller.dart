@@ -8,6 +8,7 @@ import 'package:manpower_station/app/models/active_banner.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/app/network/api_list.dart';
+import '../../../../utils/helper_function.dart';
 import '../../../components/custom_snackbar.dart';
 import '../../../core/base/base_controller.dart';
 import '../../../network/api_client.dart';
@@ -21,6 +22,13 @@ class HomeController extends BaseController {
   List get allServiceData => _allServiceData;
   final _allCategoryData = <dynamic>[].obs;
   List get allCatData => _allCategoryData;
+  RxBool _retryButtonShow =false.obs;
+  bool get showRetryButton => _retryButtonShow.value;
+
+  set retryButtonShow(bool showRetry){
+       _retryButtonShow.value=showRetry;
+
+  }
 
 
 
@@ -36,8 +44,9 @@ class HomeController extends BaseController {
 
     if (response is List) {
       _allServiceData.assignAll(response.map((e) => ServiceModel.fromJson(e)).toList());
+      retryButtonShow=false;
     } else {
-      CustomSnackBar.showCustomErrorSnackBar(title: 'Failed to load services', message: '$response');
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Failed to load services', message: 'No internet Connection!');
     }
   }
 
@@ -57,7 +66,6 @@ class HomeController extends BaseController {
   //     CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services:',message: '${response.statusMessage}');
   //   }
   // }
-
 
   /// Get all Categories from server
   Future<void> fetchAllCategories()async{
