@@ -246,10 +246,10 @@ class _PinInputScreenState extends State<PinInputScreen> {
                     ),
                   ),
                   keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    // LengthLimitingTextInputFormatter(4),
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
+                  // inputFormatters: [
+                  //   // LengthLimitingTextInputFormatter(4),
+                  //   FilteringTextInputFormatter.digitsOnly,
+                  // ],
                   onChanged: (otp) {
                     setState(() {
                       _otpPin=otp;
@@ -263,6 +263,9 @@ class _PinInputScreenState extends State<PinInputScreen> {
                   },
                 ),
                 TextFormField(
+                  onTapOutside: (event) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
                   obscureText: _obsecureNewPass,
                   decoration:  InputDecoration(
                     suffixIcon: IconButton(onPressed: (){
@@ -298,6 +301,9 @@ class _PinInputScreenState extends State<PinInputScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: TextFormField(
+                    onTapOutside: (event) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
                     obscureText: true,
                     decoration: const InputDecoration(
                       hintText: ' Confirm Password',

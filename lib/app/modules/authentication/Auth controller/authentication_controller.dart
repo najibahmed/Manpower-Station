@@ -128,16 +128,26 @@ class AuthenticationController extends BaseController {
       'newPassword': newPassword,
     };
     print(requestData);
-    // var response =
-    //     await authRepo.putData(requestData, ApiList.verifyOtpAndResetPass);
-    // if (response.statusCode == 201) {
-    //   Map<String, dynamic> responseData = response.data;
-    //   print('response Data:--------$responseData');
-    //
-    // } else {
-    //   CustomSnackBar.showCustomErrorSnackBar(
-    //       title: 'Error Otp ', message: 'Check!', color: Colors.redAccent);
-    // }
+    var response =
+        await authRepo.putData(requestData, ApiList.verifyOtpAndResetPass);
+      Map<String, dynamic> responseData = response.data;
+    print(responseData);
+    if (response.statusCode == 201) {
+      print('response Data:--------$responseData');
+      Get.defaultDialog(
+        title: "Successful",
+        middleText: "${responseData['message']}",
+        textConfirm: 'ok',
+        onConfirm: () {
+          Get.back();
+          // Get.offNamedUntil(AppPages.SignIn, ModalRoute.withName(AppPages.SignIn));
+        },
+      );
+      // CustomSnackBar.showCustomSnackBar(title: "Successful", message: "${responseData['message']}");
+      // Get.offNamedUntil(AppPages.SignIn, ModalRoute.withName(AppPages.SignIn));
+    } else {
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Error Otp', message: "${responseData['message']}", color: Colors.redAccent);
+    }
   }
 
   void setUserInfo(OtpModel otpData) {

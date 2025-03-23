@@ -32,6 +32,8 @@ class DashboardScreen extends GetView<DashBoardController> {
           title: "Exit App",
           middleText: "Are you sure you want to exit?",
           textConfirm: "Yes",
+          confirmTextColor: Colors.black87,
+          cancelTextColor: Colors.black87,
           textCancel: "No",
           onConfirm: () {
             Get.back(); // Close dialog
