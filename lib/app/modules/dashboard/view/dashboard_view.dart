@@ -2,21 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/modules/bookings/view/bookings_view.dart';
 import 'package:manpower_station/app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:manpower_station/app/modules/home/views/home_view.dart';
 import 'package:manpower_station/app/modules/menu/views/menu_view.dart';
 import 'package:manpower_station/app/modules/search_view/view/search_screen.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
-import 'package:manpower_station/config/theme/my_theme.dart';
-import 'package:manpower_station/config/translations/localization_service.dart';
 import 'package:manpower_station/utils/app_Images.dart';
 
-import '../../../components/custom_snackbar.dart';
 
 class DashboardScreen extends GetView<DashBoardController> {
   const DashboardScreen({super.key});

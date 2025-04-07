@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/resend_tile.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
 import '../../../../../config/theme/light_theme_colors.dart';
 import '../../../../../utils/app_Images.dart';
-import '../../../../components/custom_snackbar.dart';
 import '../../../../components/small_text.dart';
 import '../../Auth controller/authentication_controller.dart';
 
@@ -167,7 +165,7 @@ class _PinInputScreenState extends State<PinInputScreen> {
       _formKey.currentState!.save();
       // Triggers onSaved for all fields
       // String pin = _pinDigits.join(); // Combines digits into full PIN
-      print("User entered PIN: $_otpPin");
+      // print("User entered PIN: $_otpPin");
       // Navigate to another page (optional)
       Get.toNamed(AppPages.ChangePassword);
     }

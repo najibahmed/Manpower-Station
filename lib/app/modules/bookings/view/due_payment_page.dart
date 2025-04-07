@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/models/bookings_model.dart';
 import 'package:manpower_station/app/modules/bookings/controller/bookings_controller.dart';
-import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
-
 import '../../../../config/theme/light_theme_colors.dart';
 import '../../../../utils/app_Images.dart';
 import '../../../../utils/helper_function.dart';
@@ -160,7 +158,6 @@ class PayDue extends GetView<BookingsController> {
         },
         // This will return the payment event with a message
         status: (EventState event, String message)async {
-          print('---->this is the payment event message $message');
           if (event == EventState.success) {
             controller.isLoading.value = false;
             await controller.setPaymentSuccess();
@@ -171,18 +168,15 @@ class PayDue extends GetView<BookingsController> {
             showSuccessDialog(title:  "Payment Successful",successMsg:"Your payment was processed successfully!");
           }
           else if (event == EventState.cancel) {
-            print('---->Cancel State');
             controller.isLoading.value = false;
             await controller.setPaymentCancel();
             CustomSnackBar.showCustomErrorToast(message: message);
           }
           else if (event == EventState.fail||event == EventState.backButtonPressed) {
-            print('---->Fail State');
             await controller.setPaymentCancel();
             controller.isLoading.value = false;
             CustomSnackBar.showCustomErrorToast(message: message);
           }else if(event == EventState.error){
-            print('---->Error State');
             CustomSnackBar.showCustomErrorToast(message: message);
           }
         },

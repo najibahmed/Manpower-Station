@@ -1,15 +1,18 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/custom_snackbar.dart';
 
 import 'helper_function.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
   // await NotificationService.instance.setupFlutterNotification();
   await NotificationService.instance.showNotification(message);
 }
@@ -72,7 +75,6 @@ class NotificationService {
       }
       return false;
     }
-    print('User granted permission: ${settings.authorizationStatus}');
   }
 
   /// Fetch the current FCM token
@@ -80,20 +82,24 @@ class NotificationService {
     try {
       String? token = await _messaging.getToken();
       if (token != null) {
-        print("FCM Token: $token");
+        // print("FCM Token: $token");
         // TODO: Send token to your server if necessary
       }
     } catch (e) {
-      print("Error getting FCM token: $e");
+      // print("Error getting FCM token: $e");
     }
   }
 
   void isTokenRefresh()  {
     _messaging.onTokenRefresh.listen((newToken) {
-      print("FCM Token Refreshed: $newToken");
+      // if (kDebugMode) {
+      //   print("FCM Token Refreshed: $newToken");
+      // }
       // TODO: Send the updated token to your server if necessary
     }).onError((error) {
-      print("Error getting refreshed FCM token: $error");
+      // if (kDebugMode) {
+      //   print("Error getting refreshed FCM token: $error");
+      // }
     });
   }
 
@@ -103,18 +109,20 @@ class NotificationService {
     if(await HelperFunction.instance.isInternetConnected()){
       try {
         await _messaging.subscribeToTopic(topic);
-        print("Subscribed to topic: $topic");
+        // print("Subscribed to topic: $topic");
       } catch (e) {
-        print("Error subscribing to topic: $e");
+        // print("Error subscribing to topic: $e");
       }
     }
     else{
-      print("No internet can't Subscribed to topic: $topic");
+      CustomSnackBar.showFlutterToast(message: "No internet Connection");
     }
   }
 
   void handleMessage() {
-    print("Message Handled Successfully");
+    if (kDebugMode) {
+      print("Message Handled Successfully");
+    }
   }
 
   Future<void> showNotification(RemoteMessage message) async {
@@ -201,21 +209,18 @@ class NotificationService {
             _handleBackgroundMsg(initialMsg);
           }
     } catch (e) {
-      print("setup Message Handlers error:$e");
+      CustomSnackBar.showFlutterToast(message: "setup Message Handlers error:$e");
     }
   }
 
   void _handleBackgroundMsg(RemoteMessage message) {
-    print("handle background message");
     if (message.data["Offer"] == 'productId') {
       // open chat
     }
   }
 
   void _showDialogNotification(RemoteMessage message){
-    print("show dialog");
     final context =  Get.context;
-    print("context:"+context.toString());
     if(context!= null){
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
@@ -227,7 +232,6 @@ class NotificationService {
           },
               child: const Text("Close")),
           TextButton(onPressed: (){
-            print("Success button or view button");
             Navigator.pop(context);
             // _handleBackgroundMsg(message.data['type']?? "");
           },

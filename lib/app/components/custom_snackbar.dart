@@ -4,8 +4,8 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomSnackBar {
-  static showCustomSnackBar({required String title, required String message,Duration? duration})
-  {
+  static showCustomSnackBar(
+      {required String title, required String message, Duration? duration}) {
     Get.snackbar(
       title,
       message,
@@ -14,33 +14,59 @@ class CustomSnackBar {
       colorText: Colors.white,
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.black87,
-      icon: const Icon(Icons.check_circle, color: Colors.white,),
+      icon: const Icon(
+        Icons.check_circle,
+        color: Colors.white,
+      ),
     );
   }
 
+  static showCustomDialog(
+      {required String middleText,
+      required String title,
+      required void Function() onConfirm,
+      required String textConfirm}) {
+    Get.defaultDialog(
+      confirmTextColor: Colors.black87,
+      title: title,
+      middleText: middleText,
+      textConfirm: textConfirm,
+      onConfirm: onConfirm,
+    );
+  }
 
-  static showCustomErrorSnackBar({required String title, required String message,Color? color,Duration? duration})
-  {
+  static showCustomErrorSnackBar(
+      {required String title,
+      required String message,
+      Color? color,
+      Duration? duration}) {
     Get.snackbar(
       title,
-      message,animationDuration: Duration(seconds: 1),
+      message,
+      animationDuration: const Duration(seconds: 1),
       snackPosition: SnackPosition.BOTTOM,
       duration: duration ?? const Duration(seconds: 2),
-      margin: const EdgeInsets.only(top: 10,left: 10,right: 10,bottom: 20),
+      margin: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 20),
       colorText: Colors.white,
       backgroundColor: color ?? Colors.redAccent,
-      icon: const Icon(Icons.error, color: Colors.white,),
+      icon: const Icon(
+        Icons.error,
+        color: Colors.white,
+      ),
     );
   }
 
-
-  static showCustomToast({String? title, required String message,Color? color,Duration? duration}){
+  static showCustomToast(
+      {String? title,
+      required String message,
+      Color? color,
+      Duration? duration}) {
     Get.rawSnackbar(
       title: title,
       duration: duration ?? const Duration(seconds: 3),
       snackStyle: SnackStyle.GROUNDED,
       backgroundColor: color ?? LightThemeColors.primaryColor,
-      onTap: (snack){
+      onTap: (snack) {
         Get.closeAllSnackbars();
       },
       //overlayBlur: 0.8,
@@ -65,13 +91,17 @@ class CustomSnackBar {
     );
   }
 
-  static showCustomErrorToast({String? title, required String message,Color? color,Duration? duration}){
+  static showCustomErrorToast(
+      {String? title,
+      required String message,
+      Color? color,
+      Duration? duration}) {
     Get.rawSnackbar(
       title: title,
       duration: duration ?? const Duration(seconds: 3),
       snackStyle: SnackStyle.GROUNDED,
       backgroundColor: color ?? Colors.redAccent,
-      onTap: (snack){
+      onTap: (snack) {
         Get.closeAllSnackbars();
       },
       //overlayBlur: 0.8,

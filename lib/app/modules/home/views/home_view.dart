@@ -1,12 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/big_text.dart';
-import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/app/components/small_text.dart';
 import 'package:manpower_station/app/models/category_model.dart';
@@ -14,7 +11,6 @@ import 'package:manpower_station/app/modules/bookings/controller/bookings_contro
 import 'package:manpower_station/app/modules/home/views/horizontal_service_card.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
@@ -153,6 +149,7 @@ class HomeView extends BaseView<HomeController> {
                   delegate: SliverChildBuilderDelegate(
                     childCount: controller.allCatData.isEmpty
                         ? 4
+
                         : controller.allCatData.length,
                     (context, index) {
                       if (controller.allCatData.isEmpty) {
@@ -285,18 +282,18 @@ class HomeView extends BaseView<HomeController> {
                             return SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: CachedNetworkImage(
+                                placeholder: (context, url) =>const Center(child:   CircularProgressIndicator()),
                                 fit: BoxFit.cover,
                                 imageUrl: '${Constants.bannerImgUrl}$banner',
                                 errorWidget: (context, url, error) {
-                                  // print(url);
                                   return const Icon(Icons.error);
                                 },
-                                progressIndicatorBuilder:
-                                    (context, url, progress) => Center(
-                                  child: CircularProgressIndicator(
-                                    value: progress.progress,
-                                  ),
-                                ),
+                                // progressIndicatorBuilder:
+                                //     (context, url, progress) => Center(
+                                //   child: CircularProgressIndicator(
+                                //     value: progress.progress,
+                                //   ),
+                                // ),
                               ),
                             );
                           },
@@ -359,13 +356,15 @@ class HomeView extends BaseView<HomeController> {
   Future<void> _handleRefresh() async {
     if (!controller.refreshLoading.value) {
       controller.refreshLoading.value = true;
-      Get.find<UserController>().getUserInformation();
-      Get.find<BookingsController>().getAllBookingsByUid();
-      controller.fetchAllService();
-      controller.fetchAllCategories();
+      await Future.wait([
+      Get.find<UserController>().getUserInformation(),
+      Get.find<BookingsController>().getAllBookingsByUid(),
+      controller.fetchAllService(),
+      controller.fetchAllCategories(),
       // await controller.getAllServiceData();
       // await controller.getAllServiceCategories();
-      controller.getBanners();
+      controller.getBanners()
+      ]);
       controller.refreshLoading.value = false;
     }
   }

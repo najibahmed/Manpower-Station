@@ -18,11 +18,11 @@ class HomeController extends BaseController {
   final ServiceRepository repository;
   HomeController({required this.repository});
  RxBool refreshLoading=false.obs;
-  RxList _allServiceData = <dynamic>[].obs;
+  final RxList _allServiceData = <dynamic>[].obs;
   List get allServiceData => _allServiceData;
   final _allCategoryData = <dynamic>[].obs;
   List get allCatData => _allCategoryData;
-  RxBool _retryButtonShow =false.obs;
+  final RxBool _retryButtonShow =false.obs;
   bool get showRetryButton => _retryButtonShow.value;
 
   set retryButtonShow(bool showRetry){
@@ -95,10 +95,12 @@ class HomeController extends BaseController {
 
 
   @override
-  void onInit() {
-    getBanners();
-    fetchAllService();
-    fetchAllCategories();
+  void onInit() async{
+    await Future.wait([
+    getBanners(),
+    fetchAllService(),
+    fetchAllCategories()
+    ]);
 
     super.onInit();
   }

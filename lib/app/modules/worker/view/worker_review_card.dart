@@ -5,7 +5,7 @@ import 'package:manpower_station/app/modules/worker/controller/worker_controller
 import 'package:manpower_station/utils/constants.dart';
 
 class WorkerReviewCard extends StatelessWidget {
-  final review;
+  final dynamic review;
 
   const WorkerReviewCard({super.key, required this.review});
 

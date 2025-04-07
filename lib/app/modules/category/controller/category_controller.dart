@@ -11,7 +11,7 @@ class CategoryController extends BaseController {
 
   final RxList _oneCategoryServicesData = <dynamic>[].obs;
   List get oneCategoryServicesData => _oneCategoryServicesData;
-  RxBool _isLoading=false.obs;
+  final RxBool _isLoading=false.obs;
   bool get getLoading=>_isLoading.value;
   var categoryTitle = Get.arguments[0];
   final catId = Get.arguments[1];

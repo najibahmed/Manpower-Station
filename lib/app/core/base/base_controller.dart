@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../connection_manager/connection_manager_controller.dart';
-import 'page_state.dart';
+
 
 abstract class BaseController extends GetxController {
   final isAuthenticated = false.obs;

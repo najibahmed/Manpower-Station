@@ -9,7 +9,6 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 
 import '../../components/custom_button.dart';
-import '../../routes/app_pages.dart';
 
 class VerificationCompleted extends BaseView<AuthenticationController>{
   const VerificationCompleted({super.key});
@@ -74,7 +73,7 @@ class VerificationCompleted extends BaseView<AuthenticationController>{
                 height: 44.h,
                 width: 298.w,
                 onTap: () {
-                  Get.toNamed(AppPages.DashboardView);
+
 
                 },
               ))

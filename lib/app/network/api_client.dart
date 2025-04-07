@@ -60,7 +60,6 @@ class BaseClient {
         if (error.response?.statusCode == 401) {
           // Attempt to refresh the token
           try {
-            print('inside try refresh token');
             final newTokens = await _refreshToken();
             // Save the new tokens
             await MySharedPref.setAccessToken(newTokens['access_token']!);
@@ -326,7 +325,7 @@ Future<Map<String, String>> _refreshToken() async {
         logType: LogType.warning);
     throw Exception('No Access token available');
   }
-  Dio _dio = Dio(
+  Dio dio = Dio(
     BaseOptions(
       baseUrl: ApiList.baseUrl,
       headers: {
@@ -336,7 +335,7 @@ Future<Map<String, String>> _refreshToken() async {
       },
     ),
   );
-  final response = await _dio.post(
+  final response = await dio.post(
     '/api/users/refresh/token',
   );
   if (response.statusCode == 200) {

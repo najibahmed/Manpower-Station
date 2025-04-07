@@ -25,8 +25,6 @@ class BookingDetailsController extends BaseController {
   void onInit() {
     booking = Get.arguments[0];
     workerList = Get.arguments[1];
-    print("---booking----->$booking");
-    print("---workerList----->${workerList.first!.user}");
     // workerList.map((worker) {
     //   print("${worker.user}");
     //   getWorkerInformation(worker.user);
@@ -128,7 +126,6 @@ class BookingDetailsController extends BaseController {
       },
       'app': 'ammerpay-app'
     };
-    print(requestData);
     // var response= await apiService.postData(requestData, ApiList.userOrderCreateUrl);
     // if (response.statusCode == 200) {
     //       print("pay due  response data----->${response.data}");

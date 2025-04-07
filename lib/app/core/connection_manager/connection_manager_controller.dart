@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:manpower_station/app/core/base/base_controller.dart';
 import '../../components/custom_snackbar.dart';
 import 'connection_type.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
@@ -9,7 +8,6 @@ import 'package:manpower_station/app/modules/service/controller/service_controll
 import 'package:manpower_station/app/modules/worker/controller/worker_controller.dart';
 import 'package:manpower_station/app/network/api_list.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:uuid/uuid.dart';
 import '../../../../utils/helper_function.dart';
 import '../../../components/custom_snackbar.dart';
 import '../views/checkout_screen.dart';
@@ -22,9 +20,9 @@ class CheckoutController extends BaseController {
   final serviceController = Get.find<ServiceController>();
   RxBool isLoading = RxBool(false);
   RxString paymentMethodGroupValue = PaymentMethod.cod.obs;
-  RxString _transactionId=''.obs;
+   RxString _transactionId=''.obs;
   String get transactionId =>_transactionId.value;
-  RxString _payAmount=''.obs;
+   RxString _payAmount=''.obs;
   String get amount =>_payAmount.value;
   final formKey = GlobalKey<FormState>();
   final List<WorkerModel> worker =
@@ -99,8 +97,7 @@ class CheckoutController extends BaseController {
   Future<void> setPaymentCancel()async{
       const appStatus= 'ammerpay-app';
     var response = await checkOutRepo.postWithOutData(ApiList.getPaymentFailsUrl(_transactionId.value, appStatus));
-      print("Fail response:${response.statusCode}");
-      // CustomSnackBar.showCustomErrorToast(message: response.data["message"]);
+      CustomSnackBar.showCustomErrorToast(message: response.data["message"]);
 
   }
 

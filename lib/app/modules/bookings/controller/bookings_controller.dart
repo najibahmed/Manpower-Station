@@ -103,7 +103,6 @@ class BookingsController extends BaseController
       },
       'app': 'ammerpay-app'
     };
-    print(requestData);
     var response= await apiService.postData(requestData, ApiList.userOrderCreateUrl);
     if (response.statusCode == 200) {
       var tranId=response.data['formData']["tran_id"];
@@ -135,7 +134,6 @@ class BookingsController extends BaseController
   Future<void> setPaymentCancel()async{
     const appStatus= 'ammerpay-app';
     var response = await apiService.postWithOutData(ApiList.getPaymentFailsUrl(_transactionId.value, appStatus));
-    print("Fail response:${response.statusCode}");
     // CustomSnackBar.showCustomErrorToast(message: response.data["message"]);
 
   }

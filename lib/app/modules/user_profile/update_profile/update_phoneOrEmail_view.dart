@@ -5,12 +5,10 @@ import 'package:manpower_station/app/components/custom_button.dart';
 import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
-import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 import 'package:manpower_station/utils/app_Images.dart';
-
 import '../../../components/custom_snackbar.dart';
 
 class UpdatePhoneEmail extends BaseView<UserController> {
@@ -20,10 +18,10 @@ class UpdatePhoneEmail extends BaseView<UserController> {
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
     return PreferredSize(
-      preferredSize: Size.fromHeight(kToolbarHeight),
+      preferredSize: const Size.fromHeight(kToolbarHeight),
       child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors:const [
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(colors:[
             LightThemeColors.primaryColor,LightThemeColors.secondaryColor])
         ),
         child: AppBar(

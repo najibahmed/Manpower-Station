@@ -21,7 +21,7 @@ class BookingHistoryDetails extends BaseView<BookingDetailsController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(kToolbarHeight),
         // Standard AppBar height
         child: Container(
             decoration: const BoxDecoration(
@@ -271,9 +271,9 @@ class BookingHistoryDetails extends BaseView<BookingDetailsController> {
             offset: const Offset(2.0, 2.0),
             blurRadius: 12,
             spreadRadius: 1.0),
-        BoxShadow(
+        const BoxShadow(
             color: Colors.white,
-            offset: const Offset(-1.0, -1.0),
+            offset: Offset(-1.0, -1.0),
             blurRadius: 5,
             spreadRadius: 1.0)
       ]),

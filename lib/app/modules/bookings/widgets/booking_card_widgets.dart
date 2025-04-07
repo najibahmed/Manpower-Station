@@ -1,15 +1,11 @@
-import 'package:aamarpay/aamarpay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/small_text.dart';
-import '../../../../config/theme/light_theme_colors.dart';
 import '../../../../utils/constants.dart';
 import '../../../../utils/helper_function.dart';
 import '../../../components/custom_loading_overlay.dart';
-import '../../../components/custom_snackbar.dart';
 import '../../../models/bookings_model.dart';
 import '../../../routes/app_pages.dart';
-import '../controller/booking_details_controller.dart';
 import '../controller/bookings_controller.dart';
 
 class BookingItemCard extends StatelessWidget {
@@ -129,7 +125,7 @@ class BookingItemCard extends StatelessWidget {
                 ],
               ),
             )
-          : booking.services==null?SizedBox():Container(
+          : booking.services==null ? const SizedBox():Container(
               width: size.width * 1,
               padding: EdgeInsets.all(size.width * 0.03),
               decoration: BoxDecoration(

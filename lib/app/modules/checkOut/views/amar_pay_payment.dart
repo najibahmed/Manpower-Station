@@ -156,7 +156,7 @@ class MyPay extends GetView<CheckoutController> {
           },
           // This will return the payment event with a message
           status: (EventState event, String message)async {
-            print('---->this is the payment event message $message');
+
             if (event == EventState.success) {
               Get.offNamed(AppPages.PaymentSuccess);
               controller.isLoading.value = false;
@@ -166,18 +166,15 @@ class MyPay extends GetView<CheckoutController> {
               //     title: "Order Confirmed", message: message);
             }
             else if (event == EventState.cancel) {
-              print('---->Cancel State');
               controller.isLoading.value = false;
              await controller.setPaymentCancel();
               CustomSnackBar.showCustomErrorToast(message: message);
             }
             else if (event == EventState.fail||event == EventState.backButtonPressed) {
-              print('---->Fail State');
               await controller.setPaymentCancel();
               controller.isLoading.value = false;
               CustomSnackBar.showCustomErrorToast(message: message);
             }else if(event == EventState.error){
-              print('---->Error State');
               CustomSnackBar.showCustomErrorToast(message: message);
             }
           },

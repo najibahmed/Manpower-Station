@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/user_profile/user_profile_controller/user_profile_controller.dart';
-import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
@@ -359,7 +358,7 @@ class UpdateProfileScreen extends BaseView<UserController> {
 
       } catch (error) {
         //   controller.errMsg.value = error.message;
-        print(error);
+        CustomSnackBar.showFlutterToast(message: error.toString());
       }
     }
   }

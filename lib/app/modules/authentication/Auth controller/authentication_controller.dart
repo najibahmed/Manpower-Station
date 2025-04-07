@@ -127,20 +127,18 @@ class AuthenticationController extends BaseController {
       'otp': otp,
       'newPassword': newPassword,
     };
-    print(requestData);
     var response =
         await authRepo.putData(requestData, ApiList.verifyOtpAndResetPass);
       Map<String, dynamic> responseData = response.data;
-    print(responseData);
-    if (response.statusCode == 201) {
-      print('response Data:--------$responseData');
+    if (response.statusCode == 200) {
       Get.defaultDialog(
+        confirmTextColor: Colors.black87,
         title: "Successful",
         middleText: "${responseData['message']}",
         textConfirm: 'ok',
         onConfirm: () {
           Get.back();
-          // Get.offNamedUntil(AppPages.SignIn, ModalRoute.withName(AppPages.SignIn));
+          Get.offNamedUntil(AppPages.SignIn, ModalRoute.withName(AppPages.SignIn));
         },
       );
       // CustomSnackBar.showCustomSnackBar(title: "Successful", message: "${responseData['message']}");

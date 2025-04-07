@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 import 'package:manpower_station/utils/helper_function.dart';
-
 import '../../../../config/theme/light_theme_colors.dart';
 import '../../../../config/theme/my_fonts.dart';
 import '../../../../utils/app_Images.dart';
@@ -46,7 +44,6 @@ class HorizontalServiceCard extends StatelessWidget {
                       fit: BoxFit.cover,
                       imageUrl: '${Constants.serviceImgUrl}$image',
                       errorWidget: (context, url, error) {
-                        print("Service Image error:$error");
                         return Image.asset(
                           AppImages.instance.servicePlaceHolder,
                           fit: BoxFit.cover,

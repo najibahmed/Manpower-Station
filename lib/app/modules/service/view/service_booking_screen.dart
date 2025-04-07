@@ -2,11 +2,9 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/components/big_text.dart';
 import 'package:manpower_station/app/components/custom_snackbar.dart';
-import 'package:manpower_station/app/components/gradientBar_widget.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/modules/service/controller/service_controller.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
@@ -17,7 +15,7 @@ import 'package:manpower_station/utils/helper_function.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
 class ServiceBookingScreen extends BaseView<ServiceController> {
-  ServiceBookingScreen({super.key});
+  const ServiceBookingScreen({super.key});
 
   @override
   Widget? bottomNavigationBar() {
@@ -271,7 +269,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
                     SizedBox(height: screenHeight * .03),
 
                     /// Calender dialogue
-                    ScheduleButton(screenHeight, screenWidth, context),
+                    scheduleButton(screenHeight, screenWidth, context),
                     SizedBox(height: screenHeight * .02),
                     const SizedBox(
                       height: 40,
@@ -329,7 +327,7 @@ class ServiceBookingScreen extends BaseView<ServiceController> {
     );
   }
 
-  Center ScheduleButton(
+  Center scheduleButton(
       double screenHeight, double screenWidth, BuildContext context) {
     return Center(
       child: SizedBox(
