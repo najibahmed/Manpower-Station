@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:logger/logger.dart';
 
 /// logger Util Log Type

@@ -1,8 +1,12 @@
+
+// ignore_for_file: file_names
+
 class AppImages{
 
   static AppImages instance = AppImages();
 
   /// Images
+
   String get manpower_Logo => 'assets/images/manpower_name_logo.png';
 
   /// Logo
@@ -23,5 +27,21 @@ class AppImages{
   /// Lottie
   String get logoAnim => 'assets/splash.json';
 
+  ///Order section
+  String get noOrderHistory => 'assets/images/no_order_history.png';
+  String get paymentDone => 'assets/images/payment_done.png';
 
+  ///Help support
+  String get support =>"assets/images/help_support.png";
+  String get imgPerson =>"assets/images/img_person.jpg";
+  //Online pay
+  String get onlinePayment =>"assets/images/online_payment.png";
+
+  ///Service
+String get servicePlaceHolder =>"assets/images/service_img.png";
+
+
+
+///Category
+String get categoryPlaceHolder =>"assets/images/category_img.png";
 }

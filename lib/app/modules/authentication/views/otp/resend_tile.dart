@@ -6,7 +6,8 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
 
 class ResendSmsTile extends StatefulWidget {
-  const ResendSmsTile({super.key});
+  final Function() onTapped;
+  const ResendSmsTile({super.key,required this.onTapped});
 
   @override
   _ResendSmsTileState createState() => _ResendSmsTileState();
@@ -48,10 +49,10 @@ class _ResendSmsTileState extends State<ResendSmsTile> {
       focusColor: LightThemeColors.primaryColor,
       enabled: _isTileActive,
       onTap: (){
-        _isTileActive ? _resendSms : null;
+        _isTileActive ? _resendSms() : null;
       },
       leading: Icon(Icons.sms, color: _isTileActive ? LightThemeColors.primaryColor :LightThemeColors.opacityTextColor),
-      title: Text('${Strings.resendSms.tr}'),
+      title: Text(Strings.resendSms.tr),
       trailing:  _isTileActive ? const Text(''):Text('Wait $_start s',
         style: TextStyle(
           fontSize: MyFonts.bodySmallTextSize,
@@ -62,10 +63,9 @@ class _ResendSmsTileState extends State<ResendSmsTile> {
   }
 
   void _resendSms() {
-    // Your resend SMS logic here
-    print('SMS resent');
+    widget.onTapped();
+    //  resend SMS logic here
     emailFocusNode.unfocus();
-    // Restart the timer after resending
     _startTimer();
   }
 

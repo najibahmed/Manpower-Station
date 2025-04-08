@@ -1,13 +1,17 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:manpower_station/app/components/shimmer_widget.dart';
 import 'package:manpower_station/utils/constants.dart';
+
+import 'app_Images.dart';
+
 class HelperFunction {
-  static HelperFunction instance=HelperFunction();
+  static HelperFunction instance = HelperFunction();
 
   ///  Singleton pattern
   // static HelperFunction _instance;
@@ -22,7 +26,6 @@ class HelperFunction {
 //     return _instance!;
 //   }
 
-
   getFormattedDate(DateTime dt, {String pattern = 'yyyy-MM-dd – kk:mm'}) =>
       DateFormat(pattern).format(dt);
 
@@ -32,19 +35,20 @@ class HelperFunction {
   String get generateOrderId =>
       'PB_${getFormattedDate(DateTime.now(), pattern: 'yyyyMMdd_HH:mm:ss')}';
 
-  num getDiscountAmount(discount,num price) {
-    if(discount.discountType=="Percentage Discount"){
-      return price-((price * discount.discount!) / 100).round();
-    }else{
-      return price-discount.discount!;
+  num getDiscountAmount(discount, num price) {
+    if (discount.discountType == "Percentage Discount") {
+      return price - ((price * discount.discount!) / 100).round();
+    } else {
+      return price - discount.discount!;
     }
   }
+
   /// Device
   double getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
 
-  double getScreenHeight(BuildContext context){
+  double getScreenHeight(BuildContext context) {
     return MediaQuery.of(context).size.height;
   }
 
@@ -62,23 +66,26 @@ class HelperFunction {
             child: const Center(child: CircularProgressIndicator())),
       ); // It's an SVG file
     }
-
     // Check for .jpg or .jpeg extension
     if (imageUrl.toLowerCase().endsWith('.jpg') ||
         imageUrl.toLowerCase().endsWith('.jpeg') ||
         imageUrl.toLowerCase().endsWith('.png')) {
-      return Image.network(
-        '${Constants.avatarImgUrl}$imageUrl',
-        height: 120,
-        width: double.infinity,
+      return CachedNetworkImage(
+        errorWidget: (context, url, error) =>
+            Image.asset(AppImages.instance.imgPerson,fit: BoxFit.cover,),
+        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+        imageUrl: '${Constants.avatarImgUrl}$imageUrl',
+        // height: 120,
+        // width: double.infinity,
         fit: BoxFit.cover,
-      ); // It's a JPG/JPEG file
+      );
     }
-
     // You can handle other cases or return false if it doesn't match SVG or JPG
-    return const SizedBox(child: Center(
-      child: Text("image file format nor jpg,jpeg,png neither svg"),
-    ),); // Assuming it's not a known image type
+    return const SizedBox(
+      child: Center(
+        child: Text("image file format nor jpg,jpeg,png neither svg"),
+      ),
+    ); // Assuming it's not a known image type
   }
 
   Widget buildServiceCardShimmer() {
@@ -111,8 +118,9 @@ class HelperFunction {
       ),
     );
   }
+
   /// Shimmmer Widget for booking details
-  Widget _buildCardShimmer(double screenHeight, double screenWidth) {
+  Widget buildCardShimmer(double screenHeight, double screenWidth) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -280,7 +288,7 @@ class HelperFunction {
                                 SizedBox(height: screenHeight * 0.01),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     ShimmerWidget.rectangular(
                                         height: screenHeight * 0.02,
@@ -293,7 +301,7 @@ class HelperFunction {
                                 SizedBox(height: screenHeight * 0.01),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     ShimmerWidget.rectangular(
                                         height: screenHeight * 0.02,
@@ -306,7 +314,7 @@ class HelperFunction {
                                 SizedBox(height: screenHeight * 0.01),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     ShimmerWidget.rectangular(
                                         height: screenHeight * 0.02,
@@ -339,7 +347,6 @@ class HelperFunction {
       ]),
     );
   }
-
 
   Future<bool> isInternetConnected() async {
     var connectivityResult = await Connectivity().checkConnectivity();

@@ -2,45 +2,72 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/app/components/big_text.dart';
+import 'package:manpower_station/app/components/custom_loading_overlay.dart';
 import 'package:manpower_station/app/components/dash_divider.dart';
 import 'package:manpower_station/app/core/base/base_view.dart';
 import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/models/worker_model.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 import 'package:manpower_station/app/modules/checkOut/views/shipping_form.dart';
+import 'package:manpower_station/app/routes/app_pages.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
-
+import '../../../../utils/app_Images.dart';
 
 class CheckOutScreen extends BaseView<CheckoutController> {
-  CheckOutScreen({super.key});
+  const CheckOutScreen({super.key});
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      centerTitle: true,
-      title: const Text(
-        "Checkout",
-        style: TextStyle(
-            fontSize: 22,
-            letterSpacing: 1,
-            fontWeight: FontWeight.bold,
-            color: Colors.white),
-      ),
-      leading: IconButton(
-          onPressed: () {
-            Get.back();
-            // controller.worker.clear();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          )),
-      // backgroundColor: LightThemeColors.primaryColor,
-    );
+    return PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        // Standard AppBar height
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                LightThemeColors.primaryColor,
+                LightThemeColors.secondaryColor
+              ],
+              // Gradient colors
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            centerTitle: true,
+            title: const Text(
+              "Checkout",
+              style: TextStyle(
+                  fontSize: 22,
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+            leading: IconButton(
+                onPressed: () {
+                  Get.back();
+                  // controller.worker.clear();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                )),
+            // backgroundColor: LightThemeColors.primaryColor,
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Get.offNamedUntil(AppPages.DashboardView,
+                        (Route<dynamic> route) => route.isFirst);
+                  },
+                  icon: const Icon(Icons.home_outlined))
+            ],
+          ),
+        ));
   }
-
 
   @override
   Widget body(BuildContext context) {
@@ -77,21 +104,26 @@ class CheckOutScreen extends BaseView<CheckoutController> {
 
             /// PaymentMethod(),
             // buildPaymentMethodSection(controller: controller),
-            SizedBox(height: screenHeight * 0.05),
+            SizedBox(height: screenHeight * 0.03),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: controller.saveOrder,
+                onPressed: () async {
+                  showLoadingOverLay(
+                      asyncFunction: controller.saveOrder(), msg: "Loading");
+                  // controller.saveOrder();
+                },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   backgroundColor: LightThemeColors.primaryColor,
                 ),
                 child: const Text(
-                  'CONFIRM ORDER',
+                  'PLACE ORDER',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
+            SizedBox(height: screenHeight * 0.05),
           ],
         ),
       ),
@@ -116,22 +148,22 @@ class CheckOutScreen extends BaseView<CheckoutController> {
                     '${Constants.banglaCurrency} ${controller.serviceController.cartSubtotal}.00'),
               ],
             ),
-            SizedBox(height: 10.h),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Tax:'),
-                Text('${Constants.banglaCurrency} +6.70'),
-              ],
-            ),
+            // SizedBox(height: 10.h),
+            // const Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text('Tax:'),
+            //     Text('${Constants.banglaCurrency} +6.70'),
+            //   ],
+            // ),
             SizedBox(height: 10.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                    'Discount: ${item.discountModel.discount}${item.discountModel.discountType == "Percentage Discount" ? '%' : Constants.banglaCurrency}'),
+                    'Discount: ${controller.serviceController.selectedService.serviceDiscount!.discount}${controller.serviceController.selectedService.serviceDiscount!.discountType == "Percentage Discount" ? '%' : Constants.banglaCurrency}'),
                 Text(
-                    '- ${Constants.banglaCurrency} ${controller.getDiscountAmount(item.discountModel, controller.serviceController.cartSubtotal.value)}'),
+                    ' ${Constants.banglaCurrency} - ${controller.getDiscountAmount(controller.serviceController.selectedService.serviceDiscount!, controller.serviceController.cartSubtotal.value)}'),
               ],
             ),
             const Divider(
@@ -144,7 +176,7 @@ class CheckOutScreen extends BaseView<CheckoutController> {
                 const Text('Grand Total:',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 Text(
-                    '${Constants.banglaCurrency} ${controller.getGrandTotal()}.00',
+                    '${Constants.banglaCurrency} ${controller.cartItem.first.totalPrice}.00',
                     style: const TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
@@ -187,7 +219,10 @@ Widget customWorkerTile(WorkerModel worker, double screenHeight,
             child: CachedNetworkImage(
               fit: BoxFit.cover,
               imageUrl: '${Constants.avatarImgUrl}${worker.avatar}',
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) => Image.asset(
+                AppImages.instance.imgPerson,
+                fit: BoxFit.cover,
+              ),
               progressIndicatorBuilder: (context, url, progress) => Center(
                 child: CircularProgressIndicator(
                   value: progress.progress,
@@ -207,25 +242,25 @@ Widget customWorkerTile(WorkerModel worker, double screenHeight,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                worker.username!,
+                "${worker.firstName ?? "Empty"} ${worker.lastName ?? "empty"}",
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               SizedBox(height: screenHeight * 0.01),
               Text(
-                "Gender:  ${worker.gender!}",
+                "Gender:  ${worker.gender ?? "Empty"}",
                 style: const TextStyle(
                     fontWeight: FontWeight.normal, fontSize: 14),
               ),
-              Text(
-                "Area:  ${worker.area!}",
-                style: const TextStyle(
-                    fontWeight: FontWeight.normal, fontSize: 14),
-              ),
+              // Text(
+              //   "Area:  ${worker.area ?? "Empty"}",
+              //   style: const TextStyle(
+              //       fontWeight: FontWeight.normal, fontSize: 14),
+              // ),
               Row(
                 children: [
                   Text(
-                    "Rating:  ${worker.ratings!} ",
+                    "Rating:  ${worker.ratings ?? '0'} ",
                     style: const TextStyle(
                         fontWeight: FontWeight.normal, fontSize: 14),
                   ),
@@ -253,108 +288,120 @@ Widget customServiceTile(CartModel item, double screenHeight,
     // shape: RoundedRectangleBorder(
     //   borderRadius: BorderRadius.circular(15),
     // ),
-    child: Row(
-      children: [
-        ClipRRect(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
-          child: SizedBox(
-            height:screenHeight* 0.188,
-            width: screenWidth * 0.34,
-            child: CachedNetworkImage(
-              fit: BoxFit.cover,
-              imageUrl: '${Constants.serviceImgUrl}${item.serviceImageUrl}',
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              progressIndicatorBuilder: (context, url, progress) => Center(
-                child: CircularProgressIndicator(
-                  value: progress.progress,
+    child: SizedBox(
+      height: screenHeight * 0.188,
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+            child: SizedBox(
+              height: screenHeight * 0.188,
+              width: screenWidth * 0.34,
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: '${Constants.serviceImgUrl}${item.serviceImageUrl}',
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: CircularProgressIndicator(
+                    value: progress.progress,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        Expanded(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                item.serviceName,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              // const Divider(color: Colors.black26,),
-              const MySeparator(),
-              SizedBox(height: screenHeight * 0.01),
-              RichText(
-                text: TextSpan(
-                    text: 'Duration:    ',
-                    style: TextStyle(
-                        fontSize: MyFonts.bodyMediumSize,
-                        fontWeight: FontWeight.normal,
-                        color:
-                            Theme.of(context).textTheme.displayMedium?.color),
-                    children: [
-                      TextSpan(
-                        text: item.serviceTimeSchedule,
-                        style: TextStyle(
-                            fontSize: MyFonts.bodyMediumSize,
-                            fontWeight: FontWeight.bold,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color),
-                      ),
-                    ]),
-              ),
-              const SizedBox(width: 5),
-              RichText(
-                text: TextSpan(
-                    text: 'Starting Date :  ',
-                    style: TextStyle(
-                        fontSize: MyFonts.bodyMediumSize,
-                        fontWeight: FontWeight.normal,
-                        color:
-                            Theme.of(context).textTheme.displayMedium?.color),
-                    children: [
-                      TextSpan(
-                        text: Constants.formatDate
-                            .format(DateTime.parse(item.startingDate)),
-                        style: TextStyle(
-                            fontSize: MyFonts.bodyMediumSize,
-                            fontWeight: FontWeight.bold,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color),
-                      ),
-                    ]),
-              ),
-              RichText(
-                text: TextSpan(
-                    text: 'Time at:   ',
-                    style: TextStyle(
-                        fontSize: MyFonts.bodyMediumSize,
-                        fontWeight: FontWeight.normal,
-                        color:
-                            Theme.of(context).textTheme.displayMedium?.color),
-                    children: [
-                      TextSpan(
-                        text: Constants.formatTime
-                            .format(DateTime.parse(item.startingDate)),
-                        style: TextStyle(
-                            fontSize: MyFonts.bodyMediumSize,
-                            fontWeight: FontWeight.bold,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color),
-                      ),
-                    ]),
-              ),
-              const SizedBox(height: 5),
-            ],
-          ),
-        ))
-      ],
+          Expanded(
+              child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                BigText(
+                  text: item.serviceName,
+                  size: Theme.of(context).textTheme.displayLarge!.fontSize!,
+                ),
+                // Text(
+                //   item.serviceName,
+                //   style:
+                //       const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                // ),
+                // const Divider(color: Colors.black26,),
+                const MySeparator(),
+                // SizedBox(height: screenHeight * 0.01),
+                RichText(
+                  text: TextSpan(
+                      text: 'Duration:    ',
+                      style: TextStyle(
+                          fontSize: MyFonts.bodyMediumSize,
+                          fontWeight: FontWeight.normal,
+                          color:
+                              Theme.of(context).textTheme.displayMedium?.color),
+                      children: [
+                        TextSpan(
+                          text: item.serviceTimeSchedule,
+                          style: TextStyle(
+                              fontSize: MyFonts.bodyMediumSize,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.color),
+                        ),
+                      ]),
+                ),
+                RichText(
+                  text: TextSpan(
+                      text: 'Starting Date :  ',
+                      style: TextStyle(
+                          fontSize: MyFonts.bodyMediumSize,
+                          fontWeight: FontWeight.normal,
+                          color:
+                              Theme.of(context).textTheme.displayMedium?.color),
+                      children: [
+                        TextSpan(
+                          text: Constants.formatDate
+                              .format(DateTime.parse(item.startingDate)),
+                          style: TextStyle(
+                              fontSize: MyFonts.bodyMediumSize,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.color),
+                        ),
+                      ]),
+                ),
+                RichText(
+                  text: TextSpan(
+                      text: 'Time at:   ',
+                      style: TextStyle(
+                          fontSize: MyFonts.bodyMediumSize,
+                          fontWeight: FontWeight.normal,
+                          color:
+                              Theme.of(context).textTheme.displayMedium?.color),
+                      children: [
+                        TextSpan(
+                          text: Constants.formatTime
+                              .format(DateTime.parse(item.startingDate)),
+                          style: TextStyle(
+                              fontSize: MyFonts.bodyMediumSize,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.color),
+                        ),
+                      ]),
+                ),
+                const SizedBox(height: 5),
+              ],
+            ),
+          ))
+        ],
+      ),
     ),
   );
 }

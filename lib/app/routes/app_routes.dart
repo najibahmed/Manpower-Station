@@ -8,6 +8,7 @@ abstract class Routes {
   static const homeScreen = _Paths.HOME;
   static const dashBoard = _Paths.DashBoard;
   static const registrationScreen = _Paths.Registration;
+  static const signInScreen = _Paths.SignIn;
   static const otpScreen = _Paths.OtpScreen;
   static const userProfile = _Paths.UserProfile;
   static const orderHistory = _Paths.BookingHistory;
@@ -17,6 +18,7 @@ abstract class Routes {
   static const serviceDetailsScreen = _Paths.ServiceDetailsScreen;
   static const redirectScreen = _Paths.RedirectScreen;
   static const checkOutScreen = _Paths.CheckOutScreen;
+  static const paymentPage = _Paths.PaymentPage;
   static const singleCatServices = _Paths.SingleCatServices;
   static const updateProfile = _Paths.UpdateProfile;
   static const workerList = _Paths.WorkerList;
@@ -28,6 +30,11 @@ abstract class Routes {
   static const reportPage = _Paths.ReportPage;
   static const onBoarding = _Paths.OnBoarding;
   static const welcomePage = _Paths.WelcomePage;
+  static const paymentDone = _Paths.PaymentSuccess;
+  static const paymentDue = _Paths.PaymentDue;
+  static const forgetPassword = _Paths.forgotPass;
+  static const changePassword = _Paths.changePass;
+  static const changePassView = _Paths.changePassView;
 
 
 }
@@ -37,6 +44,7 @@ abstract class _Paths {
   static const HOME = '/home';
   static const DashBoard = '/dash_board';
   static const Registration = '/registration';
+  static const SignIn = '/signIn';
   static const OtpScreen = '/otp';
   static const UserProfile = '/user_profile';
   static const MenusPage = '/menus_page';
@@ -46,6 +54,7 @@ abstract class _Paths {
   static const ServiceDetailsScreen = '/service_details';
   static const RedirectScreen = '/redirect_screen';
   static const CheckOutScreen = '/checkOut_screen';
+  static const PaymentPage = '/payment-page';
   static const SingleCatServices = '/single_category_services';
   static const UpdateProfile = '/update_profile';
   static const WorkerList = '/worker_list';
@@ -57,5 +66,10 @@ abstract class _Paths {
   static const ReportPage = '/report_page';
   static const OnBoarding = '/on_boarding';
   static const WelcomePage = '/welcome_page';
+  static const PaymentSuccess = '/payment-done';
+  static const PaymentDue = '/payment-due';
+  static const String forgotPass = "/forgot-pass";
+  static const String changePass = "/change-pass";
+  static const String changePassView = "/change_password";
 
 }

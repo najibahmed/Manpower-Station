@@ -13,59 +13,24 @@ class ReviewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ServiceController());
+    // final controller = Get.put(ServiceController());
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 8,
-            ),
-            _buildRatingBars(),
-            // TextFormField(
-            //   controller: controller.reviewController,
-            //   decoration: const InputDecoration(
-            //     labelText: 'Give a review',
-            //     labelStyle: TextStyle(color: Colors.grey),
-            //     focusedBorder: OutlineInputBorder(
-            //       borderSide: BorderSide(color: Colors.green, width: 2),
-            //     ),
-            //     enabledBorder: OutlineInputBorder(
-            //       borderSide: BorderSide(color: Colors.grey, width: 1),
-            //     ),
-            //     border: OutlineInputBorder(
-            //         borderSide: BorderSide(color: Colors.black12)),
-            //   ),
-            //   validator: (value) {
-            //     if (value != null) {
-            //       CustomSnackBar.showCustomErrorToast(
-            //           message: 'Please write review');
-            //     }
-            //     return null;
-            //   },
+            // const SizedBox(
+            //   height: 4,
             // ),
+            // _buildRatingBars(),
             // const SizedBox(height: 8),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     // Add write review functionality
-            //   },
-            //   style: ElevatedButton.styleFrom(
-            //     backgroundColor: Colors.green,
-            //   ),
-            //   child: const Text(
-            //     'Submit',
-            //     style: TextStyle(color: Colors.white),
-            //   ),
+            // const Divider(color: Colors.black26,),
+            // const SizedBox(height: 8),
+            // const Text(
+            //   "Reviews",
+            //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             // ),
-            const SizedBox(height: 8),
-            const Divider(color: Colors.black26,),
-            const SizedBox(height: 8),
-            const Text(
-              "Reviews",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
             const SizedBox(height: 8),
             reviews.isEmpty
                 ? const Center(child: Text("There is no review",style: TextStyle(fontSize: 16),))
@@ -84,34 +49,34 @@ class ReviewsScreen extends StatelessWidget {
   }
 
   // Rating bars to visualize rating breakdown
-  Widget _buildRatingBars() {
-    return Column(
-      children: [
-        _buildRatingBar(5, 0.8),
-        _buildRatingBar(4, 0.6),
-        _buildRatingBar(3, 0.4),
-        _buildRatingBar(2, 0.2),
-        _buildRatingBar(1, 0.1),
-      ],
-    );
-  }
-
-  // Rating bar widget
-  Widget _buildRatingBar(int stars, double percentage) {
-    return Row(
-      children: [
-        Text(stars.toString(), style: const TextStyle(fontSize: 18)),
-        const SizedBox(width: 8),
-        Expanded(
-          child: LinearProgressIndicator(
-            value: percentage,
-            backgroundColor: Colors.grey[300],
-            color: Colors.amber,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildRatingBars() {
+  //   return Column(
+  //     children: [
+  //       _buildRatingBar(5, 0.8),
+  //       _buildRatingBar(4, 0.6),
+  //       _buildRatingBar(3, 0.2),
+  //       _buildRatingBar(2, 0.1),
+  //       _buildRatingBar(1, 0.1),
+  //     ],
+  //   );
+  // }
+  //
+  // // Rating bar widget
+  // Widget _buildRatingBar(int stars, double percentage) {
+  //   return Row(
+  //     children: [
+  //       Text(stars.toString(), style: const TextStyle(fontSize: 18)),
+  //       const SizedBox(width: 8),
+  //       Expanded(
+  //         child: LinearProgressIndicator(
+  //           value: percentage,
+  //           backgroundColor: Colors.grey[300],
+  //           color: Colors.amber,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }
 
 // Custom widget for a review card
@@ -139,7 +104,7 @@ class ReviewCard extends StatelessWidget {
                   minRating: 0.0,
                   direction: Axis.horizontal,
                   allowHalfRating: true,
-                  ignoreGestures: false,
+                  ignoreGestures: true,
                   itemCount: 5,
                   itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
                   itemBuilder: (context, _) => const Icon(

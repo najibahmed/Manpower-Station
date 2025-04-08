@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manpower_station/app/modules/checkOut/controller/checkout_controller.dart';
 
+import '../respository/checkout_repo.dart';
+
 
 // Widget for shipping form
 class ShippingForm extends StatefulWidget {
@@ -17,7 +19,7 @@ class _ShippingFormState extends State<ShippingForm> {
 
   @override
   Widget build(BuildContext context) {
-    final controller=Get.put(CheckoutController());
+    final controller=Get.put(CheckoutController(checkOutRepo: Get.find<CheckoutRepo>()));
     return Form(
       key: controller.formKey,
       child: Card(

@@ -5,7 +5,7 @@ const Map<String, String> bnBD = {
   Strings.loading : 'লোড হচ্ছে',
 
   Strings.changeTheme : 'থিম পরিবর্তন করুন',
-  Strings.changeLanguage : 'ভাষা পরিবর্তন',
+  Strings.changeLanguage : 'ইংরেজি ভাষায় পরিবর্তন',
 
   Strings.noInternetConnection : 'ইন্টারনেট সংযোগ বিচ্ছিন্ন!',
   Strings.serverNotResponding : 'Server is not responding!',
@@ -26,13 +26,13 @@ const Map<String, String> bnBD = {
   Strings.retry : 'পুনরায় চেষ্টা করুন',
   Strings.internetError : 'ত্রুটি ঘটেছে, আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন! ⚠️',
 
-  Strings.enterEmailPhnNum : 'আপনার ইমেল বা ফোন নম্বর লিখুন',
+  Strings.registerAccount : 'আপনার ইমেল বা ফোন নম্বর লিখুন',
   Strings.getVerification : 'আপনি ৬-সংখ্যার যাচাইকরণ কোড পাবেন',
   Strings.acceptTermMsg : 'আপনার ইমেল বা ফোন নম্বর প্রবেশ করে, আপনি আমাদের সাথে সম্মত হন',
   Strings.and : 'এবং',
   Strings.termsAndCondition : 'শর্তাবলী',
   Strings.privacyPolicy : 'গোপনীয়তা নীতি',
-  Strings.sendOtp : 'OTP পাঠান',
+  Strings.signUp : 'OTP পাঠান',
   Strings.verifyNumMsg : 'আপনার নম্বর যাচাই করা হচ্ছে',
   Strings.verificationCodeSent : 'একটি যাচাইকরণ কোড পাঠানো হয়েছে',
   Strings.enterCode : '৪-সংখ্যার কোড লিখুন',

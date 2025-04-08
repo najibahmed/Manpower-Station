@@ -7,6 +7,8 @@ import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 
 class FaqView extends BaseView<HelpController> {
+  const FaqView({super.key});
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     // TODO: implement appBar
@@ -38,7 +40,7 @@ class FaqView extends BaseView<HelpController> {
       separatorBuilder: (context, index) {
         return  Divider(
           thickness: 2,
-          color: Theme.of(context).dividerColor,
+          color: Colors.grey.shade300,
         );
       },
       itemCount: controller.faqItems.length,

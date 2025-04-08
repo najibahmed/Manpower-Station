@@ -12,6 +12,9 @@ import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/utils/constants.dart';
 import 'package:manpower_station/utils/helper_function.dart';
 
+import '../../../../utils/app_Images.dart';
+import '../../../components/big_text.dart';
+
 class ServiceDetailsScreen extends GetView<ServiceController> {
   const ServiceDetailsScreen({
     super.key,
@@ -39,24 +42,27 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Stack(
-              clipBehavior: Clip.none,
-              // fit: StackFit.expand,
               children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      bottomRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20)),
-                  child: Hero(
-                    tag: "imgHero",
+                Hero(
+                  tag: service.name!,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20)),
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,
-                      height: 300,
+                      height: screenHeight * .4,
                       width: double.infinity,
                       imageUrl: '${Constants.serviceImgUrl}${service.image}',
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      errorWidget: (context, url, error) {
+                        return Image.asset(
+                          AppImages.instance.servicePlaceHolder,
+                          fit: BoxFit.cover,
+                        );
+                      },
                       progressIndicatorBuilder: (context, url, progress) =>
                           Center(
                         child: CircularProgressIndicator(
@@ -66,7 +72,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                     ),
                   ),
                 ),
-
+        
                 /// Stack curve corner
                 // Positioned(
                 //   top: screenHeight * 0.31,
@@ -85,12 +91,12 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                 // ),
                 /// back button for this page stack in the image
                 Positioned(
-                  top: screenHeight * 0.06,
+                  top: screenHeight * 0.08,
                   left: screenWidth * 0.03,
                   child: Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.black26,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    decoration:  BoxDecoration(
+                       color: Colors.grey[600]!.withOpacity(.8),
+                        borderRadius: const BorderRadius.all(Radius.circular(10))),
                     child: Center(
                       child: IconButton(
                           onPressed: () {
@@ -100,17 +106,17 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                           icon: const Icon(
                             Icons.arrow_back,
                             color: Colors.white,
-                            size: 26,
+                            size: 22,
                           )),
                     ),
                   ),
                 ),
               ],
             ),
-
+        
             /// Service price discount and discount price
             _buildHeader(service, context),
-
+        
             /// Tab Bar items
             TabBar(
               labelPadding: const EdgeInsets.all(4),
@@ -129,7 +135,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                 Tab(text: "FAQ"),
               ],
             ),
-
+        
             ///Tab bar page according to tab index
             Obx(() => _getTabAtIndex(controller.tabIndex.value, service)),
           ],
@@ -144,7 +150,7 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -210,9 +216,6 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
                       : const SizedBox(),
                 ],
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
-              ),
             ],
           ),
         ),
@@ -220,12 +223,15 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
+              width: MediaQuery.of(context).size.width * 0.9,
               height: MediaQuery.of(context).size.height * 0.05,
               child: ElevatedButton(
                 onPressed: () {
                   Get.offNamed(AppPages.ServiceBooking, arguments: service);
                 },
+                style: ElevatedButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50)))),
                 child: Text(
                   'Reserve Service',
                   style: TextStyle(
@@ -234,7 +240,10 @@ class ServiceDetailsScreen extends GetView<ServiceController> {
               ),
             ),
           ),
-        )
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.02,
+        ),
       ],
     );
   }
@@ -277,14 +286,11 @@ class ServiceDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Service Description",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            BigText(text:  "Service Description",size:MyFonts.bodyLargeSize),
             const SizedBox(height: 8),
             Text(
               textAlign: TextAlign.justify,

@@ -9,6 +9,7 @@ import 'package:manpower_station/config/theme/dark_theme_colors.dart';
 import 'package:manpower_station/config/theme/light_theme_colors.dart';
 import 'package:manpower_station/config/theme/my_fonts.dart';
 import 'package:manpower_station/config/translations/strings_enum.dart';
+import 'package:manpower_station/utils/app_Images.dart';
 
 class HelpView extends BaseView<HelpController> {
   const HelpView({super.key});
@@ -68,7 +69,7 @@ class HelpView extends BaseView<HelpController> {
               ),
               Center(
                 child: Image.asset(
-                  'assets/images/help_support.png',
+                  AppImages.instance.support,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -80,7 +81,6 @@ class HelpView extends BaseView<HelpController> {
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 child: ListTile(
                   tileColor: Theme.of(context).cardColor,
-                  splashColor: LightThemeColors.primaryColor,
                   onTap: () {
                     Get.toNamed(AppPages.ReportScreen);
                   },
@@ -112,7 +112,6 @@ class HelpView extends BaseView<HelpController> {
                 elevation: 5,
                 child: ListTile(
                   tileColor: Theme.of(context).cardColor,
-                  splashColor: LightThemeColors.primaryColor,
                   onTap: () {
                     Get.toNamed(AppPages.FaqScreen);
                   },

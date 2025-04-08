@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../config/translations/localization_service.dart';
+import '../../models/bookings_model.dart';
+import '../../modules/user_profile/model/user_model.dart';
 
 class MySharedPref {
   // prevent making instance
@@ -18,6 +22,8 @@ class MySharedPref {
   static const String isLoggedIn = 'isLoggedIn';
   static const String isOnBoardingChecked = 'isOnBoardingChecked';
   static const String userId = 'adminId';
+  static const String userData = 'user-data';
+  static const String userBookings = 'user-bookings';
 
   /// init get storage services
   static Future<void> init() async {
@@ -57,49 +63,89 @@ class MySharedPref {
   /// get authorization token
   static String? getAccessToken() =>
       _sharedPreferences.getString(_accessTokenKey);
+  /// remove access token
+  static Future<bool> clearAccessToken() =>
+      _sharedPreferences.remove(_accessTokenKey);
 
   /// clear all data from shared pref
   static Future<void> clear() async => await _sharedPreferences.clear();
 
   /// check onBoarding status
   static Future<bool> setOnBoardingStatus(bool status) async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.setBool(isOnBoardingChecked, status);
+    return _sharedPreferences.setBool(isOnBoardingChecked, status);
   }
   static Future<bool> getOnBoardingStatus() async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.getBool(isOnBoardingChecked) ?? false;
+    return _sharedPreferences.getBool(isOnBoardingChecked) ?? false;
   }
 
   /// check user login status
   static Future<bool> setLoginStatus(bool status) async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.setBool(isLoggedIn, status);
+    return _sharedPreferences.setBool(isLoggedIn, status);
   }
 
   static Future<bool> getLoginStatus() async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.getBool(isLoggedIn) ?? false;
+    return _sharedPreferences.getBool(isLoggedIn) ?? false;
   }
 
   /// set and get user ID
   static Future<bool> setUserId(String id) async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.setString(userId, id);
+    return _sharedPreferences.setString(userId, id);
   }
-
   static Future<String?> getUserId() async {
-    final pref = await SharedPreferences.getInstance();
-    return pref.getString(userId);
+    return _sharedPreferences.getString(userId);
   }
+  /// remove userId token
+  static Future<bool> clearUserId() =>
+      _sharedPreferences.remove(userId);
 
 ///saved jwt
 static Future<bool> setRefreshToken(String value) async {
-  final localBD=await SharedPreferences.getInstance();
-  return localBD.setString(refreshTokenKey, value);
+  return _sharedPreferences.setString(refreshTokenKey, value);
 }
 static Future<String?> getRefreshToken() async {
-  final localBD=await SharedPreferences.getInstance();
-  return localBD.getString(refreshTokenKey);
+  return _sharedPreferences.getString(refreshTokenKey);
 }
+  /// remove refresh token
+  static Future<bool> clearRefreshToken() =>
+      _sharedPreferences.remove(refreshTokenKey);
+
+
+/// user data UserModel
+  // Save UserData to SharedPreferences
+  static Future<void> saveUser(UserModel user) async {
+    String userJson = jsonEncode(user.toJson()); // Convert UserModel to JSON string
+    await _sharedPreferences.setString(userData, userJson);
+  }
+  // Retrieve UserModel from SharedPreferences
+  static Future<UserModel?> getUser() async {
+    String? userJson = _sharedPreferences.getString(userData); // Retrieve JSON string
+    if (userJson == null) return null; // Return null if no data found
+    return UserModel.fromJson(jsonDecode(userJson)); // Convert JSON string back to UserModel
+  }
+  // Remove UserModel from SharedPreferences
+  static Future<void> clearUser() async {
+    await _sharedPreferences.remove(userData);
+  }
+  /// save user bookings
+  static Future<void> saveUserBookings(List<dynamic> bookingList) async {
+    List<String> bookings = [];
+    bookingList.forEach((element) => bookings.add(jsonEncode(element)));
+    await _sharedPreferences.setStringList(userBookings, bookings);
+  }
+
+  /// get user bookings
+  static Future<List<BookingsModel>> getUserBookings() async {
+    List<String> bookings = [];
+    if (_sharedPreferences.containsKey(userBookings)) {
+      bookings = _sharedPreferences.getStringList(userBookings)!;
+    }
+    List<BookingsModel> bookingList = [];
+    bookings.map((element) => bookingList.add(BookingsModel.fromJson(jsonDecode(element)))).toList();
+    return bookingList;
+  }
+  // Remove UserModel from SharedPreferences
+  static Future<void> clearBookingList() async {
+    await _sharedPreferences.remove(userBookings);
+  }
+
 }

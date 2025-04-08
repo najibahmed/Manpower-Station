@@ -1,134 +1,126 @@
+// ignore_for_file: unused_import
+
+import 'dart:isolate';
+
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:manpower_station/app/models/active_banner.dart';
 import 'package:manpower_station/app/models/category_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
-import 'package:manpower_station/app/services/api_client.dart';
-
+import 'package:manpower_station/app/network/api_list.dart';
+import '../../../../utils/helper_function.dart';
 import '../../../components/custom_snackbar.dart';
 import '../../../core/base/base_controller.dart';
+import '../../../network/api_client.dart';
+import '../service_repo/service_repository.dart';
 
 class HomeController extends BaseController {
-  var allServiceData = <dynamic>[].obs;
-  var allCategoryData = <dynamic>[].obs;
+  final ServiceRepository repository;
+  HomeController({required this.repository});
+ RxBool refreshLoading=false.obs;
+  final RxList _allServiceData = <dynamic>[].obs;
+  List get allServiceData => _allServiceData;
+  final _allCategoryData = <dynamic>[].obs;
+  List get allCatData => _allCategoryData;
+  final RxBool _retryButtonShow =false.obs;
+  bool get showRetryButton => _retryButtonShow.value;
 
-/// Get all service
-  Future<List> getAllServiceData() async {
-    try {
-      // Map<String, dynamic> requestData = {
-      //   'phone_or_email': phoneNumberEmailController.text.trim(),
-      // };
-      var url="/api/services/get/all";
-      await BaseClient.safeApiCall(
-          url,
-          RequestType.get,
-          onSuccess: (response) {
-            // if (kDebugMode) {
-            //   print(response.data);
-            // }
-            if (response.statusCode == 200) {
-              var jsonData = response.data['services'];
-              var serviceList = jsonData.map((e) => ServiceModel.fromJson(e))
-                  .toList();
-              allServiceData.assignAll(serviceList);// Update the RxList with new data
-              return allServiceData;
-            } else {
-              CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services:',message: '${response.statusMessage}');
-            }
-          }
-      );
-    } catch (e) {
-      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get service:',message: '$e');
-    }
-    return allServiceData;
+  set retryButtonShow(bool showRetry){
+       _retryButtonShow.value=showRetry;
+
   }
 
-  /// Get all service categories
-  Future<void> getAllServiceCategories() async {
-    try {
-      var url="/api/services/categories/get/all/parent";
-      await BaseClient.safeApiCall(
-          url,
-          RequestType.get,
-          onSuccess: (response) {
-            // if (kDebugMode) {
-            //   print(response.data);
-            // }
-            if (response.statusCode == 200) {
-              var jsonData = response.data['categories'];
-              var categoryList = jsonData.map((e) => CategoryModel.fromJson(e))
-                  .toList();
-              allCategoryData.assignAll(categoryList);// Update the RxList with new data
-            } else {
-              CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load Categories:',message: '${response.statusMessage}');
-            }
-          }
-      );
-    } catch (e) {
-      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get category:',message: '$e');
+
+
+
+  Future<void> fetchAllService() async {
+    final receivePort = ReceivePort();
+
+    // Spawn the isolate and pass the URL
+    await Isolate.spawn(_fetchDataInIsolate, [receivePort.sendPort, repository]);
+
+    // Receive data from the isolate
+    final response = await receivePort.first;
+
+    if (response is List) {
+      _allServiceData.assignAll(response.map((e) => ServiceModel.fromJson(e)).toList());
+      retryButtonShow=false;
+    } else {
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Failed to load services', message: 'No internet Connection!');
     }
   }
 
-  /// Get one category service
-  RxList oneCategoryServicesData = <dynamic>[].obs;
-  Future<void> getOneCategoryServices(String id) async {
-    try {
-      var url="/api/services/categories/services/$id";
-      await BaseClient.safeApiCall(
-          url,
-          RequestType.get,
-          onSuccess: (response) {
-            // if (kDebugMode) {
-            //   print(response.data);
-            // }
-            if (response.statusCode == 200) {
-              var jsonData = response.data['servicesLists'];
-              var serviceList = jsonData.map((item) => ServiceModel.fromJson(item))
-                  .toList();
-              oneCategoryServicesData.assignAll(serviceList);// Update the RxList with new data
-            } else {
-              CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services by one category:',message: ' ${response.statusMessage}');
-            }
-          }
-      );
-    } catch (e) {
-      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get all service cat:',message: '$e');
+
+
+
+
+  // /// Get all service from server
+  // Future<void> fetchAllService()async{
+  //   var response =  await repository.getData(ApiList.getAllServiceUrl);
+  //   if (response.statusCode == 200) {
+  //     var jsonData = response.data['services'];
+  //     var serviceList = jsonData.map((e) => ServiceModel.fromJson(e))
+  //         .toList();
+  //     _allServiceData.assignAll(serviceList);// Update the RxList with new data
+  //   } else {
+  //     CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load services:',message: '${response.statusMessage}');
+  //   }
+  // }
+
+  /// Get all Categories from server
+  Future<void> fetchAllCategories()async{
+    var response =  await repository.getData(ApiList.getAllServicesCategoriesUrl);
+    if (response.statusCode == 200) {
+      var jsonData = response.data['categories'];
+      var categoryList = jsonData.map((e) => CategoryModel.fromJson(e))
+          .toList();
+      _allCategoryData.assignAll(categoryList);// Update the RxList with new data
+    } else {
+      CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load Categories:',message: '${response.statusMessage}');
     }
   }
+
 
   /// Get active banners for dashboard
   late Rx<ActiveBanner> activeBanners=ActiveBanner().obs;
-  Future<void> getActiveBanners() async {
-    try {
-      var url="/api/banners/get/active";
-      await BaseClient.safeApiCall(
-          url,
-          RequestType.get,
-          onSuccess: (response) {
-            // if (kDebugMode) {
-            //   print(response.data);
-            // }
-            if (response.statusCode == 200) {
-              var jsonData = response.data['banner'];
-              activeBanners.value = ActiveBanner.fromJson(jsonData);
-            } else {
-              CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load banners:',message:  '${response.statusMessage}');
-            }
-          }
-      );
-    } catch (e) {
-      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get banner:',message: '$e');
-
+  Future<void> getBanners()async {
+    var response =  await repository.getData(ApiList.activeAppBannersUrl);
+    if (response.statusCode == 200) {
+      var jsonData = response.data['banner'];
+      activeBanners.value = ActiveBanner.fromJson(jsonData);
+    } else {
+      CustomSnackBar.showCustomErrorSnackBar(title:'Failed to load banners:',message:  '${response.statusMessage}');
     }
   }
 
+
   @override
-  void onInit() {
-    getActiveBanners();
-    getAllServiceData();
-    getAllServiceCategories();
+  void onInit() async{
+    await Future.wait([
+    getBanners(),
+    fetchAllService(),
+    fetchAllCategories()
+    ]);
+
     super.onInit();
   }
 
+}
 
 
+void _fetchDataInIsolate(List<dynamic> args) async {
+  SendPort sendPort = args[0];
+  ServiceRepository repository = args[1];
+
+  try {
+    var response =  await repository.getData(ApiList.getAllServiceUrl); // Using Dio directly inside isolate
+
+    if (response.statusCode == 200) {
+      sendPort.send(response.data['services']); // Send JSON back
+    } else {
+      sendPort.send("Error: ${response.statusMessage}");
+    }
+  } catch (e) {
+    sendPort.send("Error: $e");
+  }
 }

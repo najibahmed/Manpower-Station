@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class LightThemeColors
 {
   // PRIMARY
-  static const Color primaryColor = Color(0xFF25A267);
+  static const Color primaryColor = Color(0xFF006b4f);
+  // static const Color primaryColor = Color(0xFF25A267);
+  static const Color secondaryColor = Color(0xffb22b1c);
 
   // SECONDARY COLOR
   static const Color accentColor = Color(0xFFD9EDE1);
@@ -29,7 +31,7 @@ class LightThemeColors
   static const Color buttonDisabledTextColor = Colors.black;
 
   //TEXT
-  static const Color bodyTextColor = Colors.black;
+  static const Color bodyTextColor = Colors.black87;
   static const Color bodyThemeTextColor = Colors.white;
   static const Color displayTextColor = Colors.black54;
   static const Color bodySmallTextColor = Color(0xff7C7C7C);
@@ -53,9 +55,4 @@ class LightThemeColors
   // header containers
   static const Color headerContainerBackgroundColor = Color(0XFF38B6F0);
 
-  // employee list item
-  static const Color employeeListItemBackgroundColor = Colors.white;
-  static const Color employeeListItemNameColor = Color(0xFF4A4A4A);
-  static const Color employeeListItemSubtitleColor = Color(0xFFA1A4B1);
-  static const Color employeeListItemIconsColor = Color(0xFFA1A4B1);
 }

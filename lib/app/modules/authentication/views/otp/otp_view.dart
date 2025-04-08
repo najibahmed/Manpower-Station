@@ -85,13 +85,13 @@ class OtpView extends BaseView<AuthenticationController> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.07,
                 ),
-                Text("${Strings.verifyNumMsg.tr}",
+                Text(Strings.verifyNumMsg.tr,
                     style: TextStyle(fontSize: MyFonts.bodyLargeSize)),
                 const SizedBox(
                   height: 2,
                 ),
                 Text('''${Strings.verificationCodeSent.tr}
-                ${controller.phoneNumberEmailController.text}''',
+                ${controller.signUpEmailController.text}''',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: MyFonts.bodyMediumSize,
@@ -210,7 +210,7 @@ class OtpView extends BaseView<AuthenticationController> {
   void authenticateOtp() {
     if (_formKey.currentState!.validate()) {
       showLoadingOverLay(
-          asyncFunction: controller.otpVerification(), msg: "Verifying");
+          asyncFunction: controller.verifyUserOtp(), msg: "Verifying");
       // controller.otpVerification();
     }
   }

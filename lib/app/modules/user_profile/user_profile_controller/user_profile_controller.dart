@@ -8,30 +8,33 @@ import 'package:manpower_station/app/core/base/base_controller.dart';
 import 'package:manpower_station/app/data/local/my_shared_pref.dart';
 import 'package:manpower_station/app/modules/authentication/views/otp/otp_model.dart';
 import 'package:manpower_station/app/modules/user_profile/model/user_model.dart';
+import 'package:manpower_station/app/modules/user_profile/user_repo/user_repository.dart';
 import 'package:manpower_station/app/routes/app_pages.dart';
-import 'package:manpower_station/app/services/api_client.dart';
-import 'package:manpower_station/utils/constants.dart';
-
 import '../../../components/custom_snackbar.dart';
+import '../../../network/api_client.dart';
+import '../../../network/api_list.dart';
 
 class UserController extends BaseController {
+  final UserRepository userRepository;
+  UserController({required this.userRepository});
+
   final profilePic = Rx<File?>(null);
   RxString errorMessage=''.obs;
   late Rx<UserModel>? userData=UserModel().obs;
-  RxBool isLoading=true.obs;
   late TextEditingController oldEmailPhoneController;
   late TextEditingController newEmailPhoneController;
   late TextEditingController updateOtpController;
   late TextEditingController updateNameController;
-   late TextEditingController updateDescriptionController;
+  late TextEditingController updateDescriptionController;
   late TextEditingController updateAddressController;
   late TextEditingController updateAreaController;
 
 
 
-
+/// pick user profile image
   Future<void> pickImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
+
 
     // Show a bottom sheet with options to choose between camera and gallery
     final XFile? image = await showModalBottomSheet<XFile>(
@@ -68,38 +71,65 @@ class UserController extends BaseController {
       profilePic.value = File(image.path);
       // Do something with the image file, like uploading or displaying it
     }else{
-      profilePic.value = File('');
+      // profilePic.value = File('');
     }
   }
 
-  /// Get user information
-  Future<void> getUserInformation() async {
-    try {
-      String? userId = await MySharedPref.getUserId();
-      String url =
-          "/api/clients/get/unique/client/profile/$userId";
-      await BaseClient.safeApiCall(
-        url,
-        RequestType.get,
-        onSuccess: (response) {
-          if (response.statusCode == 201) {
-            final responseData=response.data['client'];
-            userData?.value= UserModel.fromJson(responseData);
-            // Get.snackbar('Success', '${response.data['message']}');
-          } else {
-            Get.snackbar('Error', 'Having problem to get user data!',);
-          }
-        },
-      );
+
+
+
+  /// fetch user information
+  Future<void> getUserInformation()async{
+    String? userId = await MySharedPref.getUserId();
+    var response =  await userRepository.getData(ApiList.userProfileInfoUrl(userId!));
+    if (response.statusCode == 201) {
+      final responseData=response.data['client'];
+      userData?.value= UserModel.fromJson(responseData);
+      //save user to local storage
+      await MySharedPref.saveUser(userData!.value);
+      _loadUserData();
       /// for pre-fill to update email initializing controller;
       updateDescriptionController=TextEditingController(text: userData?.value.profileDescription?? 'null');
       updateNameController=TextEditingController(text: userData?.value.username??"null");
       updateAddressController=TextEditingController(text: userData?.value.address??"null");
       updateAreaController=TextEditingController(text: userData?.value.area??"null");
-    } catch (e) {
-      CustomSnackBar.showCustomErrorSnackBar(title:'Error try get user :',message: '$e');
+    } else {
+      Get.snackbar('Error', 'Having problem to get user data!',);
     }
   }
+
+  // /// Get user information
+  // Future<void> getUserInformation() async {
+  //   try {
+  //     String? userId = await MySharedPref.getUserId();
+  //     String url = ApiList.userProfileInfoUrl(userId!);
+  //     await BaseClient.safeApiCall(
+  //       url,
+  //       RequestType.get,
+  //       onSuccess: (response) async{
+  //         if (response.statusCode == 201) {
+  //           final responseData=response.data['client'];
+  //           userData?.value= UserModel.fromJson(responseData);
+  //           // Get.snackbar('Success', '${response.data['message']}');
+  //
+  //           //save user to local storage
+  //           await MySharedPref.saveUser(userData!.value);
+  //
+  //           /// for pre-fill to update email initializing controller;
+  //           updateDescriptionController=TextEditingController(text: userData?.value.profileDescription?? 'null');
+  //           updateNameController=TextEditingController(text: userData?.value.username??"null");
+  //           updateAddressController=TextEditingController(text: userData?.value.address??"null");
+  //           updateAreaController=TextEditingController(text: userData?.value.area??"null");
+  //         } else {
+  //           Get.snackbar('Error', 'Having problem to get user data!',);
+  //         }
+  //       },
+  //     );
+  //
+  //   } catch (e) {
+  //     CustomSnackBar.showCustomErrorSnackBar(title:'Error try get user :',message: '$e');
+  //   }
+  // }
 
   /// update email or phone Number
   Future<void> updatePhoneOrEmail() async {
@@ -109,7 +139,7 @@ class UserController extends BaseController {
         'newPhoneNumber_Or_email': newEmailPhoneController.text.trim(),
       };
       await BaseClient.safeApiCall(
-        "/api/users/update/user/phone_or_email",
+        ApiList.updateUserEmailUrl,
         RequestType.put,
         // headers: {
         //   'Authorization': Constants.accessToken
@@ -147,20 +177,9 @@ class UserController extends BaseController {
         formData.files.add(MapEntry('avatar',
             await dio.MultipartFile.fromFile(imageData.path, filename: fileName)));
       };
-      // if(profilePic.value!=null){
-      //   File imageData=profilePic.value!;
-      //   String fileName=imageData.path.split('/').last;
-      //      requestData = {
-      //     'avatar' :   await dio.MultipartFile.fromFile(imageData.path, filename: fileName),
-      //     'username' : updateNameController.text.trim(),
-      //     'profile_description' : updateDescriptionController.text.trim(),
-      //     'address' : updateAddressController.text.trim(),
-      //     'area' : updateAreaController.text.trim(),
-      //   };
-      // }
+
       String? userId = await MySharedPref.getUserId();
-      String url =
-          "/api/clients/update/client/profile/$userId";
+      String url = ApiList.updateProfileInfoUrl(userId!);
       await BaseClient.safeApiCall(
         url,
         RequestType.put,
@@ -194,8 +213,7 @@ class UserController extends BaseController {
       Map<String, dynamic> requestData = {
         'otp': updateOtpController.text.trim(),
       };
-      await BaseClient.safeApiCall(
-        "/api/users/update/user/phone_email/verified",
+      await BaseClient.safeApiCall( ApiList.updateOtpVerificationUrl,
         RequestType.put,
         data: requestData,
         onError: (err) {
@@ -234,8 +252,17 @@ class UserController extends BaseController {
     } finally {
     }
   }
+
+  void _loadUserData()async{
+    UserModel? user = await MySharedPref.getUser();
+    if(user != null){
+      userData!.value= user;
+    }
+  }
+   get loadUserData => _loadUserData();
   @override
   void onInit() {
+    _loadUserData();
     getUserInformation();
     oldEmailPhoneController=TextEditingController();
     newEmailPhoneController=TextEditingController();
@@ -244,9 +271,9 @@ class UserController extends BaseController {
     updateNameController=TextEditingController();
     updateDescriptionController=TextEditingController();
     updateAreaController=TextEditingController();
-    Future.delayed(const Duration(seconds:3),(){
-      isLoading.value=false;
-    });
+    // Future.delayed(const Duration(seconds:3),(){
+    //   isLoading.value=false;
+    // });
     super.onInit();
   }
   @override
@@ -261,12 +288,4 @@ class UserController extends BaseController {
     updateAreaController.dispose();
     super.onClose();
   }
-}
-enum FieldType {
-  username,
-  email,
-  description,
-  address,
-  area,
-  avatar_image
 }

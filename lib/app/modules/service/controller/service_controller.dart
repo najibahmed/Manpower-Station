@@ -5,38 +5,44 @@ import 'package:manpower_station/app/models/cart_model.dart';
 import 'package:manpower_station/app/modules/service/model/service_list_model.dart';
 
 
-class ServiceController extends BaseController
-    with GetSingleTickerProviderStateMixin {
+enum ServiceType{
+  Hours,
+  Days,
+  Weeks,
+  Months
+}
+class ServiceController extends BaseController with GetSingleTickerProviderStateMixin {
 
-  TextEditingController reviewController=TextEditingController();
-  RxInt timeLimit = 3.obs;
-  RxString selectedTimeKey = 'Hours'.obs;
-  // RxList time = [3, 4, 5, 6, 7, 8].obs;
+
   late TabController tabController;
-  var tabIndex = 0.obs;
-  Rx<DateTime?> selectedDateTime = DateTime.now().obs;
+  TextEditingController reviewController = TextEditingController();
+  RxInt timeLimit = 1.obs;       //dropdown time
+  RxString? selectedTimeKey = ''.obs;     //dropdown selected timekey
+  var tabIndex = 0.obs;          //service details tab index
+  RxDouble userRating = 0.0.obs;
+  RxInt cartSubtotal = 0.obs;       //cartSubtotal service booking page
+  // RxList time = [3, 4, 5, 6, 7, 8].obs;
   late ServiceModel selectedService;
-  RxList<CartModel> cartItems = <CartModel>[].obs;
-  RxDouble userRating=0.0.obs;
   late ServiceModel serviceModel;
-   RxInt cartSubtotal=0.obs;
+  Rx<DateTime?> selectedDateTime = Rx<DateTime?>(null);   //service selected date time
+
+  final RxList<CartModel> _cartItems = <CartModel>[].obs;
+  List<CartModel> get getCartItems=> _cartItems;
+
 
   // Get price
   getServicePrice(time, timeKey, price) {
-    dynamic servicePrice;
-    if (timeKey == 'Hours') {
-       servicePrice = (price ~/ 3) * time;
-
-    } else if (timeKey == 'Days') {
-       servicePrice = price * time;
-
-    } else if (timeKey == 'Weeks') {
-       servicePrice = price * (time * 7);
-
-    } else if (timeKey == 'Months') {
-       servicePrice = price * (time * 30);
+    dynamic servicePrice=0;
+    if (timeKey == ServiceType.Hours.name) {
+      servicePrice = (price ~/ 3) * time;
+    } else if (timeKey == 'days') {
+      servicePrice = price * time;
+    } else if (timeKey == 'weeks') {
+      servicePrice = price * (time * 7);
+    } else if (timeKey == 'months') {
+      servicePrice = price * (time * 30);
     }
-    cartSubtotal.value=servicePrice;
+    cartSubtotal.value = servicePrice;
     return servicePrice;
   }
 
@@ -44,7 +50,8 @@ class ServiceController extends BaseController
   void changeTabIndex(int index) {
     tabIndex.value = index;
   }
-/// Calculate cart subtotal
+
+  /// Calculate cart subtotal
 //   num getCartSubTotal() {
 //     num total = 0;
 //     for (final cartModel in cartItems) {
@@ -53,55 +60,42 @@ class ServiceController extends BaseController
 //     return total;
 //   }
 
-  /// Get Service Data
-  // Future<void> getServiceData() async {
-  //   try {
-  //     // Map<String, dynamic> requestData = {
-  //     //   'phone_or_email': phoneNumberEmailController.text.trim(),
-  //     // };
-  //     var url = "/api/services/get/all";
-  //     await BaseClient.safeApiCall(url, RequestType.get, onSuccess: (response) {
-  //       // if (kDebugMode) {
-  //       //   print(response.data);
-  //       // }
-  //       if (response.statusCode == 200) {
-  //         var jsonData =
-  //             response.data['services']; // Assuming the response is a list
-  //         var serviceList =
-  //             jsonData.map((e) => ServiceModel.fromJson(e)).toList();
-  //         serviceData.assignAll(serviceList); // Update the RxList with new data
-  //       } else {
-  //         print('Failed to load services: ${response.statusMessage}');
-  //       }
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
 
-
-/// on tap to select worker service is added to cart
+  /// on tap to select worker service is added to cart
   void addToCartList() {
     final cartModel = CartModel(
         serviceId: selectedService.id!,
         serviceName: selectedService.name!,
+        minimumCost: selectedService.minimumAdvancePaid!,
         serviceImageUrl: selectedService.image!,
-        discountModel: selectedService.serviceDiscount!,
+        servicePrice: serviceModel.servicePrice!,
+        totalPrice: getGrandTotal(),
         startingDate: selectedDateTime.value.toString(),
-        servicePrice: cartSubtotal.value,
-        serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey.value}");
-    cartItems.add(cartModel);
+        serviceTimeSchedule: "${timeLimit.value}${selectedTimeKey?.value}",
+    );
+    _cartItems.value=[];
+    _cartItems.add(cartModel);
   }
-  late AnimationController _controller;
-  late Animation<double> animation;
+
+    /// calculated discount amount on behalf of  price and percentage
+  num  getDiscountAmount(discount, num price) {
+    if (discount.discountType == "Percentage Discount") {
+      return ((price * discount.discount!) / 100).round();
+    } else {
+      return discount.discount!;
+    }
+  }
+  int getGrandTotal() {
+    return ((cartSubtotal.value -
+        getDiscountAmount(selectedService.serviceDiscount, cartSubtotal.value)).round());
+  }
+
   @override
   void onInit() {
-    // getServiceData();
-     serviceModel = Get.arguments;
+    serviceModel = Get.arguments;
+    selectedService=serviceModel;
     tabController = TabController(length: 3, initialIndex: 0, vsync: this);
-
-    // TODO: implement onInit
     super.onInit();
   }
 

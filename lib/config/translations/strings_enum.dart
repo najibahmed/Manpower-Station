@@ -24,13 +24,13 @@ class Strings {
   static const String internetError = 'internet error';
 
 
-  static const String enterEmailPhnNum = 'Register with your Email or Phone Number';
-  static const String getVerification = 'You will get 6-digit verification code.';
+  static const String registerAccount = 'Register Account';
+  static const String getVerification = 'Complete your details or continue \nwith social media.';
   static const String acceptTermMsg = 'By entering your email or phone number, you agree to our';
   static const String and = 'and';
   static const String termsAndCondition = 'Terms and Conditions';
   static const String privacyPolicy = 'Privacy Policy';
-  static const String sendOtp = 'Send OTP';
+  static const String signUp = 'Sign UP';
   static const String verifyNumMsg = 'Verifying your Phone number and Email';
   static const String verificationCodeSent = 'A verification code has been sent to';
   static const String enterCode = 'Enter 4-digit code';

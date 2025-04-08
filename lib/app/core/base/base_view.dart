@@ -6,18 +6,22 @@ import 'base_controller.dart';
 abstract class BaseView<Controller extends BaseController>
     extends GetView<Controller> {
   const BaseView({super.key});
+
   PreferredSizeWidget? appBar(BuildContext context);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Obx(() {
         return Scaffold(
-          // backgroundColor: Colors.green[50],
+          backgroundColor:
+          Get.isDarkMode ? const Color(0xff2D2D2D) : const Color(0xFFF5FCF9),
           //sets ios status bar color
           // TODO: backgroundColor: add your screen bg color here,
           // key: controller.globalKey,
           resizeToAvoidBottomInset: controller.resizeToAvoidBottomInset.value,
+
           appBar: appBar(context),
           floatingActionButton: floatingActionButton(),
           bottomNavigationBar: bottomNavigationBar(),
@@ -50,7 +54,7 @@ abstract class BaseView<Controller extends BaseController>
       child: Container(
           width: double.infinity,
           height: 30,
-          color: Colors.redAccent,
+          color: Colors.redAccent.shade200,
           // TODO: color: add your color here,
           child: Center(
             child: Text(
@@ -59,7 +63,7 @@ abstract class BaseView<Controller extends BaseController>
               style: Theme.of(context)
                   .textTheme
                   .bodySmall
-                  ?.copyWith(fontSize: 12.sp,color: Colors.white),
+                  ?.copyWith(fontSize: 12.sp, color: Colors.white),
             ),
           )),
     );

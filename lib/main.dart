@@ -1,11 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:manpower_station/utils/notification_helper.dart';
 import 'app/core/binding/initial_binding.dart';
 import 'app/data/local/my_shared_pref.dart';
 import 'app/routes/app_pages.dart';
 import 'config/theme/my_theme.dart';
 import 'config/translations/localization_service.dart';
+import 'firebase_options.dart';
+
 
 
 Future<void> main() async {
@@ -13,8 +17,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MySharedPref.init();
   final onboardingComplete = await MySharedPref.getOnBoardingStatus();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // initialize local notifications service
-  // await AwesomeNotificationsHelper.init();
+  await NotificationService.instance.initialize();
+
   runApp(
     ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -50,3 +56,4 @@ Future<void> main() async {
     ),
   );
 }
+
