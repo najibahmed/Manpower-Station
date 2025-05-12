@@ -194,18 +194,17 @@ class HomeView extends BaseView<HomeController> {
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(15)),
                 child: CachedNetworkImage(
+                  placeholder: (context, url) => const Center(child:   CircularProgressIndicator()),
                   height: size.height * .13,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  imageUrl: '${Constants.categoryImgUrl}${category.frontImage}',
+                  errorListener: (error) {
+                    debugPrint('Image failed to load: $error');
+                  },
+                  imageUrl: Uri.encodeFull('${Constants.categoryImgUrl}${category.frontImage}'),
                   errorWidget: (context, url, error) => Image.asset(
                     AppImages.instance.categoryPlaceHolder,
                     fit: BoxFit.cover,
-                  ),
-                  progressIndicatorBuilder: (context, url, progress) => Center(
-                    child: CircularProgressIndicator(
-                      value: progress.progress,
-                    ),
                   ),
                 ),
               ),
@@ -284,7 +283,10 @@ class HomeView extends BaseView<HomeController> {
                               child: CachedNetworkImage(
                                 placeholder: (context, url) =>const Center(child:   CircularProgressIndicator()),
                                 fit: BoxFit.cover,
-                                imageUrl: '${Constants.bannerImgUrl}$banner',
+                                errorListener: (error) {
+                                  debugPrint('Image failed to load: $error');
+                                },
+                                imageUrl: Uri.encodeFull('${Constants.bannerImgUrl}$banner'),
                                 errorWidget: (context, url, error) {
                                   return const Icon(Icons.error);
                                 },

@@ -46,6 +46,9 @@ class ServiceCard extends StatelessWidget {
                     return Image.asset(AppImages.instance.servicePlaceHolder, fit: BoxFit.cover,);
 
                   },
+                  errorListener: (error) {
+                    debugPrint('Image failed to load: $error');
+                  },
                   progressIndicatorBuilder:
                       (context, url, progress) =>
                       Center(

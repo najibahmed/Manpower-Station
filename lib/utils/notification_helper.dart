@@ -86,7 +86,9 @@ class NotificationService {
         // TODO: Send token to your server if necessary
       }
     } catch (e) {
-      // print("Error getting FCM token: $e");
+      if (kDebugMode) {
+        print("Error getting FCM token: $e");
+      }
     }
   }
 

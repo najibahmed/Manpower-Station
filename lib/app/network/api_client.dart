@@ -26,6 +26,7 @@ enum RequestType {
 
 class BaseClient {
   static final Dio _dio = Dio(BaseOptions(
+    
     baseUrl: ApiList.baseUrl,
     headers: {
       'Content-Type': 'application/json',

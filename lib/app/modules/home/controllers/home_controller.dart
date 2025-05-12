@@ -46,7 +46,7 @@ class HomeController extends BaseController {
       _allServiceData.assignAll(response.map((e) => ServiceModel.fromJson(e)).toList());
       retryButtonShow=false;
     } else {
-      CustomSnackBar.showCustomErrorSnackBar(title: 'Failed to load services', message: 'No internet Connection!');
+      CustomSnackBar.showCustomErrorSnackBar(title: 'Failed to load services', message: 'Error Occurred. Pull down to Refresh!!');
     }
   }
 
@@ -107,16 +107,19 @@ class HomeController extends BaseController {
 
 }
 
-
-void _fetchDataInIsolate(List<dynamic> args) async {
+void _fetchDataInIsolate(List<dynamic> args) {
   SendPort sendPort = args[0];
   ServiceRepository repository = args[1];
 
+  _doAsyncWork(sendPort, repository); // Call async function from here
+}
+
+Future<void> _doAsyncWork(SendPort sendPort, ServiceRepository repository) async {
   try {
-    var response =  await repository.getData(ApiList.getAllServiceUrl); // Using Dio directly inside isolate
+    var response = await repository.getData(ApiList.getAllServiceUrl);
 
     if (response.statusCode == 200) {
-      sendPort.send(response.data['services']); // Send JSON back
+      sendPort.send(response.data['services']);
     } else {
       sendPort.send("Error: ${response.statusMessage}");
     }
@@ -124,3 +127,19 @@ void _fetchDataInIsolate(List<dynamic> args) async {
     sendPort.send("Error: $e");
   }
 }
+// Future<void> _fetchDataInIsolate(List<dynamic> args) async {
+//   SendPort sendPort = args[0];
+//   ServiceRepository repository = args[1];
+//
+//   try {
+//     var response =  await repository.getData(ApiList.getAllServiceUrl); // Using Dio directly inside isolate
+//
+//     if (response.statusCode == 200) {
+//       sendPort.send(response.data['services']); // Send JSON back
+//     } else {
+//       sendPort.send("Error: ${response.statusMessage}");
+//     }
+//   } catch (e) {
+//     sendPort.send("Error: $e");
+//   }
+// }
